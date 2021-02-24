@@ -1,10 +1,16 @@
 import React, { useCallback } from "react";
+import { useViewport } from "./comps/useViewport";
+import Web from "./pages/web";
+import Mobile from "./pages/mobile";
+import 'antd/dist/antd.css';
+import './styles/index.min.css'
+import { WebRoutes } from "./routes";
 
-export class APP extends React.Component {
-    componentDidMount() {
-    }
 
-    render() {
-        return <div>web 项目模板</div>;
-    }
+export const APP = () => {
+    const { width } = useViewport();
+    const breakpoint = 620;
+
+    return width < breakpoint ? <Mobile /> : <WebRoutes />
+
 }

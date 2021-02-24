@@ -1,0 +1,47 @@
+.webFooter{
+    width: 100%;
+    height: 11.667rem;
+    padding: 5rem 11.42rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #2a2a2a;
+    >ul{
+        display: flex;
+        >li{
+            display: flex;
+            
+        }
+    }
+    &-tel{
+        >li:first-child{
+            margin-right: 2.5rem;
+            
+        }
+        span{
+            font-size: 1.667rem;
+            margin-left: 0.3rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    }
+    >img{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%,0);
+    }
+    &-menu{
+        align-items: center;
+        >li{
+            margin-left: 4rem;
+            font-size: 1.667rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    }
+}
+.webFooter-copyright{
+    background: #2a2a2a;
+    text-align: center;
+    padding-bottom: 1.667rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.5rem;
+}

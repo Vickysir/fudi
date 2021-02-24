@@ -1,0 +1,89 @@
+.homepage-banner {
+  position: relative;
+}
+
+.homepage-banner > img {
+  width: 100%;
+}
+
+.homepage-banner > p {
+  font-size: 4.167rem;
+  color: #ffffff;
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+}
+
+.homepage-banner > h3 {
+  font-size: 7rem;
+  color: #ffffff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.homepage-recommended {
+  padding: 6.667rem 14%;
+  background-color: #fafafa;
+}
+
+.homepage-recommended h1 {
+  font-size: 5rem;
+  color: #000;
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.homepage-recommended-row2th {
+  margin-top: 2.5rem;
+}
+
+.homepage-recommended-img {
+  font-size: 3.083rem;
+  font-weight: 600;
+  color: #32ca88;
+}
+
+.homepage-desc {
+  padding: 6.667rem 14%;
+}
+
+.homepage-desc h1 {
+  font-size: 5rem;
+  color: #000;
+  text-align: center;
+  margin-bottom: 10rem;
+}
+
+.homepage-desc h1 > span {
+  color: #32ca88;
+}
+
+.homepage-desc-card {
+  position: relative;
+}
+
+.homepage-desc-card > h3 {
+  text-align: center;
+  color: #32ca88;
+  font-size: 3.083rem;
+  margin-top: 2.5rem;
+}
+
+.homepage-desc-card > p {
+  text-align: center;
+}
+
+.homepage-desc-card-img1 {
+  position: absolute;
+  top: -115px;
+  left: 105px;
+}
+
+.homepage-desc-card-img2 {
+  position: absolute;
+  top: -85px;
+  left: 135px;
+}

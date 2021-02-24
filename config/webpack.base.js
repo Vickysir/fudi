@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const { getThemeVariables } = require('antd/dist/theme');
 
 const config = require("./config");
 const { DefinePlugin } = require('webpack');
@@ -27,7 +28,7 @@ module.exports = {
                         test: /\.(j|t)sx?$/,
                         include: config.appPath,
                         exclude: config.node_modules_path,
-                        use: "babel-loader",
+                        use: "babel-loader"
                     },
                     {
                         test: /\.(html)$/,
@@ -40,10 +41,35 @@ module.exports = {
                                 loader: "less-loader",
                                 options: {
                                     lessOptions: {
+                                        // modifyVars: getThemeVariables({
+                                        //     dark: true, // 开启暗黑模式
+                                        //     compact: true, // 开启紧凑模式
+
+                                        // }),
+                                        modifyVars: {
+                                            'primary-color': 'red',
+                                            'link-color': '#1DA57A',
+                                            'border-radius-base': '2px',
+                                        },
                                         javascriptEnabled: true,
                                     }
                                 }
                             }]
+                    },
+                    {
+                        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                        use: [
+                            {
+                                loader: 'babel-loader',
+                            },
+                            {
+                                loader: '@svgr/webpack',
+                                options: {
+                                    babel: false,
+                                    icon: true,
+                                },
+                            },
+                        ],
                     },
                     {
                         test: /\.(svg|jpg|jpeg|bmp|png|webp|gif|ico|ttf)$/,
@@ -102,6 +128,6 @@ module.exports = {
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             'process.env.APP_ENV': JSON.stringify(process.env.APP_ENV),
             APP_VERSION: JSON.stringify(`Version${pkg.version} - ${new Date().toUTCString()}`),
-        })
+        }),
     ]
 }

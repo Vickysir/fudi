@@ -1,0 +1,51 @@
+.webFooter {
+  width: 100%;
+  height: 11.667rem;
+  padding: 5rem 11.42rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #2a2a2a;
+}
+
+.webFooter > ul {
+  display: flex;
+}
+
+.webFooter > ul > li {
+  display: flex;
+}
+
+.webFooter-tel > li:first-child {
+  margin-right: 2.5rem;
+}
+
+.webFooter-tel span {
+  font-size: 1.667rem;
+  margin-left: 0.3rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.webFooter > img {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.webFooter-menu {
+  align-items: center;
+}
+
+.webFooter-menu > li {
+  margin-left: 4rem;
+  font-size: 1.667rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.webFooter-copyright {
+  background: #2a2a2a;
+  text-align: center;
+  padding-bottom: 1.667rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.5rem;
+}

@@ -1,0 +1,76 @@
+$theme-color:#32ca88;
+.homepage-banner{
+    position: relative;
+    >img{
+        width: 100%;
+    }
+    >p{
+        font-size: 4.167rem;
+        color: #ffffff;
+        position: absolute;
+        left:50%;
+        top:30%;
+        transform:translate(-50%,-50%);
+    }
+    >h3{
+        font-size: 7rem;
+        color: #ffffff;
+        position: absolute;
+        left:50%;
+        top:50%;
+        transform:translate(-50%,-50%);
+    }
+
+}
+.homepage-recommended{
+    padding: 6.667rem 14%;
+    background-color: #fafafa;
+    h1{
+        font-size: 5rem;
+        color: #000;
+        text-align: center;
+        margin-bottom: 5rem;
+    }
+    &-row2th{
+        margin-top:2.5rem;
+    }
+    &-img{ 
+        font-size: 3.083rem;
+        font-weight: 600;
+        color: $theme-color;
+    }
+}
+.homepage-desc{
+    padding: 6.667rem 14%;
+    h1{
+        font-size: 5rem;
+        color: #000;
+        text-align: center;
+        margin-bottom: 10rem;
+        >span{
+            color: $theme-color;
+        }
+    }
+    &-card{
+        position: relative;
+        >h3{
+            text-align: center;
+            color: $theme-color;
+            font-size: 3.083rem;
+            margin-top: 2.5rem;
+        }
+        >p{
+            text-align: center;
+        }
+        &-img1{
+            position: absolute;
+            top: -115px;
+            left: 105px;
+        }
+        &-img2{
+            position: absolute;
+            top: -85px;
+            left: 135px;
+        }
+    }
+}

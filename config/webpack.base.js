@@ -72,6 +72,21 @@ module.exports = {
                     //     ],
                     // },
                     {
+                        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                        use: [
+                            {
+                                loader: 'babel-loader',
+                            },
+                            {
+                                loader: '@svgr/webpack',
+                                options: {
+                                    babel: false,
+                                    icon: true,
+                                },
+                            },
+                        ],
+                    },
+                    {
                         test: /\.(svg|jpg|jpeg|bmp|png|webp|gif|ico|ttf)$/,
                         loader: 'url-loader',
                         options: {

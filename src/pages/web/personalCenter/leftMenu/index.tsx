@@ -60,7 +60,7 @@ const LeftMenu = (props) => {
                 <Menu.Item ><Divider /></Menu.Item>
                 <Menu.Item key="8" icon={<ImportOutlined />} >Log Out</Menu.Item>
             </Menu>
-        </div>
+        </div >
     )
 }
 

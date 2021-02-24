@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-03-02 09:43:16
+ * @LastEditTime: 2021-03-09 10:59:34
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /GitHub/fudi/config/config.js
+ */
 const path = require('path');
 
 /**

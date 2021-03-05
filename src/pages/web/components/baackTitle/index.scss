@@ -1,0 +1,19 @@
+$title37:3.083rem;
+$theme:#32ca88;
+
+.title-wrap{
+    width: 100%;
+    height: 8.333rem;
+    padding: 0 11.42rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    >h1{
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform:translate(-50%,0);
+        font-size: $title37;
+        color: $theme;
+    }
+}

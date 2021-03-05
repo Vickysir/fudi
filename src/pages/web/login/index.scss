@@ -1,0 +1,40 @@
+$title37:3.083rem;
+$title20:1.667rem;
+$theme:#32ca88;
+
+.login-wrap{
+    width: 27.6%;
+    margin:5.833rem auto 8.333rem;
+    >h1{
+        text-align: center;
+        font-size: $title37;
+        color: $theme;
+        margin-bottom: 5rem;
+    }
+    .login-form-forgot{
+        font-size: $title20;
+        font-weight: 600;
+        text-align: center;
+        >a{
+            color: $theme;
+        }
+    }
+    .login-form-thirdparty{
+        display: flex;
+        justify-content: space-around;
+        padding: 0 5.89%;
+        margin:3rem 0 5rem;
+        img{
+            cursor: pointer;
+        }
+    }
+    .login-form-regist{
+        font-size: 26px;
+        font-weight: 600;
+        text-align: center;
+        a{
+            color: $theme;
+            margin-left: 1rem;
+        }
+    }
+}

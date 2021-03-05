@@ -7,41 +7,80 @@
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
  */
 import React from 'react'
-import { Form, Input, Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Select } from 'antd';
+import { ShakeOutlined } from '@ant-design/icons';
+import WebFooter from '@/pages/components/header/webFooter';
+import WebHeader from '@/pages/components/header/webHeader';
+import BaackTitle from '../components/baackTitle';
+import { withRouter } from 'react-router-dom';
+import './index.min.css'
 
+const { Option } = Select;
+const Regist = (props) => {
+    const { history } = props;
 
-const Regist = () => {
     const onFinish = (values: any) => {
         console.log('Received values of form: ', values);
+        history.push("/setupphone");
     };
+
+    const selectBefore = (
+        <Select defaultValue="353" id="citizenship" className="select-before citizenship" bordered={false}>
+            <Option value="353">+353</Option>
+            <Option value="086">+086</Option>
+        </Select>
+    );
     return (
-        <div>
-            <h1>Set up Phone</h1>
-            <Button type="primary">Back</Button>
+        <>
+            <WebHeader />
             <div>
-                <Form
-                    name="normal_login"
-                    className="login-form"
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                >
-                    <Form.Item
-                        name="email"
-                        rules={[{ required: true, message: 'Please input your phone number!' }]}
+                <BaackTitle titleContent="Set up Phone" />
+                <div className="login-wrap">
+                    <Form
+                        name="normal_login"
+                        className="login-form"
+                        initialValues={{ remember: true }}
+                        onFinish={onFinish}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="000 000 00 00" />
-                        <div>
-                            To proceed, please fill your phone number. You will receive an SMS with a verification code.
-                        </div>
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button">Apply</Button>
-                    </Form.Item>
-                </Form>
+                        <Form.Item
+                            name="email"
+                            rules={[{ required: true, message: 'Please input your phone number!' }]}
+                        >
+                            <Input
+                                prefix={
+                                    <>
+                                        <ShakeOutlined className="site-form-item-icon" style={{ "margin": "0 0 0 1rem" }} />
+                                        {selectBefore}
+                                    </>
+                                }
+                                placeholder="000 000 00 00"
+                                size="large"
+                                style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
+                            />
+                        </Form.Item>
+                        <Form.Item>
+                            <div className="login-wrap-tips">
+                                To proceed, please fill your phone number. You will receive an SMS with a verification code.
+                            </div>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                className="login-form-button"
+                                size="large"
+                                shape="round"
+                                block
+                            >
+                                Apply
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </div>
             </div>
-        </div>
+            <WebFooter />
+        </>
     )
 }
 
-export default Regist
+export default withRouter(Regist) 

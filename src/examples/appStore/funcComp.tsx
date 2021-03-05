@@ -6,6 +6,7 @@ import { IAppStore, useAppStore } from "../../__internal";
  * 在function组件中使用APP_STORE, 将APP_STORE的数据作为组件state使用
  */
 export function FuncComp() {
+<<<<<<< HEAD
     let [xxAA, setXXAA] = useState(APP_STORE.xxAA);
     useEffect(() => {
         let handler = (ev: { newValue: any, oldValue: any }) => { setXXAA(ev.newValue); }
@@ -15,6 +16,17 @@ export function FuncComp() {
         }
     });
     return <div>【FuncComp】xxAA:{xxAA}</div>
+=======
+    let [xx, setXX] = useState(APP_STORE.xx);
+    useEffect(() => {
+        let handler = (ev: { newValue: any, oldValue: any }) => { setXX(ev.newValue); }
+        APP_STORE.on("xxAtt", handler);
+        return () => {
+            APP_STORE.off("xxAtt", handler)
+        }
+    });
+    return (<div>{xx}</div>)
+>>>>>>> update(devServer):
 }
 
 
@@ -22,6 +34,11 @@ export function FuncComp() {
  * 使用提供的帮助函数使用APP_STORE
  */
 export function FuncComp2() {
+<<<<<<< HEAD
     let storeAtt = useAppStore("xxAA");
     return <div>【FuncComp2】xxAA:{storeAtt}</div>
+=======
+    let storeAtt = useAppStore("xx");
+    return (<div>{storeAtt}</div>)
+>>>>>>> update(devServer):
 }

@@ -13,7 +13,11 @@ export function useAppStore<T extends IAppStore, P extends keyof T>(attName: P):
         return () => {
             APP_STORE.off(attName as string, handler)
         }
+<<<<<<< HEAD
     }, []);
+=======
+    });
+>>>>>>> update(devServer):
     return att
 }
 /**

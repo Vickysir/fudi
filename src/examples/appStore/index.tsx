@@ -2,6 +2,7 @@ import React from "react";
 import { MyApp } from "../../__internal";
 import { ClassComp, ClassComp2 } from "./classComp";
 import { FuncComp, FuncComp2 } from "./funcComp";
+<<<<<<< HEAD
 import { UpdateStore } from "./updateStore";
 
 MyApp.start(
@@ -13,6 +14,12 @@ MyApp.start(
             //-----------------------------------------<br></br>
             <UpdateStore />
             <div>--------------------------</div>
+=======
+
+MyApp.start(
+    (
+        <div>
+>>>>>>> update(devServer):
             <ClassComp />
             <ClassComp2 />
             <FuncComp />

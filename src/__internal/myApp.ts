@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { AppStore } from "./appStore";
 import { AppEnvType, IAppOption, IStoreOption } from "./iapp";

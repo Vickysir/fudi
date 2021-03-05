@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2021-03-05 12:02:42
- * @LastEditTime: 2021-03-22 16:34:17
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /web-template/config/config.js
- */
 const path = require('path');
 
 /**

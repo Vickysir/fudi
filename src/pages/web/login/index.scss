@@ -4,6 +4,7 @@ $theme:#32ca88;
 
 .login-wrap{
     width: 27.6%;
+    min-height: 400px;
     margin:5.833rem auto 8.333rem;
     >h1{
         text-align: center;
@@ -36,5 +37,12 @@ $theme:#32ca88;
             color: $theme;
             margin-left: 1rem;
         }
+    }
+    &-tips{
+        font-size: 18px;
+        font-weight: 500;
+        color: #7c7c7d;
+        text-align: center;
+        margin-bottom: 1.5rem;
     }
 }

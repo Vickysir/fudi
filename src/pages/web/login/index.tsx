@@ -86,7 +86,7 @@ const Login = () => {
                         </Form.Item>
                         <Form.Item>
                             <div className="login-form-forgot">
-                                <Link to='/changepassword'>Forgot password</Link>
+                                <Link to='/restpassword'>Forgot password</Link>
                             </div>
                         </Form.Item>
 

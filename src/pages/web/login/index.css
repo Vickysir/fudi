@@ -1,5 +1,6 @@
 .login-wrap {
   width: 27.6%;
+  min-height: 400px;
   margin: 5.833rem auto 8.333rem;
 }
 
@@ -40,4 +41,12 @@
 .login-wrap .login-form-regist a {
   color: #32ca88;
   margin-left: 1rem;
+}
+
+.login-wrap-tips {
+  font-size: 18px;
+  font-weight: 500;
+  color: #7c7c7d;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }

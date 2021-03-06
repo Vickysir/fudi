@@ -27,8 +27,8 @@ export function WebRoutes() {
         <Route path="/home" component={Homepage} />
         {/* <CheckTokenRoute path="/home" component={Web} /> */}
         <Route path="/login" component={Login} />
-        <Route path="/changepassword" component={Changepassword} />
         <Route path="/restpassword" component={Restpassword} />
+        <Route path="/changepassword" component={Changepassword} />
         <Route path="/regist" component={Regist} />
         <Route path="/setupphone" component={Setupphone} />
         <Route path="/faq" component={FAQ} />

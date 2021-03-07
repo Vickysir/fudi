@@ -11,7 +11,7 @@ import React from 'react'
 const MyInfor = () => {
     return (
         <div>
-            我的订单
+            my info
         </div>
     )
 }

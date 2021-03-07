@@ -1,6 +1,4 @@
-$title37:3.083rem;
-$title20:1.667rem;
-$theme:#32ca88;
+@import "../../../styles/theme/index.scss";
 
 .login-wrap{
     width: 27.6%;
@@ -9,7 +7,7 @@ $theme:#32ca88;
     >h1{
         text-align: center;
         font-size: $title37;
-        color: $theme;
+        color: $theme-color;
         margin-bottom: 5rem;
     }
     .login-form-forgot{
@@ -17,7 +15,7 @@ $theme:#32ca88;
         font-weight: 600;
         text-align: center;
         >a{
-            color: $theme;
+            color: $theme-color;
         }
     }
     .login-form-thirdparty{
@@ -34,7 +32,7 @@ $theme:#32ca88;
         font-weight: 600;
         text-align: center;
         a{
-            color: $theme;
+            color: $theme-color;
             margin-left: 1rem;
         }
     }

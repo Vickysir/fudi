@@ -23,17 +23,23 @@ const LeftMenu = (props) => {
         console.log('click ', e);
         console.log('props', props)
         switch (e.key) {
-            case "1": history.push("/personalCenter/vouchers")
+            case "1":
+                history.push("/personalCenter/myOrders")
                 break;
-            case "2": history.push("/personalCenter/changepwd")
+            case "2":
+                history.push("/personalCenter/vouchers")
                 break;
-            case "3": history.push("/personalCenter/invitation")
+            case "3":
+                history.push("/personalCenter/invitation")
                 break;
-            case "4": history.push("/personalCenter/myInfor")
+            case "4":
+                history.push("/personalCenter/notification")
                 break;
-            case "5": history.push("/personalCenter/myOrders")
+            case "5":
+                history.push("/personalCenter/myInfor")
                 break;
-            case "6": history.push("/personalCenter/notification")
+            case "6":
+                history.push("/personalCenter/changepwd")
                 break;
             case "7": history.push("/personalCenter/sendQ")
                 break;

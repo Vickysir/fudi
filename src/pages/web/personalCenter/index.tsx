@@ -6,7 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/index.tsx
  */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from 'antd'
 import { ArrowLeftOutlined, } from '@ant-design/icons';
 import { HashRouter as Router, Route } from 'react-router-dom'
@@ -25,6 +25,9 @@ import './index.min.css'
 
 const PersonalCenter = (props) => {
     const { history } = props;
+    useEffect(() => {
+        history.push("/personalCenter/myOrders")
+    }, [])
     function goTo() {
         history.push("/home")
     }
@@ -46,11 +49,11 @@ const PersonalCenter = (props) => {
                     </div>
                     <div>
                         <Router>
+                            <Route path="/personalCenter/myOrders" component={MyOrders} />
                             <Route path="/personalCenter/vouchers" component={Vouchers} />
                             <Route path="/personalCenter/changepwd" component={Changepwd} />
                             <Route path="/personalCenter/invitation" component={Invitation} />
                             <Route path="/personalCenter/myInfor" component={MyInfor} />
-                            <Route path="/personalCenter/myOrders" component={MyOrders} />
                             <Route path="/personalCenter/notification" component={NotificationCenter} />
                             <Route path="/personalCenter/sendQ" component={SendQ} />
                         </Router>

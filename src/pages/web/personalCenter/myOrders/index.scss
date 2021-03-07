@@ -1,0 +1,21 @@
+@import '../../../../styles//theme/index.scss';
+.myOrders-wrap{
+    font-size: $title26;
+    font-weight: 600;
+    h3{
+        margin:4.167rem 0;
+    }
+    &-list{
+        border:2px solid #fafafa;
+        border-radius: 10px;
+        &-content{
+
+        }
+        &-footer{
+            height: 47px;
+            padding: 1rem 2rem;
+            background-color: $theme-color;
+            color: #fff;
+        }
+    }
+}

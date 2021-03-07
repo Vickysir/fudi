@@ -8,7 +8,7 @@
  */
 import React from 'react'
 import { Divider, Menu } from 'antd';
-import { UserOutlined, LockOutlined, BulbOutlined, ImportOutlined, BellOutlined, ShoppingOutlined, TeamOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, BulbOutlined, ImportOutlined, BellOutlined, ShoppingOutlined, TeamOutlined, ContainerOutlined } from '@ant-design/icons';
 import Icon from '@ant-design/icons';
 import iconOrder from '@/assets/images/common/icon/icon-order.svg';
 import iconNott from '@/assets/images/common/icon/icon-nott.svg';
@@ -49,7 +49,8 @@ const LeftMenu = (props) => {
                 mode="inline"
             >
                 <Menu.Item key="1" icon={<ShoppingOutlined />} >My Orders</Menu.Item>
-                <Menu.Item key="2" icon={<Icon component={iconNott} />} >My Vouchers</Menu.Item>
+                {/* <Menu.Item key="2" icon={<Icon component={iconNott} />} >My Vouchers</Menu.Item> */}
+                <Menu.Item key="2" icon={<ContainerOutlined />} >My Vouchers</Menu.Item>
                 <Menu.Item key="3" icon={<TeamOutlined />} >Invitate Friends</Menu.Item>
                 <Menu.Item key="4" icon={<BellOutlined />} >Notifications</Menu.Item>
                 <Menu.Item ><Divider /></Menu.Item>

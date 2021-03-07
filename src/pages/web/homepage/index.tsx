@@ -99,7 +99,7 @@ const Homepage = () => {
                 </div>
                 <div className="homepage-desc">
                     <h1><span>Fudi&More</span> is your perfect choice!</h1>
-                    <Row gutter={24} type="flex" justify="space-around">
+                    <Row gutter={24} justify="space-around">
                         <Col span={8}>
                             <Card hoverable>
                                 <div className="homepage-desc-card">

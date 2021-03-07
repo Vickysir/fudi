@@ -1,5 +1,4 @@
-$title37:3.083rem;
-$theme:#32ca88;
+@import "../../../../styles/theme/index.scss";
 
 .title-wrap{
     width: 100%;
@@ -14,6 +13,6 @@ $theme:#32ca88;
         bottom: 0;
         transform:translate(-50%,0);
         font-size: $title37;
-        color: $theme;
+        color: $theme-color;
     }
 }

@@ -8,6 +8,7 @@
  */
 import React from 'react'
 import { Button } from 'antd'
+import { ArrowLeftOutlined, } from '@ant-design/icons';
 import { HashRouter as Router, Route } from 'react-router-dom'
 import Vouchers from './vouchers'
 import Changepwd from './changepwd'
@@ -17,27 +18,47 @@ import MyOrders from './myOrders'
 import SendQ from './sendQ'
 import NotificationCenter from './notification'
 import LeftMenu from './leftMenu'
+import WebHeader from '../../components/header/webHeader'
+import WebFooter from '../../components/header/webFooter'
+import './index.min.css'
 
 
-const PersonalCenter = () => {
+const PersonalCenter = (props) => {
+    const { history } = props;
+    function goTo() {
+        history.push("/home")
+    }
     return (
-        <div>
-            <Button type="primary">Back to All Dishes</Button>
-            <div>
-                <LeftMenu />
+        <>
+            <WebHeader />
+            <div className="personalCenter-wrap">
+                <Button
+                    type="primary"
+                    shape="round"
+                    style={{ "margin": "4.167rem 0" }}
+                    onClick={goTo}
+                >
+                    <ArrowLeftOutlined />Back to All Dishes
+                </Button>
+                <div className="personalCenter-wrap-box">
+                    <div>
+                        <LeftMenu />
+                    </div>
+                    <div>
+                        <Router>
+                            <Route path="/personalCenter/vouchers" component={Vouchers} />
+                            <Route path="/personalCenter/changepwd" component={Changepwd} />
+                            <Route path="/personalCenter/invitation" component={Invitation} />
+                            <Route path="/personalCenter/myInfor" component={MyInfor} />
+                            <Route path="/personalCenter/myOrders" component={MyOrders} />
+                            <Route path="/personalCenter/notification" component={NotificationCenter} />
+                            <Route path="/personalCenter/sendQ" component={SendQ} />
+                        </Router>
+                    </div>
+                </div>
             </div>
-            <div>
-                <Router>
-                    <Route path="/personalCenter/vouchers" component={Vouchers} />
-                    <Route path="/personalCenter/changepwd" component={Changepwd} />
-                    <Route path="/personalCenter/invitation" component={Invitation} />
-                    <Route path="/personalCenter/myInfor" component={MyInfor} />
-                    <Route path="/personalCenter/myOrders" component={MyOrders} />
-                    <Route path="/personalCenter/notification" component={NotificationCenter} />
-                    <Route path="/personalCenter/sendQ" component={SendQ} />
-                </Router>
-            </div>
-        </div>
+            <WebFooter />
+        </>
     )
 }
 

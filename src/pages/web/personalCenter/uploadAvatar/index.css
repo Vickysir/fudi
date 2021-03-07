@@ -1,0 +1,25 @@
+.upload-box {
+  height: 21.667rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.upload-box > h3 {
+  text-align: center;
+  font-size: 2.167rem;
+  font-weight: 600;
+  color: #32ca88;
+}
+
+.upload-box-avatar {
+  width: auto !important;
+}
+
+.upload-box-avatar .ant-upload {
+  width: 10.333rem !important;
+  height: 10.333rem !important;
+  border-radius: 5rem !important;
+}

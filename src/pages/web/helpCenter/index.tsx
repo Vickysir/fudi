@@ -9,27 +9,41 @@
 import { Button, Divider } from 'antd'
 import React from 'react'
 import iconphone from '@/assets/images/common/icon/icon-phone.svg'
+import WebFooter from '@/pages/components/header/webFooter'
+import WebHeader from '@/pages/components/header/webHeader'
+import BaackTitle from '../components/baackTitle'
+import './index.min.css'
 
 const HelpCenter = () => {
+
     return (
-        <div>
-            <h1>Frequently Asked Questions</h1>
-            <Button type="primary">Back</Button>
-            <ul>
-                <li>
-                    <span>Ask your Question</span>
-                    <Button type="primary">Open Online Chat</Button>
-                </li>
-                <li><Divider type="vertical" /></li>
-                <li>
-                    <span>Or Call Us</span>
-                    <p>
-                        <img src={iconphone} alt="iconphone" />
-                        +353 00 000 00 00
-                    </p>
-                </li>
-            </ul>
-        </div>
+        <>
+            <WebHeader />
+            <div>
+                <BaackTitle titleContent="Help Center" />
+                <ul className="login-wrap helpCenter">
+                    <li>
+                        <span>Ask your Question</span>
+                        <Button
+                            type="primary"
+                            size="large"
+                            shape="round"
+                        >
+                            Open Online Chat
+                        </Button>
+                    </li>
+                    <li><Divider /></li>
+                    <li>
+                        <span>Or Call Us</span>
+                        <p className="helpCenter-call">
+                            <img src={iconphone} alt="iconphone" />
+                            <span>+353 00 000 00 00</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <WebFooter />
+        </>
     )
 }
 

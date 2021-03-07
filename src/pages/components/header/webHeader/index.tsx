@@ -13,8 +13,15 @@ import iconnott from '@/assets/images/common/icon/icon-nott.svg'
 import iconorder from '@/assets/images/common/icon/icon-order.svg'
 import logo from './images/logo.svg'
 import { Avatar, Badge } from 'antd';
+import { withRouter } from 'react-router-dom'
 import './index.min.css'
-const WebHeader = () => {
+
+
+const WebHeader = (props) => {
+    const { history } = props;
+    function goTo() {
+        history.push("/personalCenter")
+    }
     return (
         <div className="webHeader">
             <ul className="webHeader-tel">
@@ -33,12 +40,12 @@ const WebHeader = () => {
                         <img src={iconnott} alt="iconnott" />
                     </Badge>
                 </li>
-                <li>
-                    <Avatar size="large" style={{ backgroundColor: '#fde3cf' }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                <li onClick={goTo}>
+                    <Avatar size="large" style={{ backgroundColor: '#fde3cf', "cursor": "pointer" }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 </li>
             </ul>
         </div>
     )
 }
 
-export default WebHeader
+export default withRouter(WebHeader)

@@ -14,6 +14,7 @@ import iconOrder from '@/assets/images/common/icon/icon-order.svg';
 import iconNott from '@/assets/images/common/icon/icon-nott.svg';
 import UploadAvatar from '../uploadAvatar';
 import { withRouter } from "react-router";
+import './index.min.css'
 
 const LeftMenu = (props) => {
 
@@ -40,11 +41,11 @@ const LeftMenu = (props) => {
     };
 
     return (
-        <div>
+        <div className="leftMenu-warp">
             <UploadAvatar />
             <Menu
                 onClick={handleClick}
-                style={{ width: 256 }}
+                style={{ "width": "21.333rem", "paddingBottom": "2rem" }}
                 defaultSelectedKeys={['1']}
                 mode="inline"
             >

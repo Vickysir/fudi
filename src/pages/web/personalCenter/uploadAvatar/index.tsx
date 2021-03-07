@@ -9,6 +9,7 @@
 import React from 'react'
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import './index.min.css'
 
 function getBase64(img, callback) {
     const reader = new FileReader();
@@ -59,20 +60,20 @@ export default class UploadAvatar extends React.Component {
             </div>
         );
         return (
-            <>
+            <div className="upload-box">
                 <Upload
                     name="avatar"
                     listType="picture-card"
-                    className="avatar-uploader"
+                    className="avatar-uploader upload-box-avatar"
                     showUploadList={false}
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    action=""
                     beforeUpload={beforeUpload}
                     onChange={this.handleChange}
                 >
                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                 </Upload>
                 <h3>Daisy Murphy</h3>
-            </>
+            </div>
 
         );
     }

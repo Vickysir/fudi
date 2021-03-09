@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-03-09 11:00:12
+ * @LastEditTime: 2021-03-09 11:03:05
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /fudi/src/__internal/storeHelper.tsx
+ */
 import { DebuffAction } from "@mtgoo/ctool";
 import React, { useEffect, useState } from "react";
 import { IAppStore } from "./iapp";
@@ -13,11 +21,7 @@ export function useAppStore<T extends IAppStore, P extends keyof T>(attName: P):
         return () => {
             APP_STORE.off(attName as string, handler)
         }
-<<<<<<< HEAD
-    }, []);
-=======
     });
->>>>>>> update(devServer):
     return att
 }
 /**

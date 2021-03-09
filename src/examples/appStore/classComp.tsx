@@ -27,11 +27,7 @@ export class ClassComp extends React.Component<{}, { xxAtt: any }> {
         this._debuffAction.dispose();
     }
     render() {
-<<<<<<< HEAD
-        return (<div>【ClassComp】xxAtt:{this.state.xxAtt}</div>)
-=======
         return (<div>{this.state.xxAtt}</div>)
->>>>>>> update(devServer):
     }
 }
 
@@ -41,11 +37,7 @@ export class ClassComp extends React.Component<{}, { xxAtt: any }> {
 @mapAppStoreToProps(["xxAtt"])
 export class ClassComp2 extends React.Component<{ xxAtt?: any }> {
     render() {
-<<<<<<< HEAD
-        return <div>【ClassComp2】xxAtt:{this.props.xxAtt}</div>
-=======
         return <div>{this.props.xxAtt}</div>
->>>>>>> update(devServer):
     }
 }
 

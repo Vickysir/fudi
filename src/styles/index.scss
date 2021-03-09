@@ -1,5 +1,10 @@
+@font-face {
+    font-family: "MontserratAlternates";
+    src: url("../assets/fonts/MontserratAlternates-Bold.ttf"),
+}
 html,body{
     font-size: 12px;
+    font-family: "MontserratAlternates";
 }
 ol, ul, dl {
     margin: 0;
@@ -10,4 +15,5 @@ h1,h2,h3,h4,h5,h6,p{
     margin: 0;
     padding: 0;
 }
+
 

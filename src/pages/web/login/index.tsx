@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 14:36:13
- * @LastEditTime: 2021-03-09 11:12:23
+ * @LastEditTime: 2021-03-09 11:17:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /GitHub/fudi/src/pages/web/login/index.tsx
@@ -44,7 +44,6 @@ const Login = () => {
         console.log('^^^^^^^^^^error', error)
     }
 
-<<<<<<< HEAD
     // 表单 
     const onFinish = (values: any) => {
         console.log('Received values of form: ', values);
@@ -129,68 +128,6 @@ const Login = () => {
             </div>
             <WebFooter />
         </>
-=======
-
-    return (
-        <div>
-            <h1>Log In</h1>
-            <div>
-                <Form
-                    name="normal_login"
-                    className="login-form"
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                >
-                    <Form.Item
-                        name="username"
-                        rules={[{ required: true, message: 'Please input your Username!' }]}
-                    >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-                    </Form.Item>
-                    <Form.Item
-                        name="password"
-                        rules={[{ required: true, message: 'Please input your Password!' }]}
-                    >
-                        <Input
-                            prefix={<LockOutlined className="site-form-item-icon" />}
-                            type="password"
-                            placeholder="Password"
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox>Remember me</Checkbox>
-                        </Form.Item>
-
-                        <a className="login-form-forgot" href="">Forgot password</a>
-                    </Form.Item>
-
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button">Log in</Button>
-                    </Form.Item>
-                </Form>
-            </div>
-            <div>
-                <GoogleLogin
-                    clientId={"473960765414-67u4bo8orupa8fbps4ic47v8sr9i2oca.apps.googleusercontent.com"}
-                    buttonText=""
-                    onSuccess={onSignIn}
-                    onFailure={onFailure}
-                />
-
-                <AppleLogin clientId="com.react.apple.login" redirectURI="http://localhost:8585" />
-
-                <FacebookLogin
-                    appId="127554539221626"
-                    autoLoad={true}
-                    fields="name,email,picture"
-                    callback={onSignIn} />
-            </div>
-            <div>
-                Don’t have an account?<Link to='/regist'>Regist</Link>
-            </div>
-        </div>
->>>>>>> feat(init):初始化,homepage
     )
 }
 

@@ -1,18 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2021-03-05 10:04:05
- * @LastEditTime: 2021-03-09 11:12:33
+ * @LastEditTime: 2021-03-09 11:16:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/menu/index.tsx
  */
 import React from 'react'
 import { Divider, Menu } from 'antd';
-<<<<<<< HEAD
 import { UserOutlined, LockOutlined, BulbOutlined, ImportOutlined, BellOutlined, ShoppingOutlined, TeamOutlined, ContainerOutlined } from '@ant-design/icons';
-=======
-import { UserOutlined, LockOutlined, BulbOutlined, ImportOutlined, BellOutlined, ShoppingOutlined, TeamOutlined } from '@ant-design/icons';
->>>>>>> feat(init):初始化,homepage
 import Icon from '@ant-design/icons';
 import iconOrder from '@/assets/images/common/icon/icon-order.svg';
 import iconNott from '@/assets/images/common/icon/icon-nott.svg';
@@ -64,11 +60,7 @@ const LeftMenu = (props) => {
                 <Menu.Item ><Divider /></Menu.Item>
                 <Menu.Item key="8" icon={<ImportOutlined />} >Log Out</Menu.Item>
             </Menu>
-<<<<<<< HEAD
-        </div >
-=======
         </div>
->>>>>>> feat(init):初始化,homepage
     )
 }
 

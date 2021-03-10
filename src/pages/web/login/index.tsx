@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 14:36:13
- * @LastEditTime: 2021-03-09 11:17:14
+ * @LastEditTime: 2021-03-10 14:03:08
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /GitHub/fudi/src/pages/web/login/index.tsx
@@ -18,7 +18,10 @@ import WebHeader from '@/pages/components/header/webHeader';
 import google from '@/assets/images/common/login/google.png'
 import fb from '@/assets/images/common/login/fb.png'
 import apple from '@/assets/images/common/login/apple.png'
+import axios from 'axios';
+import { apiPath } from '@/pages/api';
 import './index.less'
+
 
 
 const Login = () => {
@@ -28,7 +31,13 @@ const Login = () => {
         onFailure: onFailure,
         clientId: "473960765414-67u4bo8orupa8fbps4ic47v8sr9i2oca.apps.googleusercontent.com",
     })
-
+    useEffect(() => {
+        axios.post(apiPath.login, { "password": "helloworld", "name": "spring" }).then((res) => {
+            console.log('res', res)
+        }).catch(err => {
+            console.log('err', err)
+        })
+    }, [])
 
 
 

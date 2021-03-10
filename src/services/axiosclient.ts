@@ -1,4 +1,14 @@
+/*
+ * @Author: your name
+ * @Date: 2021-03-02 09:43:16
+ * @LastEditTime: 2021-03-10 14:36:26
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /fudi/src/services/axiosclient.ts
+ */
 import axios from 'axios';
+import { getAuthorization, getBrowser } from '@/utils/calculateAuthToken';
+
 
 /**
  * 配置axios的基本配置
@@ -7,23 +17,34 @@ export function initAxiosConfig() {
     axios.defaults.baseURL = APP_CONFIG?.api;
     axios.defaults.timeout = 10000; //响应时间
     axios.interceptors.request.use((config) => {
-        if (APP_STORE?.authInfo?.token) {
-            config.headers.common['Authorization'] = "Token " + APP_STORE.authInfo.token;
-        }
+        let browser = getBrowser();
+        const api = config.url;
+        const timestamp = new Date().getTime();
+        const device = browser.type;
+        const version = browser.versions;
+        const token = APP_STORE.authInfo?.token || ""
+        const Authorization = getAuthorization(api, timestamp, device, version, token)
+        config.headers.common['Authorization'] = Authorization;
+        config.headers.common['Authorization-Device'] = device;
+        config.headers.common['Authorization-Version'] = version;
+        config.headers.common['Authorization-Timestamp'] = timestamp;
+        config.headers.common['Accept-Language'] = "en-US";
+        console.log('token', token)
+        console.log('config', config)
         return config
     });
 
     axios.interceptors.response.use(
         response => {
             let data = response.data as IcustomResponse;
-            if ((data.code == 200 || 2000) || data.code == null) {
+            if (data.event == "SUCCESS") {
                 return data as any;
             } else {
                 //-----------------------------------------------------------
                 //              处理公共异常code状态（可选）
                 //-----------------------------------------------------------
                 {//异常code举例：处理401
-                    if (data.code == 401) {//认证失败
+                    if (data.event == "UNAUTHORIZED") {//认证失败
                         APP_STORE?.clear();
                         window.location.reload();
                     }
@@ -39,7 +60,7 @@ interface IcustomResponse<T = any> {
     /**
      * 状态码
      */
-    code?: number;
+    event?: string;
     /**
      * 返回的数据
      */
@@ -47,7 +68,7 @@ interface IcustomResponse<T = any> {
     /**
      * 数据状态描述。例如：`success`
      */
-    message: string;
+    describe: string;
 
     /**
      * 数据分页

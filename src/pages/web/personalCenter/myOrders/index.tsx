@@ -6,13 +6,31 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/sendQ/index.tsx
  */
-import React from 'react'
-import { Card, Button } from 'antd'
+import React, { useState } from 'react'
 import { InfoCircleOutlined, HistoryOutlined } from '@ant-design/icons';
+import AddReview from './addReview';
 import './index.min.css'
+import SendSuccess from './sendSuccess';
+
 
 
 const MyOrders = () => {
+    const [isOpen, setisOpen] = useState(false)
+    const [issend, setissend] = useState(false)
+
+    const addReview = () => {
+        console.log('open')
+        setisOpen(true);
+    }
+    const addReviewClose = (type: string) => {
+        setisOpen(false);
+        if (type === "ok") return setissend(true);
+        return setissend(false);
+    }
+    const sendSuccessClose = () => {
+        setissend(false);
+    }
+
     return (
         <div className="myOrders-wrap">
             <div>
@@ -42,10 +60,12 @@ const MyOrders = () => {
                     </div>
                     <ul className="myOrders-wrap-list-footer footer-completed">
                         <li>Order #3235</li>
-                        <li>Add Review</li>
+                        <li onClick={addReview}>Add Review</li>
                     </ul>
                 </div>
             </div>
+            <AddReview isOpen={isOpen} isClose={addReviewClose} />
+            <SendSuccess isOpen={issend} isClose={sendSuccessClose} />
         </div>
     )
 }

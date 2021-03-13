@@ -1,0 +1,12 @@
+@import '../../../../../styles//theme/index.scss';
+.sendSuccess{
+    >div{
+        text-align: center;
+    }
+    >div:last-child{
+        font-size: $title37;
+        font-weight: 600;
+        line-height: 3.3rem;
+        margin-bottom: 1rem;
+    }
+}

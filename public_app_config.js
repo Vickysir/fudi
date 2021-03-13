@@ -1,7 +1,7 @@
 const publicAppConfig = {
     common: {},
     dev: {
-        api: "http://app.fudiandmore.test.dev.51zhiyuan.net/"
+        api: "https://dev_server_address"
     },
     test: {
         api: "https://test_server_address"

@@ -1,0 +1,49 @@
+.ant-modal-content {
+  border-radius: 2rem !important;
+}
+
+.model-content {
+  padding: 1rem 2rem;
+}
+
+.model-content > header {
+  text-align: center;
+  font-size: 1.667rem;
+  font-weight: 600;
+  color: #7c7c7d;
+}
+
+.model-content-rate {
+  text-align: center;
+}
+
+.model-content-rate > h1 {
+  font-size: 3.083rem;
+  font-weight: 600;
+  color: #000;
+  margin-top: 1.1rem;
+}
+
+.model-content > ul {
+  margin-top: 1.1rem;
+}
+
+.model-content > ul > li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 2.167rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.model-content > ul > li > div > span:first-child {
+  margin-right: 0.5rem;
+}
+
+.model-content > div {
+  margin-top: 1.5rem;
+}
+
+.model-content-action {
+  text-align: right;
+}

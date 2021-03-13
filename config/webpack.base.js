@@ -56,21 +56,22 @@ module.exports = {
                                 }
                             }]
                     },
-                    // {
-                    //     test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                    //     use: [
-                    //         {
-                    //             loader: 'babel-loader',
-                    //         },
-                    //         {
-                    //             loader: '@svgr/webpack',
-                    //             options: {
-                    //                 babel: false,
-                    //                 icon: true,
-                    //             },
-                    //         },
-                    //     ],
-                    // },
+                    {
+                        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                        use: [
+                            {
+                                loader: 'babel-loader',
+                            },
+                            {
+                                loader: '@svgr/webpack',
+                                options: {
+                                    babel: false,
+                                    icon: true,
+                                },
+                            },
+                        ],
+                        include: path.resolve(__dirname, '../src/assets/images/common/svg')
+                    },
                     {
                         test: /\.(svg|jpg|jpeg|bmp|png|webp|gif|ico|ttf)$/,
                         loader: 'url-loader',

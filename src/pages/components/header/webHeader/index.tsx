@@ -7,13 +7,15 @@
  * @FilePath: /fudi/src/pages/components/header/webHeader/index.tsx
  */
 import React from 'react'
-import iconphone from '@/assets/images/common/icon/icon-phone.svg'
+import iconphone from '@/assets/images/common/imgs/icon-phone.svg'
 import iconchat from '@/assets/images/common/icon/icon-chat.svg'
 import iconnott from '@/assets/images/common/icon/icon-nott.svg'
 import iconorder from '@/assets/images/common/icon/icon-order.svg'
-import logo from './images/logo.svg'
+import logoOne from '@/assets/images/fudi/logoOne.svg'
 import { Avatar, Badge } from 'antd';
-import { withRouter } from 'react-router-dom'
+import Icon from '@ant-design/icons';
+import { Link, withRouter } from 'react-router-dom'
+import style from '@/styles/theme/icon.less'
 import './index.less'
 
 
@@ -25,19 +27,29 @@ const WebHeader = (props) => {
     return (
         <div className="webHeader">
             <ul className="webHeader-tel">
-                <li><img src={iconphone} alt="iconphone" /><span>+353 00 000 00 00</span></li>
-                <li><img src={iconchat} alt="iconchat" /><span className="chat">Online Chat</span></li>
+                <li>
+                    <img src={iconphone} alt="iconphone" />
+                    <span>+353 00 000 00 00</span>
+                </li>
+                <li>
+                    <Icon component={iconchat} className={style.iconFill} />
+                    <span className="chat">Online Chat</span>
+                </li>
             </ul>
-            <img src={logo} alt="logo" />
+            <div className="webHeader-logo">
+                <Link to="/home">
+                    <img src={logoOne} alt="logo" />
+                </Link>
+            </div>
             <ul className="webHeader-menu">
                 <li>
                     <Badge count={5}>
-                        <img src={iconorder} alt="iconorder" />
+                        <Icon component={iconorder} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
                     </Badge>
                 </li>
                 <li>
                     <Badge count={5}>
-                        <img src={iconnott} alt="iconnott" />
+                        <Icon component={iconnott} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
                     </Badge>
                 </li>
                 <li onClick={goTo}>

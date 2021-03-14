@@ -9,7 +9,7 @@
 import React from 'react'
 import iconphone from './images/icon-phone.svg'
 import iconchat from './images/icon-chat.svg'
-import logo from './images/logo.svg'
+import logo from '@/assets/images/fudi/logoWhite.svg'
 import { Avatar, Badge } from 'antd';
 import { Link } from 'react-router-dom';
 import './index.less'

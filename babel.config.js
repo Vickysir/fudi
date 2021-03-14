@@ -32,7 +32,8 @@ module.exports = api => {
             ],
             "@babel/proposal-class-properties",
             "@babel/proposal-object-rest-spread",
-            ["import", { libraryName: "antd-mobile", style: "css" }]
+            // ["import", { libraryName: "antd", style: true }],
+            // ["import", { libraryName: "antd-mobile", style: "css" }]
         ]
     };
 };

@@ -9,8 +9,9 @@
 import React, { useState } from 'react'
 import { InfoCircleOutlined, HistoryOutlined } from '@ant-design/icons';
 import AddReview from './addReview';
-import './index.min.css'
 import SendSuccess from './sendSuccess';
+import './index.less'
+
 
 
 

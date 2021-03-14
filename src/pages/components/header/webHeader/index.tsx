@@ -14,7 +14,7 @@ import iconorder from '@/assets/images/common/icon/icon-order.svg'
 import logo from './images/logo.svg'
 import { Avatar, Badge } from 'antd';
 import { withRouter } from 'react-router-dom'
-import './index.min.css'
+import './index.less'
 
 
 const WebHeader = (props) => {

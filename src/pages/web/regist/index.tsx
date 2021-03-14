@@ -13,7 +13,7 @@ import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
 import BaackTitle from '../components/baackTitle';
 import { withRouter } from 'react-router-dom';
-import './index.min.css'
+import './index.less'
 
 const { Option } = Select;
 const Regist = (props) => {

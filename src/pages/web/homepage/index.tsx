@@ -24,7 +24,7 @@ import Dowmloadmarket from './dowload';
 
 import { Card, Col, Row } from 'antd';
 
-import "./css/index.min.css"
+import "./index.less"
 
 const Homepage = () => {
     return (

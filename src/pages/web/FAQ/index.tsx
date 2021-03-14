@@ -11,7 +11,7 @@ import { Button, Collapse } from 'antd'
 import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
 import BaackTitle from '../components/baackTitle'
-import './index.min.css'
+import './index.less'
 
 const { Panel } = Collapse;
 const text = `

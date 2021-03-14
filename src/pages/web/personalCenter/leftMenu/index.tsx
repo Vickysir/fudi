@@ -14,7 +14,7 @@ import iconOrder from '@/assets/images/common/icon/icon-order.svg';
 import iconNott from '@/assets/images/common/icon/icon-nott.svg';
 import UploadAvatar from '../uploadAvatar';
 import { withRouter } from "react-router";
-import './index.min.css'
+import './index.less'
 
 const LeftMenu = (props) => {
 

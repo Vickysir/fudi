@@ -12,7 +12,7 @@ import iconphone from '@/assets/images/common/icon/icon-phone.svg'
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
 import BaackTitle from '../components/baackTitle'
-import './index.min.css'
+import './index.less'
 
 const HelpCenter = () => {
 

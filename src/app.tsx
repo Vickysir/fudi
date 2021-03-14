@@ -11,7 +11,7 @@ import { useViewport } from "./comps/useViewport";
 import Web from "./pages/web";
 import Mobile from "./pages/mobile";
 import { WebRoutes } from "./routes";
-import './styles/index.min.css'
+// import "./styles/index.less"
 
 
 export const APP = () => {

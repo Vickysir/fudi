@@ -1,4 +1,3 @@
-@import '../../../../../styles//theme/index.scss';
 .ant-modal-content{
     border-radius: 2rem !important;
 }
@@ -7,14 +6,14 @@
     padding: 1rem 2rem;
     >header{
         text-align: center;
-        font-size: $title20;
+        font-size: @title20;
         font-weight: 600;
         color: #7c7c7d;
     }
     &-rate{
         text-align: center;
         >h1{
-            font-size: $title37;
+            font-size: @title37;
             font-weight: 600;
             color: #000;
             margin-top:1.1rem;
@@ -25,11 +24,14 @@
         >li{
             display: flex;
             justify-content: space-between;
-            font-size: $title26;
+            font-size: @title26;
             font-weight: 600;
             color: #000;
             >div>span:first-child{
                 margin-right: 0.5rem;
+            }
+            >p{
+                margin: 0;
             }
         }
     }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Rate, Modal, Input, Button } from 'antd';
-import './index.min.css'
+import './index.less'
 
 const { TextArea } = Input;
 const AddReview = (props) => {

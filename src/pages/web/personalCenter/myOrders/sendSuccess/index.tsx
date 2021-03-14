@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Input } from 'antd';
 import Icon from '@ant-design/icons';
 import heartSvg from '@/assets/images/common/svg/heart.svg'
-import './index.min.css'
+import './index.less'
 
 const { TextArea } = Input;
 const SendSuccess = (props) => {

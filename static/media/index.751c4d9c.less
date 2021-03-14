@@ -1,0 +1,45 @@
+.webHeader{
+    width: 100%;
+    height: 11.667rem;
+    padding: 5rem 11.42rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.333rem solid #fafafa;
+    >ul{
+        display: flex;
+        margin:0;
+        >li{
+            display: flex;
+            
+        }
+    }
+    &-tel{
+        >li:first-child{
+            margin-right: 2.5rem;
+        }
+        >li{
+            display: flex;
+            align-items: center;
+        }
+        span{
+            font-size: 1.667rem;
+            margin-left: 0.3rem;
+        }
+        span.chat{
+            color: @theme-color;
+            
+        }
+    }
+    &-logo{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%,0);
+    }
+    &-menu{
+        align-items: center;
+        >li{
+            margin-left: 4rem;
+        }
+    }
+}

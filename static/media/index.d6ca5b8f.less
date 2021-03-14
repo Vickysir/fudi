@@ -1,0 +1,81 @@
+.myOrders-wrap{
+    h3{
+        margin:4.167rem 0;
+        font-size: @title26;
+        font-weight: 600;
+    }
+    &-list{
+        border:2px solid #fafafa;
+        border-radius: 0.833rem;
+        >ul{
+            margin: 0;
+        }
+        &-title{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.667rem;
+            font-size: 18px;
+            font-weight: 500;
+            >li:last-child span{
+                color: @theme-color;
+                cursor: pointer;
+            }
+            span{
+                color: #bfbfbf;
+                margin:0 1rem;
+                font-size: 2rem;
+            }
+        }
+        &-content{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.667rem 1.667rem;
+            >p{
+                color: #bfbfbf;
+                font-size: @title18;
+                margin: 0;
+                >span{
+                    font-size: @title18;
+                    color: @theme-color;
+                    margin-left: 0.5rem;
+                }
+                span.completed{
+                    color: #bfbfbf;
+                }
+            }
+        }
+        &-footer{
+            height: 3.917rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            font-size: @title20;
+            font-weight: 600;
+            border-bottom-left-radius: 0.833rem;
+            border-bottom-right-radius: 0.833rem;
+            background-color: @theme-color;
+            color: #fff;
+            >li:last-child{
+                cursor: pointer;
+            }
+        }
+        ul.footer-completed{
+            color: #7c7c7d;
+            background-color:rgba(232, 232, 232, 0.3);
+            >li:last-child{
+                color: @theme-color;
+                cursor: pointer;
+            }
+        }
+        ul.title-completed{
+            color: #7c7c7d;
+            >li:last-child{
+                color: #7c7c7d;
+                cursor: pointer;
+            }
+        }
+    }
+}

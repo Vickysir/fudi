@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, Input } from 'antd';
 import Icon from '@ant-design/icons';
-import heartSvg from '@/assets/images/common/svg/heart.svg'
+import heartSvg from '@/assets/images/common/icon/heart.svg'
 import './index.less'
 
 const { TextArea } = Input;
@@ -29,7 +29,7 @@ const SendSuccess = (props) => {
             >
                 <div className="model-content sendSuccess">
                     <div>
-                        <Icon component={heartSvg} style={{ fontSize: "18rem", color: "" }} />
+                        <Icon component={heartSvg} style={{ fontSize: "18rem" }} />
                     </div>
                     <div>
                         Thank you<br />

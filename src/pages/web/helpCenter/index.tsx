@@ -8,7 +8,7 @@
  */
 import { Button, Divider } from 'antd'
 import React from 'react'
-import iconphone from '@/assets/images/common/icon/icon-phone.svg'
+import iconphone from '@/assets/images/common/imgs/icon-phone.svg'
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
 import BaackTitle from '../components/baackTitle'

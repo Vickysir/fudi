@@ -35,6 +35,19 @@ module.exports = {
                         loader: 'html-loader'
                     },
                     {
+                        test: /\.less?$/,
+                        include: path.resolve(__dirname, '../src/styles/theme/icon.less'), // 为改文件单独开启 css modules
+                        use: ["style-loader",
+                            {
+                                loader: "css-loader",
+                                options: {
+                                    modules: true,
+                                }
+                            },
+                            "less-loader"
+                        ]
+                    },
+                    {
                         test: /\.(less|css)$/,
                         use: ["style-loader", "css-loader",
                             {
@@ -75,7 +88,10 @@ module.exports = {
                                 },
                             },
                         ],
-                        include: path.resolve(__dirname, '../src/assets/images/common/svg')
+                        include: [
+                            path.resolve(__dirname, '../src/assets/images/common/svg'),
+                            path.resolve(__dirname, '../src/assets/images/common/icon'),
+                        ]// svg以组件方式引入
                     },
                     {
                         test: /\.(svg|jpg|jpeg|bmp|png|webp|gif|ico|ttf)$/,

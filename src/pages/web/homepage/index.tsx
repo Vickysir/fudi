@@ -16,14 +16,16 @@ import product3 from '@/assets/images/fudi/product3.png';
 import product4 from '@/assets/images/fudi/product4.png';
 import product5 from '@/assets/images/fudi/product5.png';
 import product6 from '@/assets/images/fudi/product6.png';
-import star from '@/assets/images/fudi/star.svg';
-import shield from '@/assets/images/fudi/shield.svg';
-import gift from '@/assets/images/fudi/gift.svg';
-import ellipse from '@/assets/images/fudi/ellipse.svg';
+import star from '@/assets/images/common/icon/star.svg';
+import shield from '@/assets/images/common/icon/shield.svg';
+import gift from '@/assets/images/common/icon/gift.svg';
+import ellipse from '@/assets/images/common/icon/ellipse.svg';
 import Dowmloadmarket from './dowload';
 
 import { Card, Col, Row } from 'antd';
+import Icon from '@ant-design/icons';
 
+import style from '@/styles/theme/icon.less'
 import "./index.less"
 
 const Homepage = () => {
@@ -107,8 +109,8 @@ const Homepage = () => {
                                     <p>The best restaurants to choose from</p>
                                     <p>Pay cash or online</p>
                                     <p> Order anytime and anywhere</p>
-                                    <img className="homepage-desc-card-img1" src={ellipse} alt="icon" />
-                                    <img className="homepage-desc-card-img2" src={gift} alt="icon" />
+                                    <Icon component={ellipse} className={`homepage-desc-card-img1 ${style.iconFill}`} style={{ fontSize: "10rem" }} />
+                                    <Icon component={gift} className={`homepage-desc-card-img2 ${style.homePageIconFill}`} />
                                 </div>
                             </Card>
                         </Col>
@@ -119,8 +121,8 @@ const Homepage = () => {
                                     <p>The best restaurants to choose from </p>
                                     <p>Pay cash or online </p>
                                     <p> Order anytime and anywhere</p>
-                                    <img className="homepage-desc-card-img1" src={ellipse} alt="icon" />
-                                    <img className="homepage-desc-card-img2" src={shield} alt="icon" />
+                                    <Icon component={ellipse} className={`homepage-desc-card-img1 ${style.iconFill}`} style={{ fontSize: "10rem" }} />
+                                    <Icon component={shield} className={`homepage-desc-card-img2 ${style.homePageIconFill}`} />
                                 </div>
                             </Card>
                         </Col>
@@ -131,8 +133,8 @@ const Homepage = () => {
                                     <p>The best restaurants to choose from</p>
                                     <p>Pay cash or online</p>
                                     <p> Order anytime and anywhere</p>
-                                    <img className="homepage-desc-card-img1" src={ellipse} alt="icon" />
-                                    <img className="homepage-desc-card-img2" src={star} alt="icon" />
+                                    <Icon component={ellipse} className={`homepage-desc-card-img1 ${style.iconFill}`} style={{ fontSize: "10rem" }} />
+                                    <Icon component={star} className={`homepage-desc-card-img2 ${style.homePageIconFill}`} />
                                 </div>
                             </Card>
                         </Col>

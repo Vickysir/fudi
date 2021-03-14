@@ -49,6 +49,7 @@ const PersonalCenter = (props) => {
                     </div>
                     <div>
                         <Router>
+                            <Route path="/personalCenter" component={MyOrders} />
                             <Route path="/personalCenter/myOrders" component={MyOrders} />
                             <Route path="/personalCenter/vouchers" component={Vouchers} />
                             <Route path="/personalCenter/changepwd" component={Changepwd} />

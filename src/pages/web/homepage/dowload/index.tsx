@@ -11,7 +11,7 @@ import googlestore from '@/assets/images/common/googlestore.png'
 import applestore from '@/assets/images/common/applestore.png'
 import phoneframe from '@/assets/images/fudi/phone-frame.png'
 import phonescreen from '@/assets/images/fudi/phone-screen.png'
-import './css/index.min.css'
+import './index.less'
 
 const Dowmloadmarket = () => {
     return (

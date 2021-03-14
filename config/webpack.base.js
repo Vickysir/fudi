@@ -49,6 +49,15 @@ module.exports = {
                                         javascriptEnabled: true,
                                     }
                                 }
+                            },
+                            {
+                                loader: 'style-resources-loader',
+                                options: {
+                                    patterns: [
+                                        path.resolve(__dirname, '../src/styles/theme/global.less'),
+                                        path.resolve(__dirname, '../src/styles/index.less')
+                                    ]
+                                }
                             }
                         ]
                     },

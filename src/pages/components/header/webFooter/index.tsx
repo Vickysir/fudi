@@ -12,7 +12,7 @@ import iconchat from './images/icon-chat.svg'
 import logo from './images/logo.svg'
 import { Avatar, Badge } from 'antd';
 import { Link } from 'react-router-dom';
-import './index.min.css'
+import './index.less'
 
 const WebFooter = () => {
     return (

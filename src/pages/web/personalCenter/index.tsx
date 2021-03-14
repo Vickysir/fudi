@@ -20,7 +20,7 @@ import NotificationCenter from './notification'
 import LeftMenu from './leftMenu'
 import WebHeader from '../../components/header/webHeader'
 import WebFooter from '../../components/header/webFooter'
-import './index.min.css'
+import './index.less'
 
 
 const PersonalCenter = (props) => {

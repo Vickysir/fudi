@@ -18,7 +18,7 @@ import WebHeader from '@/pages/components/header/webHeader';
 import google from '@/assets/images/common/login/google.png'
 import fb from '@/assets/images/common/login/fb.png'
 import apple from '@/assets/images/common/login/apple.png'
-import './index.min.css'
+import './index.less'
 
 
 const Login = () => {

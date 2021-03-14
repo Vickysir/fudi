@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'antd'
 import { ArrowLeftOutlined, } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom';
-import './index.min.css'
+import './index.less'
 
 
 const BaackTitle = (props) => {

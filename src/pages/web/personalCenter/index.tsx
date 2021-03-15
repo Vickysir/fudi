@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 17:17:52
- * @LastEditTime: 2021-03-05 10:10:16
+ * @LastEditTime: 2021-03-15 21:00:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/index.tsx
@@ -26,11 +26,18 @@ import './index.less'
 const PersonalCenter = (props) => {
     const { history } = props;
     useEffect(() => {
-        history.push("/personalCenter/myOrders")
-    }, [])
+        // history.push("/personalCenter/myOrders")
+        console.log('变化了', props)
+        const { location } = props
+        if (location.pathname = "/personalCenter") {
+
+        }
+    }, [props])
+
     function goTo() {
         history.push("/home")
     }
+
     return (
         <>
             <WebHeader />
@@ -49,7 +56,7 @@ const PersonalCenter = (props) => {
                     </div>
                     <div>
                         <Router>
-                            <Route path="/personalCenter" component={MyOrders} />
+                            <Route exact path="/personalCenter" component={MyOrders} />
                             <Route path="/personalCenter/myOrders" component={MyOrders} />
                             <Route path="/personalCenter/vouchers" component={Vouchers} />
                             <Route path="/personalCenter/changepwd" component={Changepwd} />

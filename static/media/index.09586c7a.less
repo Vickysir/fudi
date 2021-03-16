@@ -1,0 +1,49 @@
+.vouchers-wrap{
+    >header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        >h3{
+            font-size: @title26;
+        }
+        // 重置 antd 样式
+        .ant-input-affix-wrapper{
+            border-radius: 5rem !important;
+        }
+        .ant-input-search-button{
+            border-radius: 5rem !important;
+        }
+    }
+    >div{
+        margin-top:2rem;
+    }
+    // 优惠券 box
+    &-box{
+        // width: 26.667rem;
+        padding:1.667rem;
+        box-shadow: 0px 0.417rem 0.417rem 0px rgba(96, 110, 131, 0.1);
+        border-radius: 0.833rem;
+        // margin:2.5rem 0;
+        >div{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            >h5,p{
+                margin:0;
+            }
+            >h5{
+                font-size: @title20;
+            }
+            >p{
+                font-size: @title20;
+                color:@theme-color;
+                cursor: pointer;
+            }
+        }
+        >P{
+           color:@theme-gray;
+           margin:1rem 0;
+        }
+    }
+
+}

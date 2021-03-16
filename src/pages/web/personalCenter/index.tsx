@@ -1,15 +1,15 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 17:17:52
- * @LastEditTime: 2021-03-15 21:00:50
+ * @LastEditTime: 2021-03-16 10:17:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/index.tsx
  */
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Button } from 'antd'
 import { ArrowLeftOutlined, } from '@ant-design/icons';
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router, Route, withRouter } from 'react-router-dom'
 import Vouchers from './vouchers'
 import Changepwd from './changepwd'
 import Invitation from './invitation'
@@ -24,18 +24,22 @@ import './index.less'
 
 
 const PersonalCenter = (props) => {
-    const { history } = props;
-    useEffect(() => {
-        // history.push("/personalCenter/myOrders")
-        console.log('变化了', props)
-        const { location } = props
-        if (location.pathname = "/personalCenter") {
+    const { history, location } = props;
+    const childRef = useRef(null);
 
+    useEffect(() => {
+        if (location.pathname = "/personalCenter/index") {
+            updateChildState()
         }
-    }, [props])
+    }, [location.search])
 
     function goTo() {
         history.push("/home")
+    }
+
+    const updateChildState = () => {
+        // changeVal就是子组件暴露给父组件的方法
+        childRef.current.changeVal({ key: "1" });
     }
 
     return (
@@ -52,11 +56,10 @@ const PersonalCenter = (props) => {
                 </Button>
                 <div className="personalCenter-wrap-box">
                     <div>
-                        <LeftMenu />
+                        <LeftMenu cRef={childRef} />
                     </div>
                     <div>
                         <Router>
-                            <Route exact path="/personalCenter" component={MyOrders} />
                             <Route path="/personalCenter/myOrders" component={MyOrders} />
                             <Route path="/personalCenter/vouchers" component={Vouchers} />
                             <Route path="/personalCenter/changepwd" component={Changepwd} />
@@ -73,4 +76,4 @@ const PersonalCenter = (props) => {
     )
 }
 
-export default PersonalCenter
+export default withRouter(PersonalCenter)

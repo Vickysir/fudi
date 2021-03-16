@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2021-03-05 10:04:05
- * @LastEditTime: 2021-03-15 20:59:57
+ * @LastEditTime: 2021-03-16 10:01:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/menu/index.tsx
  */
-import React, { useState } from 'react'
+import React, { useEffect, useImperativeHandle, useState } from 'react'
 import { Divider, Menu } from 'antd';
 import { UserOutlined, LockOutlined, BulbOutlined, ImportOutlined, BellOutlined, ShoppingOutlined, TeamOutlined, ContainerOutlined } from '@ant-design/icons';
 import Icon from '@ant-design/icons';
@@ -17,11 +17,13 @@ import { withRouter } from "react-router";
 import './index.less'
 
 const LeftMenu = (props) => {
-    const [selectedKeys, setselectedKeys] = useState(['1'])
+    const { cRef } = props;
+    const [selectedKeys, setselectedKeys] = useState(['1']);
     const handleClick = (e) => {
         const { history } = props;
-        console.log('click ', e);
-        console.log('props', props)
+        const selectedKeys = [];
+        selectedKeys.push(e.key);
+        setselectedKeys(selectedKeys);
         switch (e.key) {
             case "1":
                 history.push("/personalCenter/myOrders")
@@ -46,9 +48,14 @@ const LeftMenu = (props) => {
             default: history.push("/personalCenter/myOrders")
         }
     };
-    function changeActiveMenu(params) {
 
-    }
+    useImperativeHandle(cRef, () => ({
+        // changeVal 就是暴露给父组件的方法
+        changeVal: (newVal) => {
+            console.log('调用成功', newVal);
+            handleClick(newVal);
+        }
+    }));
 
     return (
         <div className="leftMenu-warp">

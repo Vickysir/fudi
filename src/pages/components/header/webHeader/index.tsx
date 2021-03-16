@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 09:43:16
- * @LastEditTime: 2021-03-05 11:12:26
+ * @LastEditTime: 2021-03-16 10:14:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/components/header/webHeader/index.tsx
@@ -22,7 +22,7 @@ import './index.less'
 const WebHeader = (props) => {
     const { history } = props;
     function goTo() {
-        history.push("/personalCenter")
+        history.push("/personalCenter/index?id=1")
     }
     return (
         <div className="webHeader">

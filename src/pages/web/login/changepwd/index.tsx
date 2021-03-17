@@ -1,16 +1,5 @@
 /*
  * @Author: your name
-<<<<<<< HEAD
-=======
- * @Date: 2021-03-04 10:31:27
- * @LastEditTime: 2021-03-04 10:40:39
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /fudi/src/pages/web/resetpwd/resetpassword.tsx
- */
-/*
- * @Author: your name
->>>>>>> feat(init):初始化,homepage
  * @Date: 2021-03-04 10:25:22
  * @LastEditTime: 2021-03-04 10:28:38
  * @LastEditors: Please set LastEditors

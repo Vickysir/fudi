@@ -45,6 +45,8 @@ const LeftMenu = (props) => {
                 break;
             case "7": history.push("/personalCenter/sendQ")
                 break;
+            case "8": history.push("/login")
+                break;
             default: history.push("/personalCenter/myOrders")
         }
     };

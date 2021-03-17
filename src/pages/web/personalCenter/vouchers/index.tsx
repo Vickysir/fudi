@@ -19,7 +19,7 @@ const sendQ = () => {
     const [isOpen, setisOpen] = useState(false);
     const onSearch = value => console.log(value);
 
-    const onClickInfo = () => {
+    const onClickOpen = () => {
         setisOpen(true);
     }
     const onCloseInfo = () => {
@@ -45,7 +45,7 @@ const sendQ = () => {
                         <div className="vouchers-wrap-box">
                             <div>
                                 <h5>Fudi2020</h5>
-                                <p onClick={onClickInfo}>Available</p>
+                                <p onClick={onClickOpen}>Available</p>
                             </div>
                             <p>21 Jun 2021 – 21 Jul 2021</p>
                         </div>
@@ -54,7 +54,7 @@ const sendQ = () => {
                         <div className="vouchers-wrap-box">
                             <div>
                                 <h5>Fudi2020</h5>
-                                <p onClick={onClickInfo}>Available</p>
+                                <p onClick={onClickOpen}>Available</p>
                             </div>
                             <p>21 Jun 2021 – 21 Jul 2021</p>
                         </div>
@@ -63,7 +63,7 @@ const sendQ = () => {
                         <div className="vouchers-wrap-box">
                             <div>
                                 <h5>Fudi2020</h5>
-                                <p onClick={onClickInfo}>Available</p>
+                                <p onClick={onClickOpen}>Available</p>
                             </div>
                             <p>21 Jun 2021 – 21 Jul 2021</p>
                         </div>
@@ -72,7 +72,7 @@ const sendQ = () => {
                         <div className="vouchers-wrap-box">
                             <div>
                                 <h5>Fudi2020</h5>
-                                <p onClick={onClickInfo}>Available</p>
+                                <p onClick={onClickOpen}>Available</p>
                             </div>
                             <p>21 Jun 2021 – 21 Jul 2021</p>
                         </div>

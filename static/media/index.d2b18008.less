@@ -1,0 +1,51 @@
+.notificationCenter-wrap{
+    width: 55.833rem;
+    >div{
+        >h3{
+            font-size: @title26;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        .notificationCenter-wrap-box{
+            width: 55.833rem;
+            height: 14.417rem;
+            display: flex;
+            align-items: center;
+            padding: 1.667rem;
+            margin-bottom: 1.667rem;
+            border-radius: 0.833rem;
+            box-shadow: 0 0.4167rem 0.4167rem 0 rgba(96, 110, 131, 0.18), 0 0 0.333rem 0 rgba(96, 110, 131, 0.1);
+            cursor: pointer;
+            &-img{
+                width: 14.75rem; //26.4%
+                height: 11.083rem;
+                background: @theme-color;
+                padding: 1.667rem;
+                opacity: 0.8;
+            }
+            >ul{
+                margin: 0;
+                margin-left: 2rem;
+                >li:first-child{
+                    text-align: right;
+                    color: @theme-lessGray;
+                    >span{
+                        margin-left: 1rem;
+                    }
+                }
+                >li{
+                    >h3{
+                        font-size: @title26;
+                        font-weight: 600;
+                        color: @theme-color;
+                    }
+                    >P{
+                        font-size: 1.333rem;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+    
+}

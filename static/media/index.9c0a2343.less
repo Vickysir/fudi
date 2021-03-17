@@ -1,0 +1,94 @@
+.invitation-wrap{
+    width: 55.833rem;
+    >header{
+        height: 14.45rem;
+        position: relative;
+        background: @theme-color;
+        opacity: 0.8;
+        h3,p{
+            width: 70%;
+            margin:0;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            transform:translate(-50%,-50%);
+            color: @theme-white;
+        }
+        >h3{
+            top: 30%;
+            font-size: @title37;
+            font-weight: 600;
+        }
+        >p{
+            top: 65%;
+            font-size: @title16;
+            font-weight: 500;
+        }
+    }
+
+    &-code{
+        height: 8.75rem;
+        padding: 0 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-left: 2px solid @theme-lessWhite;
+        border-right: 2px solid @theme-lessWhite;
+        >div{
+            font-size: @title20;
+            font-weight: 600;
+            >span{
+                font-size: @title37;
+                font-weight: 600;
+            }
+            >img{
+                margin-left: 2rem;
+            }
+        }
+        
+    }
+    >ul{
+        padding: 3.333rem;
+        border: 2px solid @theme-lessWhite;
+        >li:first-child{
+            margin-bottom: 3rem;
+            >h3{
+                font-size: @title26;
+                font-weight: 600;
+                margin: 0;
+            }
+            >p{
+                font-size: @title16;
+                font-weight: 500;
+                color: @theme-gray;
+                margin: 0;
+            }
+        }
+        .invitation-wrap-friends{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 2rem 0;
+            >div{
+                display: flex;
+                align-items: center;
+                >h3{
+                    font-size: @title20;
+                    font-weight: 600;
+                    margin-left: 2rem;
+                }
+            }
+            >p{
+                font-size: @title20;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+.complete{
+    color:@theme-lessGray;
+}
+.invited{
+    color:@theme-color;
+}

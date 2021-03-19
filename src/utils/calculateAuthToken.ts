@@ -28,9 +28,14 @@ import { Base64 } from 'js-base64';
 //     signature = hmac-sha1(api, device + "\n" + timestamp + "\n" + version)
 //     Authorization = base64(token + ":" + signature)
 
-export function getAuthorization(api, timestamp, device, version, token = "") {
+export function getAuthorization(api: string, timestamp: number, device: string, version: string, token: string): string {
+
+
     let Authorization, signature;
-    signature = hmacSHA1(api, device + "\n" + timestamp + "\n" + version);
+
+    let key = api;
+    let value = device + "\n" + timestamp + "\n" + version;
+    signature = hmacSHA1(value, key);
     Authorization = Base64.encode(`${token}:${signature}`);
     return Authorization
 }

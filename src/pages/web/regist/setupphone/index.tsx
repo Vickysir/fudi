@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-03-09 11:12:43
+ * @LastEditTime: 2021-03-19 13:32:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
@@ -36,7 +36,7 @@ const Setupphone = (props) => {
                         onFinish={onFinish}
                     >
                         <Form.Item
-                            name="email"
+                            name="code"
                             rules={[{ required: true, message: 'Please input your 4-digits code!' }]}
                         >
                             <Input

@@ -1,13 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 09:43:16
- * @LastEditTime: 2021-03-10 14:36:26
+ * @LastEditTime: 2021-03-19 11:46:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/services/axiosclient.ts
  */
 import axios from 'axios';
 import { getAuthorization, getBrowser } from '@/utils/calculateAuthToken';
+import { message } from 'antd';
 
 
 /**
@@ -17,11 +18,11 @@ export function initAxiosConfig() {
     axios.defaults.baseURL = APP_CONFIG?.api;
     axios.defaults.timeout = 10000; //响应时间
     axios.interceptors.request.use((config) => {
-        let browser = getBrowser();
+        // let browser = getBrowser();
         const api = config.url;
         const timestamp = new Date().getTime();
-        const device = browser.type;
-        const version = browser.versions;
+        const device = "ios";
+        const version = "1.0";
         const token = APP_STORE.authInfo?.token || ""
         const Authorization = getAuthorization(api, timestamp, device, version, token)
         config.headers.common['Authorization'] = Authorization;
@@ -49,6 +50,7 @@ export function initAxiosConfig() {
                         window.location.reload();
                     }
                 }
+                message.error(data.describe);
                 return Promise.reject(data) as any;
             }
         });

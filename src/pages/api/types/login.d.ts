@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-10 14:45:49
- * @LastEditTime: 2021-03-10 15:48:13
+ * @LastEditTime: 2021-03-19 11:12:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/api/types/login.d.ts
@@ -12,7 +12,7 @@ export interface LoginRegistPost {
     "againPassword": string//"hell0w0rld1",
     "code": string//"4266",
     "email": string//"2541150915@qq.com",
-    "token": string//"8e660612d2064a63917c935e3c3bbc7d", 
+    "token"?: string//"8e660612d2064a63917c935e3c3bbc7d", 
     "invitationCode": string//"dsfwefweashyju"
 }
 export interface PhoneVerificationCodePost {
@@ -32,6 +32,11 @@ export interface LoginPost {
     "password": string//"helloworld",
     "name": string//"spring"
 }
+export interface LoginPostResponse {
+    "token": string//"fbc9f41b02bd45e79a96264eb1371c97",
+}
+
+
 export interface SaveAddressPost {
     "zipCode": string//"310000",
     "consignee": string//"this is user name",

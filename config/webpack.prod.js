@@ -1,3 +1,4 @@
+const path = require('path');
 const baseConfig = require('./webpack.base');
 
 const config = require("./config");

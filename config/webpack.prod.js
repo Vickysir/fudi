@@ -23,11 +23,24 @@ module.exports = {
                         test: /\.(j|t)sx?$/,
                         include: config.appPath,
                         exclude: config.node_modules_path,
-                        use: "babel-loader",
+                        use: "babel-loader"
                     },
                     {
                         test: /\.(html)$/,
                         loader: 'html-loader'
+                    },
+                    {
+                        test: /\.less?$/,
+                        include: path.resolve(__dirname, '../src/styles/theme/icon.less'), // 为改文件单独开启 css modules
+                        use: ["style-loader",
+                            {
+                                loader: "css-loader",
+                                options: {
+                                    modules: true,
+                                }
+                            },
+                            "less-loader"
+                        ]
                     },
                     {
                         test: /\.(less|css)$/,
@@ -36,10 +49,44 @@ module.exports = {
                                 loader: "less-loader",
                                 options: {
                                     lessOptions: {
+                                        // modifyVars: {
+                                        //     'primary-color': 'red',
+                                        //     'link-color': '#1DA57A',
+                                        //     'border-radius-base': '2px',
+                                        // },
                                         javascriptEnabled: true,
                                     }
                                 }
-                            }]
+                            },
+                            {
+                                loader: 'style-resources-loader',
+                                options: {
+                                    patterns: [
+                                        path.resolve(__dirname, '../src/styles/theme/global.less'),
+                                        path.resolve(__dirname, '../src/styles/index.less')
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                        use: [
+                            {
+                                loader: 'babel-loader',
+                            },
+                            {
+                                loader: '@svgr/webpack',
+                                options: {
+                                    babel: false,
+                                    icon: true,
+                                },
+                            },
+                        ],
+                        include: [
+                            path.resolve(__dirname, '../src/assets/images/common/svg'),
+                            path.resolve(__dirname, '../src/assets/images/common/icon'),
+                        ]// svg以组件方式引入
                     },
                     {
                         test: /\.(svg|jpg|jpeg|bmp|png|webp|gif|ico|ttf)$/,
@@ -53,7 +100,7 @@ module.exports = {
                         loader: 'file-loader',
                         exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
                         options: {
-                            name: 'static/media/[name].[contenthash:8].[ext]',
+                            name: 'media/[name].[hash:8].[ext]',
                         },
                     }
                 ]

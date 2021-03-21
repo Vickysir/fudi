@@ -7,7 +7,7 @@
  * @FilePath: /fudi/src/pages/components/header/webHeader/index.tsx
  */
 import React from 'react'
-import iconphone from '@/assets/images/common/imgs/icon-phone.svg'
+import imgphone from '@/assets/images/common/imgs/img-phone.svg'
 import iconchat from '@/assets/images/common/icon/icon-chat.svg'
 import iconnott from '@/assets/images/common/icon/icon-nott.svg'
 import iconorder from '@/assets/images/common/icon/icon-order.svg'
@@ -28,7 +28,7 @@ const WebHeader = (props) => {
         <div className="webHeader">
             <ul className="webHeader-tel">
                 <li>
-                    <img src={iconphone} alt="iconphone" />
+                    <img src={imgphone} alt="imgphone" />
                     <span>+353 00 000 00 00</span>
                 </li>
                 <li>

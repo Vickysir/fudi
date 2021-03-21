@@ -8,7 +8,7 @@
  */
 import { Button, Divider } from 'antd'
 import React from 'react'
-import iconphone from '@/assets/images/common/imgs/icon-phone.svg'
+import imgphone from '@/assets/images/common/imgs/img-phone.svg'
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
 import BaackTitle from '../components/baackTitle'
@@ -36,7 +36,7 @@ const HelpCenter = () => {
                     <li>
                         <span>Or Call Us</span>
                         <p className="helpCenter-call">
-                            <img src={iconphone} alt="iconphone" />
+                            <img src={imgphone} alt="imgphone" />
                             <span>+353 00 000 00 00</span>
                         </p>
                     </li>

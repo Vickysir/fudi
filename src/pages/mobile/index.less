@@ -1,0 +1,98 @@
+.mobile{
+    &-homepage-banner{
+        position: relative;
+        overflow: hidden;
+        >img{
+            height: 20rem;
+        }
+        >p{
+            font-size: @title20;
+            color: #ffffff;
+            position: absolute;
+            left:50%;
+            top:30%;
+            transform:translate(-50%,-50%);
+        }
+        >h3{
+            width: 100%;
+            text-align: center;
+            font-size:@title30;
+            color: #ffffff;
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform:translate(-50%,-50%);
+        }
+
+    }
+    &-homepage-recommended{
+        >h1{
+            font-size:@title30;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        background-color: #fafafa;
+        &-img{
+            position: relative;
+            >img{
+                width: 100%;
+            }
+            >h3{
+                width: 100%;
+                text-align: center;
+                color: #fff;
+                font-size: @title30;
+                font-weight: 900;
+                position: absolute;
+                bottom: 3%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+        }
+    }
+    &-homepage-desc{
+        h1{
+            font-size: @title30;
+            color: #000;
+            text-align: center;
+            padding-top: 2rem;
+            margin: 2rem 1rem;
+            >span{
+                color: @theme-color;
+            }
+        }
+        &-card{
+            position: relative;
+            padding: 1rem;
+            padding-bottom: 2rem;
+            margin: 5rem 1.2rem;
+            background:#fff;
+            box-shadow: 0 2px 40px 0 rgba(96, 110, 131, 0.1);
+            border-radius: 1rem;
+            >h3{
+                text-align: center;
+                color: @theme-color;
+                font-size: @title26;
+                margin-top: 2.5rem;
+            }
+            >p{
+                text-align: center;
+                margin: 0;
+                font-size: @title16;
+            }
+            &-img1{
+                position: absolute;
+                top: -5%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+            &-img2{
+                position: absolute;
+                top: -5%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+        }
+    }
+
+}

@@ -10,12 +10,12 @@ import React from 'react'
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
 import homeBanner from '@/assets/images/fudi/home-banner.png';
-import product1 from '@/assets/images/fudi/product1.png';
-import product2 from '@/assets/images/fudi/product2.png';
-import product3 from '@/assets/images/fudi/product3.png';
-import product4 from '@/assets/images/fudi/product4.png';
-import product5 from '@/assets/images/fudi/product5.png';
-import product6 from '@/assets/images/fudi/product6.png';
+import product1 from '@/assets/images/fudi/product1_.png';
+import product2 from '@/assets/images/fudi/product2_.png';
+import product3 from '@/assets/images/fudi/product3_.png';
+import product4 from '@/assets/images/fudi/product4_.png';
+import product5 from '@/assets/images/fudi/product5_.png';
+import product6 from '@/assets/images/fudi/product6_.png';
 import star from '@/assets/images/common/icon/star.svg';
 import shield from '@/assets/images/common/icon/shield.svg';
 import gift from '@/assets/images/common/icon/gift.svg';
@@ -41,62 +41,34 @@ const Homepage = () => {
                 <div className="homepage-recommended">
                     <h1>Taste the best food!</h1>
                     <Row>
-                        <Col span={8}>
-                            <Card
-                                hoverable
-                                style={{ width: "28.33rem", textAlign: "center" }}
-                                cover={<img alt="product1" src={product1} />}
-                            >
-                                <div className="homepage-recommended-img">Pizza</div>
-                            </Card>
-                        </Col>
-                        <Col span={8}>
-                            <Card
-                                hoverable
-                                style={{ width: "28.33rem", textAlign: "center" }}
-                                cover={<img alt="product2" src={product2} />}
-                            >
-                                <div className="homepage-recommended-img">Pasta</div>
-                            </Card>
-                        </Col>
-                        <Col span={8}>
-                            <Card
-                                hoverable
-                                style={{ width: "28.33rem", textAlign: "center" }}
-                                cover={<img alt="product3" src={product3} />}
-                            >
-                                <div className="homepage-recommended-img">Salads</div>
-                            </Card>
-                        </Col>
+                        <div className="homepage-recommended-img width60">
+                            <img alt="product1" src={product1} />
+                            <div>Pizza</div>
+                        </div>
+                        <div className="homepage-recommended-img width40">
+                            <img alt="product2" src={product2} />
+                            <div>Healthy</div>
+                        </div>
                     </Row>
-                    <Row className="homepage-recommended-row2th">
-                        <Col span={8}>
-                            <Card
-                                hoverable
-                                style={{ width: "28.33rem", textAlign: "center" }}
-                                cover={<img alt="product4" src={product4} />}
-                            >
-                                <div className="homepage-recommended-img">Starters</div>
-                            </Card>
-                        </Col>
-                        <Col span={8}>
-                            <Card
-                                hoverable
-                                style={{ width: "28.33rem", textAlign: "center" }}
-                                cover={<img alt="product5" src={product5} />}
-                            >
-                                <div className="homepage-recommended-img">Drinks</div>
-                            </Card>
-                        </Col>
-                        <Col span={8}>
-                            <Card
-                                hoverable
-                                style={{ width: "28.33rem", textAlign: "center" }}
-                                cover={<img alt="product6" src={product6} />}
-                            >
-                                <div className="homepage-recommended-img">Sauces</div>
-                            </Card>
-                        </Col>
+                    <Row>
+                        <div className="homepage-recommended-img width40">
+                            <img alt="product3" src={product3} />
+                            <div>Fast Delivery</div>
+                        </div>
+                        <div className="homepage-recommended-img width60">
+                            <img alt="product4" src={product4} />
+                            <div>Special Offers</div>
+                        </div>
+                    </Row>
+                    <Row>
+                        <div className="homepage-recommended-img width60">
+                            <img alt="product4" src={product5} />
+                            <div>Delicious</div>
+                        </div>
+                        <div className="homepage-recommended-img width40">
+                            <img alt="product3" src={product6} />
+                            <div>Exclusive Recipes</div>
+                        </div>
                     </Row>
                 </div>
                 <div className="homepage-desc">

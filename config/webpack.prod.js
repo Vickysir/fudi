@@ -16,7 +16,6 @@ module.exports = {
         filename: 'static/js/[name].[contenthash:8].js'
     },
     module: {
-        ...baseConfig.module,
         rules: [
             {
                 oneOf: [

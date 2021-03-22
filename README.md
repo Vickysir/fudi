@@ -217,3 +217,14 @@ DEBUG需求情景如下：
 //TODO：CICD
 
 ![](https://note.youdao.com/yws/public/resource/4e0e610896b6c99a93c33ec3d0ed6b78/xmlnote/DDBF2E299689486D97F09CA5DEA65B12/16226)
+
+### 同步代码
+```
+git remote add upsteam http://...
+
+git fetch upsteam
+
+git reset --hard upstream/master
+
+git push -f
+```

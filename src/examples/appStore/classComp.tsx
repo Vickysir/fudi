@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-03-22 16:37:38
+ * @LastEditTime: 2021-03-22 16:42:58
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /fudi/src/examples/appStore/classComp.tsx
+ */
 import { DebuffAction } from "@mtgoo/ctool";
 import React from "react";
 import { mapAppStoreToProps } from "../../__internal";
@@ -27,7 +35,7 @@ export class ClassComp extends React.Component<{}, { xxAtt: any }> {
         this._debuffAction.dispose();
     }
     render() {
-        return (<div>{this.state.xxAtt}</div>)
+        return (<div>【ClassComp】xxAtt:{this.state.xxAtt}</div>)
     }
 }
 
@@ -37,7 +45,7 @@ export class ClassComp extends React.Component<{}, { xxAtt: any }> {
 @mapAppStoreToProps(["xxAtt"])
 export class ClassComp2 extends React.Component<{ xxAtt?: any }> {
     render() {
-        return <div>{this.props.xxAtt}</div>
+        return <div>【ClassComp2】xxAtt:{this.props.xxAtt}</div>
     }
 }
 

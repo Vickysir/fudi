@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-03-22 13:43:32
+ * @LastEditTime: 2021-03-22 18:32:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
@@ -13,6 +13,9 @@ import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
 import BaackTitle from '../../components/baackTitle';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
+import { apiPath } from '@/pages/api';
+import { PhoneVerificationCodePost } from '@/pages/api/types/login';
 
 
 import './index.less'
@@ -22,9 +25,19 @@ const { Option } = Select;
 const Setupphone = (props) => {
     const { history } = props;
 
-    const onFinish = (values: any) => {
+    const onFinish = (values: PhoneVerificationCodePost) => {
         console.log('Received values of form: ', values);
-        history.push("/setupphone/verification");
+
+        // 存入store
+        Object.assign(APP_STORE.registInfo, { ...values });
+        // 发送 api 获取注册手机验证码
+        axios.post(apiPath.phoneVerificationCode, values)
+            .then((res) => {
+                console.log('res', res);
+                history.push("/setupphone/verification");
+            }).catch(err => {
+                console.log('err', err);
+            })
     };
 
     const selectBefore = (

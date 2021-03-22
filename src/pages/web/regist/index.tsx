@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-22 11:35:07
- * @LastEditTime: 2021-03-22 13:40:17
+ * @LastEditTime: 2021-03-22 17:29:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/regist/index.tsx
@@ -14,7 +14,7 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
  */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Input, Button } from 'antd';
 import { MailOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import WebFooter from '@/pages/components/header/webFooter';
@@ -27,11 +27,14 @@ import { useGoogleLogin } from 'react-google-login'
 import AppleLogin from 'react-apple-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import { Link, withRouter } from 'react-router-dom';
+import { useAppStore } from '@/__internal';
+import { LoginRegistPost } from '@/pages/api/types/login';
 
 
 
 const Regist = (props) => {
     const { history } = props;
+
     const { signIn, loaded } = useGoogleLogin({
         onSuccess: onSuccess,
         onFailure: onFailure,
@@ -41,6 +44,10 @@ const Regist = (props) => {
     const onFinish = (values: any) => {
         console.log('Received values of form: ', values);
         history.push("/setupphone");
+
+        // 存入store
+        APP_STORE.registInfo = values;
+
     };
 
     // login

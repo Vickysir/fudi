@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-03-22 13:45:48
+ * @LastEditTime: 2021-03-22 18:39:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
@@ -22,25 +22,27 @@ const PhoneVerification = (props) => {
 
     const onFinish = (values: any) => {
         console.log('Received values of form: ', values);
-        history.push("/login");
+
+        // 存入store
+        Object.assign(APP_STORE.registInfo, { ...values });
+
+        // 获取store
+        let authinfo: LoginRegistPost = APP_STORE.registInfo;
+        console.log(`authinfo`, authinfo)
+
+        //发送API 注册
+        axios.post(apiPath.regist, authinfo)
+            .then((res) => {
+                console.log('res', res)
+                history.push("/login");
+
+            }).catch(err => {
+                console.log('err', err)
+            })
     };
 
-    const data: LoginRegistPost = {
-        "phone": "18616350384",
-        "password": "hell0w0rld1",
-        "againPassword": "hell0w0rld1",
-        "code": "4266",
-        "email": "460022058@qq.com",
-        "invitationCode": "dsfwefweashyju"
-    }
-
     useEffect(() => {
-        // axios.post(apiPath.regist, data)
-        //     .then((res) => {
-        //         console.log('res', res)
-        //     }).catch(err => {
-        //         console.log('err', err)
-        //     })
+
     }, [])
 
 

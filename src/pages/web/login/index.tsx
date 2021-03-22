@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 14:36:13
- * @LastEditTime: 2021-03-10 14:03:08
+ * @LastEditTime: 2021-03-22 10:47:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /GitHub/fudi/src/pages/web/login/index.tsx
@@ -31,13 +31,13 @@ const Login = () => {
         onFailure: onFailure,
         clientId: "473960765414-67u4bo8orupa8fbps4ic47v8sr9i2oca.apps.googleusercontent.com",
     })
-    useEffect(() => {
-        axios.post(apiPath.login, { "password": "helloworld", "name": "spring" }).then((res) => {
-            console.log('res', res)
-        }).catch(err => {
-            console.log('err', err)
-        })
-    }, [])
+    // useEffect(() => {
+    //     axios.post(apiPath.login, { "password": "helloworld", "name": "spring" }).then((res) => {
+    //         console.log('res', res)
+    //     }).catch(err => {
+    //         console.log('err', err)
+    //     })
+    // }, [])
 
 
 

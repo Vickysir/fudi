@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 09:43:16
- * @LastEditTime: 2021-03-16 10:14:18
+ * @LastEditTime: 2021-03-22 10:47:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/components/header/webHeader/index.tsx
@@ -41,7 +41,7 @@ const WebHeader = (props) => {
                     <img src={logoOne} alt="logo" />
                 </Link>
             </div>
-            <ul className="webHeader-menu">
+            {/* <ul className="webHeader-menu">
                 <li>
                     <Badge count={5}>
                         <Icon component={iconorder} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
@@ -55,7 +55,7 @@ const WebHeader = (props) => {
                 <li onClick={goTo}>
                     <Avatar size="large" style={{ backgroundColor: '#fde3cf', "cursor": "pointer" }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 </li>
-            </ul>
+            </ul> */}
         </div>
     )
 }

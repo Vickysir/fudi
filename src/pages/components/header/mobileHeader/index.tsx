@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-03-22 09:15:48
+ * @LastEditTime: 2021-03-22 10:48:38
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /fudi/src/pages/components/header/mobileHeader/index.tsx
+ */
 import React from 'react'
 import { Badge } from 'antd';
 import Icon from '@ant-design/icons';
@@ -20,7 +28,7 @@ const MobileHeader = (props) => {
             <div className="mobileHeader-logo">
                 <img src={logoOne} alt="logo" />
             </div>
-            <ul className="mobileHeader-menu">
+            {/* <ul className="mobileHeader-menu">
                 <li>
                     <Badge count={5}>
                         <Icon component={iconnott} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
@@ -29,7 +37,7 @@ const MobileHeader = (props) => {
                 <li>
                     <Avatar size="large" style={{ backgroundColor: '#fde3cf', "cursor": "pointer" }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 </li>
-            </ul>
+            </ul> */}
         </div>
     )
 }

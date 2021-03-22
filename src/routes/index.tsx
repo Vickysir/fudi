@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 13:55:48
- * @LastEditTime: 2021-03-04 17:23:46
+ * @LastEditTime: 2021-03-22 13:44:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/routes/index.tsx
@@ -14,6 +14,7 @@ import Login from "@/pages/web/login";
 import Changepassword from "@/pages/web/login/changepwd";
 import Restpassword from "@/pages/web/login/resetpwd";
 import Regist from "@/pages/web/regist";
+import PhoneVerification from "@/pages/web/regist/setupphone/verification";
 import Setupphone from "@/pages/web/regist/setupphone";
 import FAQ from "@/pages/web/FAQ";
 import HelpCenter from "@/pages/web/helpCenter";
@@ -30,7 +31,8 @@ export function WebRoutes() {
         <Route path="/restpassword" component={Restpassword} />
         <Route path="/changepassword" component={Changepassword} />
         <Route path="/regist" component={Regist} />
-        <Route path="/setupphone" component={Setupphone} />
+        <Route exact path="/setupphone" component={Setupphone} />
+        <Route path="/setupphone/verification" component={PhoneVerification} />
         <Route path="/faq" component={FAQ} />
         <Route path="/helpCenter" component={HelpCenter} />
         <Route path="/personalCenter" component={PersonalCenter} />

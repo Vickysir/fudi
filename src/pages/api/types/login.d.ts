@@ -12,8 +12,8 @@ export interface LoginRegistPost {
     "againPassword": string//"hell0w0rld1",
     "code": string//"4266",
     "email": string//"2541150915@qq.com",
-    "token"?: string//"8e660612d2064a63917c935e3c3bbc7d", 
-    "invitationCode": string//"dsfwefweashyju"
+    "token": string//"8e660612d2064a63917c935e3c3bbc7d", 
+    "invitationCode"?: string//"dsfwefweashyju"
 }
 export interface PhoneVerificationCodePost {
     "phone": string//"+8613656690321"

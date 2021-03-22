@@ -6,8 +6,8 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
  */
-import React from 'react'
-import { Form, Input, Button, Select } from 'antd';
+import React, { useState } from 'react'
+import { Form, Input, Button, Select, message } from 'antd';
 import { ShakeOutlined } from '@ant-design/icons';
 import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
@@ -16,6 +16,8 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { apiPath } from '@/pages/api';
 import { PhoneVerificationCodePost } from '@/pages/api/types/login';
+import { useAppStore } from '@/__internal';
+
 
 
 import './index.less'
@@ -24,28 +26,47 @@ import './index.less'
 const { Option } = Select;
 const Setupphone = (props) => {
     const { history } = props;
+    const [phonePrefix, setphonePrefix] = useState("+353")
 
     const onFinish = (values: PhoneVerificationCodePost) => {
+        values.phone = phonePrefix + values.phone;
         console.log('Received values of form: ', values);
 
-        // 存入store
         Object.assign(APP_STORE.registInfo, { ...values });
         // 发送 api 获取注册手机验证码
         axios.post(apiPath.phoneVerificationCode, values)
             .then((res) => {
                 console.log('res', res);
-                history.push("/setupphone/verification");
+                if (res.event === "SUCCESS") {
+                    message.success("The verification code has been sent");
+                    // phone、Token 存入store
+                    const store = Object.assign(APP_STORE.registInfo, res.data);
+                    APP_STORE.registInfo = store;
+                    history.push("/setupphone/verification");
+                }
             }).catch(err => {
                 console.log('err', err);
             })
     };
 
+    // 处理电话号码前缀change
+    function handelSelectChange(value: string) {
+        setphonePrefix(value);
+    }
+
     const selectBefore = (
-        <Select defaultValue="353" id="citizenship" className="select-before citizenship" bordered={false}>
-            <Option value="353">+353</Option>
-            <Option value="086">+086</Option>
+        <Select
+            value={phonePrefix}
+            onChange={handelSelectChange}
+            className="select-before citizenship"
+            bordered={false}
+        >
+            <Option value="+353">+353</Option>
+            <Option value="+86">+86</Option>
         </Select>
     );
+    let storeAtt = useAppStore("registInfo");
+    console.log(`storeAtt`, storeAtt)
     return (
         <>
             <WebHeader />
@@ -99,4 +120,4 @@ const Setupphone = (props) => {
     )
 }
 
-export default withRouter(Setupphone) 
+export default withRouter(Setupphone)

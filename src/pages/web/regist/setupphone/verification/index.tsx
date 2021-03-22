@@ -23,27 +23,21 @@ const PhoneVerification = (props) => {
     const onFinish = (values: any) => {
         console.log('Received values of form: ', values);
 
-        // 存入store
-        Object.assign(APP_STORE.registInfo, { ...values });
-
-        // 获取store
-        let authinfo: LoginRegistPost = APP_STORE.registInfo;
-        console.log(`authinfo`, authinfo)
+        //获取store
+        const authinfo: LoginRegistPost = Object.assign(APP_STORE.registInfo, { ...values });
+        console.log(`authinfo`, authinfo);
 
         //发送API 注册
         axios.post(apiPath.regist, authinfo)
             .then((res) => {
-                console.log('res', res)
+                console.log('res', res);
+                APP_STORE.registInfo = null;
                 history.push("/login");
 
             }).catch(err => {
                 console.log('err', err)
             })
     };
-
-    useEffect(() => {
-
-    }, [])
 
 
     return (

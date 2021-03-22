@@ -27,13 +27,13 @@ import { useGoogleLogin } from 'react-google-login'
 import AppleLogin from 'react-apple-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import { Link, withRouter } from 'react-router-dom';
-import { useAppStore } from '@/__internal';
-import { LoginRegistPost } from '@/pages/api/types/login';
+import { customValidator, handleCfmPwd } from '@/pages/components/antd/validator';
 
 
 
 const Regist = (props) => {
     const { history } = props;
+    const [form] = Form.useForm();
 
     const { signIn, loaded } = useGoogleLogin({
         onSuccess: onSuccess,
@@ -61,6 +61,7 @@ const Regist = (props) => {
         console.log('^^^^^^^^^^error', error)
     }
 
+
     return (
         <>
             <WebHeader />
@@ -72,6 +73,7 @@ const Regist = (props) => {
                         className="login-form"
                         initialValues={{ remember: true }}
                         onFinish={onFinish}
+                        form={form}
                     >
                         <Form.Item
                             name="email"
@@ -98,7 +100,14 @@ const Regist = (props) => {
                         </Form.Item>
                         <Form.Item
                             name="againPassword"
-                            rules={[{ required: true, message: 'Please input your Confirm Password!' }]}
+                            rules={[
+                                { required: true, message: 'Please input your Confirm Password!' },
+                                {
+                                    validator: (rules, value, callback) => { customValidator(rules, value, callback, handleCfmPwd, form) }
+                                }
+
+                            ]}
+                            validateFirst={true}
                         >
                             <Input.Password
                                 prefix={<LockOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
@@ -150,4 +159,4 @@ const Regist = (props) => {
     )
 }
 
-export default withRouter(Regist) 
+export default withRouter(Regist)

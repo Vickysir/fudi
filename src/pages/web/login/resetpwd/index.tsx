@@ -1,25 +1,39 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-03-04 10:40:32
+ * @LastEditTime: 2021-03-23 16:16:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
  */
 import React from 'react'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
 import BaackTitle from '../../components/baackTitle';
 import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
 import { withRouter } from 'react-router-dom';
+import { APIEmailVerificationCode } from '@/pages/api/request';
 
 
 const Restpassword = (props) => {
     const { history } = props;
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
-        history.push("/changepassword");
+    const onFinish = async (values: any) => {
+        // email 存入store
+        APP_STORE.resetPwdInfo = { ...values };
+        // 发送 api 获取注册邮箱验证码
+        try {
+            const { event, data } = await APIEmailVerificationCode(values);
+            if (event === "SUCCESS") {
+                message.success("The verification code has been sent");
+                // token 存入store
+                let resetPwdInfo = Object.assign(APP_STORE.resetPwdInfo, { ...data })
+                APP_STORE.resetPwdInfo = resetPwdInfo;
+                history.push("/changepassword");
+            }
+        } catch (err) {
+            console.log('err', err);
+        }
     };
     return (
         <>

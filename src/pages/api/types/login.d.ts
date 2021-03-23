@@ -1,11 +1,17 @@
 /*
  * @Author: your name
  * @Date: 2021-03-10 14:45:49
- * @LastEditTime: 2021-03-23 13:28:50
+ * @LastEditTime: 2021-03-23 15:16:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/api/types/login.d.ts
  */
+export interface PhoneVerificationCodePost {
+    "phone": string//"+8613656690321"
+}
+export interface VerificationCodePostResponse {
+    token: string//"fbc9f41b02bd45e79a96264eb1371c97",
+}
 export interface LoginRegistPost {
     "phone": string//"12345678",
     "password": string//"hell0w0rld1",
@@ -15,19 +21,8 @@ export interface LoginRegistPost {
     "token": string//"8e660612d2064a63917c935e3c3bbc7d", 
     "invitationCode"?: string//"dsfwefweashyju"
 }
-export interface PhoneVerificationCodePost {
-    "phone": string//"+8613656690321"
-}
-export interface EmailVerificationCodePost {
-    "email": string//"25411150915@qq.com"
-}
 
-export interface ResetPwdPost {
-    "password": string//"hell0w0rld1",
-    "code": string//"0732",
-    "email": string//"648728367@qq.com",
-    "token": string//"f4ebd009b4bf4facbcfb86ae8d6d3362"
-}
+
 export interface LoginPost {
     "password": string//"helloworld",
     "name": string//"spring"
@@ -37,6 +32,19 @@ export interface LoginPostResponse {
     email: string//"460022058@qq.com"
     nickname: string// "User_7193"
     phone: string// "+447418310635"
+}
+
+
+
+export interface EmailVerificationCodePost {
+    "email": string//"25411150915@qq.com"
+}
+
+export interface ResetPwdPost {
+    "password"?: string//"hell0w0rld1",
+    "code"?: string//"0732",
+    "email"?: string//"648728367@qq.com",
+    "token"?: string//"f4ebd009b4bf4facbcfb86ae8d6d3362"
 }
 
 

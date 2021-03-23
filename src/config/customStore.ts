@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2021-03-22 16:32:14
- * @LastEditTime: 2021-03-23 14:07:26
+ * @LastEditTime: 2021-03-23 14:19:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/config/customStore.ts
  */
-import { LoginPostResponse, LoginRegistPost } from '@/pages/api/types/login';
+import { LoginPostResponse, LoginRegistPost, ResetPwdPost } from '@/pages/api/types/login';
 import { Att, MyStore } from '../__internal';
 
 /**
@@ -21,6 +21,8 @@ export class CustomStore {
     authInfo: IAuthInfo;
     @Att
     registInfo: LoginRegistPost;
+    @Att
+    resetPwdInfo: ResetPwdPost;
 }
 
 /**

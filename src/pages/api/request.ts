@@ -9,6 +9,7 @@
 import axios from 'axios';
 import { apiPath } from '@/pages/api';
 import { EmailVerificationCodePost, LoginPost, LoginPostResponse, LoginRegistPost, PhoneVerificationCodePost, ResetPwdPost, VerificationCodePostResponse } from './types/login';
+import { SettingPageInfoPostResponse } from './types/personalCenter';
 
 // 注册  获取手机验证码
 export const APIPhoneVerificationCode = async (params: PhoneVerificationCodePost) => {
@@ -28,6 +29,12 @@ export const APIEmailVerificationCode = async (params: EmailVerificationCodePost
     return await axios.post<VerificationCodePostResponse>(apiPath.emailVerificationCode, params)
 }
 // 忘记密码  修改密码
-export const APIResetPwdPost = async (params: ResetPwdPost) => {
+export const APIResetPwd = async (params: ResetPwdPost) => {
     return await axios.post(apiPath.resetPwd, params)
 }
+
+// 个人中心 获取个人信息
+export const APISettingPageInfo = async () => {
+    return await axios.post<SettingPageInfoPostResponse>(apiPath.personalCenterInfo)
+}
+

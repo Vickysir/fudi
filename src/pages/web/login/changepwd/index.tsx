@@ -14,7 +14,7 @@ import WebHeader from '@/pages/components/header/webHeader';
 import BaackTitle from '../../components/baackTitle';
 import { withRouter } from 'react-router-dom';
 import { handleCfmPwd } from '@/pages/components/antd/validator';
-import { APIResetPwdPost } from '@/pages/api/request';
+import { APIResetPwd } from '@/pages/api/request';
 
 
 
@@ -29,7 +29,7 @@ const Changepassword = (props) => {
         // 发送 api 获取注册邮箱验证码
         try {
             const resetPwdInfo = APP_STORE.resetPwdInfo;
-            const { event, data } = await APIResetPwdPost({ ...resetPwdInfo, code, password });
+            const { event, data } = await APIResetPwd({ ...resetPwdInfo, code, password });
             if (event === "SUCCESS") {
                 message.success("Password reset successfully");
                 // 重置store

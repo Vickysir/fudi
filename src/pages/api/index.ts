@@ -23,8 +23,10 @@ export const apiPath = {
     "foodPage": "/goods/classify/list/first/v2",// discounted / hot sale / new food page
     "categoriesInFoodList": "/goods/list/v2",// Food list for other categories
     "foodDetail": "/goods/detail/v2",// food details
+
     "sendAdvice": "/user/feedback/save",// Send Suggestions
     "personalCenterInfo": "/user/my",// Info on Setting page
+
     "gets3UploadKey": "/auth/aws/sts/s3/put",// Get keys for S3(only used when uploading user icon)
     "personalCenterUpdatePhone": "/user/update/phone/v2",// Update phone number
     "personalCenterUpdateIcon": "/user/update/head",//Update user icon

@@ -1,11 +1,5 @@
-/*
- * @Author: your name
- * @Date: 2021-03-10 14:45:49
- * @LastEditTime: 2021-03-23 19:27:19
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /fudi/src/pages/api/types/login.d.ts
- */
+import { PersonalCenterInfor } from "./personalCenter";
+
 export interface PhoneVerificationCodePost {
     "phone": string//"+8613656690321"
 }
@@ -217,24 +211,3 @@ export interface FoodDetailsPostResponse {
 
 }
 
-
-
-export interface SendSuggestionsPost {
-    "content": "helloworld"
-}
-export interface SendSuggestionsPostResponse {
-    "content": "helloworld"
-}
-
-
-export interface SettingPageInfoPostResponse extends PersonalCenterInfor {
-
-}
-export interface PersonalCenterInfor {
-    "head": string// "public/4b84ab80964c4cf8b15000fadaab1c94",
-    "coupon": number//2,
-    "bonus": number//20001,
-    "nickname": string// "spring",
-    "id": number//5,
-    "order": number//0
-}

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-10 14:45:49
- * @LastEditTime: 2021-03-23 15:16:37
+ * @LastEditTime: 2021-03-23 19:27:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/api/types/login.d.ts
@@ -46,6 +46,18 @@ export interface ResetPwdPost {
     "email"?: string//"648728367@qq.com",
     "token"?: string//"f4ebd009b4bf4facbcfb86ae8d6d3362"
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export interface SaveAddressPost {
@@ -107,4 +119,122 @@ export interface MapRangePostResponse {
             }[]
         }[]
     }[]
+}
+
+export interface ShopListPostResponseArray {
+    "id": number// 1,
+    "name": string// "Edenhall",
+    "address": string// "Edenhall, Model Farm Rd, Cork, Ireland",
+    "thumbnail": string// "public/f6499e879cc24b649dccec89a2594001",
+    "longitude": number// -8.5386944,
+    "latitude": number// 51.8903393,
+    "self": number// 0,
+    "eatIn": number// 1,
+    "delivery": number// 1,
+    "reservation": number// 1
+}
+export interface ShopDetailPostResponseArray {
+    "outline": string// "Restaurant & Takeaway",
+    "address": string// "Edenhall, Model Farm Rd, Cork, Ireland",
+    "phone": string// "+353214947888",
+    "latitude": number// 51.8903393,
+    "longitude": number// -8.5386944,
+    "name": string// "Edenhall",
+    "startTime": number// 14400000,
+    "id": number// 1,
+    "endTime": number// 54000000,
+    "evaluate": { //评论
+        "total": number// 25,
+        "evaluateList": {
+            "complexStarLevel": number// 4,
+            "thumbnail": string[]// [],
+            "createTime": number// 1555435246000,
+            "id": number// 96,
+            "user": {
+                "head": string// "public/6b80b80a30364abbb22bd2d52a62d462",
+                "nickname": string// "Mikey Ryan",
+                "id": number// 5576
+            },
+            "content": "V good "
+        }[]
+    },
+}
+
+export interface CategoriesInHomePagesPost {
+    "shopId": number//1
+}
+
+export interface CategoriesInHomePagesPostResponse {
+
+}
+export interface FoodPagesPostPost {
+    "shopId": number//1
+}
+export interface FoodPagesPostResponse {
+    "whirligigList": {
+        "id": number//2,
+        "resource": string// "public/8223865e30b545d2a7efab03b4681796",
+        "thumbnail": string// "public/68d2cc9d198145ad84a96670afa753d8"
+    }[],
+    "hotSaleGoodsList": {
+        "thumbnail": string// "public/2d22f9f6eb924b08ada22309945ac1da",
+        "sale": number//0,
+        "originalPrice": number//4,
+        "currentPrice": number//4,
+        "id": number//54,
+        "title": string// "dough balls(6)"
+    }[],
+    "newGoodsList": {
+        "thumbnail": string// "public/d2a72fdc66ac4a7e949534d3543c9592",
+        "sale": number//0,
+        "originalPrice": number//0,
+        "currentPrice": number//0,
+        "id": number//50,
+        "title": string// "margherita"
+    }[],
+    "user": PersonalCenterInfor
+}
+
+export interface CategoriesInFoodListPost {
+    "shopId": number//1,
+    "goodsClassifyId": number//102
+}
+export interface CategoriesInFoodListPostResponseArray {
+    "name": string// "Extra",
+    "goodsList": {
+        "thumbnail": string// "public/d2a72fdc66ac4a7e949534d3543c9592",
+        "originalPrice": number//0,
+        "currentPrice": number//0,
+        "id": number//50,
+        "title": string// "margherita"
+    }[]
+}
+
+export interface FoodDetailsPost {
+    "id": number//1,
+}
+export interface FoodDetailsPostResponse {
+
+}
+
+
+
+export interface SendSuggestionsPost {
+    "content": "helloworld"
+}
+export interface SendSuggestionsPostResponse {
+    "content": "helloworld"
+}
+
+
+export interface SettingPageInfoPostResponse extends PersonalCenterInfor {
+
+}
+export interface PersonalCenterInfor {
+    "head": string// "public/4b84ab80964c4cf8b15000fadaab1c94",
+    "coupon": number//2,
+    "bonus": number//20001,
+    "nickname": string// "spring",
+    "id": number//5,
+    "order": number//0
 }

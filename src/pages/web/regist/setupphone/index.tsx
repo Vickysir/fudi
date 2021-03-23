@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-03-23 09:51:12
+ * @LastEditTime: 2021-03-23 11:34:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
@@ -18,7 +18,6 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { apiPath } from '@/pages/api';
 import { PhoneVerificationCodePost } from '@/pages/api/types/login';
-import { useAppStore } from '@/__internal';
 
 
 
@@ -83,9 +82,6 @@ const Setupphone = (props) => {
         return content
     }
 
-    let storeAtt = useAppStore("registInfo");
-    console.log(`registInfo`, storeAtt)
-    console.log('APP_STORE: ', APP_STORE);
     return (
         <>
             <WebHeader />

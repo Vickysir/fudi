@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 09:43:16
- * @LastEditTime: 2021-03-22 10:47:55
+ * @LastEditTime: 2021-03-23 11:31:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/components/header/webHeader/index.tsx
@@ -12,8 +12,9 @@ import iconchat from '@/assets/images/common/icon/icon-chat.svg'
 import iconnott from '@/assets/images/common/icon/icon-nott.svg'
 import iconorder from '@/assets/images/common/icon/icon-order.svg'
 import logoOne from '@/assets/images/fudi/logoOne.svg'
-import { Avatar, Badge } from 'antd';
+import { Avatar, Badge, Button } from 'antd';
 import Icon from '@ant-design/icons';
+import { LoginOutlined, } from '@ant-design/icons';
 import { Link, withRouter } from 'react-router-dom'
 import style from '@/styles/theme/icon.less'
 import './index.less'
@@ -21,6 +22,9 @@ import './index.less'
 
 const WebHeader = (props) => {
     const { history } = props;
+    const { pathname } = history.location;
+    const token = APP_STORE.authInfo?.token;
+    const isLogin = token && true;
     function goTo() {
         history.push("/personalCenter/index?id=1")
     }
@@ -41,21 +45,42 @@ const WebHeader = (props) => {
                     <img src={logoOne} alt="logo" />
                 </Link>
             </div>
-            {/* <ul className="webHeader-menu">
-                <li>
-                    <Badge count={5}>
-                        <Icon component={iconorder} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
-                    </Badge>
-                </li>
-                <li>
-                    <Badge count={5}>
-                        <Icon component={iconnott} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
-                    </Badge>
-                </li>
-                <li onClick={goTo}>
-                    <Avatar size="large" style={{ backgroundColor: '#fde3cf', "cursor": "pointer" }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                </li>
-            </ul> */}
+            <ul className="webHeader-menu">
+                {
+                    !isLogin &&
+                    <li>
+                        {
+                            pathname === "/login" ?
+                                <Link to="/home">
+                                    <Button type="primary" shape="round">Home</Button>
+                                </Link>
+                                :
+                                <Link to="/login">
+                                    <Button type="primary" shape="round">Login</Button>
+                                </Link>
+                        }
+                    </li>
+                }
+                {
+                    isLogin &&
+                    <>
+                        <li>
+                            <Badge count={5}>
+                                <Icon component={iconorder} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
+                            </Badge>
+                        </li>
+                        <li>
+                            <Badge count={5}>
+                                <Icon component={iconnott} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
+                            </Badge>
+                        </li>
+                        <li onClick={goTo}>
+                            <Avatar size="large" style={{ backgroundColor: '#fde3cf', "cursor": "pointer" }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        </li>
+                    </>
+                }
+
+            </ul>
         </div>
     )
 }

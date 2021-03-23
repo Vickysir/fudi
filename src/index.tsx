@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-22 16:37:38
- * @LastEditTime: 2021-03-23 10:57:28
+ * @LastEditTime: 2021-03-23 11:23:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/index.tsx
@@ -12,6 +12,7 @@ import { initAxiosConfig } from "./extends/axios";
 import { MyApp } from "./__internal";
 import ThemeComp from "./pages/components/header/themeComp";
 import { BrowserRouter } from "react-router-dom";
+import './config/customStore';
 
 
 MyApp.start(

@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2021-03-22 16:32:14
- * @LastEditTime: 2021-03-23 09:46:33
+ * @LastEditTime: 2021-03-23 14:07:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/config/customStore.ts
  */
-import { LoginRegistPost } from '@/pages/api/types/login';
+import { LoginPostResponse, LoginRegistPost } from '@/pages/api/types/login';
 import { Att, MyStore } from '../__internal';
 
 /**
@@ -36,6 +36,6 @@ export interface ICustomStoreEvents {
 /**
  * 登录后的一些数据存储起来,例如：token
  */
-export interface IAuthInfo {
+export interface IAuthInfo extends LoginPostResponse {
     token: string;
 }

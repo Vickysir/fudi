@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-05 10:04:05
- * @LastEditTime: 2021-03-16 10:01:47
+ * @LastEditTime: 2021-03-23 13:53:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/menu/index.tsx
@@ -45,7 +45,9 @@ const LeftMenu = (props) => {
                 break;
             case "7": history.push("/personalCenter/sendQ")
                 break;
-            case "8": history.push("/login")
+            case "8":
+                APP_STORE.authInfo = null;
+                history.push("/login");
                 break;
             default: history.push("/personalCenter/myOrders")
         }

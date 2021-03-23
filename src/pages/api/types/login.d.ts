@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-10 14:45:49
- * @LastEditTime: 2021-03-19 11:12:22
+ * @LastEditTime: 2021-03-23 13:28:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/api/types/login.d.ts
@@ -33,7 +33,10 @@ export interface LoginPost {
     "name": string//"spring"
 }
 export interface LoginPostResponse {
-    "token": string//"fbc9f41b02bd45e79a96264eb1371c97",
+    token: string//"fbc9f41b02bd45e79a96264eb1371c97",
+    email: string//"460022058@qq.com"
+    nickname: string// "User_7193"
+    phone: string// "+447418310635"
 }
 
 

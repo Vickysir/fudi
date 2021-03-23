@@ -24,7 +24,7 @@ const WebHeader = (props) => {
     const { history } = props;
     const { pathname } = history.location;
     const token = APP_STORE.authInfo?.token;
-    const isLogin = token && true;
+    const isLogin = token && APP_STORE.authInfo?.nickname;
     function goTo() {
         history.push("/personalCenter/index?id=1")
     }

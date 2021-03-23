@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 14:36:13
- * @LastEditTime: 2021-03-22 10:47:12
+ * @LastEditTime: 2021-03-23 13:51:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /GitHub/fudi/src/pages/web/login/index.tsx
@@ -10,39 +10,29 @@ import React, { useEffect, useState } from 'react'
 import { useGoogleLogin } from 'react-google-login'
 import AppleLogin from 'react-apple-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
-import { Link } from 'react-router-dom'
-import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { Link, withRouter } from 'react-router-dom'
+import { Form, Input, Button, message } from 'antd';
+import { MailOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
 import google from '@/assets/images/common/login/google.png'
 import fb from '@/assets/images/common/login/fb.png'
 import apple from '@/assets/images/common/login/apple.png'
-import axios from 'axios';
-import { apiPath } from '@/pages/api';
+import { APILogin } from '@/pages/api/request';
 import './index.less'
 
 
 
-const Login = () => {
+const Login = (props) => {
+    const { history } = props;
     const [form] = Form.useForm();
     const { signIn, loaded } = useGoogleLogin({
         onSuccess: onSuccess,
         onFailure: onFailure,
         clientId: "473960765414-67u4bo8orupa8fbps4ic47v8sr9i2oca.apps.googleusercontent.com",
     })
-    // useEffect(() => {
-    //     axios.post(apiPath.login, { "password": "helloworld", "name": "spring" }).then((res) => {
-    //         console.log('res', res)
-    //     }).catch(err => {
-    //         console.log('err', err)
-    //     })
-    // }, [])
 
-
-
-
-    // login
+    // 第三方授权  登录
     function onSignIn() {
         signIn()
     }
@@ -53,9 +43,21 @@ const Login = () => {
         console.log('^^^^^^^^^^error', error)
     }
 
-    // 表单 
-    const onFinish = (values: any) => {
+    // 表单 登录
+    const onFinish = async (values: any) => {
         console.log('Received values of form: ', values);
+        try {
+            const { event, data } = await APILogin(values);
+            if (event === "SUCCESS") {
+                console.log('event', event);
+                console.log('data', data);
+                message.success("Login successful")
+                APP_STORE.authInfo = { ...data };
+                history.push("/home");
+            }
+        } catch (err) {
+            console.log('err', err)
+        }
     };
 
     return (
@@ -71,13 +73,13 @@ const Login = () => {
                         onFinish={onFinish}
                     >
                         <Form.Item
-                            name="username"
+                            name="name"
                             rules={[{ required: true, message: 'Please input your Username!' }]}
                         >
                             <Input
                                 size="large"
-                                prefix={<UserOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
-                                placeholder="Username"
+                                prefix={<MailOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
+                                placeholder="Email"
                                 style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
                             />
                         </Form.Item>
@@ -140,4 +142,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default withRouter(Login)

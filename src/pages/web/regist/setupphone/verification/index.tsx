@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-03-22 18:39:21
+ * @LastEditTime: 2021-03-23 14:17:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
@@ -13,30 +13,28 @@ import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
 import BaackTitle from '../../../components/baackTitle';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
-import { apiPath } from '@/pages/api';
 import { LoginRegistPost } from '@/pages/api/types/login';
+import { APIRegist } from '@/pages/api/request';
 
 const PhoneVerification = (props) => {
     const { history } = props;
 
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+    const onFinish = async (values: any) => {
 
         //获取store
         const authinfo: LoginRegistPost = Object.assign(APP_STORE.registInfo, { ...values });
         console.log(`authinfo`, authinfo);
-
         //发送API 注册
-        axios.post(apiPath.regist, authinfo)
-            .then((res) => {
-                console.log('res', res);
+        try {
+            const { event, data } = await APIRegist(authinfo);
+            if (event === "SUCCESS") {
                 APP_STORE.registInfo = null;
                 history.push("/login");
+            }
+        } catch (err) {
+            console.log('err', err)
+        }
 
-            }).catch(err => {
-                console.log('err', err)
-            })
     };
 
 

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-03-23 11:34:26
+ * @LastEditTime: 2021-03-23 14:17:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
@@ -15,8 +15,7 @@ import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
 import BaackTitle from '@/pages/web/components/baackTitle';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
-import { apiPath } from '@/pages/api';
+import { APIPhoneVerificationCode } from '@/pages/api/request';
 import { PhoneVerificationCodePost } from '@/pages/api/types/login';
 
 
@@ -29,25 +28,24 @@ const Setupphone = (props) => {
     const { history } = props;
     const [phonePrefix, setphonePrefix] = useState("+353")
 
-    const onFinish = (values: PhoneVerificationCodePost) => {
+    const onFinish = async (values: PhoneVerificationCodePost) => {
         values.phone = phonePrefix + values.phone;
-        console.log('Received values of form: ', values);
 
         Object.assign(APP_STORE.registInfo, { ...values });
         // 发送 api 获取注册手机验证码
-        axios.post(apiPath.phoneVerificationCode, values)
-            .then((res) => {
-                console.log('res', res);
-                if (res.event === "SUCCESS") {
-                    message.success("The verification code has been sent");
-                    // phone、Token 存入store
-                    const store = Object.assign(APP_STORE.registInfo, res.data);
-                    APP_STORE.registInfo = store;
-                    history.push("/setupphone/verification");
-                }
-            }).catch(err => {
-                console.log('err', err);
-            })
+        try {
+            const { event, data } = await APIPhoneVerificationCode(values);
+            if (event === "SUCCESS") {
+                message.success("The verification code has been sent");
+                // phone、Token 存入store
+                const store = Object.assign(APP_STORE.registInfo, data);
+                APP_STORE.registInfo = store;
+                // APP_STORE.authInfo = { ...data };
+                history.push("/setupphone/verification");
+            }
+        } catch (err) {
+            console.log('err', err);
+        }
     };
 
     // 处理电话号码前缀change

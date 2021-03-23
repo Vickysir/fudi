@@ -7,7 +7,7 @@
  * @FilePath: /fudi/src/pages/web/personalCenter/myInfor/index.tsx
  */
 import React from 'react'
-import { MailOutlined, UserOutlined, ShakeOutlined, CreditCardOutlined, EnvironmentOutlined, HomeOutlined } from '@ant-design/icons';
+import { MailOutlined, UserOutlined, PhoneOutlined, CreditCardOutlined, EnvironmentOutlined, HomeOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import './index.less';
 
@@ -30,29 +30,29 @@ const MyInfor = () => {
                 </Form.Item>
                 <Form.Item
                     name="username"
-                    rules={[{ required: true, message: 'Please input your Old Password!' }]}
+                    rules={[{ required: true, message: 'Please input your Full Name!' }]}
                 >
                     <Input
                         size="large"
                         prefix={<UserOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
-                        placeholder="Username"
+                        placeholder="Full Name"
                         style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
                     />
                 </Form.Item>
                 <Form.Item
                     name="telphone"
-                    rules={[{ required: true, message: 'Please input your New Password!' }]}
+                    rules={[{ required: true, message: 'Please input your Phone Number!' }]}
                 >
                     <Input
-                        prefix={<ShakeOutlined className="site-form-item-icon" style={{ "margin": "0 0 0 1rem" }} />}
-                        placeholder="+31 000 000 00 00"
+                        prefix={<PhoneOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
+                        placeholder="+353 000 000 00 00"
                         size="large"
                         style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
                     />
                 </Form.Item>
                 <Form.Item
                     name="email"
-                    rules={[{ required: true, message: 'Please input your Confirm Password!' }]}
+                    rules={[{ required: true, message: 'Please input your Eamil!' }]}
                 >
                     <Input
                         prefix={<MailOutlined style={{ "margin": "0 1rem" }} />}
@@ -69,7 +69,7 @@ const MyInfor = () => {
                     rules={[{ required: true, message: 'Please input your Location!' }]}
                 >
                     <Input
-                        prefix={<EnvironmentOutlined className="site-form-item-icon" style={{ "margin": "0 0 0 1rem" }} />}
+                        prefix={<EnvironmentOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
                         placeholder="Grafton Street, Dublin"
                         size="large"
                         style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
@@ -77,12 +77,12 @@ const MyInfor = () => {
                 </Form.Item>
                 <Form.Item
                     name="address"
-                    rules={[{ required: true, message: 'Please input your Old Password!' }]}
+                    rules={[{ required: true, message: 'Please input your House Number' }]}
                 >
                     <Input
                         size="large"
                         prefix={<HomeOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
-                        placeholder="Username"
+                        placeholder="House Number"
                         style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
                     />
                 </Form.Item>

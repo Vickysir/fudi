@@ -6,15 +6,17 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/sendQ/index.tsx
  */
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Input } from 'antd'
 import './index.less'
 
 const { TextArea } = Input;
 const SendQ = () => {
+    const [content, setcontent] = useState("")
 
     const onChange = e => {
-        console.log(e);
+        const content = e.target.value
+        setcontent(content);
     };
 
     return (

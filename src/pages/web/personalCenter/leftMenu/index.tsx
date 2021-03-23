@@ -71,11 +71,11 @@ const LeftMenu = (props) => {
                 mode="inline"
                 selectedKeys={selectedKeys}
             >
-                <Menu.Item key="1" icon={<ShoppingOutlined />} >My Orders</Menu.Item>
+                <Menu.Item key="1" icon={<ShoppingOutlined />} >My Orders<span className="leftMenu-warp-count">1</span></Menu.Item>
                 {/* <Menu.Item key="2" icon={<Icon component={iconNott} />} >My Vouchers</Menu.Item> */}
-                <Menu.Item key="2" icon={<ContainerOutlined />} >My Vouchers</Menu.Item>
+                <Menu.Item key="2" icon={<ContainerOutlined />} >My Vouchers <span className="leftMenu-warp-count">1</span></Menu.Item>
                 <Menu.Item key="3" icon={<TeamOutlined />} >Invitate Friends</Menu.Item>
-                <Menu.Item key="4" icon={<BellOutlined />} >Notifications</Menu.Item>
+                <Menu.Item key="4" icon={<BellOutlined />} >Notifications<span className="leftMenu-warp-count">1</span></Menu.Item>
                 <Menu.Item ><Divider /></Menu.Item>
                 <Menu.Item key="5" icon={<UserOutlined />} >Edit My Info</Menu.Item>
                 <Menu.Item key="6" icon={<LockOutlined />} >Change Password</Menu.Item>

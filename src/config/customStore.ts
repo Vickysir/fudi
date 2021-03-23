@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-22 16:32:14
- * @LastEditTime: 2021-03-22 17:16:48
+ * @LastEditTime: 2021-03-23 09:46:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/config/customStore.ts
@@ -19,6 +19,7 @@ export class CustomStore {
     //----------------------------------------------------
     @Att
     authInfo: IAuthInfo;
+    @Att
     registInfo: LoginRegistPost;
 }
 

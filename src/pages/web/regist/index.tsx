@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-22 11:35:07
- * @LastEditTime: 2021-03-22 17:29:38
+ * @LastEditTime: 2021-03-23 10:19:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/regist/index.tsx
@@ -27,7 +27,7 @@ import { useGoogleLogin } from 'react-google-login'
 import AppleLogin from 'react-apple-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import { Link, withRouter } from 'react-router-dom';
-import { customValidator, handleCfmPwd } from '@/pages/components/antd/validator';
+import { customValidator, emailValidator, handleCfmPwd } from '@/pages/components/antd/validator';
 
 
 
@@ -77,7 +77,12 @@ const Regist = (props) => {
                     >
                         <Form.Item
                             name="email"
-                            rules={[{ required: true, message: 'Please input your Email!' }]}
+                            rules={[
+                                { required: true, message: 'Please input your Email!' },
+                                { validator: emailValidator() }
+
+                            ]}
+                            validateFirst={true}
                         >
                             <Input
                                 size="large"
@@ -102,9 +107,7 @@ const Regist = (props) => {
                             name="againPassword"
                             rules={[
                                 { required: true, message: 'Please input your Confirm Password!' },
-                                {
-                                    validator: (rules, value, callback) => { customValidator(rules, value, callback, handleCfmPwd, form) }
-                                }
+                                { validator: handleCfmPwd(form) }
 
                             ]}
                             validateFirst={true}

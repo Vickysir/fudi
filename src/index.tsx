@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-22 16:37:38
- * @LastEditTime: 2021-03-22 18:15:29
+ * @LastEditTime: 2021-03-23 10:57:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/index.tsx
@@ -28,8 +28,8 @@ MyApp.start(
             // 启动的时候加载上次的数据，默认：true
             loadDataOnOpen: true,
         },
-        //（可选）数据中心数据。配置这个会覆盖掉MyStore标注的数据中心
-        storeData: {},
+        // //（可选）数据中心数据。配置这个会覆盖掉MyStore标注的数据中心
+        // storeData: {},
         onInit: () => {
             initAxiosConfig()
         },

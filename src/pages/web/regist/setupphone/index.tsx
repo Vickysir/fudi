@@ -1,17 +1,19 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-03-22 18:32:59
+ * @LastEditTime: 2021-03-23 09:51:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
  */
 import React, { useState } from 'react'
 import { Form, Input, Button, Select, message } from 'antd';
-import { ShakeOutlined } from '@ant-design/icons';
+import Icon from '@ant-design/icons';
+import iconFlagUK from '@/assets/images/common/icon/flag-UK.svg'
+import iconFlagLreland from '@/assets/images/common/icon/flag-Lreland.svg'
 import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
-import BaackTitle from '../../components/baackTitle';
+import BaackTitle from '@/pages/web/components/baackTitle';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { apiPath } from '@/pages/api';
@@ -62,11 +64,28 @@ const Setupphone = (props) => {
             bordered={false}
         >
             <Option value="+353">+353</Option>
-            <Option value="+86">+86</Option>
+            <Option value="+44">+44</Option>
         </Select>
     );
+    //根据用户手机区号的选择，更换flag
+    function SelectFlag(value: string) {
+        let content = null;
+        switch (value) {
+            case "+353":
+                content = <Icon component={iconFlagLreland} style={{ fontSize: "2.5rem" }} />
+                break;
+            case "+44":
+                content = <Icon component={iconFlagUK} style={{ fontSize: "2.5rem" }} />
+                break;
+            default:
+                content = <Icon component={iconFlagLreland} style={{ fontSize: "2.5rem" }} />
+        }
+        return content
+    }
+
     let storeAtt = useAppStore("registInfo");
-    console.log(`storeAtt`, storeAtt)
+    console.log(`registInfo`, storeAtt)
+    console.log('APP_STORE: ', APP_STORE);
     return (
         <>
             <WebHeader />
@@ -86,7 +105,7 @@ const Setupphone = (props) => {
                             <Input
                                 prefix={
                                     <>
-                                        <ShakeOutlined className="site-form-item-icon" style={{ "margin": "0 0 0 1rem" }} />
+                                        {SelectFlag(phonePrefix)}
                                         {selectBefore}
                                     </>
                                 }

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-05 10:04:05
- * @LastEditTime: 2021-03-23 13:53:22
+ * @LastEditTime: 2021-03-24 09:59:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/menu/index.tsx
@@ -14,10 +14,16 @@ import iconOrder from '@/assets/images/common/icon/icon-order.svg';
 import iconNott from '@/assets/images/common/icon/icon-nott.svg';
 import UploadAvatar from '../uploadAvatar';
 import { withRouter } from "react-router";
+import { RouteChildrenProps } from 'react-router-dom';
+import { SettingPageInfoPostResponse } from '@/pages/api/types/personalCenter';
 import './index.less'
 
-const LeftMenu = (props) => {
-    const { cRef } = props;
+interface Props extends RouteChildrenProps {
+    cRef: any;
+    userInfo: SettingPageInfoPostResponse
+}
+const LeftMenu = (props: Props) => {
+    const { cRef, userInfo } = props;
     const [selectedKeys, setselectedKeys] = useState(['1']);
     const handleClick = (e) => {
         const { history } = props;
@@ -63,7 +69,7 @@ const LeftMenu = (props) => {
 
     return (
         <div className="leftMenu-warp">
-            <UploadAvatar />
+            <UploadAvatar userInfo={userInfo} />
             <Menu
                 onClick={handleClick}
                 style={{ "width": "21.333rem", "paddingBottom": "2rem" }}
@@ -71,9 +77,9 @@ const LeftMenu = (props) => {
                 mode="inline"
                 selectedKeys={selectedKeys}
             >
-                <Menu.Item key="1" icon={<ShoppingOutlined />} >My Orders<span className="leftMenu-warp-count">1</span></Menu.Item>
+                <Menu.Item key="1" icon={<ShoppingOutlined />} >My Orders<span className="leftMenu-warp-count">{userInfo.orderNumber}</span></Menu.Item>
                 {/* <Menu.Item key="2" icon={<Icon component={iconNott} />} >My Vouchers</Menu.Item> */}
-                <Menu.Item key="2" icon={<ContainerOutlined />} >My Vouchers <span className="leftMenu-warp-count">1</span></Menu.Item>
+                <Menu.Item key="2" icon={<ContainerOutlined />} >My Vouchers <span className="leftMenu-warp-count">{userInfo.bonus}</span></Menu.Item>
                 <Menu.Item key="3" icon={<TeamOutlined />} >Invitate Friends</Menu.Item>
                 <Menu.Item key="4" icon={<BellOutlined />} >Notifications<span className="leftMenu-warp-count">1</span></Menu.Item>
                 <Menu.Item ><Divider /></Menu.Item>

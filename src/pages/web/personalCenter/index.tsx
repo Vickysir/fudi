@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 17:17:52
- * @LastEditTime: 2021-03-16 10:17:02
+ * @LastEditTime: 2021-03-24 09:21:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/index.tsx
  */
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button } from 'antd'
 import { ArrowLeftOutlined, } from '@ant-design/icons';
 import { HashRouter as Router, Route, withRouter } from 'react-router-dom'
@@ -21,12 +21,25 @@ import LeftMenu from './leftMenu'
 import WebHeader from '../../components/header/webHeader'
 import WebFooter from '../../components/header/webFooter'
 import './index.less'
+import { APISettingPageInfo } from '@/pages/api/request';
 
 
 const PersonalCenter = (props) => {
     const { history, location } = props;
     const childRef = useRef(null);
-
+    const [userInfo, setuserInfo] = useState(null);
+    useEffect(() => {
+        APISettingPageInfo()
+            .then((res) => {
+                console.log(`res`, res)
+                const { event, data } = res;
+                if (event === "SUCCESS") {
+                    setuserInfo(data);
+                }
+            }).catch((err) => {
+                console.log(`err`, err)
+            })
+    }, [])
     useEffect(() => {
         if (location.pathname = "/personalCenter/index") {
             updateChildState()
@@ -56,7 +69,7 @@ const PersonalCenter = (props) => {
                 </Button>
                 <div className="personalCenter-wrap-box">
                     <div>
-                        <LeftMenu cRef={childRef} />
+                        <LeftMenu cRef={childRef} userInfo={userInfo} />
                     </div>
                     <div>
                         <Router>

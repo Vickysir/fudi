@@ -10,6 +10,7 @@ import React from 'react'
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import './index.less'
+import { SettingPageInfoPostResponse } from '@/pages/api/types/personalCenter';
 
 function getBase64(img, callback) {
     const reader = new FileReader();
@@ -29,7 +30,10 @@ function beforeUpload(file) {
     return isJpgOrPng && isLt2M;
 }
 
-export default class UploadAvatar extends React.Component {
+interface Props {
+    userInfo: SettingPageInfoPostResponse
+}
+export default class UploadAvatar extends React.Component<Props> {
     state = {
         loading: false,
         imageUrl: ""
@@ -53,6 +57,7 @@ export default class UploadAvatar extends React.Component {
 
     render() {
         const { loading, imageUrl } = this.state;
+        const { userInfo } = this.props;
         const uploadButton = (
             <div>
                 {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -72,7 +77,7 @@ export default class UploadAvatar extends React.Component {
                 >
                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                 </Upload>
-                <h3>Daisy Murphy</h3>
+                <h3>{userInfo.nickname}</h3>
             </div>
 
         );

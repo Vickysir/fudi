@@ -9,8 +9,10 @@
 import React from 'react'
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import './index.less'
 import { SettingPageInfoPostResponse } from '@/pages/api/types/personalCenter';
+import { havePlaceholder } from '@/utils';
+import './index.less'
+
 
 function getBase64(img, callback) {
     const reader = new FileReader();
@@ -77,7 +79,7 @@ export default class UploadAvatar extends React.Component<Props> {
                 >
                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                 </Upload>
-                <h3>{userInfo.nickname}</h3>
+                <h3>{havePlaceholder(userInfo?.nickname, "")}</h3>
             </div>
 
         );

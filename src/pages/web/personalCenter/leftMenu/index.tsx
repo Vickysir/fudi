@@ -16,6 +16,8 @@ import UploadAvatar from '../uploadAvatar';
 import { withRouter } from "react-router";
 import { RouteChildrenProps } from 'react-router-dom';
 import { SettingPageInfoPostResponse } from '@/pages/api/types/personalCenter';
+import { havePlaceholder } from '@/utils';
+
 import './index.less'
 
 interface Props extends RouteChildrenProps {
@@ -77,9 +79,9 @@ const LeftMenu = (props: Props) => {
                 mode="inline"
                 selectedKeys={selectedKeys}
             >
-                <Menu.Item key="1" icon={<ShoppingOutlined />} >My Orders<span className="leftMenu-warp-count">{userInfo.orderNumber}</span></Menu.Item>
+                <Menu.Item key="1" icon={<ShoppingOutlined />} >My Orders<span className="leftMenu-warp-count">{havePlaceholder(userInfo?.orderNumber, "")}</span></Menu.Item>
                 {/* <Menu.Item key="2" icon={<Icon component={iconNott} />} >My Vouchers</Menu.Item> */}
-                <Menu.Item key="2" icon={<ContainerOutlined />} >My Vouchers <span className="leftMenu-warp-count">{userInfo.bonus}</span></Menu.Item>
+                <Menu.Item key="2" icon={<ContainerOutlined />} >My Vouchers <span className="leftMenu-warp-count">{havePlaceholder(userInfo?.bonus, "")}</span></Menu.Item>
                 <Menu.Item key="3" icon={<TeamOutlined />} >Invitate Friends</Menu.Item>
                 <Menu.Item key="4" icon={<BellOutlined />} >Notifications<span className="leftMenu-warp-count">1</span></Menu.Item>
                 <Menu.Item ><Divider /></Menu.Item>

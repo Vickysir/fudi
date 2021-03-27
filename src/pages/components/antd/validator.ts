@@ -8,9 +8,9 @@
  */
 
 //确认两次密码校验一致
-export const handleCfmPwd = (form) => {
+export const handleCfmPwd = (form, comparisonKey: string) => {
     return (rule, value, callback) => {
-        let password = form.getFieldsValue().password;
+        let password = form.getFieldsValue()[comparisonKey];
         if (password && password !== value) {
             callback('The two passwords do not match')
         } else {

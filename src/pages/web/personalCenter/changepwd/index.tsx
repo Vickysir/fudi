@@ -11,12 +11,15 @@ import { Form, Input, Button } from 'antd';
 import { LockOutlined, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 import InfoModel from './comfirm';
 import './index.less';
+import { handleCfmPwd } from '@/pages/components/antd/validator';
 
 
 
 const Changepwd = () => {
     const [isOpen, setisOpen] = useState(false);
     const [data, setdata] = useState(null);
+    const [form] = Form.useForm();
+
 
     const onClickOpen = () => {
         setisOpen(true);
@@ -38,6 +41,7 @@ const Changepwd = () => {
                     className="login-form"
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
+                    form={form}
                 >
                     <Form.Item
                         name="oldPassword"
@@ -65,7 +69,12 @@ const Changepwd = () => {
                     </Form.Item>
                     <Form.Item
                         name="againNewPassword"
-                        rules={[{ required: true, message: 'Please input your Confirm Password!' }]}
+                        rules={[
+                            { required: true, message: 'Please input your Confirm Password!' },
+                            { validator: handleCfmPwd(form, "newPassword") }
+
+                        ]}
+                        validateFirst={true}
                     >
                         <Input.Password
                             prefix={<LockOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}

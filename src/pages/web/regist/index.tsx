@@ -104,7 +104,7 @@ const Regist = (props) => {
                             name="againPassword"
                             rules={[
                                 { required: true, message: 'Please input your Confirm Password!' },
-                                { validator: handleCfmPwd(form) }
+                                { validator: handleCfmPwd(form, "password") }
 
                             ]}
                             validateFirst={true}

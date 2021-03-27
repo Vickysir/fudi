@@ -13,7 +13,7 @@ import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
 import BaackTitle from '../../../components/baackTitle';
 import { withRouter } from 'react-router-dom';
-import { LoginRegistPost } from '@/pages/api/types/login';
+import { LoginRegistPost } from '@/pages/api/types';
 import { APIRegist } from '@/pages/api/request';
 
 const PhoneVerification = (props) => {

@@ -7,8 +7,9 @@
  * @FilePath: /fudi/src/pages/web/personalCenter/sendQ/index.tsx
  */
 import React, { useState } from 'react'
-import { Button, Input } from 'antd'
+import { Button, Input, message } from 'antd'
 import './index.less'
+import { APISendSuggestions } from '@/pages/api/request';
 
 const { TextArea } = Input;
 const SendQ = () => {
@@ -19,6 +20,22 @@ const SendQ = () => {
         setcontent(content);
     };
 
+    const handelClickSendSuggestions = async () => {
+        try {
+            const { event } = await APISendSuggestions({ content })
+            if (event === "SUCCESS") {
+                message.success("Send a success");
+                setcontent("");
+            }
+        } catch (err) {
+            console.log(`err`, err)
+        }
+    }
+
+    const handelCancel = () => {
+        setcontent("");
+    };
+
     return (
         <div className="sendQ-wrap">
             <h3>Send Suggestion</h3>
@@ -27,10 +44,11 @@ const SendQ = () => {
                 allowClear
                 onChange={onChange}
                 autoSize={{ minRows: 6 }}
+                value={content}
             />
             <div>
-                <Button type="primary" shape="round" style={{ marginRight: "1rem" }}>Cancel</Button>
-                <Button type="primary" shape="round">Send</Button>
+                <Button type="primary" shape="round" style={{ marginRight: "1rem" }} onClick={handelCancel}>Cancel</Button>
+                <Button type="primary" shape="round" onClick={handelClickSendSuggestions}>Send</Button>
             </div>
         </div >
     )

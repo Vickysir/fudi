@@ -6,7 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: /GitHub/fudi/src/pages/web/homepage/index.tsx
  */
-import React from 'react'
+import React, { useEffect } from 'react'
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
 import homeBanner from '@/assets/images/fudi/home-banner.png';
@@ -27,8 +27,22 @@ import Icon from '@ant-design/icons';
 
 import style from '@/styles/theme/icon.less'
 import "./index.less"
+import { APIShopServicePhone } from '@/pages/api/request';
 
 const Homepage = () => {
+    useEffect(() => {
+        APIShopServicePhone()
+            .then((res) => {
+                console.log(`ShopServicePhone res`, res)
+                const { event, data } = res;
+                if (event === "SUCCESS") {
+
+                }
+            }).catch((err) => {
+                console.log(`ShopServicePhone err`, err)
+            })
+
+    }, [])
     return (
         <>
             <WebHeader />

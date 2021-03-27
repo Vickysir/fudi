@@ -1,10 +1,9 @@
-import { PersonalCenterInfor } from "./personalCenter";
 
 export interface PhoneVerificationCodePost {
     "phone": string//"+8613656690321"
 }
 export interface VerificationCodePostResponse {
-    token: string//"fbc9f41b02bd45e79a96264eb1371c97",
+    "token": string//"fbc9f41b02bd45e79a96264eb1371c97",
 }
 export interface LoginRegistPost {
     "phone": string//"12345678",
@@ -15,31 +14,71 @@ export interface LoginRegistPost {
     "token": string//"8e660612d2064a63917c935e3c3bbc7d", 
     "invitationCode"?: string//"dsfwefweashyju"
 }
-
-
 export interface LoginPost {
     "password": string//"helloworld",
     "name": string//"spring"
 }
-export interface LoginPostResponse {
-    token: string//"fbc9f41b02bd45e79a96264eb1371c97",
-    email: string//"460022058@qq.com"
-    nickname: string// "User_7193"
-    phone: string// "+447418310635"
+export interface ThirdPartyLogin {
+    "idToken": string
+    "FCMToken"?: string
 }
-
-
-
+export interface LoginPostResponse {
+    "token": string//"fbc9f41b02bd45e79a96264eb1371c97",
+    "email": string//"460022058@qq.com"
+    "nickname": string// "User_7193"
+    "phone": string// "+447418310635"
+}
 export interface EmailVerificationCodePost {
     "email": string//"25411150915@qq.com"
 }
-
 export interface ResetPwdPost {
     "password"?: string//"hell0w0rld1",
     "code"?: string//"0732",
     "email"?: string//"648728367@qq.com",
     "token"?: string//"f4ebd009b4bf4facbcfb86ae8d6d3362"
 }
+export interface SendSuggestionsPost {
+    "content": string
+}
+export interface PersonalCenterInfor {
+    "head": string// "public/4b84ab80964c4cf8b15000fadaab1c94",
+    "coupon": number//2,
+    "bonus": number//20001,
+    "nickname": string// "spring",
+    "id"?: number//5,
+    "order"?: number//0
+}
+export interface SettingPageInfoPostResponse extends PersonalCenterInfor {
+    "email": string//'460022058@qq.com'
+    "orderNumber": number//0
+    "collection": number//0
+    "phone": string//'+447418310635'
+}
+
+export interface FAQListPostResponseArray {
+    "answer": string
+    "question": string
+}
+export interface PersonalCenterUpdatePasswordPost {
+    "oldPassword": string//"HelloWorld",
+    "newPassword": string//"HelloWorld",
+    "againNewPassword": string//"HelloWorld"
+}
+export interface PersonalCenterUpdatePasswordPost {
+    "invitationCode": string//"dfe0"
+    "invitationList": []
+}
+export interface PersonalCenterObtainCouponPost {
+    "id"?: number//1
+    "code"?: string//dkmdc23
+}
+
+
+
+
+
+
+
 
 
 
@@ -99,17 +138,17 @@ export interface MapRangePostResponse {
     "event": "SUCCESS",
     "describe": ""
     "data": {
-        address: string
-        phone: string
-        latitude: number
-        longitude: number
-        name: string
-        id: number
-        positionList: {
-            label: string//"A"
-            latLngList: {
-                latitude: number
-                longitude: number
+        "address": string
+        "phone": string
+        "latitude": number
+        "longitude": number
+        "name": string
+        "id": number
+        "positionList": {
+            "label": string//"A"
+            "latLngList": {
+                "latitude": number
+                "longitude": number
             }[]
         }[]
     }[]

@@ -7,15 +7,13 @@
  * @FilePath: /fudi/src/pages/api/index.ts
  */
 export const apiPath = {
-    "regist": "/auth/register/v2",//regist
-    "login": "/auth/login",//login
-    "phoneVerificationCode": "/auth/register/phone/verification",//注册获取验手机证码
-    "emailVerificationCode": "/user/forget/password/email/verification",// Send email forgot password
-    "resetPwd": "/user/forget/password",// Reset password
-
-
+    "regist": "/auth/register/v2",//regist     一期✔️
+    "login": "/auth/login",//login     一期✔️
+    "phoneVerificationCode": "/auth/register/phone/verification",//注册获取验手机证码     一期✔️
+    "emailVerificationCode": "/user/forget/password/email/verification",// Send email forgot password     一期✔️
+    "resetPwd": "/user/forget/password",// Reset password     一期✔️
     "saveAddress": "/user/shipping_address/save",//save address
-    "addressList": "/user/shipping_address/list",//address list
+    "addressList": "/user/shipping_address/list",//address list     一期
     "mapRange": "/shop/range/label/list/v2",//map range
     "shopList": "/shop/list/v2/collection",//shop(restaurant) list
     "shopDetail": "/shop/detail/v2",//shop(restaurant) detail
@@ -24,19 +22,23 @@ export const apiPath = {
     "categoriesInFoodList": "/goods/list/v2",// Food list for other categories
     "foodDetail": "/goods/detail/v2",// food details
 
-    "sendAdvice": "/user/feedback/save",// Send Suggestions
-    "personalCenterInfo": "/user/my",// Info on Setting page
-
+    "sendSuggestions": "/user/feedback/save",// Send Suggestions     一期✔️
+    "personalCenterInfo": "/user/my",// Info on Setting page     一期
     "gets3UploadKey": "/auth/aws/sts/s3/put",// Get keys for S3(only used when uploading user icon)
     "personalCenterUpdatePhone": "/user/update/phone/v2",// Update phone number
     "personalCenterUpdateIcon": "/user/update/head",//Update user icon
-    "personalCenterUpdatePassword": "/user/update/password",//Update Password
-    "personalCenterUpdateCouponList": "/coupon/list/v2",//Get coupon list
-    "personalCenterObtainCoupon": "/user/coupon/obtain/v2",//Obtain the coupon code from the text field
-    "personalCenterUsableCoupon": "/user/coupon/usable",// return the useable coupon 
-    "personalCenterInvalidCoupon": "/user/coupon/invalid",// Return the expired coupon
-    "personalCenterInvitation": "/user/invitation",// Return if this user's invitation status
+    "personalCenterUpdatePassword": "/user/update/password",//Update Password     一期
+
+    "personalCenterCouponList": "/coupon/list/v2",//Get coupon list     一期
+    "personalCenterObtainCoupon": "/user/coupon/obtain/v2",//Obtain the coupon code from the text field     一期
+    "personalCenterUsableCoupon": "/user/coupon/usable",// return the useable coupon     一期
+    "personalCenterInvalidCoupon": "/user/coupon/invalid",// Return the expired coupon     一期
+
+    "personalCenterInvitation": "/user/invitation",// Return if this user's invitation status     一期
     "personalCenterUpdateNickname": "/user/update/nickname",// Update user name
-    "personalCenterOrderList": "/user/order/list/v2",// return the order list
-    "shopServicePhone": "/shop/custom_service_phone",// Get customer service phone number
+    "personalCenterOrderList": "/user/order/list/v2",// return the order list     一期
+    "shopServicePhone": "/shop/custom_service_phone",// Get customer service phone number     一期
+    "thirdPartyLogin": "/auth/login/third_party",// Third party login     
+    "FAQList": "/faq/list",// FAQ     一期✔️
+    "personalCenterUpdateEmail": "/faq/list",// Update email 
 }

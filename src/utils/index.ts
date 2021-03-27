@@ -5,7 +5,7 @@ export const havePlaceholder = (value: number | string | undefined | null, thePl
         case 0:
             content = thePlaceholderKey
             break;
-        default: value
+        default: content = value
             break;
     }
     return content

@@ -21,7 +21,7 @@ import LeftMenu from './leftMenu'
 import WebHeader from '../../components/header/webHeader'
 import WebFooter from '../../components/header/webFooter'
 import './index.less'
-import { APISettingPageInfo } from '@/pages/api/request';
+import { APISettingPageInfo, APISendSuggestions } from '@/pages/api/request';
 
 
 const PersonalCenter = (props) => {
@@ -32,13 +32,12 @@ const PersonalCenter = (props) => {
         APISettingPageInfo()
             .then((res) => {
                 console.log(`res`, res)
-                const { event, data } = res;
-                if (event === "SUCCESS") {
-                    setuserInfo(data);
-                }
+                const { data } = res;
+                setuserInfo(data);
             }).catch((err) => {
                 console.log(`err`, err)
             })
+
     }, [])
     useEffect(() => {
         if (location.pathname = "/personalCenter/index") {
@@ -54,6 +53,7 @@ const PersonalCenter = (props) => {
         // changeVal就是子组件暴露给父组件的方法
         childRef.current.changeVal({ key: "1" });
     }
+
 
     return (
         <>

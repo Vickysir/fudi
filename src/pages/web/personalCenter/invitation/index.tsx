@@ -6,12 +6,27 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/sendQ/index.tsx
  */
-import React from 'react'
-import { Button } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Button, Spin } from 'antd'
 import fb from '@/assets/images/common/login/fb.png'
 import './index.less'
+import { APIPersonalCenterInvitation } from '@/pages/api/request'
+import { PersonalCenterUpdatePasswordPost } from '@/pages/api/types'
 
 const Invitation = () => {
+    const [code, setcode] = useState("")
+    const [invitationList, setinvitationList] = useState([])
+    useEffect(() => {
+        APIPersonalCenterInvitation()
+            .then((res) => {
+                const { invitationCode, invitationList }: PersonalCenterUpdatePasswordPost = res.data;
+                setcode(invitationCode);
+                setinvitationList(invitationList);
+            })
+            .catch((err) => {
+                console.log(`err`, err)
+            })
+    }, [])
     return (
         <div className="invitation-wrap">
             <header>
@@ -21,7 +36,7 @@ const Invitation = () => {
             <div className="invitation-wrap-code">
                 <div>
                     Invite Code:
-                    <span>652a</span>
+                    <span>{code ? code : <Spin />}</span>
                 </div>
                 <div>
                     <Button type="primary" shape="round">Share Code</Button>
@@ -31,7 +46,7 @@ const Invitation = () => {
             <ul>
                 <li>
                     <h3>Invitations</h3>
-                    <p>5 Friends</p>
+                    <p>{invitationList.length} Friends</p>
                 </li>
                 <li className="invitation-wrap-friends">
                     <div>
@@ -45,7 +60,7 @@ const Invitation = () => {
                         <img src={fb} alt="icon" />
                         <h3>Opi Watihana</h3>
                     </div>
-                    <p className="invited">Complete</p>
+                    <p className="invited">invited</p>
                 </li>
             </ul>
         </div>

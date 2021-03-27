@@ -1,21 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, Button } from 'antd';
 import './index.less'
+import { PersonalCenterUpdatePasswordPost } from '@/pages/api/types';
+import { APIPersonalCenterUpdatePassword } from '@/pages/api/request';
 
-const InfoModel = (props) => {
+interface Props {
+    isOpen: boolean
+    submitData: PersonalCenterUpdatePasswordPost | null
+    onClose: () => void
+}
+const InfoModel = (props: Props) => {
     const [visible, setvisible] = useState(false)
-    const { isOpen, onClose } = props;
+    const { isOpen, submitData, onClose } = props;
 
     useEffect(() => {
         setvisible(isOpen);
     }, [isOpen])
 
 
-    const handleCancel = (e) => {
+    const handleCancel = () => {
         setvisible(false);
         onClose();
     }
-
+    const hanelOk = async () => {
+        // api 请求
+        try {
+            const { data } = await APIPersonalCenterUpdatePassword(submitData);
+            setvisible(false);
+            onClose();
+        } catch (err) {
+            console.log(`err`, err)
+        }
+    }
     return (
         <div>
             <Modal
@@ -28,11 +44,11 @@ const InfoModel = (props) => {
                     <header>Change Password</header>
                     <div>
                         <p>
-                            This voucher gives you -30% for the each delivery from 21 Jun 2021 till 21 Jul 2021.
+                            Are you sure with changing password?
                         </p>
                         <div>
-                            <Button type="primary" shape="round" style={{ marginRight: "2rem", width: "13rem" }}>Cancel</Button>
-                            <Button type="primary" shape="round" style={{ width: "13rem" }}>Ok</Button>
+                            <Button type="primary" shape="round" style={{ marginRight: "2rem", width: "13rem" }} onClick={handleCancel}>Cancel</Button>
+                            <Button type="primary" shape="round" style={{ width: "13rem" }} onClick={hanelOk}>Ok</Button>
                         </div>
                     </div>
                 </div>

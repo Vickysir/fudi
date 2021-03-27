@@ -15,10 +15,10 @@ import iconNott from '@/assets/images/common/icon/icon-nott.svg';
 import UploadAvatar from '../uploadAvatar';
 import { withRouter } from "react-router";
 import { RouteChildrenProps } from 'react-router-dom';
-import { SettingPageInfoPostResponse } from '@/pages/api/types/personalCenter';
 import { havePlaceholder } from '@/utils';
 
 import './index.less'
+import { SettingPageInfoPostResponse } from '@/pages/api/types';
 
 interface Props extends RouteChildrenProps {
     cRef: any;
@@ -27,6 +27,7 @@ interface Props extends RouteChildrenProps {
 const LeftMenu = (props: Props) => {
     const { cRef, userInfo } = props;
     const [selectedKeys, setselectedKeys] = useState(['1']);
+
     const handleClick = (e) => {
         const { history } = props;
         const selectedKeys = [];
@@ -64,10 +65,11 @@ const LeftMenu = (props: Props) => {
     useImperativeHandle(cRef, () => ({
         // changeVal 就是暴露给父组件的方法
         changeVal: (newVal) => {
-            console.log('调用成功', newVal);
+            // console.log('调用成功', newVal);
             handleClick(newVal);
         }
     }));
+
 
     return (
         <div className="leftMenu-warp">

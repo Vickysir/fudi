@@ -16,7 +16,7 @@ import WebHeader from '@/pages/components/header/webHeader';
 import BaackTitle from '@/pages/web/components/baackTitle';
 import { withRouter } from 'react-router-dom';
 import { APIPhoneVerificationCode } from '@/pages/api/request';
-import { PhoneVerificationCodePost } from '@/pages/api/types/login';
+import { PhoneVerificationCodePost } from '@/pages/api/types';
 
 
 

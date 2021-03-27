@@ -6,7 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/config/customStore.ts
  */
-import { LoginPostResponse, LoginRegistPost, ResetPwdPost } from '@/pages/api/types/login';
+import { LoginPostResponse, LoginRegistPost, ResetPwdPost } from '@/pages/api/types';
 import { Att, MyStore } from '../__internal';
 
 /**

@@ -16,6 +16,7 @@ import './index.less';
 
 const Changepwd = () => {
     const [isOpen, setisOpen] = useState(false);
+    const [data, setdata] = useState(null);
 
     const onClickOpen = () => {
         setisOpen(true);
@@ -25,6 +26,7 @@ const Changepwd = () => {
     }
     const onFinish = (values: any) => {
         console.log('Received values of form: ', values);
+        setdata(values);
         onClickOpen();
     };
     return (
@@ -62,7 +64,7 @@ const Changepwd = () => {
                         />
                     </Form.Item>
                     <Form.Item
-                        name="confirmPassword"
+                        name="againNewPassword"
                         rules={[{ required: true, message: 'Please input your Confirm Password!' }]}
                     >
                         <Input.Password
@@ -88,7 +90,7 @@ const Changepwd = () => {
                     </Form.Item>
                 </Form>
             </div>
-            <InfoModel isOpen={isOpen} onClose={onCloseInfo} />
+            <InfoModel isOpen={isOpen} onClose={onCloseInfo} submitData={data} />
         </div>
     )
 }

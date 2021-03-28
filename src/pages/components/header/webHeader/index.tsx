@@ -18,6 +18,8 @@ import { LoginOutlined, } from '@ant-design/icons';
 import { Link, withRouter } from 'react-router-dom'
 import style from '@/styles/theme/icon.less'
 import './index.less'
+import { useAppStore } from '@/__internal'
+import { openOnlineChat } from '@/utils'
 
 
 const WebHeader = (props) => {
@@ -25,6 +27,10 @@ const WebHeader = (props) => {
     const { pathname } = history.location;
     const token = APP_STORE.authInfo?.token;
     const isLogin = token && APP_STORE.authInfo?.nickname;
+    const storeAtt = useAppStore("commonInfo");
+    function handleClick() {
+        openOnlineChat(storeAtt?.shopServicePhone)
+    }
     function goTo() {
         history.push("/personalCenter/index?id=1")
     }
@@ -35,7 +41,7 @@ const WebHeader = (props) => {
                     <img src={imgphone} alt="imgphone" />
                     <span>+353 00 000 00 00</span>
                 </li>
-                <li>
+                <li onClick={handleClick}>
                     <Icon component={iconchat} className={style.iconFill} />
                     <span className="chat">Online Chat</span>
                 </li>

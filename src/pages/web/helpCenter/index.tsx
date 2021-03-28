@@ -13,9 +13,14 @@ import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
 import BaackTitle from '../components/baackTitle'
 import './index.less'
+import { openOnlineChat } from '@/utils'
+import { useAppStore } from '@/__internal'
 
 const HelpCenter = () => {
-
+    const storeAtt = useAppStore("commonInfo");
+    function handleClick() {
+        openOnlineChat(storeAtt?.shopServicePhone)
+    }
     return (
         <>
             <WebHeader />
@@ -28,6 +33,7 @@ const HelpCenter = () => {
                             type="primary"
                             size="large"
                             shape="round"
+                            onClick={handleClick}
                         >
                             Open Online Chat
                         </Button>

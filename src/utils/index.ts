@@ -10,3 +10,8 @@ export const havePlaceholder = (value: number | string | undefined | null, thePl
     }
     return content
 }
+
+export const openOnlineChat = (telphopne: string | number) => {
+    const tel = telphopne ? telphopne : 353000000023;
+    window.open(`https://wa.me/${tel}`)
+}

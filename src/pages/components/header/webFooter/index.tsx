@@ -13,14 +13,20 @@ import logo from '@/assets/images/fudi/logoWhite.svg'
 import { Avatar, Badge } from 'antd';
 import { Link } from 'react-router-dom';
 import './index.less'
+import { useAppStore } from '@/__internal';
+import { openOnlineChat } from '@/utils';
 
 const WebFooter = () => {
+    const storeAtt = useAppStore("commonInfo");
+    function handleClick() {
+        openOnlineChat(storeAtt?.shopServicePhone)
+    }
     return (
         <>
             <div className="webFooter">
                 <ul className="webFooter-tel">
                     <li><img src={iconphone} alt="iconphone" /><span>+353 00 000 00 00</span></li>
-                    <li><img src={iconchat} alt="iconchat" /><span>Online Chat</span></li>
+                    <li onClick={handleClick}><img src={iconchat} alt="iconchat" /><span>Online Chat</span></li>
                 </ul>
                 <img src={logo} alt="logo" />
                 <ul className="webFooter-menu">

@@ -1,3 +1,6 @@
+export interface CommonInfo {
+    "shopServicePhone": number
+}
 
 export interface PhoneVerificationCodePost {
     "phone": string//"+8613656690321"

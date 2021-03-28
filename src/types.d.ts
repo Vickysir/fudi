@@ -7,3 +7,6 @@ declare module '*.bmp'
 declare module '*.tiff'
 declare module '*.less'
 declare module '*.scss'
+declare module '*.ttf'
+declare module '*.woff';
+declare module '*.woff2';

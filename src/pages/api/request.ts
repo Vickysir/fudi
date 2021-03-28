@@ -104,6 +104,13 @@ export const APIPersonalCenterObtainCoupon = async (params: PersonalCenterObtain
 export const APIGets3UploadKey = async () => {
     return await axios.post<Gets3UploadKeyPostResponse>(apiPath.gets3UploadKey)
 }
+
+// accessKeyId: "ASIAUXKDVFS5CEWGBVRC"  "ASIAUXKDVFS5EJ3SMRVE"
+// expiration: 1616938542000
+// objectKey: "public/220d53c31810437b93a02fa8dc1fb85e"
+// secretAccessKey: "Ks/U1hxVoMIRgVa1kcRj5B+IjbnziYeby5q7wF/M"
+// sessionToken: "FwoGZXIvYXdzEA4aDBUSe0VNouU97dCXNiLAAnVZGP4080S6oX176A1Fh31BVP08b8Wc4H5AxmV5kLqDVQamIZOLubzaNIlVkV9pM6ZTvRFPo6vSBy/1QvfhcV0u2eJGajqkt4in+4/TjOre8hcFXu8ir4KvEGSBnJTUt5QY0/6eHH/xT5h+Y7s94e7uBiwjtPmsdUjl0Q8
+
 // 个人中心 上传头像
 export const APIPersonalCenterUpdateIcon = async (params: PersonalCenterUpdateIconPost) => {
     return await axios.post(apiPath.personalCenterUpdateIcon, params)

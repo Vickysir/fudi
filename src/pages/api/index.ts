@@ -29,7 +29,8 @@ export const apiPath = {
     "personalCenterUpdateIcon": "/user/update/head",//Update user icon     一期
     "personalCenterUpdatePassword": "/user/update/password",//Update Password     一期
 
-    "personalCenterCouponList": "/coupon/list/v2",//Get coupon list     一期
+    // "personalCenterCouponList": "/coupon/list/v2",//Get coupon list     一期
+    "personalCenterCouponList": "/coupon/list/received",//Get coupon list     一期
     "personalCenterObtainCoupon": "/user/coupon/obtain/v2",//Obtain the coupon code from the text field     一期
     "personalCenterUsableCoupon": "/user/coupon/usable",// return the useable coupon     一期
     "personalCenterInvalidCoupon": "/user/coupon/invalid",// Return the expired coupon     一期

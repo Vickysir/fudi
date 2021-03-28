@@ -15,7 +15,11 @@ import {
     SettingPageInfoPostResponse,
     FAQListPostResponseArray,
     PersonalCenterUpdatePasswordPost,
-    PersonalCenterObtainCouponPost
+    PersonalCenterObtainCouponPost,
+    Gets3UploadKeyPostResponse,
+    PersonalCenterUpdateIconPost,
+    SaveAddressPost,
+    AddressListPostResponse
 } from './types';
 
 // 注册  获取手机验证码
@@ -30,7 +34,6 @@ export const APIRegist = async (params: LoginRegistPost) => {
 export const APILogin = async (params: LoginPost) => {
     return await axios.post<LoginPostResponse>(apiPath.login, params)
 }
-
 // 忘记密码  获取邮箱code
 export const APIEmailVerificationCode = async (params: EmailVerificationCodePost) => {
     return await axios.post<VerificationCodePostResponse>(apiPath.emailVerificationCode, params)
@@ -59,10 +62,6 @@ export const APIShopServicePhone = async () => {
 export const APISettingPageInfo = async () => {
     return await axios.post<SettingPageInfoPostResponse>(apiPath.personalCenterInfo)
 }
-// 个人中心 获取 adress list
-export const APIUserAddressList = async () => {
-    return await axios.post(apiPath.addressList)
-}
 // 个人中心 send 建议
 export const APISendSuggestions = async (params: SendSuggestionsPost) => {
     return await axios.post(apiPath.sendSuggestions, params)
@@ -71,6 +70,8 @@ export const APISendSuggestions = async (params: SendSuggestionsPost) => {
 export const APIPersonalCenterUpdatePassword = async (params: PersonalCenterUpdatePasswordPost) => {
     return await axios.post(apiPath.personalCenterUpdatePassword, params)
 }
+
+
 // 个人中心 邀请朋友
 export const APIPersonalCenterInvitation = async () => {
     return await axios.post<PersonalCenterUpdatePasswordPost>(apiPath.personalCenterInvitation)
@@ -79,6 +80,8 @@ export const APIPersonalCenterInvitation = async () => {
 export const APIPersonalCenterOrderList = async () => {
     return await axios.post(apiPath.personalCenterOrderList)
 }
+
+
 // 个人中心 my Vouchers
 export const APIPersonalCenterCouponList = async () => {
     return await axios.post(apiPath.personalCenterCouponList)
@@ -94,4 +97,37 @@ export const APIPersonalCenterInvalidCoupon = async () => {
 // 个人中心 添加优惠券
 export const APIPersonalCenterObtainCoupon = async (params: PersonalCenterObtainCouponPost) => {
     return await axios.post(apiPath.personalCenterObtainCoupon, params)
+}
+
+
+// aws 获取 key
+export const APIGets3UploadKey = async () => {
+    return await axios.post<Gets3UploadKeyPostResponse>(apiPath.gets3UploadKey)
+}
+// 个人中心 上传头像
+export const APIPersonalCenterUpdateIcon = async (params: PersonalCenterUpdateIconPost) => {
+    return await axios.post(apiPath.personalCenterUpdateIcon, params)
+}
+
+
+
+// 个人中心 修改信息  Nickname
+export const APIPersonalCenterUpdateNickname = async () => {
+    return await axios.post(apiPath.personalCenterUpdateNickname)
+}
+// 个人中心 修改信息  Email
+export const APIPersonalCenterUpdateEmail = async (params: EmailVerificationCodePost) => {
+    return await axios.post(apiPath.personalCenterUpdateEmail, params)
+}
+// 个人中心 修改信息  Phone
+export const APIPersonalCenterUpdatePhone = async () => {
+    return await axios.post(apiPath.personalCenterUpdatePhone)
+}
+// 个人中心 获取 adress list
+export const APIUserAddressList = async () => {
+    return await axios.post<AddressListPostResponse>(apiPath.addressList)
+}
+// 个人中心 保存 adress 
+export const APISaveAddress = async (params: SaveAddressPost) => {
+    return await axios.post(apiPath.saveAddress, params)
 }

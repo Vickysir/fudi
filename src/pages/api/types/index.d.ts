@@ -72,27 +72,16 @@ export interface PersonalCenterObtainCouponPost {
     "id"?: number//1
     "code"?: string//dkmdc23
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export interface Gets3UploadKeyPostResponse {
+    "accessKeyId": string//"ASIA2UHYAPVRLFDWHDVT",
+    "secretAccessKey": string//"JuoVS9rdrL2Xmq9toAhSpfsJzcysGqUmBznpQggP",
+    "sessionToken": string//"FQoGZXIvYXdzEMj//////////wEaDKdch18OXdkYE4CehSLjAoMyO6msWGFVp32Gcer+dpmKUUZi2HwifZnokxR3oLA5ZwP7/pvQByEhWz2PkpID3BwfgCXaonHcd2Gau6+yO8Jpkv2yF/fxFlZrRuBnqn73On0LUNJ3BubqYspIeVNFOxx07WKGF5znKNiqGQ3PYNYn56IKEs0b2W27V10pgiIwkEjqW64xSbq6lGAX8zyW8o+fA06mucs7ZQe27sCvFEvd/HeL6wT2dIK6tnx3EX1nzecmEhVMUOrBT/cVRvwX400GsRvkKLTBWLz40pMJ+OTZvT2FdZRnXiCyZENjDSo5QdowVT2mJexDjyZ8rzFb26TIt9nniTbQDFzUS0Ad0XSIxqZMFxqNgoEXrDovTXFAMpEQuevrxNxnnAnTjaNM/RIggXfe243rsDZnoyQjCyiz1eEUIc+kAnFe2eXqQ5d80dRngE7iKYJTgnd1wiZ3mEfsY7u+EaidpfcpZ3NZIwYk3lcorvOM3QU=",
+    "expiration": string//1537427390000,
+    "objectKey": string//"public/9d5b5e63e9d74c2cabc11a79aea76ec3"
+}
+export interface PersonalCenterUpdateIconPost {
+    "head": string//"public/6668fa286a2a4bde946389f422a98cf7"
+}
 export interface SaveAddressPost {
     "zipCode": string//"310000",
     "consignee": string//"this is user name",
@@ -134,6 +123,33 @@ export interface AddressListPostResponse {
     }],
     "describe": ""
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export interface MapRangePostResponse {
     "event": "SUCCESS",
     "describe": ""

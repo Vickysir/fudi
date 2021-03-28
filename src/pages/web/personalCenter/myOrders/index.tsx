@@ -6,11 +6,12 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/sendQ/index.tsx
  */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { InfoCircleOutlined, HistoryOutlined } from '@ant-design/icons';
 import AddReview from './addReview';
 import SendSuccess from './sendSuccess';
 import './index.less'
+import { APIPersonalCenterOrderList } from '@/pages/api/request';
 
 
 
@@ -32,10 +33,19 @@ const MyOrders = () => {
         setissend(false);
     }
 
+    useEffect(() => {
+        APIPersonalCenterOrderList()
+            .then((res) => {
+                console.log(`APIPersonalCenterOrderList res`, res)
+            })
+            .catch((err) => {
+                console.log(`APIPersonalCenterOrderList err`, err)
+            })
+    }, [])
     return (
         <div className="myOrders-wrap">
             <div>
-                <h3>Active</h3>
+                <h3 style={{ marginTop: 0 }}>Active</h3>
                 <div className="myOrders-wrap-list">
                     <ul className="myOrders-wrap-list-title">
                         <li>Jungle Pizza <span>·</span> Delivery <span>·</span> 3Item <span>·</span> €71</li>

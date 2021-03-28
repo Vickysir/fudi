@@ -6,18 +6,31 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/coupons/index.tsx
  */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input, Row, Col } from 'antd';
 import { ContainerOutlined, PlusOutlined } from '@ant-design/icons';
 import VouchersInfo from './info';
 import './index.less'
+import { APIPersonalCenterCouponList, APIPersonalCenterInvalidCoupon, APIPersonalCenterObtainCoupon, APIPersonalCenterUsableCoupon } from '@/pages/api/request';
 
 
 
 const { Search } = Input;
-const sendQ = () => {
+const Vouchers = () => {
     const [isOpen, setisOpen] = useState(false);
-    const onSearch = value => console.log(value);
+    const handleAddVouchers = (value: string) => {
+        console.log(value);
+        if (value) {
+            APIPersonalCenterObtainCoupon({ code: value })
+                .then((res) => {
+                    console.log(`APIPersonalCenterCouponList res`, res)
+                })
+                .catch((err) => {
+                    console.log(`APIPersonalCenterCouponList err`, err)
+                })
+        }
+
+    }
 
     const onClickOpen = () => {
         setisOpen(true);
@@ -25,7 +38,30 @@ const sendQ = () => {
     const onCloseInfo = () => {
         setisOpen(false);
     }
+    useEffect(() => {
+        APIPersonalCenterCouponList()
+            .then((res) => {
+                console.log(`APIPersonalCenterCouponList res`, res)
+            })
+            .catch((err) => {
+                console.log(`APIPersonalCenterCouponList err`, err)
+            })
+        APIPersonalCenterUsableCoupon()
+            .then((res) => {
+                console.log(`APIPersonalCenterUsableCoupon res`, res)
+            })
+            .catch((err) => {
+                console.log(`APIPersonalCenterUsableCoupon err`, err)
+            })
+        APIPersonalCenterInvalidCoupon()
+            .then((res) => {
+                console.log(`APIPersonalCenterInvalidCoupon res`, res)
+            })
+            .catch((err) => {
+                console.log(`APIPersonalCenterInvalidCoupon err`, err)
+            })
 
+    }, [])
     return (
         <div className="vouchers-wrap">
             <header>
@@ -33,7 +69,7 @@ const sendQ = () => {
                 <Search
                     placeholder="Add Voucher Code"
                     allowClear
-                    onSearch={onSearch}
+                    onSearch={handleAddVouchers}
                     enterButton={<PlusOutlined />}
                     prefix={<ContainerOutlined style={{ "margin": "0 0.5rem" }} />}
                     style={{ "width": 300 }}
@@ -84,4 +120,4 @@ const sendQ = () => {
     )
 }
 
-export default sendQ
+export default Vouchers

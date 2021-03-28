@@ -30,14 +30,14 @@ export function initAxiosConfig() {
         config.headers.common['Authorization-Version'] = version;
         config.headers.common['Authorization-Timestamp'] = timestamp;
         config.headers.common['Accept-Language'] = "en-US";
-        console.log('token', token)
-        console.log('config', config)
+        // config.headers.common['Content-Type'] = "application/json";
+
         return config
     });
 
     axios.interceptors.response.use(
         response => {
-            let data = response.data as IcustomResponse;
+            let data = response.data as ICustomResponse;
             if (data.event == "SUCCESS") {
                 return data as any;
             } else {

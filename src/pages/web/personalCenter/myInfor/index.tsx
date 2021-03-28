@@ -6,16 +6,27 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/myInfor/index.tsx
  */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { MailOutlined, UserOutlined, PhoneOutlined, CreditCardOutlined, EnvironmentOutlined, HomeOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import './index.less';
+import { APIPersonalCenterUpdateEmail } from '@/pages/api/request';
 
 const MyInfor = () => {
 
     const onFinish = (values: any) => {
         console.log('Received values of form: ', values);
     };
+    useEffect(() => {
+        // APIPersonalCenterUpdateEmail({ email: "460022058@qq.com" })
+        //     .then((res) => {
+        //         console.log(`APIPersonalCenterUpdateEmail res`, res)
+        //         const { data } = res;
+        //     }).catch((err) => {
+        //         console.log(`APIPersonalCenterUpdateEmail err`, err)
+        //     })
+
+    }, [])
 
     return (
         <div className="myInfor-wrap">

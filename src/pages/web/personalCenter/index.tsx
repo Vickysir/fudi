@@ -31,11 +31,11 @@ const PersonalCenter = (props) => {
     useEffect(() => {
         APISettingPageInfo()
             .then((res) => {
-                console.log(`res`, res)
+                console.log(`APISettingPageInfo res`, res)
                 const { data } = res;
                 setuserInfo(data);
             }).catch((err) => {
-                console.log(`err`, err)
+                console.log(`APISettingPageInfo err`, err)
             })
 
     }, [])

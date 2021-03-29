@@ -23,10 +23,7 @@ const Shop = () => {
     const [rateValue, setrateValue] = useState(1)
     const suffix = (
         <SearchOutlined
-            style={{
-                fontSize: 16,
-                color: '#1890ff',
-            }}
+            className="shop-theme-color"
         />
     );
 
@@ -57,6 +54,7 @@ const Shop = () => {
                                     tooltips={desc}
                                     onChange={handleChange}
                                     value={rateValue}
+                                    className="shop-theme-color"
                                 />
                                 {rateValue ? <span className="ant-rate-text shop-rate">{desc[rateValue - 1]}</span> : ''}
                             </span>
@@ -65,9 +63,9 @@ const Shop = () => {
                             </span>
                         </div>
                         <ul>
-                            <li><FieldTimeOutlined />09:00 - 21:00</li>
-                            <li><EnvironmentOutlined />5 Castle St, Centre, Cork</li>
-                            <li><Icon component={iconchat} className={style.iconFill} />Online Chart</li>
+                            <li><FieldTimeOutlined className="shop-icon" />09:00 - 21:00</li>
+                            <li><EnvironmentOutlined className="shop-icon" />5 Castle St, Centre, Cork</li>
+                            <li><Icon component={iconchat} className={`${style.iconFill} shop-icon`} />Online Chart</li>
                         </ul>
                     </div>
                     <div className="shop-wrap-shopDesc-search">
@@ -80,8 +78,8 @@ const Shop = () => {
                         </div>
                         <div style={{ "width": "100%", "textAlign": "center" }}>
                             <Input
-                                style={{ "width": "30%" }}
-                                placeholder="input search text"
+                                style={{ "width": "45%", "paddingLeft": "2rem", "paddingRight": "2rem" }}
+                                placeholder="Search"
                                 size="large"
                                 suffix={suffix}
                                 onChange={onSearch}

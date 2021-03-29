@@ -7,7 +7,7 @@
         position: relative;
         &-button{
             position: absolute;
-            left: 5%;
+            left: 11.42rem;
             top: 8%;
         }
     }
@@ -31,6 +31,9 @@
                 width:100%;
                 display: flex;
                 justify-content:center;
+                .shop-theme-color{
+                    color: @theme-color;
+                }
                 .shop-rate{
                     font-size: @title26;
                     color:@theme-color;
@@ -48,6 +51,10 @@
                 margin-top:5rem;
                 font-size: @title22;
                 color: @theme-gray;
+                .shop-icon{
+                    margin-right: 0.5rem;
+                    color: @theme-color;
+                }
             }
         }
         &-search{
@@ -64,6 +71,13 @@
     }
     &-shopCategoriesList{
         background:@theme-moreWhite;
-        padding-top:40rem
+        padding: 40rem 11.25% 5rem;
+        h1{
+            font-size: 60px;
+            font-weight: 600;
+            color: @theme-color;
+            text-align: center;
+            margin:4.1667rem 0;
+        }
     }
 }

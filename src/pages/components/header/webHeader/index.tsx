@@ -51,7 +51,7 @@ const WebHeader = (props) => {
                     <img src={logoOne} alt="logo" />
                 </Link>
             </div>
-            <ul className="webHeader-menu">
+            {/* <ul className="webHeader-menu">
                 {
                     !isLogin &&
                     <li>
@@ -86,7 +86,7 @@ const WebHeader = (props) => {
                     </>
                 }
 
-            </ul>
+            </ul> */}
         </div>
     )
 }

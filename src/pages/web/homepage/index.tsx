@@ -30,19 +30,19 @@ import "./index.less"
 import { APIShopServicePhone } from '@/pages/api/request';
 
 const Homepage = () => {
-    useEffect(() => {
-        APIShopServicePhone()
-            .then((res) => {
-                console.log(`ShopServicePhone res`, res)
-                const { event, data } = res;
-                if (event === "SUCCESS") {
+    // useEffect(() => {
+    //     APIShopServicePhone()
+    //         .then((res) => {
+    //             console.log(`ShopServicePhone res`, res)
+    //             const { event, data } = res;
+    //             if (event === "SUCCESS") {
 
-                }
-            }).catch((err) => {
-                console.log(`ShopServicePhone err`, err)
-            })
+    //             }
+    //         }).catch((err) => {
+    //             console.log(`ShopServicePhone err`, err)
+    //         })
 
-    }, [])
+    // }, [])
     return (
         <>
             <WebHeader />

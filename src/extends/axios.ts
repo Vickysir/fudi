@@ -17,6 +17,9 @@ import { message } from 'antd';
 export function initAxiosConfig() {
     axios.defaults.baseURL = APP_CONFIG?.api;
     axios.defaults.timeout = 10000; //响应时间
+    axios.defaults.headers.get['Content-Type'] = 'application/json; charse=UTF-8'
+    axios.defaults.headers.post['Content-Type'] = 'application/json; charse=UTF-8'
+
     axios.interceptors.request.use((config) => {
         // let browser = getBrowser();
         const api = config.url;
@@ -30,7 +33,8 @@ export function initAxiosConfig() {
         config.headers.common['Authorization-Version'] = version;
         config.headers.common['Authorization-Timestamp'] = timestamp;
         config.headers.common['Accept-Language'] = "en-US";
-        // config.headers.common['Content-Type'] = "application/json";
+        // config.headers['Content-Type'] = 'application/json; charset=UTF-8'
+        console.log(`config`, config)
 
         return config
     });

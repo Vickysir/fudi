@@ -1,0 +1,69 @@
+.shop-wrap{
+    position: relative;
+    &-banner{
+        height: 33.333rem;
+        background: #7d7d7d;
+        opacity: 0.8;
+        position: relative;
+        &-button{
+            position: absolute;
+            left: 5%;
+            top: 8%;
+        }
+    }
+    &-shopDesc{
+        width: 56.77%;
+        position: absolute;
+        left: 50%;
+        top: 20rem;
+        transform: translate(-50%,0);
+        border-radius: 1rem;
+        background-color: @theme-white;
+        &-box{
+            padding: 3.333rem 4.1667rem;
+            >h1{
+                width:100%;
+                text-align: center;
+                font-size: @title60;
+                font-weight: 600;
+            }
+            >div{
+                width:100%;
+                display: flex;
+                justify-content:center;
+                .shop-rate{
+                    font-size: @title26;
+                    color:@theme-color;
+                }
+                .shop-reviews{
+                    font-size: @title26;
+                    color:@theme-lessGray;
+                    margin-left: 1rem;
+                }
+            }
+            >ul{
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                margin-top:5rem;
+                font-size: @title22;
+                color: @theme-gray;
+            }
+        }
+        &-search{
+            padding: 5.833rem 4.1667rem;
+            background:@theme-moreWhite;
+            >div:first-child{
+                width: 100%;
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                margin-bottom: 2rem;
+            }
+        }
+    }
+    &-shopCategoriesList{
+        background:@theme-moreWhite;
+        padding-top:40rem
+    }
+}

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 13:55:48
- * @LastEditTime: 2021-03-22 13:44:31
+ * @LastEditTime: 2021-03-29 10:40:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/routes/index.tsx
@@ -19,6 +19,7 @@ import Setupphone from "@/pages/web/regist/setupphone";
 import FAQ from "@/pages/web/FAQ";
 import HelpCenter from "@/pages/web/helpCenter";
 import PersonalCenter from "@/pages/web/personalCenter";
+import Shop from "@/pages/web/shop";
 
 
 
@@ -36,6 +37,7 @@ export function WebRoutes() {
         <Route path="/faq" component={FAQ} />
         <Route path="/helpCenter" component={HelpCenter} />
         <Route path="/personalCenter" component={PersonalCenter} />
+        <Route path="/shop" component={Shop} />
     </Router>
 }
 

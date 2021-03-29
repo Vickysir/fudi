@@ -12,6 +12,7 @@ import applestore from '@/assets/images/common/applestore.png'
 import phoneframe from '@/assets/images/fudi/phone-frame.png'
 import phonescreen from '@/assets/images/fudi/phone-screen.png'
 import './index.less'
+import { openAppStore } from '@/utils'
 
 const MobileDowmloadmarket = () => {
     return (
@@ -21,10 +22,10 @@ const MobileDowmloadmarket = () => {
                     <h3>Download Our App</h3>
                 </li>
                 <li>
-                    <img src={applestore} alt="app store" />
+                    <img src={applestore} alt="app store" onClick={() => openAppStore("IOS")} />
                 </li>
                 <li>
-                    <img src={googlestore} alt="google store" />
+                    <img src={googlestore} alt="google store" onClick={() => openAppStore("Android")} />
                 </li>
             </ul>
             <div className="mobile-dowmloadmarket-phone">

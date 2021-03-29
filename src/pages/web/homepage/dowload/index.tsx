@@ -12,6 +12,7 @@ import applestore from '@/assets/images/common/applestore.png'
 import phoneframe from '@/assets/images/fudi/phone-frame.png'
 import phonescreen from '@/assets/images/fudi/phone-screen.png'
 import './index.less'
+import { openAppStore } from '@/utils'
 
 const Dowmloadmarket = () => {
     return (
@@ -23,8 +24,8 @@ const Dowmloadmarket = () => {
                     <p>experience starts now!</p>
                 </li>
                 <li>
-                    <img src={applestore} alt="app store" />
-                    <img src={googlestore} alt="google store" />
+                    <img src={applestore} alt="app store" onClick={() => openAppStore("IOS")} />
+                    <img src={googlestore} alt="google store" onClick={() => openAppStore("Android")} />
                 </li>
             </ul>
             <div className="dowmloadmarket-phone">

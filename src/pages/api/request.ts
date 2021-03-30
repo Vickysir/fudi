@@ -54,7 +54,7 @@ export const APIFAQList = async () => {
 }
 // shopServicePhone
 export const APIShopServicePhone = async () => {
-    return await axios.get(apiPath.shopServicePhone)
+    return await axios.post(apiPath.shopServicePhone, { "shopId": 1 })
 }
 
 
@@ -78,13 +78,13 @@ export const APIPersonalCenterInvitation = async () => {
 }
 // 个人中心 my order
 export const APIPersonalCenterOrderList = async () => {
-    return await axios.post(apiPath.personalCenterOrderList)
+    return await axios.post(apiPath.personalCenterOrderList, { "shopId": 1 })
 }
 
 
 // 个人中心 my Vouchers
 export const APIPersonalCenterCouponList = async () => {
-    return await axios.post(apiPath.personalCenterCouponList)
+    return await axios.post(apiPath.personalCenterCouponList, { "shopId": 1 })
 }
 // 个人中心 有效的 Vouchers
 export const APIPersonalCenterUsableCoupon = async () => {

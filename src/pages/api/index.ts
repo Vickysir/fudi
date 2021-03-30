@@ -37,7 +37,7 @@ export const apiPath = {
 
     "personalCenterInvitation": "/user/invitation",// Return if this user's invitation status     一期
     "personalCenterUpdateNickname": "/user/update/nickname",// Update user name     一期     
-    "personalCenterOrderList": "/user/order/list/v2",// return the order list     一期
+    "personalCenterOrderList": "/user/order/list/v3",// return the order list     一期
     "shopServicePhone": "/shop/custom_service_phone",// Get customer service phone number     一期
     "thirdPartyLogin": "/auth/login/third_party",// Third party login     一期     
     "FAQList": "/faq/list",// FAQ     一期✔️

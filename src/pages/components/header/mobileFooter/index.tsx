@@ -6,12 +6,19 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/components/header/webFooter/index.tsx
  */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import iconphone from './images/icon-phone.svg'
 import logo from '@/assets/images/fudi/logoWhite.svg'
 import './index.less'
+import { useAppStore } from '@/__internal'
 
 const MobileFooter = () => {
+    const commonInfo = useAppStore("commonInfo");
+    const [storeInfo, setStoreInfo] = useState(null)
+
+    useEffect(() => {
+        setStoreInfo(commonInfo);
+    }, [commonInfo])
     return (
         <>
             <div className="mobileFooter">
@@ -19,7 +26,11 @@ const MobileFooter = () => {
                     <img src={logo} alt="logo" />
                 </div>
             </div>
-            <div className="mobileFooter-tel"><img src={iconphone} alt="iconphone" /><span>+353 00 000 00 00</span></div>
+            {
+                storeInfo?.shopServicePhone ?
+                    <div className="mobileFooter-tel"><img src={iconphone} alt="iconphone" /><span>{storeInfo.shopServicePhone}</span></div>
+                    : <div></div>
+            }
             <div className="mobileFooter-copyright"> © 2020 Fudi&more. All rights reserved</div>
         </>
     )

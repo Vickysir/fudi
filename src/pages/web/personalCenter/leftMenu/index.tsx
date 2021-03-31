@@ -15,7 +15,7 @@ import iconNott from '@/assets/images/common/icon/icon-nott.svg';
 import UploadAvatar from '../uploadAvatar';
 import { withRouter } from "react-router";
 import { RouteChildrenProps } from 'react-router-dom';
-import { havePlaceholder } from '@/utils';
+import { clearStore, havePlaceholder } from '@/utils';
 
 import './index.less'
 import { SettingPageInfoPostResponse } from '@/pages/api/types';
@@ -55,7 +55,7 @@ const LeftMenu = (props: Props) => {
             case "7": history.push("/personalCenter/sendQ")
                 break;
             case "8":
-                APP_STORE.authInfo = null;
+                clearStore();
                 history.push("/login");
                 break;
             default: history.push("/personalCenter/myOrders")

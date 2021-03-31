@@ -26,3 +26,10 @@ export const openAppStore = (type: string) => {
 
     }
 }
+
+export const clearStore = () => {
+    APP_STORE.authInfo = null
+    APP_STORE.registInfo = null
+    APP_STORE.resetPwdInfo = null
+    APP_STORE.commonInfo = null
+}

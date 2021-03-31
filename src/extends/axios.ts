@@ -51,7 +51,7 @@ export function initAxiosConfig() {
                 {//异常code举例：处理401
                     if (data.event == "UNAUTHORIZED") {//认证失败
                         APP_STORE?.clear();
-                        window.location.reload();
+                        // window.location.reload();
                     }
                 }
                 message.error(data.describe);

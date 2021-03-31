@@ -28,24 +28,28 @@ import Icon from '@ant-design/icons';
 import style from '@/styles/theme/icon.less'
 import "./index.less"
 import { APIShopServicePhone } from '@/pages/api/request';
+import { useAppStore } from '@/__internal';
 
 const Homepage = () => {
-    useEffect(() => {
-        APIShopServicePhone()
-            .then((res) => {
-                console.log(`ShopServicePhone res`, res)
-                const { event, data } = res;
-                if (event === "SUCCESS") {
+    const commonInfo = useAppStore("commonInfo");
 
-                }
-            }).catch((err) => {
-                console.log(`ShopServicePhone err`, err)
-            })
+    useEffect(() => {
+        if (commonInfo?.shopId) {
+            APIShopServicePhone(commonInfo.shopId)
+                .then((res) => {
+                    console.log(`ShopServicePhone res`, res)
+                    const { data } = res;
+                    APP_STORE.commonInfo.shopServicePhone = data.phone;
+                }).catch((err) => {
+                    console.log(`ShopServicePhone err`, err)
+                })
+        }
 
     }, [])
     return (
         <>
-            <WebHeader />
+            // TODO
+            <WebHeader commonInfo={commonInfo} />
             <div className="homepage-banner">
                 <img src={homeBanner} alt="banner" />
                 <p>Are You Hungry?</p>

@@ -6,7 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/components/header/webHeader/index.tsx
  */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import imgphone from '@/assets/images/common/imgs/img-phone.svg'
 import iconchat from '@/assets/images/common/icon/icon-chat.svg'
 import iconnott from '@/assets/images/common/icon/icon-nott.svg'
@@ -15,37 +15,50 @@ import logoOne from '@/assets/images/fudi/logoOne.svg'
 import { Avatar, Badge, Button } from 'antd';
 import Icon from '@ant-design/icons';
 import { LoginOutlined, } from '@ant-design/icons';
-import { Link, withRouter } from 'react-router-dom'
+import { Link, RouteChildrenProps, withRouter } from 'react-router-dom'
 import style from '@/styles/theme/icon.less'
 import './index.less'
 import { useAppStore } from '@/__internal'
 import { openOnlineChat } from '@/utils'
+import { CommonInfo } from '@/pages/api/types'
 
-
-const WebHeader = (props) => {
-    const { history } = props;
+interface Props extends RouteChildrenProps {
+    commonInfo: CommonInfo | null
+}
+const WebHeader = (props: Props) => {
+    const { history, commonInfo } = props;
     const { pathname } = history.location;
     const token = APP_STORE.authInfo?.token;
     const isLogin = token && APP_STORE.authInfo?.nickname;
-    const storeAtt = useAppStore("commonInfo");
+    const info = useAppStore("commonInfo");
+    const [storeInfo, setStoreInfo] = useState(commonInfo)
+
     function handleClick() {
-        openOnlineChat(storeAtt?.shopServicePhone)
+        openOnlineChat(commonInfo?.shopServicePhone)
     }
     function goTo() {
         history.push("/personalCenter/index?id=1")
     }
+    // TODO
+    useEffect(() => {
+        setStoreInfo(info);
+    }, [commonInfo])
     return (
         <div className="webHeader">
-            <ul className="webHeader-tel">
-                <li>
-                    <img src={imgphone} alt="imgphone" />
-                    <span>+353 00 000 00 00</span>
-                </li>
-                <li onClick={handleClick}>
-                    <Icon component={iconchat} className={style.iconFill} />
-                    <span className="chat">Online Chat</span>
-                </li>
-            </ul>
+            {
+                storeInfo?.shopServicePhone ?
+                    <ul className="webHeader-tel">
+                        <li>
+                            <img src={imgphone} alt="imgphone" />
+                            <span>{storeInfo.shopServicePhone}</span>
+                        </li>
+                        <li onClick={handleClick}>
+                            <Icon component={iconchat} className={style.iconFill} />
+                            <span className="chat">Online Chat</span>
+                        </li>
+                    </ul>
+                    : <ul></ul>
+            }
             <div className="webHeader-logo">
                 <Link to="/home">
                     <img src={logoOne} alt="logo" />

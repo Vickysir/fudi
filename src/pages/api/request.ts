@@ -19,8 +19,10 @@ import {
     Gets3UploadKeyPostResponse,
     PersonalCenterUpdateIconPost,
     SaveAddressPost,
-    AddressListPostResponse
+    AddressListPostResponse,
+    ShopServicePhoneResponse
 } from './types';
+
 
 // 注册  获取手机验证码
 export const APIPhoneVerificationCode = async (params: PhoneVerificationCodePost) => {
@@ -53,8 +55,8 @@ export const APIFAQList = async () => {
     return await axios.get<FAQListPostResponseArray[]>(apiPath.FAQList)
 }
 // shopServicePhone
-export const APIShopServicePhone = async () => {
-    return await axios.post(apiPath.shopServicePhone, { "shopId": 1 })
+export const APIShopServicePhone = async (shopId: number) => {
+    return await axios.post<ShopServicePhoneResponse>(apiPath.shopServicePhone, { shopId })
 }
 
 

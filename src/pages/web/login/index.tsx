@@ -53,6 +53,10 @@ const Login = (props) => {
                 console.log('data', data);
                 message.success("Login successful")
                 APP_STORE.authInfo = { ...data };
+                // TODO
+                APP_STORE.commonInfo = {
+                    shopId: 1
+                };
                 history.push("/home");
             }
         } catch (err) {

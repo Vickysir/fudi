@@ -18,13 +18,13 @@ export class CustomStore {
     //                  项目需要的共享数据定义在这里
     //----------------------------------------------------
     @Att
-    authInfo: IAuthInfo;
+    registInfoauthInfo: IAuthInfo | null;
     @Att
-    registInfo: LoginRegistPost;
+    registInfo: LoginRegistPost | null;
     @Att
-    resetPwdInfo: ResetPwdPost;
+    resetPwdInfo: ResetPwdPost | null;
     @Att
-    commonInfo: CommonInfo;
+    commonInfo: CommonInfo | null
 }
 
 /**

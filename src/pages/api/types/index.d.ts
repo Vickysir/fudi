@@ -1,5 +1,6 @@
 export interface CommonInfo {
-    "shopServicePhone": number
+    "shopServicePhone"?: string,
+    "shopId"?: number,
 }
 
 export interface PhoneVerificationCodePost {
@@ -62,6 +63,10 @@ export interface FAQListPostResponseArray {
     "answer": string
     "question": string
 }
+export interface ShopServicePhoneResponse {
+    "phone": string
+}
+
 export interface PersonalCenterUpdatePasswordPost {
     "oldPassword": string//"HelloWorld",
     "newPassword": string//"HelloWorld",

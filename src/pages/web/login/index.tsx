@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 14:36:13
- * @LastEditTime: 2021-03-23 13:51:45
+ * @LastEditTime: 2021-04-01 10:41:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /GitHub/fudi/src/pages/web/login/index.tsx
@@ -49,11 +49,9 @@ const Login = (props) => {
         try {
             const { event, data } = await APILogin(values);
             if (event === "SUCCESS") {
-                console.log('event', event);
-                console.log('data', data);
                 message.success("Login successful")
                 APP_STORE.authInfo = { ...data };
-                // TODO
+                // TODO  shopId
                 APP_STORE.commonInfo = {
                     shopId: 1
                 };

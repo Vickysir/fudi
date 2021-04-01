@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-22 16:32:14
- * @LastEditTime: 2021-03-23 14:19:54
+ * @LastEditTime: 2021-04-01 11:03:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/config/customStore.ts
@@ -18,7 +18,7 @@ export class CustomStore {
     //                  项目需要的共享数据定义在这里
     //----------------------------------------------------
     @Att
-    registInfoauthInfo: IAuthInfo | null;
+    authInfo: IAuthInfo | null;
     @Att
     registInfo: LoginRegistPost | null;
     @Att

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 09:43:16
- * @LastEditTime: 2021-03-04 14:32:35
+ * @LastEditTime: 2021-04-01 11:07:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/components/header/webFooter/index.tsx
@@ -14,11 +14,7 @@ import { useAppStore } from '@/__internal'
 
 const MobileFooter = () => {
     const commonInfo = useAppStore("commonInfo");
-    const [storeInfo, setStoreInfo] = useState(null)
 
-    useEffect(() => {
-        setStoreInfo(commonInfo);
-    }, [commonInfo])
     return (
         <>
             <div className="mobileFooter">
@@ -27,8 +23,8 @@ const MobileFooter = () => {
                 </div>
             </div>
             {
-                storeInfo?.shopServicePhone ?
-                    <div className="mobileFooter-tel"><img src={iconphone} alt="iconphone" /><span>{storeInfo.shopServicePhone}</span></div>
+                commonInfo?.shopServicePhone ?
+                    <div className="mobileFooter-tel"><img src={iconphone} alt="iconphone" /><span>{commonInfo.shopServicePhone}</span></div>
                     : <div></div>
             }
             <div className="mobileFooter-copyright"> © 2020 Fudi&more. All rights reserved</div>

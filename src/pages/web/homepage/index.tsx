@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 13:43:37
- * @LastEditTime: 2021-03-09 11:12:15
+ * @LastEditTime: 2021-04-01 10:49:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /GitHub/fudi/src/pages/web/homepage/index.tsx
@@ -39,7 +39,10 @@ const Homepage = () => {
                 .then((res) => {
                     console.log(`ShopServicePhone res`, res)
                     const { data } = res;
-                    APP_STORE.commonInfo.shopServicePhone = data.phone;
+                    APP_STORE.commonInfo={
+                        ...APP_STORE.commonInfo,
+                        shopServicePhone: data.phone
+                    } 
                 }).catch((err) => {
                     console.log(`ShopServicePhone err`, err)
                 })
@@ -48,8 +51,7 @@ const Homepage = () => {
     }, [])
     return (
         <>
-            // TODO
-            <WebHeader commonInfo={commonInfo} />
+            <WebHeader />
             <div className="homepage-banner">
                 <img src={homeBanner} alt="banner" />
                 <p>Are You Hungry?</p>

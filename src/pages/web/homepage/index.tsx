@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 13:43:37
- * @LastEditTime: 2021-04-01 10:49:12
+ * @LastEditTime: 2021-04-01 11:10:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /GitHub/fudi/src/pages/web/homepage/index.tsx
@@ -37,7 +37,6 @@ const Homepage = () => {
         if (commonInfo?.shopId) {
             APIShopServicePhone(commonInfo.shopId)
                 .then((res) => {
-                    console.log(`ShopServicePhone res`, res)
                     const { data } = res;
                     APP_STORE.commonInfo={
                         ...APP_STORE.commonInfo,

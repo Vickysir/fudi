@@ -76,6 +76,9 @@ export interface PersonalCenterUpdatePasswordPost {
     "invitationCode": string//"dfe0"
     "invitationList": []
 }
+export interface PersonalCenterOrderListResponse {
+    // TODO 换有数据的账号，对接order
+}
 export interface PersonalCenterObtainCouponPost {
     "id"?: number//1
     "code"?: string//dkmdc23

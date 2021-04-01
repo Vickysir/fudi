@@ -11,7 +11,8 @@ import { Button, Spin } from 'antd'
 import fb from '@/assets/images/common/login/fb.png'
 import './index.less'
 import { APIPersonalCenterInvitation } from '@/pages/api/request'
-import { PersonalCenterUpdatePasswordPost } from '@/pages/api/types'
+import { PersonalCenterInvitationPost } from '@/pages/api/types'
+import { invitateFriendsStaus, INVITATEFRIENDS_COMPLETE } from '@/utils/constant'
 
 const Invitation = () => {
     const [code, setcode] = useState("")
@@ -19,7 +20,7 @@ const Invitation = () => {
     useEffect(() => {
         APIPersonalCenterInvitation()
             .then((res) => {
-                const { invitationCode, invitationList }: PersonalCenterUpdatePasswordPost = res.data;
+                const { invitationCode, invitationList }: PersonalCenterInvitationPost = res.data;
                 setcode(invitationCode);
                 setinvitationList(invitationList);
             })
@@ -48,20 +49,19 @@ const Invitation = () => {
                     <h3>Invitations</h3>
                     <p>{invitationList.length} Friends</p>
                 </li>
-                <li className="invitation-wrap-friends">
-                    <div>
-                        <img src={fb} alt="icon" />
-                        <h3>Opi Watihana</h3>
-                    </div>
-                    <p className="complete">Complete</p>
-                </li>
-                <li className="invitation-wrap-friends">
-                    <div>
-                        <img src={fb} alt="icon" />
-                        <h3>Opi Watihana</h3>
-                    </div>
-                    <p className="invited">invited</p>
-                </li>
+                {
+                    invitationList.map((item, index) => {
+                        return (
+                            <li className="invitation-wrap-friends">
+                                <div>
+                                    <img src={fb} alt="icon" />
+                                    <h3>{item.inviteesUserNickname}</h3>
+                                </div>
+                                <p className={item.status === INVITATEFRIENDS_COMPLETE ? "complete" : "invited"}>{invitateFriendsStaus.get(item.status)}</p>
+                            </li>
+                        )
+                    })
+                }
             </ul>
         </div>
     )

@@ -72,12 +72,37 @@ export interface PersonalCenterUpdatePasswordPost {
     "newPassword": string//"HelloWorld",
     "againNewPassword": string//"HelloWorld"
 }
-export interface PersonalCenterUpdatePasswordPost {
+export interface PersonalCenterInvitationPost {
     "invitationCode": string//"dfe0"
-    "invitationList": []
+    "invitationList": {
+        "create_Time": number//1610617576000
+        "id": number//67
+        "inviteesUserNickname": string//"User_6488"
+        "status": number//1
+    }[]
 }
-export interface PersonalCenterOrderListResponse {
-    // TODO 换有数据的账号，对接order
+export interface PersonalCenterOrderListPost {
+    "shopId": number,
+    "status"?: number,
+}
+export interface PersonalCenterOrderListPostResponse {
+    actualAmount: number//34.9  付款金额
+    createTime: number//1615275355000
+    deliveryType: number//0
+    id: string//"D-A3FQC"
+    paymentType: number//1
+    status: number//3
+    goodsList: {
+        id: number// 98
+        thumbnail: string//"public/c57c7179be3b415fb02d124a9f1f2ddd"
+        title: string//"Bang Bang Chicken"
+        userOrderDetailId: number//596410
+    }[]
+    shop: {
+        id: number// 1
+        name: string//"Edenhall"
+        thumbnail: string//"public/0aff270dd06c4812b32c77b165b5ecf0"
+    }[]
 }
 export interface PersonalCenterObtainCouponPost {
     "id"?: number//1

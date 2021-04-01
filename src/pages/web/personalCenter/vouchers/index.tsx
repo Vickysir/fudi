@@ -67,8 +67,10 @@ const Vouchers = () => {
             })
 
     }, [])
+    const nodataStyle = data.length > 0 ? "" : "nodata"
+
     return (
-        <div className="vouchers-wrap">
+        <div className={"vouchers-wrap " + nodataStyle}>
             {
                 data.length > 0 ?
                     <>

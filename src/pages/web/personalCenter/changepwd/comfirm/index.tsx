@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Modal, Button } from 'antd';
+import { Modal, Button, message } from 'antd';
 import './index.less'
 import { PersonalCenterUpdatePasswordPost } from '@/pages/api/types';
 import { APIPersonalCenterUpdatePassword } from '@/pages/api/request';
@@ -26,6 +26,7 @@ const InfoModel = (props: Props) => {
         // api 请求
         try {
             const { data } = await APIPersonalCenterUpdatePassword(submitData);
+            message.success("Password changed successfully")
             setvisible(false);
             onClose();
         } catch (err) {

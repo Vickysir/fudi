@@ -20,7 +20,9 @@ import {
     PersonalCenterUpdateIconPost,
     SaveAddressPost,
     AddressListPostResponse,
-    ShopServicePhoneResponse
+    ShopServicePhoneResponse,
+    PersonalCenterOrderListPost,
+    PersonalCenterInvitationPost
 } from './types';
 
 
@@ -76,15 +78,16 @@ export const APIPersonalCenterUpdatePassword = async (params: PersonalCenterUpda
 
 // 个人中心 邀请朋友
 export const APIPersonalCenterInvitation = async () => {
-    return await axios.post<PersonalCenterUpdatePasswordPost>(apiPath.personalCenterInvitation)
+    return await axios.post<PersonalCenterInvitationPost>(apiPath.personalCenterInvitation)
 }
 // 个人中心 my order
-export const APIPersonalCenterOrderList = async () => {
-    return await axios.post(apiPath.personalCenterOrderList, { "shopId": 1 })
+export const APIPersonalCenterOrderList = async (params: PersonalCenterOrderListPost) => {
+    return await axios.post(apiPath.personalCenterOrderList, params)
 }
 
 
-// 个人中心 my Vouchers
+// 个人中心 my Vouchers 
+//TODO shopId
 export const APIPersonalCenterCouponList = async () => {
     return await axios.post(apiPath.personalCenterCouponList, { "shopId": 1 })
 }

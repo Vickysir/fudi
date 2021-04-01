@@ -25,7 +25,7 @@ import Shop from "@/pages/web/shop";
 
 export function WebRoutes() {
     return <Router>
-        {/* <Route exact path="/" render={() => <Redirect to="/home" />} /> */}
+        <Route exact path="/" render={() => <Redirect to="/home" />} />
         <Route path="/home" component={Homepage} />
         {/* <CheckTokenRoute path="/home" component={Web} /> */}
         <Route path="/login" component={Login} />

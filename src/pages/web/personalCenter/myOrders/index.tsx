@@ -13,6 +13,8 @@ import AddReview from './addReview';
 import SendSuccess from './sendSuccess';
 import './index.less'
 import { APIPersonalCenterOrderList } from '@/pages/api/request';
+import { useAppStore } from '@/__internal';
+
 
 
 
@@ -21,6 +23,8 @@ const MyOrders = () => {
     const [isOpen, setisOpen] = useState(false)
     const [issend, setissend] = useState(false)
     const [data, setData] = useState([])
+    const commonInfo = useAppStore("commonInfo");
+
 
     const addReview = () => {
         console.log('open')
@@ -36,7 +40,11 @@ const MyOrders = () => {
     }
 
     useEffect(() => {
-        APIPersonalCenterOrderList()
+        const params = {
+            shopId: commonInfo.shopId,
+            // status: 1
+        }
+        APIPersonalCenterOrderList(params)
             .then((res) => {
                 console.log(`APIPersonalCenterOrderList res`, res)
                 setData(res.data);
@@ -45,8 +53,9 @@ const MyOrders = () => {
                 console.log(`APIPersonalCenterOrderList err`, err)
             })
     }, [])
+    const nodataStyle = data.length > 0 ? "" : "nodata"
     return (
-        <div className="myOrders-wrap">
+        <div className={"myOrders-wrap " + nodataStyle}>
             {
                 data.length > 0 ?
                     <>

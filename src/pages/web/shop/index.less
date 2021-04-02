@@ -70,6 +70,11 @@
         }
     }
     &-shopCategoriesList{
+        &-box{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
         background:@theme-moreWhite;
         padding: 40rem 11.25% 5rem;
         h1{
@@ -78,6 +83,24 @@
             color: @theme-color;
             text-align: center;
             margin:4.1667rem 0;
+        }
+        h3{
+            text-align: center;
+            font-size: @title26;
+            font-weight: 600;
+        }
+        h6{
+            font-size: @title18;
+            text-align: center;
+            color: @theme-lessGray;
+            >span{
+                color: @theme-color;
+            }
+        }
+        p{
+            font-size: @title16;
+            text-align: center;
+            color: @theme-lessGray;
         }
     }
 }

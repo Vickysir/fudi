@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-29 09:25:46
- * @LastEditTime: 2021-03-29 11:44:10
+ * @LastEditTime: 2021-04-02 19:26:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/shop/index.tsx
@@ -90,17 +90,59 @@ const Shop = () => {
                 <div className="shop-wrap-shopCategoriesList">
                     <div>
                         <h1>Pizza</h1>
-                        <div>
+                        <div className="shop-wrap-shopCategoriesList-box">
                             <Card
+                                style={{ width: "24%", marginBottom: "2rem" }}
                                 hoverable
-                                style={{ width: 240 }}
                                 cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
                             >
-                                <Meta title="Design your Own 14’’ pizza" description="Starts from € 3 / portion" />
-                                <Button type="primary" size="large" shape="round">Order</Button>
+                                <h3>Design your Own 14’’ pizza</h3>
+                                <h6>Starts from <span>€ 3 / portion</span></h6>
+                                <p>Tomato sauce, mozzarella, parmesan, eggs, and bacon."</p>
+                                <Button type="primary" shape="round" block>Order</Button>
+                            </Card>
+                            <Card
+                                style={{ width: "24%", marginBottom: "2rem" }}
+                                hoverable
+                                cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                            >
+                                <h3>Design your Own 14’’ pizza</h3>
+                                <h6>Starts from <span>€ 3 / portion</span></h6>
+                                <Button type="primary" shape="round" block>Order</Button>
+                            </Card>
+                            <Card
+                                style={{ width: "24%", marginBottom: "2rem" }}
+                                hoverable
+                                cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                            >
+                                <h3>Design your Own 14’’ pizza</h3>
+                                <h6>Starts from <span>€ 3 / portion</span></h6>
+                                <p>Tomato sauce, mozzarella, parmesan, eggs, and bacon."</p>
+                                <Button type="primary" shape="round" block>Order</Button>
+                            </Card>
+                            <Card
+                                style={{ width: "24%", marginBottom: "2rem" }}
+                                hoverable
+                                cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                            >
+                                <h3>Design your Own 14’’ pizza</h3>
+                                <h6>Starts from <span>€ 3 / portion</span></h6>
+                                <p>Tomato sauce, mozzarella, parmesan, eggs, and bacon."</p>
+                                <Button type="primary" shape="round" block>Order</Button>
+                            </Card>
+                            <Card
+                                style={{ width: "24%", marginBottom: "2rem" }}
+                                hoverable
+                                cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                            >
+                                <h3>Design your Own 14’’ pizza</h3>
+                                <h6>Starts from <span>€ 3 / portion</span></h6>
+                                <p>Tomato sauce, mozzarella, parmesan, eggs, and bacon."</p>
+                                <Button type="primary" shape="round" block>Order</Button>
                             </Card>
                         </div>
                     </div>
+
                 </div>
             </div>
             <WebFooter />

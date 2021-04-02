@@ -1,12 +1,15 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 14:36:13
- * @LastEditTime: 2021-04-02 17:21:50
+ * @LastEditTime: 2021-04-01 10:41:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /GitHub/fudi/src/pages/web/login/index.tsx
  */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useGoogleLogin } from 'react-google-login'
+import AppleLogin from 'react-apple-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import { Link, withRouter } from 'react-router-dom'
 import { Form, Input, Button, message } from 'antd';
 import { MailOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
@@ -14,60 +17,31 @@ import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
 import google from '@/assets/images/common/login/google.png'
 import fb from '@/assets/images/common/login/fb.png'
-import { APILogin, APIThirdPartyLogin } from '@/pages/api/request';
+import apple from '@/assets/images/common/login/apple.png'
+import { APILogin } from '@/pages/api/request';
 import './index.less'
-import firebase from 'firebase';
-import { firebaseConfig } from '@/utils/firebase';
 
 
 
 const Login = (props) => {
     const { history } = props;
     const [form] = Form.useForm();
-    firebase.initializeApp(firebaseConfig)
-
-    
+    const { signIn, loaded } = useGoogleLogin({
+        onSuccess: onSuccess,
+        onFailure: onFailure,
+        clientId: "473960765414-67u4bo8orupa8fbps4ic47v8sr9i2oca.apps.googleusercontent.com",
+    })
 
     // 第三方授权  登录
-    function onGoogleSignIn() {
-        const  provider  =  new  firebase.auth.GoogleAuthProvider() ;
-        firebase.auth ()
-        .signInWithPopup ( provider )
-        .then ( ( result )  =>  {
-            console.log(`result`, result)
-            const  credential  =  result.credential ;
-            const  token  =  credential.accessToken ;
-            APIThirdPartyLogin({"idToken":token}).then((res)=>{
-                console.log(`APIThirdPartyLogin`, res)
-            }).catch((err) => {
-                console.log(`err`, err)
-            })
-
-        } ) . catch ( ( error )  =>  {
-            console.log(`error`, error)
-        } ) ;
-
+    function onSignIn() {
+        signIn()
     }
-    function onFacebookSignIn() {
-        const  provider  =  new  firebase.auth.FacebookAuthProvider() ;
-        firebase.auth ()
-        .signInWithPopup ( provider )
-        .then ( ( result )  =>  {
-            console.log(`result`, result)
-            const  credential  =  result.credential ;
-            const  token  =  credential.idToken ;
-            APIThirdPartyLogin({"idToken":token}).then((res)=>{
-                console.log(`APIThirdPartyLogin`, res)
-            }).catch((err) => {
-                console.log(`err`, err)
-            })
-
-        } ) . catch ( ( error )  =>  {
-            console.log(`error`, error)
-        } ) ;
-
+    function onSuccess(res) {
+        console.log('^^^^^^^^^^res', res)
     }
-
+    function onFailure(error) {
+        console.log('^^^^^^^^^^error', error)
+    }
 
     // 表单 登录
     const onFinish = async (values: any) => {
@@ -77,7 +51,7 @@ const Login = (props) => {
             if (event === "SUCCESS") {
                 message.success("Login successful")
                 APP_STORE.authInfo = { ...data };
-                // TODO  设置shopId
+                // TODO  shopId
                 APP_STORE.commonInfo = {
                     shopId: 1
                 };
@@ -144,8 +118,22 @@ const Login = (props) => {
                     </Form>
                 </div>
                 <div className="login-form-thirdparty">
-                    <img src={google} alt="icon" onClick={onGoogleSignIn} />
-                    <img src={fb} onClick={onFacebookSignIn} alt="icon" />
+                    <img src={google} alt="icon" onClick={onSignIn} />
+                    <FacebookLogin
+                        appId="127554539221626"
+                        callback={onSuccess}
+                        render={renderProps => (
+                            <img src={fb} onClick={renderProps.onClick} alt="icon" />
+                        )}
+                    />
+                    <AppleLogin
+                        clientId="com.react.apple.login"
+                        redirectURI="http://localhost:8585"
+                        callback={onSuccess}
+                        render={(renderProps) =>
+                            <img src={apple} onClick={renderProps.onClick} alt="icon" />
+                        }
+                    />
                 </div>
                 <div className="login-form-regist">
                     Don’t have an account?<Link to='/regist'>Sign Up</Link>

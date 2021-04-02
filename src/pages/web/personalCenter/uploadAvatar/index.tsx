@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-05 13:42:46
- * @LastEditTime: 2021-03-05 13:53:53
+ * @LastEditTime: 2021-04-02 15:05:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/uploadAvatar/index.tsx
@@ -13,6 +13,8 @@ import { havePlaceholder } from '@/utils';
 import './index.less'
 import { SettingPageInfoPostResponse } from '@/pages/api/types';
 import { APIGets3UploadKey } from '@/pages/api/request';
+// import { AWSuploadS3, uploadParams } from '@/utils/uploadUseS3';
+import UploadComponent from '@/pages/components/antd/upload';
 
 interface Props {
     userInfo: SettingPageInfoPostResponse
@@ -26,6 +28,12 @@ export default class UploadAvatar extends React.Component<Props> {
 
     }
     handleChange = info => {
+        console.log(`info`, info.file)
+        const formData = new FormData();
+        formData.append('Bucket', 'fudiandmore-web');
+        formData.append('Key', '/images/');
+        formData.append('Body', info.file);
+        // AWSuploadS3(formData);
         if (info.file.status === 'uploading') {
             this.setState({ loading: true });
             return;
@@ -52,17 +60,24 @@ export default class UploadAvatar extends React.Component<Props> {
         );
         return (
             <div className="upload-box">
-                <Upload
+                {/* <Upload
                     name="avatar"
                     listType="picture-card"
                     className="avatar-uploader upload-box-avatar"
                     showUploadList={false}
-                    action=""
                     beforeUpload={beforeUpload}
                     onChange={this.handleChange}
                 >
                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-                </Upload>
+                </Upload> */}
+                <UploadComponent  
+                    showUploadList={false}
+                    className="avatar-uploader upload-box-avatar"
+                    listType="picture-card"
+                    name="avatar"
+                >
+                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                </UploadComponent>
                 <h3>{havePlaceholder(userInfo?.nickname, "-")}</h3>
             </div>
 

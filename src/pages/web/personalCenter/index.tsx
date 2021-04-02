@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 17:17:52
- * @LastEditTime: 2021-03-24 09:21:06
+ * @LastEditTime: 2021-04-02 09:30:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/index.tsx
@@ -21,7 +21,7 @@ import LeftMenu from './leftMenu'
 import WebHeader from '../../components/header/webHeader'
 import WebFooter from '../../components/header/webFooter'
 import './index.less'
-import { APISettingPageInfo, APISendSuggestions } from '@/pages/api/request';
+import { APISettingPageInfo } from '@/pages/api/request';
 
 
 const PersonalCenter = (props) => {
@@ -31,7 +31,6 @@ const PersonalCenter = (props) => {
     useEffect(() => {
         APISettingPageInfo()
             .then((res) => {
-                console.log(`APISettingPageInfo res`, res)
                 const { data } = res;
                 setuserInfo(data);
             }).catch((err) => {

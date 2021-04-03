@@ -15,41 +15,45 @@ import { APIGets3UploadKey } from '@/pages/api/request';
 import { PropsType } from 'antd-mobile/lib/date-picker';
 
 
-interface Props{
-    showUploadList:boolean
-    [index:string]:any
+interface Props {
+  showUploadList: boolean
+  storagePath?: {
+    bucket?: string,
+    key?: string
+  }
+  [index: string]: any
 }
 interface IParam {
-  onProgress?: ({}:any, f: UploadFile) => void;
+  onProgress?: ({ }: any, f: UploadFile) => void;
   onSuccess?: () => void;
   onError: () => void;
   file: UploadFile & { webkitRelativePath: string };
 }
 export default class UploadComponent extends React.Component<Props> {
-  public S3token :IS3Config|{} = {}; // 您的S3临时令牌
-  public bucket: string = 'fudiandmore-web'; // 您要上传到的bucket名字
-  public key: string = 'images/'; // bucket下面的路径
-  private upload = (param:UploadRequestOption) => {
+  public S3token: IS3Config | {} = {}; // 您的S3临时令牌
+  public bucket: string = this.props?.storagePath?.bucket; // 您要上传到的bucket名字
+  public key: string = this.props?.storagePath?.key; // bucket下面的路径
+  private upload = (param: UploadRequestOption) => {
     console.log(`this.S3token`, this.S3token)
-    V_Upload(this.S3token, this.bucket, this.key, param)
+    V_Upload(this.S3token, param, this.bucket, this.key)
   }
-    async componentDidMount(){
-        const { data } = await APIGets3UploadKey();
-        this.S3token={
-            AccessKeyId: data.accessKeyId,
-            SecretAccessKey:data.secretAccessKey,
-            SessionToken:data.sessionToken
-        }        
+  async componentDidMount() {
+    const { data } = await APIGets3UploadKey();
+    this.S3token = {
+      AccessKeyId: data.accessKeyId,
+      SecretAccessKey: data.secretAccessKey,
+      SessionToken: data.sessionToken
+    }
   }
-  public render () {
-      console.log(`this.props`, this.props)
+  public render() {
+    console.log(`this.props`, this.props)
     return (
-      <Upload 
+      <Upload
         customRequest={this.upload}
         {...this.props}
-        >
+      >
 
-       { this.props.children}
+        { this.props.children}
       </Upload>
     );
   }

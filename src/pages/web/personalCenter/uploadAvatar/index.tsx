@@ -70,7 +70,7 @@ export default class UploadAvatar extends React.Component<Props> {
                 >
                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                 </Upload> */}
-                <UploadComponent  
+                <UploadComponent
                     showUploadList={false}
                     className="avatar-uploader upload-box-avatar"
                     listType="picture-card"

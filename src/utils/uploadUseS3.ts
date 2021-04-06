@@ -51,7 +51,7 @@ const defaultStorage = {
 	region: "eu-west-1",
 	apiVersion: "2006-03-01",
 	Bucket: "fudiandmore",
-	Key: "public/"
+	Key: "public"
 }
 
 
@@ -86,12 +86,23 @@ export interface IUpload {
 }
 export const V_Upload = (s3Config: IS3Config, body: UploadRequestOption, bucket?: string, key?: string): void => {
 	const s3 = createS3(s3Config); //传入您的S3令牌
+
+	const albumPhotosKey = key ? key : defaultStorage.Key;
+	const photoKey = encodeURIComponent(albumPhotosKey) + "/" + body.file.name;
+
 	const uploadParams = {
-		Body: body.file, // 是文件类型
+		Body: body.file, // 文件
 		Bucket: bucket ? bucket : defaultStorage.Bucket, // 对应S3上的bucket
-		Key: key ? key : defaultStorage.Key, // 需要上传到的路径
+		Key: photoKey // 需要上传到的路径
 	}
 	console.log(`uploadParams`, uploadParams)
+	s3.upload(uploadParams, function (err, data) {
+		if (err) {
+			console.log("Error", err);
+		} if (data) {
+			console.log("Upload Success", data.Location);
+		}
+	});
 	// s3.putObject( // s3上面的putObject方法 第一个参数是一个对象，第二个参数是一个函数，函数有两个值，1.表示上传失败，2.表示上传成功
 	//     uploadParams,
 	//   (err: AWSError, resp: PutObjectOutput) => {
@@ -113,13 +124,7 @@ export const V_Upload = (s3Config: IS3Config, body: UploadRequestOption, bucket?
 	//     }
 	//   });
 
-	s3.upload(uploadParams, function (err, data) {
-		if (err) {
-			console.log("Error", err);
-		} if (data) {
-			console.log("Upload Success", data.Location);
-		}
-	});
+
 };
 
 

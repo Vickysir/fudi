@@ -11,6 +11,7 @@ import { MailOutlined, UserOutlined, PhoneOutlined, CreditCardOutlined, Environm
 import { Button, Form, Input } from 'antd';
 import './index.less';
 import { APIPersonalCenterUpdateEmail } from '@/pages/api/request';
+import EditInput from '../../components/editInput';
 
 const MyInfor = () => {
 
@@ -72,6 +73,12 @@ const MyInfor = () => {
                         style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
                     />
                 </Form.Item>
+                {/* <Form.Item
+                    name="test"
+                    rules={[{ required: true, message: 'test' }]}
+                >
+                    <EditInput />
+                </Form.Item> */}
                 <Form.Item>
                     <h3 className="myInfor-wrap-title">Edit My Address</h3>
                 </Form.Item>

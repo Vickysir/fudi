@@ -41,7 +41,7 @@ const MyOrders = () => {
 
     useEffect(() => {
         const params = {
-            shopId: commonInfo.shopId,
+            shopId: commonInfo?.shopId,
             // status: 1
         }
         APIPersonalCenterOrderList(params)

@@ -26,45 +26,45 @@ const Login = (props) => {
     const [form] = Form.useForm();
     firebase.initializeApp(firebaseConfig)
 
-    
+
 
     // 第三方授权  登录
     function onGoogleSignIn() {
-        const  provider  =  new  firebase.auth.GoogleAuthProvider() ;
-        firebase.auth ()
-        .signInWithPopup ( provider )
-        .then ( ( result )  =>  {
-            console.log(`result`, result)
-            const  credential  =  result.credential ;
-            const  token  =  credential.accessToken ;
-            APIThirdPartyLogin({"idToken":token}).then((res)=>{
-                console.log(`APIThirdPartyLogin`, res)
-            }).catch((err) => {
-                console.log(`err`, err)
-            })
+        const provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth()
+            .signInWithPopup(provider)
+            .then((result) => {
+                console.log(`result`, result)
+                const credential = result.credential;
+                const token = credential.accessToken;
+                APIThirdPartyLogin({ "idToken": token }).then((res) => {
+                    console.log(`APIThirdPartyLogin`, res)
+                }).catch((err) => {
+                    console.log(`err`, err)
+                })
 
-        } ) . catch ( ( error )  =>  {
-            console.log(`error`, error)
-        } ) ;
+            }).catch((error) => {
+                console.log(`error`, error)
+            });
 
     }
     function onFacebookSignIn() {
-        const  provider  =  new  firebase.auth.FacebookAuthProvider() ;
-        firebase.auth ()
-        .signInWithPopup ( provider )
-        .then ( ( result )  =>  {
-            console.log(`result`, result)
-            const  credential  =  result.credential ;
-            const  token  =  credential.idToken ;
-            APIThirdPartyLogin({"idToken":token}).then((res)=>{
-                console.log(`APIThirdPartyLogin`, res)
-            }).catch((err) => {
-                console.log(`err`, err)
-            })
+        const provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth()
+            .signInWithPopup(provider)
+            .then((result) => {
+                console.log(`result`, result)
+                const credential = result.credential;
+                const token = credential.idToken;
+                APIThirdPartyLogin({ "idToken": token }).then((res) => {
+                    console.log(`APIThirdPartyLogin`, res)
+                }).catch((err) => {
+                    console.log(`err`, err)
+                })
 
-        } ) . catch ( ( error )  =>  {
-            console.log(`error`, error)
-        } ) ;
+            }).catch((error) => {
+                console.log(`error`, error)
+            });
 
     }
 

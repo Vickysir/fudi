@@ -19,6 +19,7 @@ import { clearStore, havePlaceholder } from '@/utils';
 
 import './index.less'
 import { SettingPageInfoPostResponse } from '@/pages/api/types';
+import { useAppStore } from '@/__internal';
 
 interface Props extends RouteChildrenProps {
     cRef: any;
@@ -27,6 +28,8 @@ interface Props extends RouteChildrenProps {
 const LeftMenu = (props: Props) => {
     const { cRef, userInfo } = props;
     const [selectedKeys, setselectedKeys] = useState(['1']);
+    const commonInfo = useAppStore("commonInfo");
+
 
     const handleClick = (e) => {
         const { history } = props;
@@ -83,7 +86,10 @@ const LeftMenu = (props: Props) => {
             >
                 <Menu.Item key="1" icon={<ShoppingOutlined />} >My Orders<span className="leftMenu-warp-count">{havePlaceholder(userInfo?.orderNumber, "")}</span></Menu.Item>
                 {/* <Menu.Item key="2" icon={<Icon component={iconNott} />} >My Vouchers</Menu.Item> */}
-                <Menu.Item key="2" icon={<ContainerOutlined />} >My Vouchers <span className="leftMenu-warp-count">{havePlaceholder(userInfo?.bonus, "")}</span></Menu.Item>
+                {
+                    commonInfo?.shopId &&
+                    <Menu.Item key="2" icon={<ContainerOutlined />} >My Vouchers <span className="leftMenu-warp-count">{havePlaceholder(userInfo?.bonus, "")}</span></Menu.Item>
+                }
                 <Menu.Item key="3" icon={<TeamOutlined />} >Invitate Friends</Menu.Item>
                 <Menu.Item key="4" icon={<BellOutlined />} >Notifications<span className="leftMenu-warp-count">1</span></Menu.Item>
                 <Menu.Item ><Divider /></Menu.Item>

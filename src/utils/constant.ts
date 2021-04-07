@@ -16,7 +16,7 @@ export const ORDERSTATUS_REFUNDING = 6 // Refunding request received
 // export const ORDERSTATUS_REFUNDING = 7  //Refunding request received
 export const ORDERSTATUS_REFUNDED = 8   //Refunded
 export const ORDERSTATUS_CANCELLED = 9  //Cancelled
-export const orderStaus = new Map([
+export const OrderStatus = new Map([
     [1, "Received"],
     [2, "Cooking"],
     [3, "Delivering"],
@@ -32,15 +32,15 @@ export const orderStaus = new Map([
 export const DELIVERYTYPE_DELIVERY = 0 //delivery
 export const DELIVERYTYPE_COLLECTION = 1 //collection
 export const DELIVERYTYPE_RESERVE = 2 //reserve 预约去店里吃
-export const deliveryType = new Map([
-    [0, "delivery"],
-    [1, "collection"],
-    [2, "reservee"],
+export const DeliveryType = new Map([
+    [0, "Delivery"],
+    [1, "Collection"],
+    [2, "Reservee"],
 ])
 // paymentType
 export const PAYMENTTYPE_ONLINE = 0 //online
 export const PAYMENTTYPE_OFFLINE = 1 //offline
-export const paymentType = new Map([
+export const PaymentType = new Map([
     [0, "online"],
     [1, "offline"],
 ])

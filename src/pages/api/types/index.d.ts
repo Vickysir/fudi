@@ -1,6 +1,8 @@
 export interface CommonInfo {
     "shopServicePhone"?: string,
     "shopId"?: number,
+    "count"?: number, // 倒计时
+    "liked"?: boolean,
 }
 
 export interface PhoneVerificationCodePost {

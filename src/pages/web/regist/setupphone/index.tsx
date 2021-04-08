@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-03-23 14:17:03
+ * @LastEditTime: 2021-04-08 16:31:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
  */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Input, Button, Select, message } from 'antd';
 import Icon from '@ant-design/icons';
 import iconFlagUK from '@/assets/images/common/icon/flag-UK.svg'
@@ -21,12 +21,15 @@ import { PhoneVerificationCodePost } from '@/pages/api/types';
 
 
 import './index.less'
+import { clearTimer, handleClickTimer } from '@/utils/timer';
+import { useAppStore } from '@/__internal';
 
 
 const { Option } = Select;
 const Setupphone = (props) => {
     const { history } = props;
     const [phonePrefix, setphonePrefix] = useState("+353")
+    const commonInfo = useAppStore("commonInfo")
 
     const onFinish = async (values: PhoneVerificationCodePost) => {
         values.phone = phonePrefix + values.phone;
@@ -41,7 +44,12 @@ const Setupphone = (props) => {
                 const store = Object.assign(APP_STORE.registInfo, data);
                 APP_STORE.registInfo = store;
                 // APP_STORE.authInfo = { ...data };
+
                 history.push("/setupphone/verification");
+                APP_STORE.commonInfo = {
+                    ...APP_STORE.commonInfo,
+                    count: 60,
+                };
             }
         } catch (err) {
             console.log('err', err);
@@ -79,6 +87,28 @@ const Setupphone = (props) => {
         }
         return content
     }
+
+    useEffect(() => {
+        const { location } = history;
+
+        if (location?.search && location?.search === "?update") {
+            console.log(`update`)
+        }
+        //计时器
+        const liked = APP_STORE.commonInfo.liked;
+        if (!liked) {
+            handleClickTimer();
+        }
+        return () => {
+            clearTimer();
+            APP_STORE.commonInfo = {
+                ...APP_STORE.commonInfo,
+                liked: false,
+                count: -1
+            };
+        }
+    }, [])
+
 
     return (
         <>
@@ -121,8 +151,9 @@ const Setupphone = (props) => {
                                 size="large"
                                 shape="round"
                                 block
+                                disabled={!commonInfo.liked}
                             >
-                                Apply
+                                {commonInfo.liked ? "Apply" : `${commonInfo.count} Seconds later`}
                             </Button>
                         </Form.Item>
                     </Form>

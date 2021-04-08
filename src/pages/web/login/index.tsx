@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-02 14:36:13
- * @LastEditTime: 2021-04-02 17:21:50
+ * @LastEditTime: 2021-04-08 15:08:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /GitHub/fudi/src/pages/web/login/index.tsx
@@ -18,54 +18,61 @@ import { APILogin, APIThirdPartyLogin } from '@/pages/api/request';
 import './index.less'
 import firebase from 'firebase';
 import { firebaseConfig } from '@/utils/firebase';
+import { LoginPostResponse } from '@/pages/api/types';
 
 
 
 const Login = (props) => {
     const { history } = props;
     const [form] = Form.useForm();
-    firebase.initializeApp(firebaseConfig)
-
 
 
     // 第三方授权  登录
-    function onGoogleSignIn() {
+    async function onGoogleSignIn() {
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig)
         const provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth()
-            .signInWithPopup(provider)
-            .then((result) => {
-                console.log(`result`, result)
-                const credential = result.credential;
-                const token = credential.accessToken;
-                APIThirdPartyLogin({ "idToken": token }).then((res) => {
-                    console.log(`APIThirdPartyLogin`, res)
-                }).catch((err) => {
-                    console.log(`err`, err)
-                })
-
-            }).catch((error) => {
-                console.log(`error`, error)
-            });
+        try {
+            const signResult = await firebase.auth().signInWithPopup(provider);
+            const getIdToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true);
+            const getApiRes = await APIThirdPartyLogin({ "idToken": getIdToken });
+            console.log(`APIThirdPartyLogin`, getApiRes)
+            afterLogin(getApiRes.data);
+        } catch (err) {
+            console.log(`err`, err)
+        }
 
     }
-    function onFacebookSignIn() {
+    async function onFacebookSignIn() {
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig)
         const provider = new firebase.auth.FacebookAuthProvider();
-        firebase.auth()
-            .signInWithPopup(provider)
-            .then((result) => {
-                console.log(`result`, result)
-                const credential = result.credential;
-                const token = credential.idToken;
-                APIThirdPartyLogin({ "idToken": token }).then((res) => {
-                    console.log(`APIThirdPartyLogin`, res)
-                }).catch((err) => {
-                    console.log(`err`, err)
-                })
 
-            }).catch((error) => {
-                console.log(`error`, error)
-            });
+        try {
+            const signResult = await firebase.auth().signInWithPopup(provider);
+            const getIdToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true);
+            const getApi = await APIThirdPartyLogin({ "idToken": getIdToken });
+            console.log(`APIThirdPartyLogin`, getApi)
 
+        } catch (err) {
+            console.log(`err`, err)
+        }
+
+    }
+
+    // 第三方登录后 
+    // check是否存在手机号
+    const afterLogin = (data: LoginPostResponse) => {
+        APP_STORE.authInfo = { ...data };
+        // TODO  设置shopId
+        APP_STORE.commonInfo = {
+            ...APP_STORE.commonInfo,
+            shopId: 1,
+        };
+
+        if (data.phone === "" || data.phone === undefined || data.phone === null) {
+            history.push("/setupphone?update");
+        } else {
+            history.push("/home");
+        }
     }
 
 
@@ -79,6 +86,7 @@ const Login = (props) => {
                 APP_STORE.authInfo = { ...data };
                 // TODO  设置shopId
                 APP_STORE.commonInfo = {
+                    ...APP_STORE.commonInfo,
                     shopId: 1
                 };
                 history.push("/home");

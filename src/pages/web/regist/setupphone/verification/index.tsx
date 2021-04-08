@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-03-23 14:17:38
+ * @LastEditTime: 2021-04-08 16:14:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
  */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Input, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import WebFooter from '@/pages/components/header/webFooter';
@@ -15,6 +15,7 @@ import BaackTitle from '../../../components/baackTitle';
 import { withRouter } from 'react-router-dom';
 import { LoginRegistPost } from '@/pages/api/types';
 import { APIRegist } from '@/pages/api/request';
+import { clearTimer, handleClickTimer } from '@/utils/timer';
 
 const PhoneVerification = (props) => {
     const { history } = props;
@@ -36,6 +37,16 @@ const PhoneVerification = (props) => {
         }
 
     };
+
+    useEffect(() => {
+        const count = APP_STORE.commonInfo.count;
+        const liked = APP_STORE.commonInfo.liked;
+        //计时器
+        handleClickTimer();
+        return () => {
+            clearTimer()
+        }
+    }, [])
 
 
     return (

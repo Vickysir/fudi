@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 17:53:51
- * @LastEditTime: 2021-04-01 11:27:15
+ * @LastEditTime: 2021-04-08 11:04:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/sendQ/index.tsx
@@ -24,6 +24,7 @@ import { Spin } from 'antd';
 const MyOrders = () => {
     const [isOpen, setisOpen] = useState(false)
     const [issend, setissend] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [data, setData] = useState({
         activeGroup: [],
         completedGroup: []
@@ -49,12 +50,12 @@ const MyOrders = () => {
             shopId: commonInfo?.shopId,
             // status: 1
         }
+        setLoading(true)
         APIPersonalCenterOrderList(params)
             .then((res) => {
-                console.log(`APIPersonalCenterOrderList res`, res)
                 const data = dataToGroup(res.data);
-                console.log(`data`, data)
                 setData(data);
+                setLoading(false);
             })
             .catch((err) => {
                 console.log(`APIPersonalCenterOrderList err`, err)
@@ -76,18 +77,23 @@ const MyOrders = () => {
 
 
     }
-    const nodataStyle = data ? "" : "nodata"
     const { activeGroup, completedGroup } = data;
+    const nodataStyle = activeGroup.length > 0 || completedGroup.length > 0 ? "" : "nodata"
+
     return (
         <div className={"myOrders-wrap " + nodataStyle}>
             {
-                data ?
+                activeGroup.length > 0 || completedGroup.length > 0 ?
                     <>
                         {
                             <div className="myOrders-wrap-list-layout">
                                 <h3 style={{ marginTop: 0 }}>Active</h3>
                                 {
-                                    activeGroup.length !== 0 ?
+                                    loading ?
+                                        <div style={{ "textAlign": "center" }}>
+                                            <Spin />
+                                        </div>
+                                        :
                                         activeGroup.map((item, index) => {
                                             return (
                                                 <div key={item.id} className="myOrders-wrap-list">
@@ -103,10 +109,7 @@ const MyOrders = () => {
                                                 </div>
                                             )
                                         })
-                                        :
-                                        <div style={{ "textAlign": "center" }}>
-                                            <Spin />
-                                        </div>
+
                                 }
                             </div>
 
@@ -115,7 +118,11 @@ const MyOrders = () => {
                             <div className="myOrders-wrap-list-layout">
                                 <h3 style={{ marginTop: 0 }}>Completed</h3>
                                 {
-                                    completedGroup.length !== 0 ?
+                                    loading ?
+                                        <div style={{ "textAlign": "center" }}>
+                                            <Spin />
+                                        </div>
+                                        :
                                         completedGroup.map((item, index) => {
                                             return (
                                                 <div key={item.id} className="myOrders-wrap-list">
@@ -131,10 +138,6 @@ const MyOrders = () => {
                                                 </div>
                                             )
                                         })
-                                        :
-                                        <div style={{ "textAlign": "center" }}>
-                                            <Spin />
-                                        </div>
                                 }
                             </div>
                         }

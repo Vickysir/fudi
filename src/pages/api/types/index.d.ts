@@ -37,6 +37,11 @@ export interface LoginPostResponse {
 export interface EmailVerificationCodePost {
     "email": string//"25411150915@qq.com"
 }
+export interface PersonalCenterUpdatePhonePost {
+    "phone": string//"25411150915@qq.com"
+    "code": string//"25411150915@qq.com"
+}
+
 export interface ResetPwdPost {
     "password"?: string//"hell0w0rld1",
     "code"?: string//"0732",

@@ -10,6 +10,9 @@
 let timer = null;
 // 倒计时 逻辑
 export const handleClickTimer = () => {
+    let count = APP_STORE.commonInfo.count;
+    if (count === null) return
+
     APP_STORE.commonInfo = {
         ...APP_STORE.commonInfo,
         liked: false,
@@ -21,7 +24,7 @@ export const handleClickTimer = () => {
             count: --count
         };
         console.log(`计时器`, count)
-        if (count === -1) {
+        if (count <= -1) {
             clearInterval(timer)
             APP_STORE.commonInfo = {
                 ...APP_STORE.commonInfo,

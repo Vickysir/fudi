@@ -14,33 +14,49 @@ import WebHeader from '@/pages/components/header/webHeader';
 import BaackTitle from '../../../components/baackTitle';
 import { withRouter } from 'react-router-dom';
 import { LoginRegistPost } from '@/pages/api/types';
-import { APIRegist } from '@/pages/api/request';
+import { APIPersonalCenterUpdatePhone, APIRegist } from '@/pages/api/request';
 import { clearTimer, handleClickTimer } from '@/utils/timer';
 
 const PhoneVerification = (props) => {
     const { history } = props;
+    const [type, setType] = useState("regist");
+
 
     const onFinish = async (values: any) => {
+        if (type === "regist") {
 
-        //获取store
-        const authinfo: LoginRegistPost = Object.assign(APP_STORE.registInfo, { ...values });
-        console.log(`authinfo`, authinfo);
-        //发送API 注册
-        try {
-            const { event, data } = await APIRegist(authinfo);
-            if (event === "SUCCESS") {
+            //获取store
+            const authinfo: LoginRegistPost = Object.assign(APP_STORE.registInfo, { ...values });
+            console.log(`authinfo`, authinfo);
+            //发送API 注册
+            try {
+                await APIRegist(authinfo);
                 APP_STORE.registInfo = null;
                 history.push("/login");
+            } catch (err) {
+                console.log('err', err)
             }
-        } catch (err) {
-            console.log('err', err)
+        } else if (type === "update") {
+            try {
+                await APIPersonalCenterUpdatePhone({ ...values, "phone": APP_STORE.registInfo.phone });
+            } catch (err) {
+                console.log(`err`, err)
+            }
         }
 
     };
 
     useEffect(() => {
-        const count = APP_STORE.commonInfo.count;
-        const liked = APP_STORE.commonInfo.liked;
+        const { location } = history;
+        // type 第三方登录过来绑定账号的
+        if (location?.search && location?.search === "?update") {
+            setType("update");
+        }
+
+        APP_STORE.commonInfo = {
+            ...APP_STORE.commonInfo,
+            count: 60,
+        };
         //计时器
         handleClickTimer();
         return () => {

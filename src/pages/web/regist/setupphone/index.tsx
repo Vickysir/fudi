@@ -29,27 +29,36 @@ const { Option } = Select;
 const Setupphone = (props) => {
     const { history } = props;
     const [phonePrefix, setphonePrefix] = useState("+353")
+    const [type, setType] = useState("regist");
     const commonInfo = useAppStore("commonInfo")
 
     const onFinish = async (values: PhoneVerificationCodePost) => {
         values.phone = phonePrefix + values.phone;
 
-        Object.assign(APP_STORE.registInfo, { ...values });
+        if (type === "regist") {
+            APP_STORE.registInfo = {
+                ...APP_STORE.registInfo,
+                ...values
+            }
+        }
+
         // 发送 api 获取注册手机验证码
         try {
             const { event, data } = await APIPhoneVerificationCode(values);
             if (event === "SUCCESS") {
                 message.success("The verification code has been sent");
                 // phone、Token 存入store
-                const store = Object.assign(APP_STORE.registInfo, data);
-                APP_STORE.registInfo = store;
-                // APP_STORE.authInfo = { ...data };
-
-                history.push("/setupphone/verification");
-                APP_STORE.commonInfo = {
-                    ...APP_STORE.commonInfo,
-                    count: 60,
+                APP_STORE.registInfo = {
+                    ...APP_STORE.registInfo,
+                    ...data,
+                    phone: values.phone
                 };
+                // APP_STORE.authInfo = { ...data };
+                if (type === "regist") {
+                    history.push("/setupphone/verification");
+                } else {
+                    history.push("/setupphone/verification?update");
+                }
             }
         } catch (err) {
             console.log('err', err);
@@ -70,6 +79,7 @@ const Setupphone = (props) => {
         >
             <Option value="+353">+353</Option>
             <Option value="+44">+44</Option>
+            <Option value="+1">+1</Option>
         </Select>
     );
     //根据用户手机区号的选择，更换flag
@@ -90,9 +100,9 @@ const Setupphone = (props) => {
 
     useEffect(() => {
         const { location } = history;
-
+        // type 第三方登录过来绑定账号的
         if (location?.search && location?.search === "?update") {
-            console.log(`update`)
+            setType("update");
         }
         //计时器
         const liked = APP_STORE.commonInfo.liked;
@@ -103,8 +113,8 @@ const Setupphone = (props) => {
             clearTimer();
             APP_STORE.commonInfo = {
                 ...APP_STORE.commonInfo,
-                liked: false,
-                count: -1
+                liked: true,
+                count: null
             };
         }
     }, [])

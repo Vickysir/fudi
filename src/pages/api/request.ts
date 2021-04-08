@@ -22,7 +22,8 @@ import {
     AddressListPostResponse,
     ShopServicePhoneResponse,
     PersonalCenterOrderListPost,
-    PersonalCenterInvitationPost
+    PersonalCenterInvitationPost,
+    PersonalCenterUpdatePhonePost
 } from './types';
 
 
@@ -132,8 +133,8 @@ export const APIPersonalCenterUpdateEmail = async (params: EmailVerificationCode
     return await axios.post(apiPath.personalCenterUpdateEmail, params)
 }
 // 个人中心 修改信息  Phone
-export const APIPersonalCenterUpdatePhone = async () => {
-    return await axios.post(apiPath.personalCenterUpdatePhone)
+export const APIPersonalCenterUpdatePhone = async (params: PersonalCenterUpdatePhonePost) => {
+    return await axios.post(apiPath.personalCenterUpdatePhone, params)
 }
 // 个人中心 获取 adress list
 export const APIUserAddressList = async () => {

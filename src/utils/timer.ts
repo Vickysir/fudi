@@ -1,11 +1,19 @@
 /*
  * @Author: your name
  * @Date: 2021-04-08 14:53:21
- * @LastEditTime: 2021-04-08 16:10:07
+ * @LastEditTime: 2021-04-09 11:47:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/utils/timer.ts
  */
+import moment from 'moment';
+
+export const formatDateTime = (dateTime, format = 'YYYY/MM/DD HH:mm:ss') => moment(new Date(dateTime)).format(format);
+export const formatDateHour = (dataTime, format = 'YYYY/MM/DD HH:mm') => moment(new Date(dataTime)).format(format);
+
+
+
+
 
 let timer = null;
 // 倒计时 逻辑

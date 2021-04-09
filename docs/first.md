@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-09 09:15:13
- * @LastEditTime: 2021-04-09 10:39:34
+ * @LastEditTime: 2021-04-09 14:01:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/docs/first.md
@@ -89,8 +89,7 @@
 3. 邀请朋友
     - 邀请码
     - <div style="color:red">分享</div>
-        - 点击按钮，分享
-            - 至Facebook （？？？？如果是Google登录的账户，或者没有Facebook账户的人怎么办）
+        - 点击按钮，分享至Facebook 
 
     - 邀请列表，数据显示
         - status = 0，则invite

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 17:53:51
- * @LastEditTime: 2021-03-17 10:28:56
+ * @LastEditTime: 2021-04-09 14:13:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/sendQ/index.tsx
@@ -40,7 +40,9 @@ const Invitation = () => {
                     <span>{code ? code : <Spin />}</span>
                 </div>
                 <div>
-                    <Button type="primary" shape="round">Share Code</Button>
+                    <Button type="primary" shape="round">
+                        <a href="https://www.facebook.com/sharer.php?title=FaceBook分享&u=https://apps.apple.com/cn/app/fudi-more/id1174079302" target="_blank">Share Code</a>
+                    </Button>
                     <img src={fb} alt="icon" />
                 </div>
             </div>

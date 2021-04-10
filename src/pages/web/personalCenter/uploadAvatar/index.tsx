@@ -23,23 +23,30 @@ interface Props {
 export default class UploadAvatar extends React.Component<Props> {
     state = {
         loading: false,
-        imageUrl: ""
+        imageUrl: "",
+        head: ""
     };
     async componentDidMount() {
+        console.log(`this.props`, this.props)
     }
     static getDerivedStateFromProps(props, state) {
-        if (props.userInfo?.head !== state.head) {
+        if (state.head === "") {
             return {
                 imageUrl: defaultStorage.S3header + props.userInfo?.head
             }
+        } else {
+            return {
+                imageUrl: state.imageUrl
+            }
         }
-        return null
     }
     handleChange = async (info) => {
         if (info.file?.imageUrl) {
             console.log(`info`, info)
+            message.success("Uploaded successfully")
             this.setState({
-                imageUrl: info.file.imageUrl
+                imageUrl: info.file.imageUrl,
+                head: info.file.path
             })
             await APIPersonalCenterUpdateIcon({ "head": info.file.path })
         }

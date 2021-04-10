@@ -33,6 +33,7 @@ const PersonalCenter = (props) => {
             .then((res) => {
                 const { data } = res;
                 setuserInfo(data);
+                console.log(`data`, data)
             }).catch((err) => {
                 console.log(`APISettingPageInfo err`, err)
             })

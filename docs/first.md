@@ -13,8 +13,13 @@
 
 
 1. 未登录
-    - header右侧，显示登录按钮
-    - homepage 电话号码隐藏
+    - header右侧，显示一个按钮，按钮内容根据不同页面显示：
+        - home页，按钮显示Login
+        - 登录页面，按钮显示Home
+        - 注册页面，按钮显示Login
+    - homepage shop电话号码隐藏
+    - Help Center 电话号码 、online chat  是否和homepage的一致 【？？？】
+
 
 2. 已登录
     - header右侧，显示登录人头像，购物车图标，通知图标

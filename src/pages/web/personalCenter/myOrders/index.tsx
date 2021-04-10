@@ -16,6 +16,7 @@ import { APIPersonalCenterOrderList } from '@/pages/api/request';
 import { useAppStore } from '@/__internal';
 import { ORDERSTATUS_RECEIVED, ORDERSTATUS_COOKING, ORDERSTATUS_DELIVERING, OrderStatus, DeliveryType } from '@/utils/constant';
 import { Spin } from 'antd';
+import { formatDateToHour } from '@/utils/timer';
 
 
 
@@ -79,6 +80,7 @@ const MyOrders = () => {
     }
     const { activeGroup, completedGroup } = data;
     const nodataStyle = activeGroup.length > 0 || completedGroup.length > 0 ? "" : "nodata"
+    //TODO 如何处理预估时间
 
     return (
         <div className={"myOrders-wrap " + nodataStyle}>
@@ -102,7 +104,7 @@ const MyOrders = () => {
                                                         <li><InfoCircleOutlined /></li>
                                                     </ul>
                                                     <div className="myOrders-wrap-list-content">
-                                                        <p>Estimated Time:<span><HistoryOutlined /> 18:00</span></p>
+                                                        <p>Estimated Time:<span><HistoryOutlined /> {formatDateToHour(item.createTime)}</span></p>
                                                         <p>Status:<span>{OrderStatus.get(item.status)}</span></p>
                                                     </div>
                                                     <div className="myOrders-wrap-list-footer">Order #{item.id}</div>
@@ -131,7 +133,7 @@ const MyOrders = () => {
                                                         <li><InfoCircleOutlined /></li>
                                                     </ul>
                                                     <div className="myOrders-wrap-list-content">
-                                                        <p>Estimated Time:<span className="completed"><HistoryOutlined /> 18:00</span></p>
+                                                        <p>Estimated Time:<span className="completed"><HistoryOutlined /> {formatDateToHour(item.createTime)}</span></p>
                                                         <p>Status:<span className="completed">{OrderStatus.get(item.status)}</span></p>
                                                     </div>
                                                     <div className="myOrders-wrap-list-footer footer-completed">Order #{item.id}</div>

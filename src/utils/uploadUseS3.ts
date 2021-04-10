@@ -1,67 +1,20 @@
-// import { APIGets3UploadKey } from "@/pages/api/request";
-// const AWS = require('aws-sdk');
-
-
-// export interface uploadParams {
-//     Bucket?: string // bucket name :  fudiandmore-web
-//     Key?: string // file path : images/
-//     Body: any // file 
-// }
-
-// export async function AWSuploadS3(uploadParams: uploadParams|{}) {
-//     const upload = {
-//         Bucket:"fudiandmore-web",
-//         Key:"/images/",
-//         ...uploadParams
-//     }
-//     let keys = null;
-//     try {
-//         const { data } = await APIGets3UploadKey();
-//         keys = data
-//         console.log(`APIGets3UploadKey data`, data)
-//     } catch (err) {
-//         console.log(`APIGets3UploadKey err`, err)
-//     }
-//     const s3 = new AWS.S3({
-//         apiVersion: '2006-03-01',
-//         accessKeyId: keys.accessKeyId,
-//         secretAccessKey: keys.secretAccessKey,
-//         region:'eu-west-1',
-//     });
-//     s3.upload(upload, function (err, data) {
-//         if (err) {
-//             console.log("Upload Error", err);
-//         } if (data) {
-//             console.log("Upload Success", data.Location);
-//         }
-//     });
-// }
-
-
-// s3service.tsx
-// 引入模块
 import { config, S3, AWSError } from 'aws-sdk';
 import { PutObjectOutput } from '../../node_modules/aws-sdk/clients/s3';
 import { UploadFile } from '../../node_modules/antd/lib/upload/interface';
 import { UploadRequestOption } from 'rc-upload/lib/interface';
+import { message } from 'antd';
 
 
 // S3 存储bucket配置
-const defaultStorage = {
+export const defaultStorage = {
+	S3header: "https://fudiandmore.s3.eu-west-1.amazonaws.com/",
 	region: "eu-west-1",
 	apiVersion: "2006-03-01",
 	Bucket: "fudiandmore",
 	Key: "public"
 }
 
-
-// 配置S3的接口
-export interface IS3Config {
-	AccessKeyId?: '';
-	SecretAccessKey?: '';
-	SessionToken?: '';
-}
-// 对S3进行配置
+// S3 配置 函数
 export const createS3 = (cfg: IS3Config) => {
 	const setting = { //您的S3临时令牌
 		accessKeyId: cfg.AccessKeyId,
@@ -77,30 +30,24 @@ export const createS3 = (cfg: IS3Config) => {
 	return s3;
 };
 
-
-export interface IUpload {
-	onProgress?: ({ }, f: UploadFile) => void; // 需要重写的antd的progress函数
-	onSuccess?: () => void; // antd中progress百分百时的成功函数
-	file: UploadFile; // 上传失败的progress函数
-	onError: () => void;
-}
-export const V_Upload = (s3Config: IS3Config, body: UploadRequestOption, bucket?: string, key?: string): void => {
+export const V_Upload = (onSuccess: (info) => void, s3Config: IS3Config, body: UploadRequestOption, bucket?: string, key?: string): void => {
 	const s3 = createS3(s3Config); //传入您的S3令牌
-
-	const albumPhotosKey = key ? key : defaultStorage.Key;
-	const photoKey = encodeURIComponent(albumPhotosKey) + "/" + body.file.name;
-
 	const uploadParams = {
 		Body: body.file, // 文件
 		Bucket: bucket ? bucket : defaultStorage.Bucket, // 对应S3上的bucket
-		Key: photoKey // 需要上传到的路径
+		Key: key ? key : defaultStorage.Key // 需要上传到的路径
 	}
-	console.log(`uploadParams`, uploadParams)
 	s3.upload(uploadParams, function (err, data) {
 		if (err) {
 			console.log("Error", err);
+			message.error(err)
 		} if (data) {
-			console.log("Upload Success", data.Location);
+			// console.log("Upload Success", data);
+			const file = {
+				"imageUrl": data.Location,
+				"path": data.key
+			}
+			onSuccess({ file })
 		}
 	});
 	// s3.putObject( // s3上面的putObject方法 第一个参数是一个对象，第二个参数是一个函数，函数有两个值，1.表示上传失败，2.表示上传成功
@@ -129,3 +76,16 @@ export const V_Upload = (s3Config: IS3Config, body: UploadRequestOption, bucket?
 
 
 
+
+export interface IS3Config {
+	AccessKeyId?: '';
+	SecretAccessKey?: '';
+	SessionToken?: '';
+}
+
+export interface IUpload {
+	onProgress?: ({ }, f: UploadFile) => void; // 需要重写的antd的progress函数
+	onSuccess?: () => void; // antd中progress百分百时的成功函数
+	file: UploadFile; // 上传失败的progress函数
+	onError: () => void;
+}

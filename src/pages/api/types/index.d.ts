@@ -3,6 +3,7 @@ export interface CommonInfo {
     "shopId"?: number,
     "count"?: number, // 倒计时
     "liked"?: boolean,
+    "uploadAvatar"?: string,
 }
 
 export interface PhoneVerificationCodePost {

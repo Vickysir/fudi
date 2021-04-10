@@ -12,14 +12,13 @@ import { IS3Config, V_Upload } from '@/utils/uploadUseS3';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { UploadRequestOption } from 'rc-upload/lib/interface';
 import { APIGets3UploadKey } from '@/pages/api/request';
-import { PropsType } from 'antd-mobile/lib/date-picker';
 
 
 interface Props {
-  showUploadList: boolean
+  showUploadList: boolean,
+  onChange: (info) => void,
   storagePath?: {
     bucket?: string,
-    key?: string
   }
   [index: string]: any
 }
@@ -29,14 +28,17 @@ interface IParam {
   onError: () => void;
   file: UploadFile & { webkitRelativePath: string };
 }
+
+
 export default class UploadComponent extends React.Component<Props> {
+
   public S3token: IS3Config | {} = {}; // 您的S3临时令牌
   public bucket: string = this.props?.storagePath?.bucket; // 您要上传到的bucket名字
-  public key: string = this.props?.storagePath?.key; // bucket下面的路径
-  private upload = (param: UploadRequestOption) => {
-    console.log(`this.S3token`, this.S3token)
-    V_Upload(this.S3token, param, this.bucket, this.key)
+  public key: string; // bucket下面的路径
+  private upload = async (param: UploadRequestOption) => {
+    V_Upload(this.onSuccess, this.S3token, param, this.bucket, this.key);
   }
+
   async componentDidMount() {
     const { data } = await APIGets3UploadKey();
     this.S3token = {
@@ -44,9 +46,14 @@ export default class UploadComponent extends React.Component<Props> {
       SecretAccessKey: data.secretAccessKey,
       SessionToken: data.sessionToken
     }
+    this.key = data.objectKey;
   }
+
+  onSuccess = (info) => {
+    this.props.onChange(info)
+  }
+
   public render() {
-    console.log(`this.props`, this.props)
     return (
       <Upload
         customRequest={this.upload}

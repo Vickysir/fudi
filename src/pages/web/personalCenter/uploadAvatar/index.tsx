@@ -12,9 +12,10 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { havePlaceholder } from '@/utils';
 import './index.less'
 import { SettingPageInfoPostResponse } from '@/pages/api/types';
-import { APIGets3UploadKey } from '@/pages/api/request';
+import { APIGets3UploadKey, APIPersonalCenterUpdateIcon } from '@/pages/api/request';
 // import { AWSuploadS3, uploadParams } from '@/utils/uploadUseS3';
 import UploadComponent from '@/pages/components/antd/upload';
+import { defaultStorage } from '@/utils/uploadUseS3';
 
 interface Props {
     userInfo: SettingPageInfoPostResponse
@@ -25,27 +26,22 @@ export default class UploadAvatar extends React.Component<Props> {
         imageUrl: ""
     };
     async componentDidMount() {
-
     }
-    handleChange = info => {
-        console.log(`info`, info.file)
-        const formData = new FormData();
-        formData.append('Bucket', 'fudiandmore-web');
-        formData.append('Key', '/images/');
-        formData.append('Body', info.file);
-        // AWSuploadS3(formData);
-        if (info.file.status === 'uploading') {
-            this.setState({ loading: true });
-            return;
+    static getDerivedStateFromProps(props, state) {
+        if (props.userInfo?.head !== state.head) {
+            return {
+                imageUrl: defaultStorage.S3header + props.userInfo?.head
+            }
         }
-        if (info.file.status === 'done') {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj, imageUrl =>
-                this.setState({
-                    imageUrl,
-                    loading: false,
-                }),
-            );
+        return null
+    }
+    handleChange = async (info) => {
+        if (info.file?.imageUrl) {
+            console.log(`info`, info)
+            this.setState({
+                imageUrl: info.file.imageUrl
+            })
+            await APIPersonalCenterUpdateIcon({ "head": info.file.path })
         }
     };
 
@@ -60,23 +56,14 @@ export default class UploadAvatar extends React.Component<Props> {
         );
         return (
             <div className="upload-box">
-                {/* <Upload
-                    name="avatar"
-                    listType="picture-card"
-                    className="avatar-uploader upload-box-avatar"
-                    showUploadList={false}
-                    beforeUpload={beforeUpload}
-                    onChange={this.handleChange}
-                >
-                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-                </Upload> */}
                 <UploadComponent
                     showUploadList={false}
                     className="avatar-uploader upload-box-avatar"
                     listType="picture-card"
                     name="avatar"
+                    onChange={this.handleChange}
                 >
-                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%', height: "100%", "borderRadius": "50%" }} /> : uploadButton}
                 </UploadComponent>
                 <h3>{havePlaceholder(userInfo?.nickname, "-")}</h3>
             </div>

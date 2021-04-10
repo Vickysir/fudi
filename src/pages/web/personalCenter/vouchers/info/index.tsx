@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, Input } from 'antd';
 import './index.less'
+import { PersonalCenterCouponListPostResponseArray } from '@/pages/api/types';
+import { formatDateToDay } from '@/utils/timer';
+import { couponType, coupon_discountType, discountRateConversion, moneyLimit } from '@/utils/constant';
 
-const VouchersInfo = (props) => {
+interface Props {
+    isOpen: boolean
+    onClose: () => void
+    data: PersonalCenterCouponListPostResponseArray
+}
+
+const VouchersInfo = (props: Props) => {
     const [visible, setvisible] = useState(false)
-    const { isOpen, onClose } = props;
+    const { isOpen, onClose, data } = props;
 
     useEffect(() => {
         setvisible(isOpen);
@@ -15,7 +24,6 @@ const VouchersInfo = (props) => {
         setvisible(false);
         onClose();
     }
-
     return (
         <div>
             <Modal
@@ -23,17 +31,23 @@ const VouchersInfo = (props) => {
                 onCancel={handleCancel}
                 footer={null}
             >
-                <div className="model-content vouchersInfo">
-                    <header>Voucher Info</header>
-                    <div className="model-content-rate">
-                        <h1>Fudi2020</h1>
-                    </div>
-                    <div className="vouchersInfo-status">Available</div>
-                    <p>21 Jun 2021 – 21 Jul 2021</p>
-                    <div className="vouchersInfo-desc" >
-                        This voucher gives you -30% for the each delivery from 21 Jun 2021 till 21 Jul 2021.
-                    </div>
-                </div>
+                {
+                    data ?
+                        <div className="model-content vouchersInfo">
+                            <header>Voucher Info</header>
+                            <div className="model-content-rate">
+                                <h1>{data.title}</h1>
+                            </div>
+                            <div className="vouchersInfo-status">Available</div>
+                            <p>{`${formatDateToDay(data.activeDate)} - ${formatDateToDay(data.quietDate)}`}</p>
+                            <div className="vouchersInfo-desc" >
+                                This voucher gives you -{discountRateConversion(data.money)} for the each {couponType.get(data.type)} from {formatDateToDay(data.activeDate)} till {formatDateToDay(data.quietDate)}.
+                                And {coupon_discountType.get(data.discountType)}, {moneyLimit.get(data.moneyLimit)} for price up limit.
+                            </div>
+                        </div>
+                        : null
+                }
+
             </Modal>
         </div>
     )

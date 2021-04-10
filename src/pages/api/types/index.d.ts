@@ -116,6 +116,28 @@ export interface PersonalCenterObtainCouponPost {
     "id"?: number//1
     "code"?: string//dkmdc23
 }
+export interface PersonalCenterCouponListPost {
+    "shopId": number,
+}
+export interface PersonalCenterCouponListPostResponseArray {
+    "activeDate": number//1553904000000
+    "discountType": number//0
+    "id": number//30
+    "money": number//0.8
+    "moneyLimit": number//-1
+    "moneyType": number//1
+    "quietDate": number//1672444800000
+    "thumbnail": string//"public/852d33a1ba614a41b5efc0333b16c143"
+    "title": string//"AQU20"
+    "type": number//0
+    "rule": {
+        "goodsClassify": {
+            "except": number[] //[148, 158] 
+        }
+    }
+
+}
+
 export interface Gets3UploadKeyPostResponse {
     "accessKeyId": string//"ASIA2UHYAPVRLFDWHDVT",
     "secretAccessKey": string//"JuoVS9rdrL2Xmq9toAhSpfsJzcysGqUmBznpQggP",

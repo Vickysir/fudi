@@ -23,7 +23,9 @@ import {
     ShopServicePhoneResponse,
     PersonalCenterOrderListPost,
     PersonalCenterInvitationPost,
-    PersonalCenterUpdatePhonePost
+    PersonalCenterUpdatePhonePost,
+    PersonalCenterCouponListPost,
+    PersonalCenterCouponListPostResponseArray,
 } from './types';
 
 
@@ -89,8 +91,8 @@ export const APIPersonalCenterOrderList = async (params: PersonalCenterOrderList
 
 // 个人中心 my Vouchers 
 //TODO shopId
-export const APIPersonalCenterCouponList = async () => {
-    return await axios.post(apiPath.personalCenterCouponList, { "shopId": 1 })
+export const APIPersonalCenterCouponList = async (params: PersonalCenterCouponListPost) => {
+    return await axios.post<PersonalCenterCouponListPostResponseArray[]>(apiPath.personalCenterCouponList, params)
 }
 // 个人中心 有效的 Vouchers
 export const APIPersonalCenterUsableCoupon = async () => {

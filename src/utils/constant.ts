@@ -42,5 +42,37 @@ export const PAYMENTTYPE_ONLINE = 0 //online
 export const PAYMENTTYPE_OFFLINE = 1 //offline
 export const PaymentType = new Map([
     [0, "online"],
-    [1, "offline"],
+    [1, "offline"]
+])
+
+// 优惠券相关
+// 优惠券类型 （for food、for delivery fee）
+export const couponType = new Map([
+    [0, "food"],
+    [1, "delivery fee"],
+])
+export const COUPONTYPE_FOOD = 0
+export const COUPONTYPE_DELIVERYFEE = 1
+
+// 优惠券使用范围 （折扣商品、all）
+export const coupon_discountType = new Map([
+    [0, "the discounted food is not included in this coupon"],//折扣食品不包含在此券中
+    [1, "all food are included in this coupon"],//所有食品都包含在此券中
+])
+export const COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT = 0
+export const COUPON_DISCOUNTTYPE_ALL = 1
+
+
+
+export const discountRateConversion = (money: number) => { // money = 0.8  => 即20%的优惠
+    const discount = Math.round((1 - money) * 100)
+    return discount + "%"
+}
+export const moneyType = new Map([
+    [0, "directly deduct from the price"],//直接从价格中扣除
+    [1, "deduct as the percentage"],//按百分比扣除
+    [1, "all free"],//全部免费
+])
+export const moneyLimit = new Map([
+    [-1, "there is no limit"],//则没有限价
 ])

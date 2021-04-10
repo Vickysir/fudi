@@ -9,6 +9,7 @@
 import moment from 'moment';
 
 export const formatDateTime = (dateTime, format = 'YYYY/MM/DD HH:mm:ss') => moment(new Date(dateTime)).format(format);
+export const formatDateToDay = (dateTime, format = 'DD MMMM YYYY') => moment(new Date(dateTime)).format(format);
 export const formatDateToHour = (dataTime, format = 'HH:mm') => moment(new Date(dataTime)).format(format);
 
 

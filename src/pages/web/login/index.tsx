@@ -80,17 +80,15 @@ const Login = (props) => {
     const onFinish = async (values: any) => {
         console.log('Received values of form: ', values);
         try {
-            const { event, data } = await APILogin(values);
-            if (event === "SUCCESS") {
-                message.success("Login successful")
-                APP_STORE.authInfo = { ...data };
-                // TODO  设置shopId
-                APP_STORE.commonInfo = {
-                    ...APP_STORE.commonInfo,
-                    shopId: 1
-                };
-                history.push("/home");
-            }
+            const { data } = await APILogin(values);
+            message.success("Login successful")
+            APP_STORE.authInfo = { ...data };
+            // TODO  设置shopId
+            APP_STORE.commonInfo = {
+                ...APP_STORE.commonInfo,
+                shopId: 1
+            };
+            history.push("/home");
         } catch (err) {
             console.log('err', err)
         }

@@ -19,8 +19,10 @@ export const formatDateToHour = (dataTime, format = 'HH:mm') => moment(new Date(
 let timer = null;
 // 倒计时 逻辑
 export const handleClickTimer = () => {
-    let count = APP_STORE.commonInfo.count;
-    if (count === null) return
+    let count = APP_STORE.commonInfo?.count;
+    let liked = APP_STORE.commonInfo?.liked;
+    if (count === null) return;
+    if (liked === undefined) return;
 
     APP_STORE.commonInfo = {
         ...APP_STORE.commonInfo,

@@ -9,7 +9,8 @@
 export const apiPath = {
     "regist": "/auth/register/v2",//regist     一期✔️
     "login": "/auth/login",//login     一期✔️
-    "phoneVerificationCode": "/auth/register/phone/verification",//注册获取验手机证码     一期✔️
+    "registPhoneVerificationCode": "/auth/register/phone/verification",//注册获取验手机证码     一期✔️
+    "updatePhoneVerificationCode": "/user/phone/verification/code",//注册获取验手机证码     一期✔️
     "emailVerificationCode": "/user/forget/password/email/verification",// Send email forgot password     一期✔️
     "resetPwd": "/user/forget/password",// Reset password     一期✔️
     "saveAddress": "/user/shipping_address/save",//save address     一期

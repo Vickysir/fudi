@@ -15,7 +15,7 @@ import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
 import BaackTitle from '@/pages/web/components/baackTitle';
 import { withRouter } from 'react-router-dom';
-import { APIPhoneVerificationCode } from '@/pages/api/request';
+import { APIRegistPhoneVerificationCode, APIUpdatePhoneVerificationCode } from '@/pages/api/request';
 import { PhoneVerificationCodePost } from '@/pages/api/types';
 
 
@@ -34,35 +34,41 @@ const Setupphone = (props) => {
 
     const onFinish = async (values: PhoneVerificationCodePost) => {
         values.phone = phonePrefix + values.phone;
-
         if (type === "regist") {
-            APP_STORE.registInfo = {
-                ...APP_STORE.registInfo,
-                ...values
-            }
-        }
 
-        // 发送 api 获取注册手机验证码
-        try {
-            const { event, data } = await APIPhoneVerificationCode(values);
-            if (event === "SUCCESS") {
+            try {
+                // 发送 api 获取注册手机验证码
+                const { data } = await APIRegistPhoneVerificationCode(values);
                 message.success("The verification code has been sent");
                 // phone、Token 存入store
                 APP_STORE.registInfo = {
                     ...APP_STORE.registInfo,
+                    ...values,
                     ...data,
-                    phone: values.phone
                 };
-                // APP_STORE.authInfo = { ...data };
-                if (type === "regist") {
-                    history.push("/setupphone/verification");
-                } else {
-                    history.push("/setupphone/verification?update");
-                }
+                history.push("/setupphone/verification");
+
+            } catch (err) {
+                console.log(`err`, err)
             }
-        } catch (err) {
-            console.log('err', err);
+        } else {
+            try {
+                // 发送 api 获取注册手机验证码
+                const { data } = await APIUpdatePhoneVerificationCode(values);
+                message.success("The verification code has been sent");
+                APP_STORE.registInfo = {
+                    ...APP_STORE.registInfo,
+                    ...values,
+                    ...data,
+                };
+                history.push("/setupphone/verification?update");
+            } catch (err) {
+                console.log('err', err);
+            }
         }
+
+
+
     };
 
     // 处理电话号码前缀change
@@ -79,7 +85,6 @@ const Setupphone = (props) => {
         >
             <Option value="+353">+353</Option>
             <Option value="+44">+44</Option>
-            <Option value="+1">+1</Option>
         </Select>
     );
     //根据用户手机区号的选择，更换flag
@@ -105,10 +110,7 @@ const Setupphone = (props) => {
             setType("update");
         }
         //计时器
-        const liked = APP_STORE.commonInfo.liked;
-        if (!liked) {
-            handleClickTimer();
-        }
+        handleClickTimer();
         return () => {
             clearTimer();
             APP_STORE.commonInfo = {
@@ -154,17 +156,32 @@ const Setupphone = (props) => {
                             </div>
                         </Form.Item>
                         <Form.Item>
-                            <Button
-                                type="primary"
-                                htmlType="submit"
-                                className="login-form-button"
-                                size="large"
-                                shape="round"
-                                block
-                                disabled={!commonInfo.liked}
-                            >
-                                {commonInfo.liked ? "Apply" : `${commonInfo.count} Seconds later`}
-                            </Button>
+                            {
+                                commonInfo ?
+                                    <Button
+                                        type="primary"
+                                        htmlType="submit"
+                                        className="login-form-button"
+                                        size="large"
+                                        shape="round"
+                                        block
+                                        disabled={!commonInfo.liked}
+                                    >
+                                        {commonInfo.liked ? "Apply" : `${commonInfo.count} Seconds later`}
+                                    </Button>
+                                    :
+                                    <Button
+                                        type="primary"
+                                        htmlType="submit"
+                                        className="login-form-button"
+                                        size="large"
+                                        shape="round"
+                                        block
+                                    >
+                                        Apply
+                                    </Button>
+                            }
+
                         </Form.Item>
                     </Form>
                 </div>

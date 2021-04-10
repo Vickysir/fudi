@@ -39,6 +39,8 @@ const PhoneVerification = (props) => {
         } else if (type === "update") {
             try {
                 await APIPersonalCenterUpdatePhone({ ...values, "phone": APP_STORE.registInfo.phone });
+                APP_STORE.registInfo = null;
+                history.push("/home");
             } catch (err) {
                 console.log(`err`, err)
             }

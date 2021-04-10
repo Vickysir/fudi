@@ -30,8 +30,12 @@ import {
 
 
 // 注册  获取手机验证码
-export const APIPhoneVerificationCode = async (params: PhoneVerificationCodePost) => {
-    return await axios.post<VerificationCodePostResponse>(apiPath.phoneVerificationCode, params)
+export const APIRegistPhoneVerificationCode = async (params: PhoneVerificationCodePost) => {
+    return await axios.post<VerificationCodePostResponse>(apiPath.registPhoneVerificationCode, params)
+}
+// 更新手机号  获取手机验证码
+export const APIUpdatePhoneVerificationCode = async (params: PhoneVerificationCodePost) => {
+    return await axios.post<VerificationCodePostResponse>(apiPath.updatePhoneVerificationCode, params)
 }
 // 注册
 export const APIRegist = async (params: LoginRegistPost) => {

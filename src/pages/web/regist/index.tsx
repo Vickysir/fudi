@@ -35,28 +35,13 @@ const Regist = (props) => {
     const { history } = props;
     const [form] = Form.useForm();
 
-    const { signIn, loaded } = useGoogleLogin({
-        onSuccess: onSuccess,
-        onFailure: onFailure,
-        clientId: "473960765414-67u4bo8orupa8fbps4ic47v8sr9i2oca.apps.googleusercontent.com",
-    })
+
 
     const onFinish = (values: any) => {
         history.push("/setupphone");
         // 存入store
         APP_STORE.registInfo = values;
     };
-
-    // login
-    function onSignIn() {
-        signIn()
-    }
-    function onSuccess(res) {
-        console.log('^^^^^^^^^^res', res)
-    }
-    function onFailure(error) {
-        console.log('^^^^^^^^^^error', error)
-    }
 
 
     return (
@@ -131,24 +116,10 @@ const Regist = (props) => {
                             </Button>
                         </Form.Item>
                     </Form>
-                    <div className="login-form-thirdparty">
-                        <img src={google} alt="icon" onClick={onSignIn} />
-                        <FacebookLogin
-                            appId="127554539221626"
-                            callback={onSuccess}
-                            render={renderProps => (
-                                <img src={fb} onClick={renderProps.onClick} alt="icon" />
-                            )}
-                        />
-                        <AppleLogin
-                            clientId="com.react.apple.login"
-                            redirectURI="http://localhost:8585"
-                            callback={onSuccess}
-                            render={(renderProps) =>
-                                <img src={apple} onClick={renderProps.onClick} alt="icon" />
-                            }
-                        />
-                    </div>
+                    {/* <div className="login-form-thirdparty">
+                        <img src={google} alt="icon" />
+                        <img src={fb} alt="icon" />
+                    </div> */}
                     <div className="login-form-regist">
                         Already have an account?<Link to='/login'>Log In</Link>
                     </div>

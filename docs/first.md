@@ -131,14 +131,16 @@
                 
             - code number input
             - 右侧 save
-                - 非空验证
+                - code number input 非空验证
      - adress list 
         - 同 nike name
      - add adress
-        - 模态框表单
-            - 非空验证
-        - 地图交互
-            - 填充input值
+        - 模态框表单，非空验证
+            - detail
+            - houseNumber
+            - zipCode
+            - 地图交互
+                - 填充input值
 
 6. change password
 

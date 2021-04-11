@@ -76,7 +76,7 @@ const LeftMenu = (props: Props) => {
 
     return (
         <div className="leftMenu-warp">
-            <UploadAvatar userInfo={userInfo} />
+            <UploadAvatar userInfo={userInfo} authInfo={APP_STORE.authInfo} />
             <Menu
                 onClick={handleClick}
                 style={{ "width": "21.333rem", "paddingBottom": "2rem" }}

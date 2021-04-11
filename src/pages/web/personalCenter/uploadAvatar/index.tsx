@@ -11,15 +11,19 @@ import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { havePlaceholder } from '@/utils';
 import './index.less'
-import { SettingPageInfoPostResponse } from '@/pages/api/types';
+import { CommonInfo, SettingPageInfoPostResponse } from '@/pages/api/types';
 import { APIGets3UploadKey, APIPersonalCenterUpdateIcon } from '@/pages/api/request';
 // import { AWSuploadS3, uploadParams } from '@/utils/uploadUseS3';
 import UploadComponent from '@/pages/components/antd/upload';
 import { defaultStorage } from '@/utils/uploadUseS3';
+import { mapAppStoreToProps } from '@/__internal';
+import { IAuthInfo } from '@/config/customStore';
 
 interface Props {
     userInfo: SettingPageInfoPostResponse
+    authInfo: IAuthInfo
 }
+@mapAppStoreToProps(["authInfo"])
 export default class UploadAvatar extends React.Component<Props> {
     state = {
         loading: false,
@@ -54,7 +58,7 @@ export default class UploadAvatar extends React.Component<Props> {
 
     render() {
         const { loading, imageUrl } = this.state;
-        const nickname = APP_STORE.authInfo?.nickname
+        const nickname = this.props.authInfo?.nickname
         const uploadButton = (
             <div>
                 {loading ? <LoadingOutlined /> : <PlusOutlined />}

@@ -24,7 +24,7 @@ export default class UploadAvatar extends React.Component<Props> {
     state = {
         loading: false,
         imageUrl: "",
-        head: ""
+        head: "",
     };
     async componentDidMount() {
         console.log(`this.props`, this.props)
@@ -54,7 +54,7 @@ export default class UploadAvatar extends React.Component<Props> {
 
     render() {
         const { loading, imageUrl } = this.state;
-        const { userInfo } = this.props;
+        const nickname = APP_STORE.authInfo?.nickname
         const uploadButton = (
             <div>
                 {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -72,7 +72,7 @@ export default class UploadAvatar extends React.Component<Props> {
                 >
                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%', height: "100%", "borderRadius": "50%" }} /> : uploadButton}
                 </UploadComponent>
-                <h3>{havePlaceholder(userInfo?.nickname, "-")}</h3>
+                <h3 className="inaline">{havePlaceholder(nickname, "-")}</h3>
             </div>
 
         );

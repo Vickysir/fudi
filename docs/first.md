@@ -11,6 +11,9 @@
     - 动态header
 - 移动端页面
 
+动态header
+    - 未登录状态
+    - 登录状态
 
 1. 未登录
     - header右侧，显示一个按钮，按钮内容根据不同页面显示：
@@ -82,9 +85,11 @@
             - 无数据，为空
             - status为，4-9
             
-2.  <div style="color:red">myVochers</div>
+2.  myVochers
 
     - 优惠券列表
+        - 详情 Available
+            - 点击，模态框展示优惠券详情
     - 添加优惠券
 
 3. 邀请朋友
@@ -127,6 +132,13 @@
             - code number input
             - 右侧 save
                 - 非空验证
+     - adress list 
+        - 同 nike name
+     - add adress
+        - 模态框表单
+            - 非空验证
+        - 地图交互
+            - 填充input值
 
 6. change password
 

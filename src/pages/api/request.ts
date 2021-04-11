@@ -19,13 +19,13 @@ import {
     Gets3UploadKeyPostResponse,
     PersonalCenterUpdateIconPost,
     SaveAddressPost,
-    AddressListPostResponse,
     ShopServicePhoneResponse,
     PersonalCenterOrderListPost,
     PersonalCenterInvitationPost,
     PersonalCenterUpdatePhonePost,
     PersonalCenterCouponListPost,
     PersonalCenterCouponListPostResponseArray,
+    AddressListPostResponseArray,
 } from './types';
 
 
@@ -131,8 +131,8 @@ export const APIPersonalCenterUpdateIcon = async (params: PersonalCenterUpdateIc
 
 
 // 个人中心 修改信息  Nickname
-export const APIPersonalCenterUpdateNickname = async () => {
-    return await axios.post(apiPath.personalCenterUpdateNickname)
+export const APIPersonalCenterUpdateNickname = async (param: { nickname: string }) => {
+    return await axios.post(apiPath.personalCenterUpdateNickname, param)
 }
 // 个人中心 修改信息  Email
 export const APIPersonalCenterUpdateEmail = async (params: EmailVerificationCodePost) => {
@@ -144,7 +144,7 @@ export const APIPersonalCenterUpdatePhone = async (params: PersonalCenterUpdateP
 }
 // 个人中心 获取 adress list
 export const APIUserAddressList = async () => {
-    return await axios.post<AddressListPostResponse>(apiPath.addressList)
+    return await axios.post<AddressListPostResponseArray[]>(apiPath.addressList)
 }
 // 个人中心 保存 adress 
 export const APISaveAddress = async (params: SaveAddressPost) => {

@@ -6,49 +6,53 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/personalCenter/myInfor/index.tsx
  */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MailOutlined, UserOutlined, PhoneOutlined, CreditCardOutlined, EnvironmentOutlined, HomeOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import './index.less';
-import { APIPersonalCenterUpdateEmail } from '@/pages/api/request';
+import { APIPersonalCenterUpdateEmail, APIUserAddressList } from '@/pages/api/request';
 import EditInput from '../../components/editInput';
+import { useAppStore } from '@/__internal';
+import { AddressListPostResponseArray } from '@/pages/api/types';
+import SaveAdressModel from './saveAdress';
 
 const MyInfor = () => {
+    const authInfo = useAppStore("authInfo");
+    const [adressList, setAdressList] = useState([])
+    const [isOpen, setisOpen] = useState(false);
 
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
-    };
+
+
     useEffect(() => {
-        // APIPersonalCenterUpdateEmail({ email: "460022058@qq.com" })
-        //     .then((res) => {
-        //         console.log(`APIPersonalCenterUpdateEmail res`, res)
-        //         const { data } = res;
-        //     }).catch((err) => {
-        //         console.log(`APIPersonalCenterUpdateEmail err`, err)
-        //     })
-
+        refetchAdressList();
     }, [])
+
+    const refetchAdressList = async () => {
+        const { data } = await APIUserAddressList();
+        setAdressList(data)
+
+    }
+    const onCloseInfo = () => {
+        setisOpen(false);
+    }
 
     return (
         <div className="myInfor-wrap">
             <Form
                 name="normal_login"
                 className="login-form"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
             >
                 <Form.Item>
                     <h3 className="myInfor-wrap-title">Edit My Info</h3>
                 </Form.Item>
                 <Form.Item
                     name="username"
-                    rules={[{ required: true, message: 'Please input your Full Name!' }]}
+                    rules={[{ required: true, message: 'test' }]}
                 >
-                    <Input
-                        size="large"
-                        prefix={<UserOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
-                        placeholder="Full Name"
-                        style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
+                    <EditInput
+                        icon={<UserOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
+                        type="username"
+                        textValue={authInfo?.nickname || "Full name"}
                     />
                 </Form.Item>
                 <Form.Item
@@ -66,69 +70,47 @@ const MyInfor = () => {
                     name="email"
                     rules={[{ required: true, message: 'Please input your Eamil!' }]}
                 >
-                    <Input
-                        prefix={<MailOutlined style={{ "margin": "0 1rem" }} />}
-                        placeholder="Eamil"
-                        size="large"
-                        style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
+                    <EditInput
+                        icon={<MailOutlined style={{ "margin": "0 1rem" }} />}
+                        type="email"
+                        textValue={authInfo?.email || "Eamil"}
                     />
                 </Form.Item>
-                {/* <Form.Item
-                    name="test"
-                    rules={[{ required: true, message: 'test' }]}
-                >
-                    <EditInput />
-                </Form.Item> */}
+
                 <Form.Item>
                     <h3 className="myInfor-wrap-title">Edit My Address</h3>
                 </Form.Item>
-                <Form.Item
-                    name="location"
-                    rules={[{ required: true, message: 'Please input your Location!' }]}
-                >
-                    <Input
-                        prefix={<EnvironmentOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
-                        placeholder="Grafton Street, Dublin"
-                        size="large"
-                        style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
-                    />
-                </Form.Item>
-                <Form.Item
-                    name="address"
-                    rules={[{ required: true, message: 'Please input your House Number' }]}
-                >
-                    <Input
-                        size="large"
-                        prefix={<HomeOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
-                        placeholder="House Number"
-                        style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
-                    />
-                </Form.Item>
-                <Form.Item
-                    name="card"
-                    rules={[{ required: true, message: 'Please input your Card!' }]}
-                >
-                    <Input
-                        prefix={<CreditCardOutlined style={{ "margin": "0 1rem" }} />}
-                        placeholder="AB 23"
-                        size="large"
-                        style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
-                    />
-                </Form.Item>
+                {
+                    adressList.map((item: AddressListPostResponseArray, index) => {
+                        return (
+                            <Form.Item
+                                name={"username" + item.id}
+                                rules={[{ required: true, message: 'test' }]}
+                            >
+                                <EditInput
+                                    type="adress"
+                                    textValue={item.houseNumber}
+                                    delete={true}
+                                />
+                            </Form.Item>
+                        )
+                    })
+                }
                 <Form.Item>
                     <Button
                         type="primary"
-                        htmlType="submit"
                         className="login-form-button"
                         size="large"
                         shape="round"
                         block
                         style={{ "margin": "0.5rem 0" }}
+                        onClick={() => setisOpen(true)}
                     >
-                        Save
+                        Add  Adress
                     </Button>
                 </Form.Item>
             </Form>
+            <SaveAdressModel isOpen={isOpen} onClose={onCloseInfo} refetch={refetchAdressList} />
         </div>
     )
 }

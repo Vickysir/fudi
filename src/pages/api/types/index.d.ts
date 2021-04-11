@@ -160,34 +160,18 @@ export interface SaveAddressPost {
     "region": string//"",
 }
 
-export interface AddressListPostResponse {
-    "event": "SUCCESS",
-    "data": [{
-        "id": 1,
-        "shopId": 4,
-        "consignee": "Guan guan",
-        "sex": 1,
-        "phone": "021494788",
-        "region": "yaoyongqi",
-        "detail": "Highfield Rugby Club, Model Farm Road, Glasheen, Cork, Ireland",
-        "longitude": -8.5168845,
-        "latitude": 51.8855478,
-        "zipCode": "",
-        "houseNumber": "1024"
-    }, {
-        "id": 31,
-        "shopId": 2,
-        "consignee": "Guan",
-        "sex": 0,
-        "phone": "+35321494788",
-        "region": "B",
-        "detail": "Centre Park Rd, Ballintemple, Cork, Ireland",
-        "longitude": -8.448020199999974,
-        "latitude": 51.898053,
-        "zipCode": "",
-        "houseNumber": "1024"
-    }],
-    "describe": ""
+export interface AddressListPostResponseArray {
+    "id": number//1,
+    "shopId": number//4,
+    "consignee": string//"Guan guan",
+    "sex": number//1,
+    "phone": string//"021494788",
+    "region": string//"yaoyongqi",
+    "detail": string//"Highfield Rugby Club, Model Farm Road, Glasheen, Cork, Ireland",
+    "longitude": number//-8.5168845,
+    "latitude": number//51.8855478,
+    "zipCode": string//"",
+    "houseNumber": string//"1024"
 }
 
 

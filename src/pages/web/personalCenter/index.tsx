@@ -29,15 +29,7 @@ const PersonalCenter = (props) => {
     const childRef = useRef(null);
     const [userInfo, setuserInfo] = useState(null);
     useEffect(() => {
-        APISettingPageInfo()
-            .then((res) => {
-                const { data } = res;
-                setuserInfo(data);
-                console.log(`data`, data)
-            }).catch((err) => {
-                console.log(`APISettingPageInfo err`, err)
-            })
-
+        reload();
     }, [])
     useEffect(() => {
         if (location.pathname = "/personalCenter/index") {
@@ -54,6 +46,15 @@ const PersonalCenter = (props) => {
         childRef.current.changeVal({ key: "1" });
     }
 
+    const reload = () => {
+        APISettingPageInfo()
+            .then((res) => {
+                const { data } = res;
+                setuserInfo(data);
+            }).catch((err) => {
+                console.log(`APISettingPageInfo err`, err)
+            })
+    }
 
     return (
         <>

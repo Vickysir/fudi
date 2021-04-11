@@ -94,7 +94,6 @@ export const APIPersonalCenterOrderList = async (params: PersonalCenterOrderList
 
 
 // 个人中心 my Vouchers 
-//TODO shopId
 export const APIPersonalCenterCouponList = async (params: PersonalCenterCouponListPost) => {
     return await axios.post<PersonalCenterCouponListPostResponseArray[]>(apiPath.personalCenterCouponList, params)
 }

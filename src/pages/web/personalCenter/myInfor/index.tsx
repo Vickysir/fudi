@@ -56,14 +56,13 @@ const MyInfor = () => {
                     />
                 </Form.Item>
                 <Form.Item
-                    name="telphone"
+                    name="phone"
                     rules={[{ required: true, message: 'Please input your Phone Number!' }]}
                 >
-                    <Input
-                        prefix={<PhoneOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
-                        placeholder="+353 000 000 00 00"
-                        size="large"
-                        style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
+                    <EditInput
+                        icon={<PhoneOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
+                        type="phone"
+                        textValue={authInfo?.phone || "Phone Number"}
                     />
                 </Form.Item>
                 <Form.Item

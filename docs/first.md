@@ -126,7 +126,7 @@
                     - 提示必填 
                 - 点击button，phone number存在
                     - 发送获取验证码请求
-                    - 进入60s 倒计时，button = disable
+                    - 进入60s 倒计时，button = disable 
                     - 计时结束，button = enable
                 
             - code number input

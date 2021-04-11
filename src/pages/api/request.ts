@@ -149,3 +149,8 @@ export const APIUserAddressList = async () => {
 export const APISaveAddress = async (params: SaveAddressPost) => {
     return await axios.post(apiPath.saveAddress, params)
 }
+
+// 个人中心 remove adress 
+export const APIRemoveAddress = async (params: { id: number }) => {
+    return await axios.post(apiPath.saveAddress, params)
+}

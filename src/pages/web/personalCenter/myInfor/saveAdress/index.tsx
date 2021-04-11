@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Button, Form, Input } from 'antd';
 // import './index.less'
 import { PersonalCenterUpdatePasswordPost } from '@/pages/api/types';
-import { APIPersonalCenterUpdatePassword } from '@/pages/api/request';
+import { APIPersonalCenterUpdatePassword, APISaveAddress } from '@/pages/api/request';
 import { MailOutlined, UserOutlined, PhoneOutlined, CreditCardOutlined, EnvironmentOutlined, HomeOutlined } from '@ant-design/icons';
 
 interface Props {
@@ -27,12 +27,18 @@ const SaveAdressModel = (props: Props) => {
         form.resetFields();
     }
 
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
-        props.refetch();
-        setvisible(false);
-        onClose();
-        form.resetFields();
+    const onFinish = async (values: any) => {
+        try {
+            console.log('Received values of form: ', values);
+            await APISaveAddress(values);
+            props.refetch();
+            setvisible(false);
+            onClose();
+            form.resetFields();
+        } catch (err) {
+            console.log(`err`, err)
+        }
+
     };
     return (
         <div>
@@ -62,7 +68,7 @@ const SaveAdressModel = (props: Props) => {
                             />
                         </Form.Item>
                         <Form.Item
-                            name="houseNumber"
+                            name="housenumber"
                             rules={[{ required: true, message: 'Please input your House Number' }]}
                         >
                             <Input
@@ -73,7 +79,7 @@ const SaveAdressModel = (props: Props) => {
                             />
                         </Form.Item>
                         <Form.Item
-                            name="card"
+                            name="zipcode"
                             rules={[{ required: true, message: 'Please input your Card!' }]}
                         >
                             <Input

@@ -6,7 +6,7 @@ import iconFlagLreland from '@/assets/images/common/icon/flag-Lreland.svg'
 import { MailOutlined, UserOutlined, PhoneOutlined, CreditCardOutlined, EnvironmentOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import style from '@/styles/theme/icon.less'
 import "./index.less"
-import { APIPersonalCenterUpdateEmail, APIPersonalCenterUpdateNickname, APIPersonalCenterUpdatePhone, APIUpdatePhoneVerificationCode } from '@/pages/api/request';
+import { APIPersonalCenterUpdateEmail, APIPersonalCenterUpdateNickname, APIPersonalCenterUpdatePhone, APIRemoveAddress, APIUpdatePhoneVerificationCode } from '@/pages/api/request';
 import { useAppStore } from '@/__internal';
 import { clearTimer, handleClickTimer } from '@/utils/timer';
 
@@ -18,6 +18,7 @@ interface Props {
     type: string
     delete?: boolean
     refetchAdressList?: () => void
+    adddressId?: number
 }
 
 const EditInput = (props: Props) => {
@@ -36,8 +37,7 @@ const EditInput = (props: Props) => {
     }
     const handleClickDelete = () => {
         deleteInputPost(props.type)
-        //TODO reload adress list 
-
+        props.refetchAdressList();
     }
     const handleClickSave = (type: string) => {
         switch (type) {
@@ -49,7 +49,6 @@ const EditInput = (props: Props) => {
                     }
                     // TODO 测试 更新phone
                     editInputPost(props.type);
-                    setIsEdit(true);
                 }
 
                 break;
@@ -101,19 +100,19 @@ const EditInput = (props: Props) => {
                     ...APP_STORE.authInfo,
                     phone: phoneNumber
                 }
+                setIsEdit(true);
             }
                 break;
 
         }
     }
     const deleteInputPost = async (type: string) => {
-        // TODO 删除adress
         switch (type) {
             case "adress": {
-
+                await APIRemoveAddress({ id: props.adddressId });
+                message.success("Delete the success")
             }
                 break;
-
         }
     }
     // 处理电话号码前缀change

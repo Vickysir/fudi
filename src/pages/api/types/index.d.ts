@@ -150,14 +150,14 @@ export interface PersonalCenterUpdateIconPost {
 }
 export interface SaveAddressPost {
     "zipCode": string//"310000",
-    "consignee": string//"this is user name",
-    "phone": string//"13656690321",
-    "sex": number//0,
-    "latitude": number//234.56,
-    "longitude": number//123.45
+    "consignee"?: string//"this is user name",
+    "phone"?: string//"13656690321",
+    "sex"?: number//0,
+    "latitude"?: number//234.56,
+    "longitude"?: number//123.45
     "houseNumber": string//"9-905",
     "detail": string//"cork street",
-    "region": string//"",
+    "region"?: string//"",
 }
 
 export interface AddressListPostResponseArray {

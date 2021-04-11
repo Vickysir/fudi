@@ -35,7 +35,7 @@ export const handleClickTimer = () => {
             count: --count
         };
         console.log(`计时器`, count)
-        if (count <= -1) {
+        if (count === -1) {
             clearInterval(timer)
             APP_STORE.commonInfo = {
                 ...APP_STORE.commonInfo,

@@ -90,6 +90,8 @@ const MyInfor = () => {
                                     type="adress"
                                     textValue={item.houseNumber}
                                     delete={true}
+                                    refetchAdressList={refetchAdressList}
+                                    adddressId={item.id}
                                 />
                             </Form.Item>
                         )

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-04-08 16:31:37
+ * @LastEditTime: 2021-04-12 18:58:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
@@ -109,16 +109,12 @@ const Setupphone = (props) => {
         if (location?.search && location?.search === "?update") {
             setType("update");
         }
+        const count = commonInfo?.count;
+        const liked = commonInfo?.liked;
+        if (count === null) return;
+        if (liked === undefined) return;
         //计时器
         handleClickTimer();
-        return () => {
-            clearTimer();
-            APP_STORE.commonInfo = {
-                ...APP_STORE.commonInfo,
-                liked: true,
-                count: null
-            };
-        }
     }, [])
 
 

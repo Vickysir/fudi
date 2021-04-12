@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-08 14:53:21
- * @LastEditTime: 2021-04-09 11:47:38
+ * @LastEditTime: 2021-04-12 17:35:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/utils/timer.ts
@@ -19,13 +19,9 @@ export const formatDateToHour = (dataTime, format = 'HH:mm') => moment(new Date(
 let timer = null;
 // 倒计时 逻辑
 export const handleClickTimer = () => {
-    let count = APP_STORE.commonInfo?.count;
-    let liked = APP_STORE.commonInfo?.liked;
-    if (count === null) return;
-    if (liked === undefined) return;
-
     APP_STORE.commonInfo = {
         ...APP_STORE.commonInfo,
+        count: 60,
         liked: false,
     };
     timer = setInterval(() => {
@@ -37,11 +33,11 @@ export const handleClickTimer = () => {
         console.log(`计时器`, count)
         if (count === -1) {
             clearInterval(timer)
-            APP_STORE.commonInfo = {
-                ...APP_STORE.commonInfo,
-                count: 60,
-                liked: true
-            };
+            // APP_STORE.commonInfo = {
+            //     ...APP_STORE.commonInfo,
+            //     count: 60,
+            //     liked: true
+            // };
         }
     }, 1000)
 };

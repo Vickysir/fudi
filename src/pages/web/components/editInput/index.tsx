@@ -226,11 +226,7 @@ const EditInput = (props: Props) => {
         }
         await APIUpdatePhoneVerificationCode({ "phone": phonePrefix + phoneNumber });
         message.success("The verification code has been sent");
-        APP_STORE.commonInfo = {
-            ...APP_STORE.commonInfo,
-            count: 60,
-            liked: false,
-        };
+        //计时器
         handleClickTimer();
     }
     // 离开 本页面 ，清除倒计时

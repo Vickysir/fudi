@@ -55,10 +55,7 @@ const PhoneVerification = (props) => {
             setType("update");
         }
 
-        APP_STORE.commonInfo = {
-            ...APP_STORE.commonInfo,
-            count: 60,
-        };
+        
         //计时器
         handleClickTimer();
         return () => {

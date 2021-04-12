@@ -49,8 +49,9 @@ const Login = (props) => {
         try {
             const signResult = await firebase.auth().signInWithPopup(provider);
             const getIdToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true);
-            const getApi = await APIThirdPartyLogin({ "idToken": getIdToken });
-            console.log(`APIThirdPartyLogin`, getApi)
+            const getApiRes = await APIThirdPartyLogin({ "idToken": getIdToken });
+            console.log(`APIThirdPartyLogin`, getApiRes)
+            afterLogin(getApiRes.data);
 
         } catch (err) {
             console.log(`err`, err)

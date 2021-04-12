@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-09 09:15:13
- * @LastEditTime: 2021-04-09 14:01:17
+ * @LastEditTime: 2021-04-12 10:06:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/docs/first.md
@@ -11,7 +11,9 @@
     - 动态header
 - 移动端页面
 
+
 动态header
+
     - 未登录状态
     - 登录状态
 
@@ -55,6 +57,7 @@
 
 
 ### 注册
+
 注册方式
 
     - 邮箱注册
@@ -105,20 +108,23 @@
     - 暂缓
 
 5. <div style="color:red">edit my info</div>
+
     - nike name
         - 显示状态 
             - text
             - 右侧 小笔icon
+                - 点击，进入编辑状态
         - 编辑状态 
             - input
             - 右侧 save
                 - 非空验证
+            - 右侧 Cancel
+                - 返回显示状态
     - email
         - 同 nike name
     - phone number
         - 显示状态 
-            - text
-            - 右侧 小笔icon
+           同 nike name
         - 编辑状态 
             - phone number input  + 发送验证码 button
 
@@ -126,12 +132,15 @@
                     - 提示必填 
                 - 点击button，phone number存在
                     - 发送获取验证码请求
-                    - 进入60s 倒计时，button = disable 
-                    - 计时结束，button = enable
+                        - 进入60s 倒计时，button = disable  //FIXME:渲染bug
+                        - 计时结束，button = enable
                 
             - code number input
             - 右侧 save
+                - phone number input 非空验证 //FIXME:逻辑遗漏
                 - code number input 非空验证
+            - 右侧 Cancel
+                - 返回显示状态
      - adress list 
         - 同 nike name
      - add adress
@@ -139,7 +148,7 @@
             - detail
             - houseNumber
             - zipCode
-            - 地图交互
+            - 地图交互 //TODO:二期
                 - 填充input值
 
 6. change password
@@ -165,7 +174,7 @@
 1. <div style="color:red">auth路由</div>
     - personalCenter
     
-2. 开放路由
+2. 公开路由
 
     - home
     - login

@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-16 15:50:47
+ * @LastEditTime: 2021-04-16 15:58:54
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /fudi/src/pages/components/antd/modal/messageModal/index.tsx
+ */
 import React, { useEffect, useState } from 'react'
 import { Modal, Input } from 'antd';
 import Icon from '@ant-design/icons';
@@ -7,6 +15,8 @@ import './index.less'
 interface Props {
     isOpen: boolean
     isClose: () => void
+    icon:React.ReactNode
+    content:React.ReactNode
 }
 
 const MessageModal = (props: Props) => {
@@ -33,11 +43,17 @@ const MessageModal = (props: Props) => {
             >
                 <div className="model-content sendSuccess">
                     <div>
-                        <Icon component={heartSvg} style={{ fontSize: "18rem" }} />
+                        {/* <Icon component={heartSvg} style={{ fontSize: "18rem" }} /> */}
+                        {
+                            props.icon
+                        }
                     </div>
                     <div>
-                        Thank you<br />
-                        for your feedback!
+                        {
+                            props.content
+                        }
+                        {/* Thank you<br />
+                        for your feedback! */}
                     </div>
                 </div>
             </Modal>

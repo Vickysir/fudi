@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-04 10:25:22
- * @LastEditTime: 2021-04-08 16:31:37
+ * @LastEditTime: 2021-04-12 18:58:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/resetpassword/index.tsx
@@ -46,6 +46,14 @@ const Setupphone = (props) => {
                     ...values,
                     ...data,
                 };
+                //开始倒计时
+                APP_STORE.commonInfo = {
+                    ...APP_STORE.commonInfo,
+                    count: 60,
+                    liked: false,
+                };
+                //计时器
+                handleClickTimer();
                 history.push("/setupphone/verification");
 
             } catch (err) {
@@ -53,7 +61,7 @@ const Setupphone = (props) => {
             }
         } else {
             try {
-                // 发送 api 获取注册手机验证码
+                // 发送 api 获取update手机验证码
                 const { data } = await APIUpdatePhoneVerificationCode(values);
                 message.success("The verification code has been sent");
                 APP_STORE.registInfo = {
@@ -61,6 +69,14 @@ const Setupphone = (props) => {
                     ...values,
                     ...data,
                 };
+                //开始倒计时
+                APP_STORE.commonInfo = {
+                    ...APP_STORE.commonInfo,
+                    count: 60,
+                    liked: false,
+                };
+                //计时器
+                handleClickTimer();
                 history.push("/setupphone/verification?update");
             } catch (err) {
                 console.log('err', err);
@@ -111,14 +127,6 @@ const Setupphone = (props) => {
         }
         //计时器
         handleClickTimer();
-        return () => {
-            clearTimer();
-            APP_STORE.commonInfo = {
-                ...APP_STORE.commonInfo,
-                liked: true,
-                count: null
-            };
-        }
     }, [])
 
 

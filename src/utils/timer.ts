@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-08 14:53:21
- * @LastEditTime: 2021-04-09 11:47:38
+ * @LastEditTime: 2021-04-12 17:35:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/utils/timer.ts
@@ -16,33 +16,38 @@ export const formatDateToHour = (dataTime, format = 'HH:mm') => moment(new Date(
 
 
 
-let timer = null;
 // 倒计时 逻辑
+// 开启倒计时，需要给初始值
+// APP_STORE.commonInfo = {
+//     ...APP_STORE.commonInfo,
+//     count: 60,
+//     liked: false,
+// };
+let timer = null;
 export const handleClickTimer = () => {
-    let count = APP_STORE.commonInfo?.count;
-    let liked = APP_STORE.commonInfo?.liked;
+
+    const count = APP_STORE.commonInfo?.count;
+    const liked = APP_STORE.commonInfo?.liked;
     if (count === null) return;
     if (liked === undefined) return;
+    if (timer) return;
 
-    APP_STORE.commonInfo = {
-        ...APP_STORE.commonInfo,
-        liked: false,
-    };
     timer = setInterval(() => {
-        let count = APP_STORE.commonInfo.count;
-        APP_STORE.commonInfo = {
-            ...APP_STORE.commonInfo,
-            count: --count
-        };
-        console.log(`计时器`, count)
+        let count = APP_STORE.commonInfo.count - 1;
         if (count === -1) {
-            clearInterval(timer)
             APP_STORE.commonInfo = {
                 ...APP_STORE.commonInfo,
-                count: 60,
+                count: null,
                 liked: true
             };
+            clearInterval(timer);
+            timer = null;
+            return
         }
+        APP_STORE.commonInfo = {
+            ...APP_STORE.commonInfo,
+            count: count
+        };
     }, 1000)
 };
 

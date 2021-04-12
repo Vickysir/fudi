@@ -15,7 +15,6 @@ import BaackTitle from '../../../components/baackTitle';
 import { withRouter } from 'react-router-dom';
 import { LoginRegistPost } from '@/pages/api/types';
 import { APIPersonalCenterUpdatePhone, APIRegist } from '@/pages/api/request';
-import { clearTimer, handleClickTimer } from '@/utils/timer';
 
 const PhoneVerification = (props) => {
     const { history } = props;
@@ -55,15 +54,6 @@ const PhoneVerification = (props) => {
             setType("update");
         }
 
-        APP_STORE.commonInfo = {
-            ...APP_STORE.commonInfo,
-            count: 60,
-        };
-        //计时器
-        handleClickTimer();
-        return () => {
-            clearTimer()
-        }
     }, [])
 
 

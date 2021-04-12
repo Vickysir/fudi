@@ -68,13 +68,6 @@ const Login = (props) => {
             ...APP_STORE.commonInfo,
             shopId: 1,
         };
-        // 验证码倒计时 初始化
-        APP_STORE.commonInfo = {
-            ...APP_STORE.commonInfo,
-            liked: true,
-            count: null
-        };
-
         if (data.phone === "" || data.phone === undefined || data.phone === null) {
             history.push("/setupphone?update");
         } else {
@@ -94,12 +87,6 @@ const Login = (props) => {
             APP_STORE.commonInfo = {
                 ...APP_STORE.commonInfo,
                 shopId: 1
-            };
-            // 验证码倒计时 初始化
-            APP_STORE.commonInfo = {
-                ...APP_STORE.commonInfo,
-                liked: true,
-                count: null
             };
             history.push("/home");
         } catch (err) {

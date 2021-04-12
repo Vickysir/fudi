@@ -52,7 +52,6 @@ const EditInput = (props: Props) => {
                         message.info(`Place input code`)
                         return
                     }
-                    // TODO 测试 更新phone
                     editInputPost(props.type);
                 }
 
@@ -134,7 +133,6 @@ const EditInput = (props: Props) => {
         >
             <Option value="+353">+353</Option>
             <Option value="+44">+44</Option>
-            <Option value="+1">+1</Option>
         </Select>
     );
     //根据用户手机区号的选择，更换flag
@@ -231,6 +229,7 @@ const EditInput = (props: Props) => {
         }
         await APIUpdatePhoneVerificationCode({ "phone": phonePrefix + phoneNumber });
         message.success("The verification code has been sent");
+        //开始倒计时
         APP_STORE.commonInfo = {
             ...APP_STORE.commonInfo,
             count: 60,
@@ -238,17 +237,12 @@ const EditInput = (props: Props) => {
         };
         handleClickTimer();
     }
-    // 离开 本页面 ，清除倒计时
     useEffect(() => {
-        return () => {
-            clearTimer();
-            APP_STORE.commonInfo = {
-                ...APP_STORE.commonInfo,
-                liked: true,
-                count: null
-            };
-        }
+        //计时器
+        handleClickTimer();
     }, [])
+
+
 
 
     return (

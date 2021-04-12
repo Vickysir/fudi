@@ -134,7 +134,9 @@
                     - 提示必填 
                 - 点击button，phone number存在
                     - 发送获取验证码请求
-                        - 进入60s 倒计时，button = disable  //FIXME:渲染bug
+                        - 进入60s 倒计时，button = disable 
+                            - 离开倒计时页面，再返回，倒计时不受影响
+                            - 页面刷新，倒计时不受影响
                         - 计时结束，button = enable
                 
             - code number input

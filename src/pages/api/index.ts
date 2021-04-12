@@ -14,6 +14,7 @@ export const apiPath = {
     "emailVerificationCode": "/user/forget/password/email/verification",// Send email forgot password     一期✔️
     "resetPwd": "/user/forget/password",// Reset password     一期✔️
     "saveAddress": "/user/shipping_address/save",//save address     一期
+    "removeAddress": "/user/shipping_address/remove",//save address     一期
     "addressList": "/user/shipping_address/list",//address list     一期
     "mapRange": "/shop/range/label/list/v2",//map range
     "shopList": "/shop/list/v2/collection",//shop(restaurant) list

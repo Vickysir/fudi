@@ -152,5 +152,5 @@ export const APISaveAddress = async (params: SaveAddressPost) => {
 
 // 个人中心 remove adress 
 export const APIRemoveAddress = async (params: { id: number }) => {
-    return await axios.post(apiPath.saveAddress, params)
+    return await axios.post(apiPath.removeAddress, params)
 }

@@ -17,6 +17,7 @@ interface Props {
     textValue: string
     type: string
     delete?: boolean
+    edit?: boolean
     refetchAdressList?: () => void
     adddressId?: number
 }
@@ -256,9 +257,11 @@ const EditInput = (props: Props) => {
                             {props.textValue}
                         </div>
                         <div>
-                            <EditOutlined className={style.themeColor} onClick={handleClickEdit} style={{ fontSize: "1.5rem", marginRight: "1rem" }} />
                             {
-                                props.delete ? <DeleteOutlined onClick={handleClickDelete} style={{ fontSize: "1.5rem" }} /> : null
+                                props.edit && <EditOutlined className={style.themeColor} onClick={handleClickEdit} style={{ fontSize: "1.5rem", marginRight: "1rem" }} />
+                            }
+                            {
+                                props.delete && <DeleteOutlined onClick={handleClickDelete} style={{ fontSize: "1.5rem" }} />
                             }
                         </div>
                     </div>

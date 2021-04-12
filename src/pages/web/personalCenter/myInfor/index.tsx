@@ -53,6 +53,7 @@ const MyInfor = () => {
                         icon={<UserOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
                         type="username"
                         textValue={authInfo?.nickname || "Full name"}
+                        edit={true}
                     />
                 </Form.Item>
                 <Form.Item
@@ -63,6 +64,7 @@ const MyInfor = () => {
                         icon={<PhoneOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
                         type="phone"
                         textValue={authInfo?.phone || "Phone Number"}
+                        edit={true}
                     />
                 </Form.Item>
                 <Form.Item
@@ -73,6 +75,7 @@ const MyInfor = () => {
                         icon={<MailOutlined style={{ "margin": "0 1rem" }} />}
                         type="email"
                         textValue={authInfo?.email || "Eamil"}
+                        edit={true}
                     />
                 </Form.Item>
 
@@ -88,16 +91,17 @@ const MyInfor = () => {
                             >
                                 <EditInput
                                     type="adress"
-                                    textValue={item.houseNumber}
+                                    textValue={item.detail + "," + item.houseNumber + "," + item.zipCode}
                                     delete={true}
                                     refetchAdressList={refetchAdressList}
                                     adddressId={item.id}
+                                    edit={false}
                                 />
                             </Form.Item>
                         )
                     })
                 }
-                <Form.Item>
+                {/* <Form.Item>
                     <Button
                         type="primary"
                         className="login-form-button"
@@ -109,7 +113,7 @@ const MyInfor = () => {
                     >
                         Add  Adress
                     </Button>
-                </Form.Item>
+                </Form.Item> */}
             </Form>
             <SaveAdressModel isOpen={isOpen} onClose={onCloseInfo} refetch={refetchAdressList} />
         </div>

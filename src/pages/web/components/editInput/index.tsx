@@ -44,6 +44,10 @@ const EditInput = (props: Props) => {
         switch (type) {
             case "phone":
                 {
+                    if (phoneNumber === "") {
+                        message.info(`Place input phone number`)
+                        return
+                    }
                     if (phoneCode === "") {
                         message.info(`Place input code`)
                         return

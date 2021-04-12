@@ -139,7 +139,7 @@
                 
             - code number input
             - 右侧 save
-                - phone number input 非空验证 //FIXME:逻辑遗漏
+                - phone number input 非空验证
                 - code number input 非空验证
             - 右侧 Cancel
                 - 返回显示状态

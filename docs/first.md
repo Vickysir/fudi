@@ -49,6 +49,7 @@
     - 检查用户 phone number 是否存在
         - 如果存在，则直接登录进入homepage
         - 如果不存在，则进入绑定手机号流程
+            此处采用的注册时候绑定手机号的UI
             - 输入手机号，获取验证码（60s 重发倒计时）/user/phone/verification/code
             - 如果是授权登录过来的用户，则调用update phone number 接口，需要两个参数
                 - phone
@@ -65,8 +66,9 @@
 1. 邮箱注册
     - 填写邮箱
     - 填写密码
-    - 绑定手机号
-    - 接收手机验证码 /auth/register/phone/verification
+    - 绑定手机号/auth/register/phone/verification
+    - 接收手机验证码 
+
     调用注册接口，注册
 
 
@@ -97,7 +99,7 @@
 
 3. 邀请朋友
     - 邀请码
-    - <div style="color:red">分享</div>
+    - 分享
         - 点击按钮，分享至Facebook 
 
     - 邀请列表，数据显示
@@ -105,9 +107,9 @@
         - status = 1，则complete
 
 4. 通知中心
-    - 暂缓
+    - 暂缓 //TODO:三期
 
-5. <div style="color:red">edit my info</div>
+5. edit my info
 
     - nike name
         - 显示状态 
@@ -143,12 +145,12 @@
                 - 返回显示状态
      - adress list 
         - 同 nike name
-     - add adress
+     - add adress //TODO:二期
         - 模态框表单，非空验证
             - detail
             - houseNumber
             - zipCode
-            - 地图交互 //TODO:二期
+            - 地图交互 
                 - 填充input值
 
 6. change password

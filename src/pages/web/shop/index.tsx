@@ -17,12 +17,16 @@ import goodPlaceholder from '@/assets/images/common/icon/good-placeholder.svg';
 import React, { useState } from 'react'
 import style from '@/styles/theme/icon.less'
 import './index.less'
+import MessageModal from '@/pages/components/antd/modal/messageModal';
+import AddReview from '../personalCenter/myOrders/addReview';
 
 const { Search } = Input;
 const { Meta } = Card;
 const desc = ['3.5', 'bad', 'normal', 'good', 'wonderful'];
 const Shop = () => {
     const [rateValue, setrateValue] = useState(1)
+    const [isOpen, setisOpen] = useState(false)
+    const [issend, setissend] = useState(false)
     const suffix = (
         <SearchOutlined
             className="shop-theme-color"
@@ -33,6 +37,14 @@ const Shop = () => {
     const handleChange = value => {
         setrateValue(value);
     };
+    const addReviewClose = (type: string) => {
+        setisOpen(false);
+        if (type === "ok") return setissend(true);
+        return setissend(false);
+    }
+    const sendSuccessClose = () => {
+        setissend(false);
+    }
     return (
         <>
             <WebHeader />
@@ -49,6 +61,7 @@ const Shop = () => {
                 </div>
                 <div className="shop-wrap-shopDesc">
                     <div className="shop-wrap-shopDesc-box">
+                        <p className="shop-wrap-shopDesc-book" ><span onClick={() => setisOpen(true)}>Book a table</span></p>
                         <h1>Jungle Pizza</h1>
                         <div>
                             <span style={{ "display": "flex", "alignItems": "center" }}>
@@ -293,6 +306,14 @@ const Shop = () => {
                 </div>
             </div>
             <WebFooter />
+            <AddReview
+                isOpen={isOpen}
+                isClose={addReviewClose}
+            />
+            <MessageModal
+                isOpen={issend}
+                isClose={sendSuccessClose}
+            />
         </>
     )
 }

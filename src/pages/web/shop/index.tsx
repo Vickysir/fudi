@@ -8,17 +8,19 @@
  */
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
-import { Button, Rate, Input, Card } from 'antd'
-import Icon, { ArrowLeftOutlined, EnvironmentOutlined, FieldTimeOutlined, SearchOutlined } from '@ant-design/icons';
+import { Button, Rate, Input, Card, Divider } from 'antd'
+import Icon, { ArrowLeftOutlined, EnvironmentOutlined, FieldTimeOutlined, SearchOutlined, CalendarOutlined } from '@ant-design/icons';
 import iconchat from '@/assets/images/common/icon/icon-chat.svg'
 import goodPlaceholder from '@/assets/images/common/icon/good-placeholder.svg';
+import tableSvg from '@/assets/images/common/icon/table.svg'
+
 
 
 import React, { useState } from 'react'
 import style from '@/styles/theme/icon.less'
 import './index.less'
 import MessageModal from '@/pages/components/antd/modal/messageModal';
-import AddReview from '../personalCenter/myOrders/addReview';
+import AddReview from '@/pages/components/antd/modal/formModal';
 
 const { Search } = Input;
 const { Meta } = Card;
@@ -313,6 +315,13 @@ const Shop = () => {
             <MessageModal
                 isOpen={issend}
                 isClose={sendSuccessClose}
+                icon={<Icon component={tableSvg} style={{ fontSize: "18rem" }} />}
+                content={
+                    <>
+                        Your table<br />booked successfully!
+                        <p className="booktableSuccess-content"><CalendarOutlined /><span style={{ marginLeft: "1rem" }} >Add to Calendar</span></p>
+                    </>
+                }
             />
         </>
     )

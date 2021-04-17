@@ -8,7 +8,7 @@
  */
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
-import { Button, Rate, Input, Card, Divider } from 'antd'
+import { Button, Rate, Input, Card, Divider, BackTop } from 'antd'
 import Icon, { ArrowLeftOutlined, EnvironmentOutlined, FieldTimeOutlined, SearchOutlined, CalendarOutlined } from '@ant-design/icons';
 import iconchat from '@/assets/images/common/icon/icon-chat.svg'
 import goodPlaceholder from '@/assets/images/common/icon/good-placeholder.svg';
@@ -25,6 +25,7 @@ import AddReview from '@/pages/components/antd/modal/formModal';
 const { Search } = Input;
 const { Meta } = Card;
 const desc = ['3.5', 'bad', 'normal', 'good', 'wonderful'];
+
 const Shop = () => {
     const [rateValue, setrateValue] = useState(1)
     const [isOpen, setisOpen] = useState(false)
@@ -46,6 +47,14 @@ const Shop = () => {
     }
     const sendSuccessClose = () => {
         setissend(false);
+    }
+    const scrollToAnchor = (anchorName) => {
+        if (anchorName) {
+            let anchorElement = document.getElementById(anchorName);
+            if (anchorElement) {
+                anchorElement.scrollIntoView()
+            }
+        }
     }
     return (
         <>
@@ -87,11 +96,11 @@ const Shop = () => {
                     </div>
                     <div className="shop-wrap-shopDesc-search">
                         <div>
-                            <Button type="primary" size="large" shape="round">Pizza</Button>
-                            <Button size="large" shape="round">Pasta</Button>
-                            <Button size="large" shape="round">Salads</Button>
-                            <Button size="large" shape="round">Drinks</Button>
-                            <Button size="large" shape="round">Sauces</Button>
+                            <Button size="large" shape="round" onClick={() => scrollToAnchor('Pizza')}>Pizza</Button>
+                            <Button size="large" shape="round" onClick={() => scrollToAnchor('Pasta')}>Pasta</Button>
+                            <Button size="large" shape="round" onClick={() => scrollToAnchor('Salads')}>Salads</Button>
+                            <Button size="large" shape="round" onClick={() => scrollToAnchor('Drinks')}>Drinks</Button>
+                            <Button size="large" shape="round" onClick={() => scrollToAnchor('Sauces')}>Sauces</Button>
                         </div>
                         <div style={{ "width": "100%", "textAlign": "center" }}>
                             <Input
@@ -106,7 +115,7 @@ const Shop = () => {
                 </div>
                 <div className="shop-wrap-shopCategoriesList" style={{ "paddingTop": "40rem" }}>
                     <div>
-                        <h1>Pizza</h1>
+                        <h1 id="Pizza">Pizza</h1>
                         <div className="shop-wrap-shopCategoriesList-box">
                             <div>
                                 <div>
@@ -208,7 +217,7 @@ const Shop = () => {
                 {/* 分类盒子 */}
                 <div className="shop-wrap-shopCategoriesList">
                     <div>
-                        <h1>Pasta</h1>
+                        <h1 id="Pasta">Pasta</h1>
                         <div className="shop-wrap-shopCategoriesList-box">
                             <div>
                                 <div>
@@ -306,6 +315,9 @@ const Shop = () => {
                         </div>
                     </div>
                 </div>
+                <BackTop>
+                    <div className="backUp">UP</div>
+                </BackTop>
             </div>
             <WebFooter />
             <AddReview

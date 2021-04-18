@@ -21,12 +21,14 @@ import style from '@/styles/theme/icon.less'
 import './index.less'
 import MessageModal from '@/pages/components/antd/modal/messageModal';
 import AddReview from '@/pages/components/antd/modal/formModal';
+import { Link, withRouter } from 'react-router-dom';
 
 const { Search } = Input;
 const { Meta } = Card;
 const desc = ['3.5', 'bad', 'normal', 'good', 'wonderful'];
 
-const Shop = () => {
+const Shop = (props) => {
+    const { history } = props;
     const [rateValue, setrateValue] = useState(1)
     const [isOpen, setisOpen] = useState(false)
     const [issend, setissend] = useState(false)
@@ -65,6 +67,7 @@ const Shop = () => {
                         className="shop-wrap-banner-button"
                         type="primary"
                         shape="round"
+                        onClick={() => history.go(-1)}
                     >
                         <ArrowLeftOutlined />Back to Homepage
                     </Button>
@@ -130,7 +133,7 @@ const Shop = () => {
                                     <h3 className="intwoline">Design your Own 14’’ pizza Design your Own 14’’ pizza</h3>
                                     <h6 className="inaline">Starts from <span>€ 3 / portion</span>Design your Own 14’’ pizza</h6>
                                     <p className="inthreeline">Tomato sauce, mozzarella, parmesan, eggs, and bacon.Tomato sauce, mozzarella, parmesan, eggs, and bacon.</p>
-                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block>Order</Button>
+                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to="/goodsDetails">Order</Link></Button>
                                 </div>
                             </div>
                             {/* 商品盒子 */}
@@ -339,4 +342,4 @@ const Shop = () => {
     )
 }
 
-export default Shop
+export default withRouter(Shop)

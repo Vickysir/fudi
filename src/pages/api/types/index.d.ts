@@ -4,6 +4,7 @@ export interface CommonInfo {
     "count"?: number, // 倒计时
     "liked"?: boolean,
     "uploadAvatar"?: string,
+    "currentShopping"?: any
 }
 
 export interface PhoneVerificationCodePost {

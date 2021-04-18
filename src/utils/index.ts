@@ -1,3 +1,5 @@
+import { IAuthInfo } from "@/config/customStore";
+
 export const havePlaceholder = (value: number | string | undefined | null, thePlaceholderKey: string = "-"): string => {
     let content = null;
     if (value === null || value === undefined || value === "") return content = thePlaceholderKey
@@ -32,4 +34,10 @@ export const clearStore = () => {
     APP_STORE.registInfo = null
     APP_STORE.resetPwdInfo = null
     APP_STORE.commonInfo = null
+}
+
+export const isLogin = (authInfo: IAuthInfo): boolean => {
+    if (!authInfo) return false;
+    if (authInfo.phone === "" || authInfo.phone === null || authInfo.phone === undefined) return false
+    return true
 }

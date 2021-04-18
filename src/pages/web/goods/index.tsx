@@ -9,9 +9,13 @@ import Crustaceans from '@/assets/images/common/imgs/goodsDetails4-Crustaceans.s
 import './index.less'
 import { Button, Divider, message } from 'antd';
 import { withRouter } from 'react-router';
+import { useAppStore } from '@/__internal';
+import { isLogin } from '@/utils';
 
 const GoodsDetails = (props) => {
     const { history } = props;
+    const authInfo = useAppStore("authInfo");
+    const commonInfo = useAppStore("commonInfo");
     const [basicPrice, setBasicPrice] = useState(5)
     const [count, setCount] = useState(1)
     const [totalPrice, setTotalPrice] = useState(basicPrice + 0)
@@ -96,6 +100,30 @@ const GoodsDetails = (props) => {
         const total = (basicPrice + sizePrice + toppings1Price + toppings2Price + toppings3Price + toppings4Price) * goodCount
         setCount(goodCount);
         setTotalPrice(total)
+    }
+    const handleClickAddToOrder = () => {
+        const currentShopping = {
+            basicPrice,
+            count,
+            totalPrice,
+            sizePrice,
+            toppings1,
+            toppings2,
+            toppings3,
+            toppings4,
+        }
+        APP_STORE.commonInfo = {
+            ...APP_STORE.commonInfo,
+            currentShopping
+        };
+        if (isLogin(authInfo)) {
+            message.success("您已登录")
+        } else {
+            message.warning("您还未登录，3s后为您跳转登录");
+            setTimeout(() => {
+                history.push("/login")
+            }, 3000)
+        }
     }
     return (
         <>
@@ -189,7 +217,7 @@ const GoodsDetails = (props) => {
                             <MinusCircleOutlined onClick={() => handleChangeGoodsCount("minus")} />
                         </div>
                     </div>
-                    <Button type="primary" shape="round" block size="large">Add to Order</Button>
+                    <Button type="primary" shape="round" block size="large" onClick={handleClickAddToOrder}>Add to Order</Button>
                 </div>
             </div>
             <WebFooter />

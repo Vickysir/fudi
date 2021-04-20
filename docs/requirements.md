@@ -36,3 +36,14 @@ googlemaplist
 ### 开发者账号，申请的Facebook，google，map key
 
 ### 通知中心的接口
+
+
+### 一期问题
+### menu 隐藏
+### 手机框 和 图片 一起的截图
+### 移动端加个下载
+### 邮箱修改的时候有问题
+### edit 手机号码，understand
+### 删除地址， delete success 提示语，
+### 删除地址，增加删除确认模态框
+### 注册的时候，增加name 和 invite code 

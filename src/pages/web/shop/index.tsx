@@ -22,6 +22,7 @@ import './index.less'
 import MessageModal from '@/pages/components/antd/modal/messageModal';
 import AddReview from '@/pages/components/antd/modal/formModal';
 import { Link, withRouter } from 'react-router-dom';
+import V_Map from '@/pages/components/map';
 
 const { Search } = Input;
 const { Meta } = Card;
@@ -58,6 +59,7 @@ const Shop = (props) => {
             }
         }
     }
+
     return (
         <>
             <WebHeader />
@@ -317,6 +319,9 @@ const Shop = (props) => {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div style={{ width: "100%", height: "1000px" }}>
+                    <V_Map />
                 </div>
                 <BackTop>
                     <div className="backUp">UP</div>

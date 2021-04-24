@@ -18,13 +18,13 @@ import style from '@/styles/theme/icon.less'
 import "./index.less"
 
 const MobileHeader = (props) => {
-    const { history } = props;
+    const { history, style } = props;
 
     return (
-        <div className="mobileHeader">
-            <div>
+        <div className="mobileHeader" style={style}>
+            {/* <div>
                 <Icon component={iconburgerMenu} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
-            </div>
+            </div> */}
             <div className="mobileHeader-logo">
                 <img src={logoOne} alt="logo" />
             </div>

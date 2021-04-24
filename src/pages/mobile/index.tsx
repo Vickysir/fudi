@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MobileHeader from '../components/header/mobileHeader'
 import MobileFooter from '../components/header/mobileFooter'
 import homeBanner from '@/assets/images/fudi/home-banner.png';
@@ -13,6 +13,7 @@ import shield from '@/assets/images/common/icon/shield.svg';
 import gift from '@/assets/images/common/icon/gift.svg';
 import ellipse from '@/assets/images/common/icon/ellipse.svg';
 import MobileDowmloadmarket from './dowload';
+import Advertising from './advertising';
 import Icon from '@ant-design/icons';
 import style from '@/styles/theme/icon.less'
 
@@ -20,9 +21,14 @@ import './index.less'
 
 
 const Mobile = () => {
+    const [headerstyle, setHeaderstyle] = useState({})
+    const setStyle = (params) => {
+        setHeaderstyle(params)
+    }
     return (
         <div className="mobile-homepage-banner">
-            <MobileHeader />
+            <Advertising setStyle={setStyle} />
+            <MobileHeader style={headerstyle} />
             <div className="mobile-homepage-banner">
                 <img src={homeBanner} alt="banner" />
                 <p>Are You Hungry?</p>

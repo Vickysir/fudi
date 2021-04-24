@@ -9,9 +9,11 @@
 ### homepage 搜索
 接口文档：
 
-    - address List
-    - 餐馆list
+    - 用户自己保存的address List ：/user/shipping_address/list   渲染 detail字段
+    - map配送范围接口 ：/shop/range/label/list/v2 （暂时用不上）
+    - 餐馆list ：shop/list/v2/collection  渲染 address 字段
     - shop 查询接口
+    - shop(restaurant) detail
 
 
 dom结构
@@ -28,7 +30,7 @@ type两种类型
 【下面1，2部分，设计稿的顺序不知道是不是有逻辑的，反正对这块交互不是很清楚】
 
 1. delivery
-    - 地图icon
+    <!-- - 地图icon
         - 点击icon，进入地图模态框
             - 显示配送区域范围
                 - 在配送范围
@@ -43,37 +45,44 @@ type两种类型
                 - 地图上显示小图标
                 - input - 文字形式的地理位置描述
             - 支持为图标拖拽
-            - 支持地图缩放，行政区域划分
-    - select下拉菜单，[下拉菜单需要根据不同情况的用户显示](https://github.com/Vickysir/fudi/issues/12)
-    - Previous Addresses 【这个是纯显示的文字，还是有交互，点击弹出模态框？这个地方的交互和 selec 下拉菜单好像冲突，不太明白】
+            - 支持地图缩放，行政区域划分 -->
+    - select下拉菜单，map autocompete
+    <!-- [下拉菜单需要根据不同情况的用户显示](https://github.com/Vickysir/fudi/issues/12) -->
+    - Previous Addresses 
         - 点击
             - 模态框展示以前的adress
+            - continue
+                - 通过自己的配送地址，判断属于哪个shop？选择后进入shop页面
+                - 接口
                 
 
 
 2. collect
-    - 地图icon
+    <!-- - 地图icon
         - 点击icon，进入地图模态框
             - 地图上显示，餐馆列表里面的餐馆
             - 选中，自动填充位置信息
             - continue button，模态框关闭，回到 搜索select
         - 自动填充刚才的选择，点击搜索
-        - 跳转至shop页面
-    - select下拉菜单
-        - 餐馆列表
-        - 选择，自动填充餐馆列表的选择，点击搜索
-        - 跳转至shop页面
+        - 跳转至shop页面 -->
+    - select下拉菜单，餐馆list自动补全
+        -点击 
+            - 餐馆列表
+            <!-- - 选择，自动填充餐馆列表的选择，点击搜索 -->
+            - continue
+                - 跳转至shop页面
         
 
 
-### shop
+### shop {"shopId":1,"goodsClassifyId":131}数据最全
 
 接口文档：
 
-    - shop 详情：/shop/detail/v2
-    - 商品分类：/goods/classify/list/first/v2 【返回的数据结构没有文档？是包含该分类下的商品list？还是只返回分类，那请求相关分类下的商品list是哪个接口？这个'/goods/list/v2'？】
-    - 搜索下拉列表接口，搜索查询接口：/goods/search
-    - book table 接口 【没找着这个接口】
+    - shop 详情：/shop/detail/v2 评分要自己计算一下
+    - 商品分类：/goods/classify/list/first/v2  只返回一级分类
+    - 二级分类：good/list/v2 返回二级分类和二级分类下面的所有产品【 这个接口最好能拆分一下】
+    - 搜索下拉列表接口，搜索查询接口：/goods/search 进入商品详情
+    - book table 接口  /user/order/submit/v3
 
 dom 结构
 
@@ -95,11 +104,10 @@ dom 结构
     - 分类枚举
         - 点击分类，自动定位到下面的分类商品的锚点处
     - 搜索
-        -【搜索内容是什么，对应哪个接口？搜索下拉菜单列表是有接口的吗？对应是什么？】
-        -【搜索替换的是下面分类商品结果？还是跳转到goodsDetails商品详情页面？】
+        - 直接进入商品详情
     - 分类商品list
 
-### goodsDetails
+### goodsDetails {"id": 234}数据最全
 
 接口文档：
 
@@ -111,14 +119,15 @@ dom结构:
 
     - goods image
     - goods details
-    - Size
-        - 规格大小对应不同的价格
-    - Toppings
-        - 不同配料对应不同的价格
-    - Total = 商品价格 X 数量
-        - 商品基础价格
-        - size价格 
-        - Toppings价格 X 数量
+    - ingredientClassifyList - 
+        - Size
+            - 规格大小对应不同的价格
+        - Toppings
+            - 不同配料对应不同的价格
+        - Total = 商品价格 X 数量
+            - 商品基础价格
+            - size价格 
+            - Toppings价格 X 数量
 
     - add to order
         - 校验用户登录状态

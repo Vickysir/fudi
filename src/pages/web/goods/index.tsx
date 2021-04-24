@@ -117,7 +117,7 @@ const GoodsDetails = (props) => {
             currentShopping
         };
         if (isLogin(authInfo)) {
-            message.success("您已登录")
+            message.success("Successful")
         } else {
             message.warning("您还未登录，3s后为您跳转登录");
             setTimeout(() => {

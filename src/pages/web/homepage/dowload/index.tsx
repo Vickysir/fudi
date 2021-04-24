@@ -9,8 +9,8 @@
 import React from 'react'
 import googlestore from '@/assets/images/common/googlestore.png'
 import applestore from '@/assets/images/common/applestore.png'
-import phoneframe from '@/assets/images/fudi/phone-frame.png'
-import phonescreen from '@/assets/images/fudi/phone-screen.png'
+import phonerender from '@/assets/images/fudi/phone-render.png'
+
 import './index.less'
 import { openAppStore } from '@/utils'
 
@@ -19,9 +19,9 @@ const Dowmloadmarket = () => {
         <div className="dowmloadmarket">
             <ul>
                 <li>
-                    <h3>Download Our App</h3>
-                    <p>A better then ever food delivery</p>
-                    <p>experience starts now!</p>
+                    <h3 className="inaline">Download Our App</h3>
+                    <p className="inaline">A better then ever food delivery</p>
+                    <p className="inaline">experience starts now!</p>
                 </li>
                 <li>
                     <img src={applestore} alt="app store" onClick={() => openAppStore("IOS")} />
@@ -29,8 +29,7 @@ const Dowmloadmarket = () => {
                 </li>
             </ul>
             <div className="dowmloadmarket-phone">
-                <img src={phoneframe} alt="phone-frame" />
-                <img src={phonescreen} alt="phone-screen" />
+                <img src={phonerender} alt="phone-frame" />
             </div>
         </div>
     )

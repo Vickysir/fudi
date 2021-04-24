@@ -9,8 +9,7 @@
 import React from 'react'
 import googlestore from '@/assets/images/common/googlestore.png'
 import applestore from '@/assets/images/common/applestore.png'
-import phoneframe from '@/assets/images/fudi/phone-frame.png'
-import phonescreen from '@/assets/images/fudi/phone-screen.png'
+import phonerender from '@/assets/images/fudi/phone-render.png'
 import './index.less'
 import { openAppStore } from '@/utils'
 
@@ -29,8 +28,7 @@ const MobileDowmloadmarket = () => {
                 </li>
             </ul>
             <div className="mobile-dowmloadmarket-phone">
-                <img src={phoneframe} alt="phone-frame" />
-                <img src={phonescreen} alt="phone-screen" />
+                <img src={phonerender} alt="phone-frame" />
             </div>
         </div>
     )

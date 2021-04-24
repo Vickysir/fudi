@@ -45,14 +45,14 @@ googlemaplist
 
 - 移动端加个下载 ✅
 
-- 邮箱修改的时候有问题
+- 邮箱修改的时候有问题  ✅
 
 - edit 手机号码，understand
 
-- 删除地址， delete success 提示语，
+- 删除地址， delete success 提示语， ✅
 
 - 删除地址，增加删除确认模态框
 
 - 注册的时候，增加 name 和 invite code
 
-- online chart, homepage、help center 上的电话换成 +353858275002
+- online chart, homepage、help center 上的电话换成 +353858275002 ✅

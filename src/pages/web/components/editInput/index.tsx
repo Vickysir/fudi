@@ -81,7 +81,7 @@ const EditInput = (props: Props) => {
         switch (type) {
             case "username": {
                 await APIPersonalCenterUpdateNickname({ "nickname": inputValue });
-                message.success("Modify the success");
+                message.success("Modify successful");
                 APP_STORE.authInfo = {
                     ...APP_STORE.authInfo,
                     nickname: inputValue
@@ -90,16 +90,17 @@ const EditInput = (props: Props) => {
                 break;
             case "email": {
                 await APIPersonalCenterUpdateEmail({ "email": inputValue });
-                message.success("Modify the success");
+                message.success("Modify successful");
                 APP_STORE.authInfo = {
                     ...APP_STORE.authInfo,
                     email: inputValue
                 }
             }
+                break;
             case "phone": {
                 const { event } = await APIPersonalCenterUpdatePhone({ "phone": phoneNumber, "code": phoneCode });
                 if (event === "ERROR") return
-                message.success("Modify the success");
+                message.success("Modify successful");
                 APP_STORE.authInfo = {
                     ...APP_STORE.authInfo,
                     phone: phoneNumber
@@ -114,7 +115,7 @@ const EditInput = (props: Props) => {
         switch (type) {
             case "adress": {
                 await APIRemoveAddress({ id: props.adddressId });
-                message.success("Delete the success")
+                message.success("Delete successful")
             }
                 break;
         }
@@ -272,6 +273,7 @@ const EditInput = (props: Props) => {
                         </div>
                     </div>
             }
+
 
         </>
     )

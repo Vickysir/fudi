@@ -67,6 +67,7 @@ const Login = (props) => {
         APP_STORE.commonInfo = {
             ...APP_STORE.commonInfo,
             shopId: 1,
+            websitePhone: "+353858275002"
         };
         if (data.phone === "" || data.phone === undefined || data.phone === null) {
             history.push("/setupphone?update");
@@ -86,7 +87,8 @@ const Login = (props) => {
             // TODO  设置shopId
             APP_STORE.commonInfo = {
                 ...APP_STORE.commonInfo,
-                shopId: 1
+                shopId: 1,
+                websitePhone: "+353858275002"
             };
             history.push("/home");
         } catch (err) {

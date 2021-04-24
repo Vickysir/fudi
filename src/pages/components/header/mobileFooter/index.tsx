@@ -23,8 +23,8 @@ const MobileFooter = () => {
                 </div>
             </div>
             {
-                commonInfo?.shopServicePhone ?
-                    <div className="mobileFooter-tel"><img src={iconphone} alt="iconphone" /><span>{commonInfo.shopServicePhone}</span></div>
+                commonInfo?.websitePhone ?
+                    <div className="mobileFooter-tel"><img src={iconphone} alt="iconphone" /><span>{commonInfo.websitePhone}</span></div>
                     : <div></div>
             }
             <div className="mobileFooter-copyright"> © 2020 Fudi&more. All rights reserved</div>

@@ -19,7 +19,7 @@ import { useAppStore } from '@/__internal'
 const HelpCenter = () => {
     const storeAtt = useAppStore("commonInfo");
     function handleClick() {
-        openOnlineChat(storeAtt?.shopServicePhone)
+        openOnlineChat(storeAtt?.websitePhone)
     }
     return (
         <>
@@ -43,7 +43,7 @@ const HelpCenter = () => {
                         <span>Or Call Us</span>
                         <p className="helpCenter-call">
                             <img src={imgphone} alt="imgphone" />
-                            <span>+353 00 000 00 00</span>
+                            <span>{storeAtt?.websitePhone}</span>
                         </p>
                     </li>
                 </ul>

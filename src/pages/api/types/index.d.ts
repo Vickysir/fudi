@@ -5,6 +5,7 @@ export interface CommonInfo {
     "liked"?: boolean,
     "uploadAvatar"?: string,
     "currentShopping"?: any
+    "websitePhone"?: string,
 }
 
 export interface PhoneVerificationCodePost {

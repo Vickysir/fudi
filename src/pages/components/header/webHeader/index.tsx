@@ -30,10 +30,10 @@ const WebHeader = (props: Props) => {
     const authInfo = useAppStore("authInfo");
     const token = authInfo?.token;
     const isLogin = token && authInfo?.nickname;
-    
 
+    websitePhone: "353858275002"
     function handleClick() {
-        openOnlineChat(commonInfo?.shopServicePhone)
+        openOnlineChat(commonInfo?.websitePhone)
     }
     function goTo() {
         history.push("/personalCenter/index?id=1")
@@ -42,11 +42,11 @@ const WebHeader = (props: Props) => {
     return (
         <div className="webHeader">
             {
-                commonInfo?.shopServicePhone ?
+                commonInfo?.websitePhone ?
                     <ul className="webHeader-tel">
                         <li>
                             <img src={imgphone} alt="imgphone" />
-                            <span>{commonInfo.shopServicePhone}</span>
+                            <span>{commonInfo.websitePhone}</span>
                         </li>
                         <li onClick={handleClick}>
                             <Icon component={iconchat} className={style.iconFill} />

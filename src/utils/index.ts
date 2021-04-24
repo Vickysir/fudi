@@ -14,7 +14,7 @@ export const havePlaceholder = (value: number | string | undefined | null, thePl
 }
 
 export const openOnlineChat = (telphopne: string | number) => {
-    const tel = telphopne ? telphopne : 353000000023;
+    const tel = telphopne ? telphopne : 353858275002;
     window.open(`https://wa.me/${tel}`)
 }
 export const openAppStore = (type: string) => {

@@ -10,7 +10,6 @@ import axios from 'axios';
 import { getAuthorization, getBrowser } from '@/utils/calculateAuthToken';
 import { message } from 'antd';
 
-
 /**
  * 配置axios的基本配置
  */
@@ -65,6 +64,7 @@ export function initAxiosConfig() {
         }
     );
 }
+
 /**
  * 规范化的数据返回格式
  */

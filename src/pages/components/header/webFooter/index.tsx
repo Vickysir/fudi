@@ -20,15 +20,15 @@ const WebFooter = () => {
     const commonInfo = useAppStore("commonInfo");
 
     function handleClick() {
-        openOnlineChat(commonInfo?.shopServicePhone)
+        openOnlineChat(commonInfo?.websitePhone)
     }
     return (
         <>
             <div className="webFooter">
                 {
-                    commonInfo?.shopServicePhone ?
+                    commonInfo?.websitePhone ?
                         <ul className="webFooter-tel">
-                            <li><img src={iconphone} alt="iconphone" /><span>{commonInfo.shopServicePhone}</span></li>
+                            <li><img src={iconphone} alt="iconphone" /><span>{commonInfo.websitePhone}</span></li>
                             <li onClick={handleClick}><img src={iconchat} alt="iconchat" /><span>Online Chat</span></li>
                         </ul>
                         : <ul></ul>

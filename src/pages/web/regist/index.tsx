@@ -16,7 +16,7 @@
  */
 import React, { useEffect, useState } from 'react'
 import { Form, Input, Button } from 'antd';
-import { MailOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { MailOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone, TabletOutlined, UserOutlined } from '@ant-design/icons';
 import WebFooter from '@/pages/components/header/webFooter';
 import WebHeader from '@/pages/components/header/webHeader';
 import BaackTitle from '../components/baackTitle';
@@ -99,6 +99,26 @@ const Regist = (props) => {
                                 iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                                 placeholder="Confirm Password"
                                 size="large"
+                                style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
+                            />
+                        </Form.Item>
+                        <Form.Item
+                            name="nickname"
+                        >
+                            <Input
+                                size="large"
+                                prefix={<UserOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
+                                placeholder=" Nick Name"
+                                style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
+                            />
+                        </Form.Item>
+                        <Form.Item
+                            name="invitationCode"
+                        >
+                            <Input
+                                size="large"
+                                prefix={<TabletOutlined className="site-form-item-icon" style={{ "margin": "0 1rem" }} />}
+                                placeholder="Invitation Code"
                                 style={{ "borderRadius": "5rem", "margin": "0.5rem 0" }}
                             />
                         </Form.Item>

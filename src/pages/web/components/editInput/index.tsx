@@ -9,6 +9,7 @@ import "./index.less"
 import { APIPersonalCenterUpdateEmail, APIPersonalCenterUpdateNickname, APIPersonalCenterUpdatePhone, APIRemoveAddress, APIUpdatePhoneVerificationCode } from '@/pages/api/request';
 import { useAppStore } from '@/__internal';
 import { clearTimer, handleClickTimer } from '@/utils/timer';
+import MessageModal from '@/pages/components/antd/modal/messageModal';
 
 const { Option } = Select;
 
@@ -24,6 +25,7 @@ interface Props {
 
 const EditInput = (props: Props) => {
     const [isEdit, setIsEdit] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [phonePrefix, setphonePrefix] = useState("+353")
     const [phoneNumber, setPhoneNumber] = useState("")
@@ -115,6 +117,7 @@ const EditInput = (props: Props) => {
         switch (type) {
             case "adress": {
                 await APIRemoveAddress({ id: props.adddressId });
+                setIsOpen(false);
                 message.success("Delete successful")
             }
                 break;
@@ -260,7 +263,7 @@ const EditInput = (props: Props) => {
                                 props.edit && <EditOutlined className={style.themeColor} onClick={handleClickEdit} style={{ fontSize: "1.5rem", marginRight: "1rem" }} />
                             }
                             {
-                                props.delete && <DeleteOutlined onClick={handleClickDelete} style={{ fontSize: "1.5rem" }} />
+                                props.delete && <DeleteOutlined onClick={() => { setIsOpen(true) }} style={{ fontSize: "1.5rem" }} />
                             }
                         </div>
                     </div>
@@ -273,7 +276,23 @@ const EditInput = (props: Props) => {
                         </div>
                     </div>
             }
-
+            {/* 删除确认模态框 */}
+            <MessageModal
+                isOpen={isOpen}
+                isClose={() => { setIsOpen(false) }}
+                footer={
+                    <>
+                        <Button style={{ marginRight: "1rem" }} shape="round" onClick={() => { setIsOpen(false) }}>Cancel</Button>
+                        <Button type="primary" shape="round" onClick={handleClickDelete}>Ok</Button>
+                    </>
+                }
+                content={
+                    <>
+                        Delete
+                        <p className="booktableSuccess-content">Are you sure to delete?</p>
+                    </>
+                }
+            />
 
         </>
     )

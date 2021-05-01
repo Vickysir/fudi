@@ -51,8 +51,8 @@ googlemaplist
 
 - 删除地址， delete success 提示语， ✅
 
-- 删除地址，增加删除确认模态框
+- 删除地址，增加删除确认模态框 ✅
 
-- 注册的时候，增加 name 和 invite code
+- 注册的时候，增加 nike name 和 invite code ✅
 
 - online chart, homepage、help center 上的电话换成 +353858275002 ✅

@@ -15,8 +15,11 @@ import './index.less'
 interface Props {
     isOpen: boolean
     isClose: () => void
-    icon:React.ReactNode
-    content:React.ReactNode
+    onOk?: () => void
+    icon?: React.ReactNode
+    content: React.ReactNode
+    footer?: React.ReactNode
+
 }
 
 const MessageModal = (props: Props) => {
@@ -39,13 +42,14 @@ const MessageModal = (props: Props) => {
             <Modal
                 visible={visible}
                 onCancel={handleCancel}
-                footer={null}
+                onOk={props?.onOk}
+                footer={props?.footer || null}
             >
                 <div className="model-content sendSuccess">
                     <div>
                         {/* <Icon component={heartSvg} style={{ fontSize: "18rem" }} /> */}
                         {
-                            props.icon
+                            props?.icon
                         }
                     </div>
                     <div>

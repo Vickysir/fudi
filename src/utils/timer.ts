@@ -28,7 +28,7 @@ export const handleClickTimer = () => {
 
     const count = APP_STORE.commonInfo?.count;
     const liked = APP_STORE.commonInfo?.liked;
-    if (count === null) return;
+    if (count === null || count === undefined) return;
     if (liked === undefined) return;
     if (timer) return;
 

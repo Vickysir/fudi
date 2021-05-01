@@ -160,23 +160,30 @@ const EditInput = (props: Props) => {
             case "phone":
                 content =
                     <>
+                        <Input
+                            prefix={
+                                <>
+                                    {SelectFlag(phonePrefix)}
+                                    {selectBefore}
+                                </>
+                            }
+                            placeholder="000 000 00 00"
+                            size="large"
+                            style={{ "borderRadius": "5rem", "margin": "0.5rem 0", "paddingLeft": "2rem" }}
+                            value={phoneNumber}
+                            onChange={(event) => setPhoneNumber(event.target.value)}
+
+                        />
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <Input
-                                prefix={
-                                    <>
-                                        {SelectFlag(phonePrefix)}
-                                        {selectBefore}
-                                    </>
-                                }
-                                placeholder="000 000 00 00"
+                                placeholder="4-digits code"
                                 size="large"
-                                style={{ "borderRadius": "5rem", "margin": "0.5rem 1rem 0.5rem 0" }}
-                                value={phoneNumber}
-                                onChange={(event) => setPhoneNumber(event.target.value)}
-
+                                style={{ "borderRadius": "5rem", "margin": "0.5rem 1rem 0.5rem 0", "paddingLeft": "2rem" }}
+                                value={phoneCode}
+                                onChange={(event) => setPhoneCode(event.target.value)}
                             />
                             {
-                                commonInfo ?
+                                commonInfo.liked !== undefined ?
                                     <Button
                                         type="primary"
                                         className="login-form-button"
@@ -199,13 +206,7 @@ const EditInput = (props: Props) => {
                                     </Button>
                             }
                         </div>
-                        <Input
-                            placeholder="4-digits code"
-                            size="large"
-                            style={{ "borderRadius": "5rem", "margin": "0.5rem 0", "paddingLeft": "2rem" }}
-                            value={phoneCode}
-                            onChange={(event) => setPhoneCode(event.target.value)}
-                        />
+
                     </>
 
                 break;

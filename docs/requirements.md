@@ -47,7 +47,7 @@ googlemaplist
 
 - 邮箱修改的时候有问题  ✅
 
-- edit 手机号码，understand
+- edit 手机号码，understand ✅, 手机input长度太短 ✅
 
 - 删除地址， delete success 提示语， ✅
 

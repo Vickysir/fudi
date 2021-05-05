@@ -1,5 +1,6 @@
 import React from 'react'
 import { message, Select } from 'antd';
+import { APICollectShopList } from '@/pages/api/request';
 
 
 const { Option } = Select;
@@ -7,24 +8,46 @@ const { Option } = Select;
 let timeout;
 let currentValue;
 
-function fetch(value, callback) {
+function fetch(type, value, callback) {
     if (timeout) {
         clearTimeout(timeout);
         timeout = null;
     }
     currentValue = value;
 
-    function fake() {
-        initService(value, (result) => {
-            const data = [];
-            result.forEach(r => {
-                data.push({
-                    value: r.place_id,
-                    text: r.description,
+    async function fake() {
+        console.log(`type`, type)
+        switch (type) {
+            case "1": //"Collect"
+                {
+                    const { data } = await APICollectShopList();
+                    console.log(`object`, data)
+                    const result = [];
+                    data.forEach(r => {
+                        result.push({
+                            value: r.id,
+                            text: r.address,
+                        });
+                    });
+                    callback(result);
+                }
+                break;
+
+            default: { //"Delivery"
+                initService(value, (result) => {
+                    const data = [];
+                    result.forEach(r => {
+                        data.push({
+                            value: r.place_id,
+                            text: r.description,
+                        });
+                    });
+                    callback(data);
                 });
-            });
-            callback(data);
-        });
+            }
+                break;
+        }
+
 
     }
     timeout = setTimeout(fake, 300);
@@ -53,6 +76,7 @@ function initService(input, callback) {
 interface Props {
     placeholder: string
     style: any
+    orderType: string
     handleAutoCompeteSelectOnChange: (value) => void
 }
 export class AutoCompeteSelect extends React.Component<Props> {
@@ -63,7 +87,7 @@ export class AutoCompeteSelect extends React.Component<Props> {
 
     handleSearch = value => {
         if (value) {
-            fetch(value, data => this.setState({ data }));
+            fetch(this.props.orderType, value, data => this.setState({ data }));
         } else {
             this.setState({ data: [] });
         }
@@ -95,3 +119,5 @@ export class AutoCompeteSelect extends React.Component<Props> {
         );
     }
 }
+
+

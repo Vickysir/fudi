@@ -27,7 +27,7 @@ import Icon, { DeleteOutlined } from '@ant-design/icons';
 
 import style from '@/styles/theme/icon.less'
 import "./index.less"
-import { APIShopServicePhone, APIUserAddressList } from '@/pages/api/request';
+import { APIShopInRange, APIShopServicePhone, APIUserAddressList } from '@/pages/api/request';
 import { useAppStore } from '@/__internal';
 import RoundInput from '@/pages/components/antd/input';
 import RoundSelect from '@/pages/components/antd/select';
@@ -35,14 +35,17 @@ import RoundButton from '@/pages/components/antd/button';
 import { DELIVERYTYPE_DELIVERY } from '@/utils/constant';
 import MessageModal from '@/pages/components/antd/modal/messageModal';
 import { AutoCompeteSelect } from '@/pages/components/antd/select/autoCompeteSelect';
+import { withRouter } from 'react-router-dom';
 
 
-const Homepage = () => {
+const Homepage = (props) => {
+    const { history } = props;
     const commonInfo = useAppStore("commonInfo");
     const [orderType, setOrderType] = useState("0")
     const [deliveryIsOpen, setDeliveryIsOpen] = useState(false)
     const [deliveryList, setDeliveryList] = useState([])
-    const [selectShopId, setSelectShopId] = useState(null)
+    const [selectShopId, setSelectShopId] = useState({ id: null, "shopId": null })
+    const [autoCompeteSelectValue, setAutoCompeteSelectValue] = useState(undefined)
 
 
     useEffect(() => {
@@ -67,19 +70,21 @@ const Homepage = () => {
     }
     const handleAutoCompeteSelectOnChange = (value) => {
         console.log(`selected `, value);
+        setAutoCompeteSelectValue(value);
     }
-    const handleSearch = (type) => {
-        const orderType = null
-        switch (type) {
+    const handleSearch = async () => {
+        if (!autoCompeteSelectValue) return message.error("Place select address")
+        switch (orderType) {
+            //"Collect"
             case "1":
-                {
-
-                }
+                history.push(`/shop/${autoCompeteSelectValue}`)
                 break;
-
-            default:  //"Delivery"
+            //"Delivery"
+            default:
                 {
-
+                    const { data } = await APIShopInRange({ latitude: 51.8943944, longitude: -8.4770851 })
+                    history.push(`/shop/${data.id}`)
+                    console.log(`data`, data)
                 }
                 break;
         }
@@ -99,6 +104,7 @@ const Homepage = () => {
                             placeholder="Place Input..."
                             style={{ width: "100%" }}
                             handleAutoCompeteSelectOnChange={handleAutoCompeteSelectOnChange}
+                            orderType={orderType}
                         />
                         {
                             orderType === `${DELIVERYTYPE_DELIVERY}` ?
@@ -218,7 +224,7 @@ const Homepage = () => {
                         {
                             deliveryList.map((item, index) => {
                                 return (
-                                    <p className={item.shopId === selectShopId ? "previousAddresses-content previousAddresses-content-active" : "previousAddresses-content"} key={index} onClick={() => { setSelectShopId(item.shopId) }}>
+                                    <p className={item.id === selectShopId.id ? "previousAddresses-content previousAddresses-content-active" : "previousAddresses-content"} key={index} onClick={() => { setSelectShopId({ id: item.id, "shopId": item.shopId }) }}>
                                         {item.detail}
                                         {/* <span><DeleteOutlined /></span> */}
                                     </p>
@@ -226,7 +232,7 @@ const Homepage = () => {
                             })
                         }
 
-                        <Button type="primary" shape="round" block onClick={() => { alert(selectShopId) }}>Continue</Button>
+                        <Button type="primary" shape="round" block onClick={() => { history.push(`/shop/${selectShopId.shopId}`) }}>Continue</Button>
                     </>
                 }
             />
@@ -234,5 +240,5 @@ const Homepage = () => {
     )
 }
 
-export default Homepage
+export default withRouter(Homepage)
 

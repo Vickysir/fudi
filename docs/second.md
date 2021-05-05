@@ -27,7 +27,6 @@ type两种类型
     - delivery  外卖
     - collect   自取
 
-【下面1，2部分，设计稿的顺序不知道是不是有逻辑的，反正对这块交互不是很清楚】
 
 1. delivery
     <!-- - 地图icon
@@ -46,14 +45,16 @@ type两种类型
                 - input - 文字形式的地理位置描述
             - 支持为图标拖拽
             - 支持地图缩放，行政区域划分 -->
-    - select下拉菜单，map autocompete
-    <!-- [下拉菜单需要根据不同情况的用户显示](https://github.com/Vickysir/fudi/issues/12) -->
+    - select下拉菜单，map autocompete 
+         - 通过自己的配送地址，判断属于哪个shop？选择后进入shop页面 ✅
+         - 接口   对接 ✅
+    <!-- [下拉菜单需要根据不同情况的用户显示](https://github.com/Vickysir/fudi/issues/12) --> 
     - Previous Addresses 
         - 点击
-            - 模态框展示以前的adress
+            - 模态框展示以前的adress ✅
             - continue
-                - 通过自己的配送地址，判断属于哪个shop？选择后进入shop页面
-                - 接口
+                - 跳转至 shop/id 页面 ✅
+               
                 
 
 
@@ -65,12 +66,12 @@ type两种类型
             - continue button，模态框关闭，回到 搜索select
         - 自动填充刚才的选择，点击搜索
         - 跳转至shop页面 -->
-    - select下拉菜单，餐馆list自动补全
+    - select下拉菜单，餐馆list自动补全  ✅
         -点击 
-            - 餐馆列表
-            <!-- - 选择，自动填充餐馆列表的选择，点击搜索 -->
-            - continue
-                - 跳转至shop页面
+            - 餐馆列表 
+            - 选择，自动填充餐馆列表的选择，点击搜索 ✅
+            <!-- - continue
+                - 跳转至shop页面  -->
         
 
 

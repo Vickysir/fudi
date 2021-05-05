@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Select } from 'antd';
-
+import './index.less'
 
 const { Option } = Select;
 
@@ -44,19 +44,21 @@ const RoundSelect = (props: props) => {
         props.onChange(value)
     }
     return (
-        <Select
-            style={{ width: 120, ...props?.style }}
-            size="large"
-            defaultActiveFirstOption
-            labelInValue
-            showArrow={true}  //样式乱了
-            value={selectValue}
-            {...props}
-            onChange={handleOnChange}
+        <div className="orderType-wrap">
+            <Select
+                style={{ width: 120, ...props?.style }}
+                size="large"
+                defaultActiveFirstOption
+                labelInValue
+                showArrow={true}  //样式乱了
+                value={selectValue}
+                {...props}
+                onChange={handleOnChange}
 
-        >
-            {getOption(props.type)}
-        </Select>
+            >
+                {getOption(props.type)}
+            </Select>
+        </div>
     )
 }
 

@@ -159,3 +159,6 @@ export const APIRemoveAddress = async (params: { id: number }) => {
 export const APIShopInRange = async (params: { latitude: number, longitude: number }) => {
     return await axios.post(apiPath.shopInRange, params)
 }
+export const APICollectShopList = async () => {
+    return await axios.post(apiPath.shopList)
+}

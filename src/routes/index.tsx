@@ -38,7 +38,7 @@ export function WebRoutes() {
         <Route path="/faq" component={FAQ} />
         <Route path="/helpCenter" component={HelpCenter} />
         <Route path="/personalCenter" component={PersonalCenter} />
-        <Route path="/shop" component={Shop} />
+        <Route path="/shop/:id" component={Shop} />
         <Route path="/goodsdetails" component={GoodsDetails} />
     </Router>
 }

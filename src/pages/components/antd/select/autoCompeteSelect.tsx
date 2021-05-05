@@ -56,6 +56,9 @@ function initService(input, callback) {
     try {
         const google = window.google;
         console.log(`google`, google)
+
+
+
         const displaySuggestions = function (predictions, status) {
             if (status != google.maps.places.PlacesServiceStatus.OK || !predictions) {
                 alert(status);
@@ -63,15 +66,18 @@ function initService(input, callback) {
             }
             console.log(`predictions`, predictions)
             callback(predictions)
+
         };
         const service = new google.maps.places.AutocompleteService();
         service.getQueryPredictions({ input }, displaySuggestions);
+
 
     } catch (err) {
         console.log(`map err`, err)
         message.error("map service init error")
     }
 }
+
 
 interface Props {
     placeholder: string

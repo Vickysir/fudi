@@ -162,3 +162,7 @@ export const APIShopInRange = async (params: { latitude: number, longitude: numb
 export const APICollectShopList = async () => {
     return await axios.post(apiPath.shopList)
 }
+// 根据placeId 获取经纬度
+export const APITranslatePlaceIdToLocation = async (place_id: string) => {
+    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?place_id=${place_id}&key=AIzaSyDU8SBtzx84CB2gf2kfZhC_Y9BRP6U7znw`)
+}

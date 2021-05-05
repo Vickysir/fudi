@@ -27,7 +27,7 @@ import Icon, { DeleteOutlined } from '@ant-design/icons';
 
 import style from '@/styles/theme/icon.less'
 import "./index.less"
-import { APIShopInRange, APIShopServicePhone, APIUserAddressList } from '@/pages/api/request';
+import { APIShopInRange, APIShopServicePhone, APITranslatePlaceIdToLocation, APIUserAddressList } from '@/pages/api/request';
 import { useAppStore } from '@/__internal';
 import RoundInput from '@/pages/components/antd/input';
 import RoundSelect from '@/pages/components/antd/select';
@@ -82,14 +82,36 @@ const Homepage = (props) => {
             //"Delivery"
             default:
                 {
-                    const { data } = await APIShopInRange({ latitude: 51.8943944, longitude: -8.4770851 })
-                    history.push(`/shop/${data.id}`)
-                    console.log(`data`, data)
+                    APITranslatePlaceIdToLocation(autoCompeteSelectValue)
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(async function (json) {
+                            console.log(json);
+                            const { location } = json.results[0].geometry
+                            const { data } = await APIShopInRange({ latitude: location.lat, longitude: location.lng })
+                            if (!data || data.length === 0) return message.error("Sorry,the address don't have results")
+                            history.push(`/shop/${data.id}`)
+                            console.log(`data`, data)
+                        });
+
                 }
                 break;
         }
     }
+    const initGoogleTranslateServer = (params) => {
+        const google = window.google;
+        const translateToLocation = (result, status) => {
+            if (status != google.maps.GeocoderStatus.OK || !result) {
+                alert(status);
+                return;
+            }
+            console.log(`result`, result)
 
+        }
+        const translate = new google.maps.Geocoder();
+        translate.geocode({ placeId: params }, translateToLocation)
+    }
     return (
         <>
             <WebHeader />

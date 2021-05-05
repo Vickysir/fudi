@@ -23,6 +23,24 @@
         top:50%;
         transform:translate(-50%,-50%);
     }
+    &-search{
+        width: 60%;
+        height: 5rem;
+        display: flex;
+        align-items: top;
+        justify-content: space-between;
+        position: absolute;
+        left:50%;
+        top:75%;
+        transform:translate(-50%,-50%);
+        >div{
+            p{
+                color: @theme-white;
+                cursor: pointer;
+                margin-top: 1rem;
+            }
+        }
+    }
 
 }
 .homepage-recommended{
@@ -92,4 +110,22 @@
             left: 135px;
         }
     }
+}
+.previousAddresses{
+    &-content{
+        text-align: left;
+        color:@theme-black;
+        font-size: @title20;
+        font-weight: 500;
+        margin-top: 2rem;
+        cursor: pointer;
+        &-active{
+            color: @theme-color;
+        }
+    }
+    &-content:hover{
+        color: @theme-color;
+        
+    }
+    
 }

@@ -154,3 +154,8 @@ export const APISaveAddress = async (params: SaveAddressPost) => {
 export const APIRemoveAddress = async (params: { id: number }) => {
     return await axios.post(apiPath.removeAddress, params)
 }
+
+// 首页搜索
+export const APIShopInRange = async (params: { latitude: number, longitude: number }) => {
+    return await axios.post(apiPath.shopInRange, params)
+}

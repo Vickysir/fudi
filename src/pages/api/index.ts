@@ -44,4 +44,7 @@ export const apiPath = {
     "thirdPartyLogin": "/auth/login/third_party",// Third party login     一期     
     "FAQList": "/faq/list",// FAQ     一期✔️
     "personalCenterUpdateEmail": "/user/update/email",// Update email     一期      
+
+    // 搜索
+    "shopInRange": "/shop/in_range/v2",
 }

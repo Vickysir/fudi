@@ -6,7 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: /GitHub/fudi/src/pages/web/homepage/index.tsx
  */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
 import homeBanner from '@/assets/images/fudi/home-banner.png';
@@ -22,32 +22,69 @@ import gift from '@/assets/images/common/icon/gift.svg';
 import ellipse from '@/assets/images/common/icon/ellipse.svg';
 import Dowmloadmarket from './dowload';
 
-import { Card, Col, Row } from 'antd';
-import Icon from '@ant-design/icons';
+import { Button, Card, Col, message, Row } from 'antd';
+import Icon, { DeleteOutlined } from '@ant-design/icons';
 
 import style from '@/styles/theme/icon.less'
 import "./index.less"
-import { APIShopServicePhone } from '@/pages/api/request';
+import { APIShopServicePhone, APIUserAddressList } from '@/pages/api/request';
 import { useAppStore } from '@/__internal';
+import RoundInput from '@/pages/components/antd/input';
+import RoundSelect from '@/pages/components/antd/select';
+import RoundButton from '@/pages/components/antd/button';
+import { DELIVERYTYPE_DELIVERY } from '@/utils/constant';
+import MessageModal from '@/pages/components/antd/modal/messageModal';
+import { AutoCompeteSelect } from '@/pages/components/antd/select/autoCompeteSelect';
+
 
 const Homepage = () => {
     const commonInfo = useAppStore("commonInfo");
+    const [orderType, setOrderType] = useState("0")
+    const [deliveryIsOpen, setDeliveryIsOpen] = useState(false)
+    const [deliveryList, setDeliveryList] = useState([])
+    const [selectShopId, setSelectShopId] = useState(null)
+
 
     useEffect(() => {
         if (commonInfo?.shopId) {
             APIShopServicePhone(commonInfo.shopId)
                 .then((res) => {
                     const { data } = res;
-                    APP_STORE.commonInfo={
+                    APP_STORE.commonInfo = {
                         ...APP_STORE.commonInfo,
                         shopServicePhone: data.phone
-                    } 
+                    }
                 }).catch((err) => {
                     console.log(`ShopServicePhone err`, err)
                 })
         }
 
     }, [])
+    const handleSelectChange = (value) => {
+        console.log(`selected `, value);
+        setOrderType(value.key)
+
+    }
+    const handleAutoCompeteSelectOnChange = (value) => {
+        console.log(`selected `, value);
+    }
+    const handleSearch = (type) => {
+        const orderType = null
+        switch (type) {
+            case "1":
+                {
+
+                }
+                break;
+
+            default:  //"Delivery"
+                {
+
+                }
+                break;
+        }
+    }
+
     return (
         <>
             <WebHeader />
@@ -55,6 +92,44 @@ const Homepage = () => {
                 <img src={homeBanner} alt="banner" />
                 <p>Are You Hungry?</p>
                 <h3>Don’t Wait. Order Now.</h3>
+                <div className="homepage-banner-search">
+                    <div style={{ width: "70%" }} >
+                        {/* <RoundInput /> */}
+                        <AutoCompeteSelect
+                            placeholder="Place Input..."
+                            style={{ width: "100%" }}
+                            handleAutoCompeteSelectOnChange={handleAutoCompeteSelectOnChange}
+                        />
+                        {
+                            orderType === `${DELIVERYTYPE_DELIVERY}` ?
+                                <p onClick={
+                                    async () => {
+                                        try {
+                                            const { data } = await APIUserAddressList();
+                                            if (data.length === 0) {
+                                                return message.info("You don't have previous addresses")
+                                            }
+                                            setDeliveryIsOpen(true)
+                                            setDeliveryList(data)
+                                        } catch (err) {
+                                            console.log(`err`, err)
+                                        }
+                                    }
+                                }>Previous Addresses</p>
+                                : null
+                        }
+
+                    </div>
+                    <RoundSelect
+                        style={{ width: "15rem" }}
+                        type="orderType"
+                        defaultValue={{ "key": "0", "value": "0", "label": "Delivery" }}
+                        onChange={handleSelectChange}
+                    />
+                    <RoundButton
+                        type="primary"
+                        onClick={handleSearch}>Search</RoundButton>
+                </div>
             </div>
             <div>
                 <div className="homepage-recommended">
@@ -134,7 +209,27 @@ const Homepage = () => {
                 </div>
             </div>
             <WebFooter />
+            <MessageModal
+                isOpen={deliveryIsOpen}
+                isClose={() => { setDeliveryIsOpen(false) }}
+                content={
+                    <>
+                        Previous Addresses
+                        {
+                            deliveryList.map((item, index) => {
+                                return (
+                                    <p className={item.shopId === selectShopId ? "previousAddresses-content previousAddresses-content-active" : "previousAddresses-content"} key={index} onClick={() => { setSelectShopId(item.shopId) }}>
+                                        {item.detail}
+                                        {/* <span><DeleteOutlined /></span> */}
+                                    </p>
+                                )
+                            })
+                        }
 
+                        <Button type="primary" shape="round" block onClick={() => { alert(selectShopId) }}>Continue</Button>
+                    </>
+                }
+            />
         </>
     )
 }

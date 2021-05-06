@@ -37,6 +37,8 @@ googlemaplist
 
 ### 通知中心的接口
 
+
+
 ### 一期问题
 
 - 移动端 menu 隐藏 ✅
@@ -58,9 +60,11 @@ googlemaplist
 - online chart, homepage、help center 上的电话换成 +353858275002 ✅
 
 
-### 
+### 2021-05-06 二期优化
 
 - previous address 字号放大一点
-    place input address
+    place input address 
+- 结果搜索不到时，提示 The address is out of our delivery range. Please input again.
 - collect时候，左边input换成select ，默认值为第一个餐馆
-- 地图限制范围 Ireland
+- 地图限制范围 Ireland， 去掉地图
+- 搜索交互，用户点击搜索后，产品分类信息改为搜索结果

@@ -56,3 +56,11 @@ googlemaplist
 - 注册的时候，增加 nike name 和 invite code ✅
 
 - online chart, homepage、help center 上的电话换成 +353858275002 ✅
+
+
+### 
+
+- previous address 字号放大一点
+    place input address
+- collect时候，左边input换成select ，默认值为第一个餐馆
+- 地图限制范围 Ireland

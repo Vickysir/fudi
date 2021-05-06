@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-10 13:59:47
- * @LastEditTime: 2021-03-23 17:01:14
+ * @LastEditTime: 2021-05-06 11:23:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/api/index.ts
@@ -18,8 +18,6 @@ export const apiPath = {
     "addressList": "/user/shipping_address/list",//address list     一期
     "mapRange": "/shop/range/label/list/v2",//map range
     "shopList": "/shop/list/v2/collection",//shop(restaurant) list
-    "shopDetail": "/shop/detail/v2",//shop(restaurant) detail
-    "categoriesInHomePages": "/goods/classify/list/first/v2",//categories in home page
     "foodPage": "/goods/classify/list/first/v2",// discounted / hot sale / new food page
     "categoriesInFoodList": "/goods/list/v2",// Food list for other categories
     "foodDetail": "/goods/detail/v2",// food details
@@ -45,6 +43,12 @@ export const apiPath = {
     "FAQList": "/faq/list",// FAQ     一期✔️
     "personalCenterUpdateEmail": "/user/update/email",// Update email     一期      
 
-    // 搜索
-    "shopInRange": "/shop/in_range/v2",
+    // 二期  
+    "shopInRange": "/shop/in_range/v2", //判断搜索地址是否在配送范围的店铺
+    "shopDetail": "/shop/detail/v2",//shop(restaurant) detail
+    "categoriesInHomePages": "/goods/classify/list/first/v2",//商品分类：categories in home page ,只返回一级分类
+    "goodsSearch":"/goods/search", // shop 页面搜索接口
+    "bookTable":"/user/order/submit/v3", //book table
+    "addToCart":"/user/cart/add/v3" //add to cart
+
 }

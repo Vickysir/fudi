@@ -176,10 +176,66 @@ export interface AddressListPostResponseArray {
     "houseNumber": string//"1024"
 }
 
+export interface ShopDetailResponse{
+    "address": string//"Edenhall, Model Farm Rd, Cork, Ireland"
+    "endTime": number// 86340000
+    "endTimeFormat":string//  "23:59"
+    "evaluate": {
+        total: number// 485,
+        evaluateList:EvaluateList[]
+    }
+    "id": number// 1
+    "latitude": number// 51.8903393
+    "longitude": number// -8.5386944
+    "name": string//"Edenhall"
+    "outline": string//"Restaurant & Takeaway(Delivery Min order €10 )"
+    "phone": string//"+353214947888"
+    "startTime": number// 0
+    "startTimeFormat": string// "00:00"
+    "thumbnail": string//"public/0aff270dd06c4812b32c77b165b5ecf0"
+}
+
+export interface EvaluateList{
+    "complexStarLevel":number// 5
+    "content": string//"Good as usual"
+    "createTime": number// 1599221539000
+    "id": number// 1750
+    "thumbnail": string[]
+    "user": {
+        "head": string// "public/6b80b80a30364abbb22bd2d52a62d462",
+        "nickname": string// "Mikey Ryan",
+        "id": number// 5576
+    },
+}
 
 
+export interface ShopCategoriesLevelOneResponseArray{
+    "id": number// 215
+    "name": string //"Gluten Free & Vegetarian"
+    "promotion": number //0
+    "thumbnail": string //"public/dfde891713054186a64e76ed6fa4bc59"    
+}
+export interface UserOrderSubmitPost{
+    remark?:string,
+    diningType:number,
+    shopId:number,
+    reservation:BookTablePost
+}
+export interface BookTablePost{
+    "consignee": string //收货人
+    "sex": string // 性别
+    "phone": number //  
+    "peopleNumber": number //
+    "diningTime": string // 
+}
 
-
+export interface AddToCartPost{
+    "consignee": string //收货人
+    "sex": string // 性别
+    "phone": number //  
+    "peopleNumber": number //
+    "diningTime": string // 
+}
 
 
 

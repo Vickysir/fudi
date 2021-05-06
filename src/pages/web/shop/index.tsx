@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-29 09:25:46
- * @LastEditTime: 2021-04-02 19:26:15
+ * @LastEditTime: 2021-05-06 19:18:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/web/shop/index.tsx
@@ -16,13 +16,14 @@ import tableSvg from '@/assets/images/common/icon/table.svg'
 
 
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from '@/styles/theme/icon.less'
 import './index.less'
 import MessageModal from '@/pages/components/antd/modal/messageModal';
 import AddReview from '@/pages/components/antd/modal/formModal';
 import { Link, withRouter } from 'react-router-dom';
 import V_Map from '@/pages/components/map';
+import { APIBookTable, APIGoodsSearch, APIShopCategoriesLevelOne, APIShopDetail } from '@/pages/api/request';
 
 const { Search } = Input;
 const { Meta } = Card;
@@ -59,6 +60,26 @@ const Shop = (props) => {
             }
         }
     }
+
+    useEffect(() => {
+        // 测试 api
+        APIShopDetail({"id":1});
+        APIShopCategoriesLevelOne({"shopId":1});
+        APIGoodsSearch({"shopId":1,"goodsClassifyId":148,"title":"Drinks"});
+        // APIBookTable({
+        //     "remark":"test",
+        //     "diningType":2,
+        //     "shopId":1,
+        //     "reservation":{
+        //         "consignee": "vicky" ,//收货人
+        //         "sex": "boy" ,// 性别
+        //         "phone": 18616350384 ,
+        //         "peopleNumber":3, 
+        //         "diningTime": "2021-05-02" ,
+        //     }
+        // });
+
+    }, [])
 
     return (
         <>

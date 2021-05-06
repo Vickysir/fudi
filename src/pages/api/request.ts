@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-23 12:58:41
- * @LastEditTime: 2021-03-23 14:03:39
+ * @LastEditTime: 2021-05-06 19:22:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /fudi/src/pages/api/request.ts
@@ -26,6 +26,11 @@ import {
     PersonalCenterCouponListPost,
     PersonalCenterCouponListPostResponseArray,
     AddressListPostResponseArray,
+    ShopDetailResponse,
+    ShopCategoriesLevelOneResponseArray,
+    BookTablePost,
+    UserOrderSubmitPost,
+    AddToCartPost,
 } from './types';
 
 
@@ -155,6 +160,10 @@ export const APIRemoveAddress = async (params: { id: number }) => {
     return await axios.post(apiPath.removeAddress, params)
 }
 
+
+
+
+
 // 首页搜索
 export const APIShopInRange = async (params: { latitude: number, longitude: number }) => {
     return await axios.post(apiPath.shopInRange, params)
@@ -162,7 +171,33 @@ export const APIShopInRange = async (params: { latitude: number, longitude: numb
 export const APICollectShopList = async () => {
     return await axios.post(apiPath.shopList)
 }
-// 根据placeId 获取经纬度
+// 根据 placeId 获取经纬度
 export const APITranslatePlaceIdToLocation = async (place_id: string) => {
     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?place_id=${place_id}&key=AIzaSyDU8SBtzx84CB2gf2kfZhC_Y9BRP6U7znw`)
 }
+
+// 商铺shop详情
+export const APIShopDetail = async (params:{id:number}) => {
+    return await axios.post<ShopDetailResponse>(apiPath.shopDetail,params)
+}
+//返回 shop 一级商品分类
+export const APIShopCategoriesLevelOne = async (params:{shopId:number}) => {
+    return await axios.post<ShopCategoriesLevelOneResponseArray[]>(apiPath.categoriesInHomePages,params)
+}
+
+// shop页面 搜索
+export const APIGoodsSearch = async (params:{shopId:number,goodsClassifyId:number,title:string}) => {
+    return await axios.post(apiPath.goodsSearch,params)
+}
+// bookTable
+export const APIBookTable = async (params:UserOrderSubmitPost) => {
+    return await axios.post(apiPath.bookTable,params)
+}
+//add to cart
+export const APIAddToCart= async (params:AddToCartPost) => {
+    return await axios.post(apiPath.addToCart,params)
+}
+
+
+
+

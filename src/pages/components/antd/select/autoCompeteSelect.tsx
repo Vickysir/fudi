@@ -69,7 +69,11 @@ function initService(input, callback) {
 
         };
         const service = new google.maps.places.AutocompleteService();
-        service.getQueryPredictions({ input }, displaySuggestions);
+        const irelandBounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(50.999929, -10.854492),
+            new google.maps.LatLng(55.354135, -5.339355)
+        );
+        service.getQueryPredictions({ input, bounds: irelandBounds, componentRestrictions: { country: "IE" } }, displaySuggestions);
 
 
     } catch (err) {

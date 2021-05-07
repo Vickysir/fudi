@@ -90,7 +90,7 @@ const Homepage = (props) => {
                             console.log(json);
                             const { location } = json.results[0].geometry
                             const { data } = await APIShopInRange({ latitude: location.lat, longitude: location.lng })
-                            if (!data || data.length === 0) return message.error("Sorry,the address don't have results")
+                            if (!data || data.length === 0) return message.error("The address is out of our delivery range. Please input again.")
                             history.push(`/shop/${data.id}`)
                             console.log(`data`, data)
                         });
@@ -123,7 +123,7 @@ const Homepage = (props) => {
                     <div style={{ width: "70%" }} >
                         {/* <RoundInput /> */}
                         <AutoCompeteSelect
-                            placeholder="Place Input..."
+                            placeholder="Place input address ..."
                             style={{ width: "100%" }}
                             handleAutoCompeteSelectOnChange={handleAutoCompeteSelectOnChange}
                             orderType={orderType}

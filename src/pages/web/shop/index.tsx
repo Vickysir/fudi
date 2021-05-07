@@ -63,9 +63,9 @@ const Shop = (props) => {
 
     useEffect(() => {
         // 测试 api
-        APIShopDetail({"id":1});
-        APIShopCategoriesLevelOne({"shopId":1});
-        APIGoodsSearch({"shopId":1,"goodsClassifyId":148,"title":"Drinks"});
+        APIShopDetail({ "id": 1 });
+        APIShopCategoriesLevelOne({ "shopId": 1 });
+        APIGoodsSearch({ "shopId": 1, "goodsClassifyId": 148, "title": "Drinks" });
         // APIBookTable({
         //     "remark":"test",
         //     "diningType":2,
@@ -341,9 +341,9 @@ const Shop = (props) => {
                         </div>
                     </div>
                 </div>
-                <div style={{ width: "100%", height: "1000px" }}>
+                {/* <div style={{ width: "100%", height: "1000px" }}>
                     <V_Map />
-                </div>
+                </div> */}
                 <BackTop>
                     <div className="backUp">UP</div>
                 </BackTop>

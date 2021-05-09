@@ -67,4 +67,4 @@ googlemaplist
 - 结果搜索不到时，提示 The address is out of our delivery range. Please input again.  ✅
 - collect时候，左边input换成select ，默认值为第一个餐馆 ✅
 - 地图搜索预测更偏向，限制范围 Ireland， 去掉地图  ✅
-- 搜索交互，用户点击搜索后，产品分类信息改为搜索结果
+- shop 搜索交互，用户点击搜索后，产品分类信息改为搜索结果

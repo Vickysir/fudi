@@ -13,6 +13,7 @@ import Icon, { ArrowLeftOutlined, EnvironmentOutlined, FieldTimeOutlined, Search
 import iconchat from '@/assets/images/common/icon/icon-chat.svg'
 import goodPlaceholder from '@/assets/images/common/icon/good-placeholder.svg';
 import tableSvg from '@/assets/images/common/icon/table.svg'
+import homeBanner from '@/assets/images/fudi/home-banner.png';
 
 
 
@@ -85,7 +86,7 @@ const Shop = (props) => {
         <>
             <WebHeader />
             <div className="shop-wrap">
-                <div className="shop-wrap-banner">
+                <div className="shop-wrap-banner" style={{ background: `url(${homeBanner})` }}>
                     <Button
                         className="shop-wrap-banner-button"
                         type="primary"
@@ -94,7 +95,6 @@ const Shop = (props) => {
                     >
                         <ArrowLeftOutlined />Back to Homepage
                     </Button>
-                    {/* <img src="" alt="banner" /> */}
                 </div>
                 <div className="shop-wrap-shopDesc">
                     <div className="shop-wrap-shopDesc-box">

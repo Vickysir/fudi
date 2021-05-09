@@ -8,7 +8,7 @@
  */
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
-import { Button, Rate, Input, Card, Divider, BackTop } from 'antd'
+import { Button, Rate, Input, Card, Divider, BackTop, Tooltip } from 'antd'
 import Icon, { ArrowLeftOutlined, EnvironmentOutlined, FieldTimeOutlined, SearchOutlined, CalendarOutlined } from '@ant-design/icons';
 import iconchat from '@/assets/images/common/icon/icon-chat.svg'
 import goodPlaceholder from '@/assets/images/common/icon/good-placeholder.svg';
@@ -31,10 +31,20 @@ const { Meta } = Card;
 const desc = ['3.5', 'bad', 'normal', 'good', 'wonderful'];
 
 const Shop = (props) => {
-    const { history } = props;
+    const { history, match } = props;
     const [rateValue, setrateValue] = useState(1)
     const [isOpen, setisOpen] = useState(false)
     const [issend, setissend] = useState(false)
+    const [shopData, setShopData] = useState({
+        name: null,
+        evaluate: {
+            total: 0
+        },
+        address: null,
+        startTimeFormat: "00:00",
+        endTimeFormat: "23:59"
+    })
+
     const suffix = (
         <SearchOutlined
             className="shop-theme-color"
@@ -63,8 +73,16 @@ const Shop = (props) => {
     }
 
     useEffect(() => {
+        console.log(`match`, match)
+        const { params } = match
+        async function ftetchApi() {
+            const { data: shopDetails } = await APIShopDetail({ "id": Number(params.id) });
+            setShopData(shopDetails)
+        }
+        ftetchApi();
+
+
         // 测试 api
-        APIShopDetail({ "id": 1 });
         APIShopCategoriesLevelOne({ "shopId": 1 });
         APIGoodsSearch({ "shopId": 1, "goodsClassifyId": 148, "title": "Drinks" });
         // APIBookTable({
@@ -81,6 +99,8 @@ const Shop = (props) => {
         // });
 
     }, [])
+
+
 
     return (
         <>
@@ -99,7 +119,7 @@ const Shop = (props) => {
                 <div className="shop-wrap-shopDesc">
                     <div className="shop-wrap-shopDesc-box">
                         <p className="shop-wrap-shopDesc-book" ><span onClick={() => setisOpen(true)}>Book a table</span></p>
-                        <h1>Jungle Pizza</h1>
+                        <h1>{shopData.name}</h1>
                         <div>
                             <span style={{ "display": "flex", "alignItems": "center" }}>
                                 <Rate
@@ -111,12 +131,16 @@ const Shop = (props) => {
                                 {rateValue ? <span className="ant-rate-text shop-rate">{desc[rateValue - 1]}</span> : ''}
                             </span>
                             <span className="shop-reviews">
-                                Reviews: 145
+                                Reviews: {shopData.evaluate?.total || 0}
                             </span>
                         </div>
                         <ul>
-                            <li><FieldTimeOutlined className="shop-icon" />09:00 - 21:00</li>
-                            <li><EnvironmentOutlined className="shop-icon" />5 Castle St, Centre, Cork</li>
+                            <li><FieldTimeOutlined className="shop-icon" />{`${shopData.startTimeFormat} - ${shopData.endTimeFormat}`}</li>
+                            <li style={{ width: "40%" }} className="inaline">
+                                <Tooltip title={shopData.address} >
+                                    <EnvironmentOutlined className="shop-icon" />{shopData.address}
+                                </Tooltip>
+                            </li>
                             <li><Icon component={iconchat} className={`${style.iconFill} shop-icon`} />Online Chart</li>
                         </ul>
                     </div>

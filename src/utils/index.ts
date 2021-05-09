@@ -29,6 +29,13 @@ export const openAppStore = (type: string) => {
     }
 }
 
+export const getUrlparams = () => {
+
+}
+
+
+
+
 export const clearStore = () => {
     APP_STORE.authInfo = null
     APP_STORE.registInfo = null

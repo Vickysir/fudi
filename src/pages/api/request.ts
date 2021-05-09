@@ -177,25 +177,25 @@ export const APITranslatePlaceIdToLocation = async (place_id: string) => {
 }
 
 // 商铺shop详情
-export const APIShopDetail = async (params:{id:number}) => {
-    return await axios.post<ShopDetailResponse>(apiPath.shopDetail,params)
+export const APIShopDetail = async (params: { id: number }) => {
+    return await axios.post<ShopDetailResponse>(apiPath.shopDetail, params)
 }
 //返回 shop 一级商品分类
-export const APIShopCategoriesLevelOne = async (params:{shopId:number}) => {
-    return await axios.post<ShopCategoriesLevelOneResponseArray[]>(apiPath.categoriesInHomePages,params)
+export const APIShopCategoriesLevelOne = async (params: { shopId: number }) => {
+    return await axios.post<ShopCategoriesLevelOneResponseArray[]>(apiPath.categoriesInHomePages, params)
 }
 
 // shop页面 搜索
-export const APIGoodsSearch = async (params:{shopId:number,goodsClassifyId:number,title:string}) => {
-    return await axios.post(apiPath.goodsSearch,params)
+export const APIGoodsSearch = async (params: { shopId: number, goodsClassifyId: number, title: string }) => {
+    return await axios.post(apiPath.goodsSearch, params)
 }
 // bookTable
-export const APIBookTable = async (params:UserOrderSubmitPost) => {
-    return await axios.post(apiPath.bookTable,params)
+export const APIBookTable = async (params: BookTablePost) => {
+    return await axios.post(apiPath.bookTable, params)
 }
 //add to cart
-export const APIAddToCart= async (params:AddToCartPost) => {
-    return await axios.post(apiPath.addToCart,params)
+export const APIAddToCart = async (params: AddToCartPost) => {
+    return await axios.post(apiPath.addToCart, params)
 }
 
 

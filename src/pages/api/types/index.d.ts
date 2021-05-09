@@ -176,13 +176,13 @@ export interface AddressListPostResponseArray {
     "houseNumber": string//"1024"
 }
 
-export interface ShopDetailResponse{
+export interface ShopDetailResponse {
     "address": string//"Edenhall, Model Farm Rd, Cork, Ireland"
     "endTime": number// 86340000
-    "endTimeFormat":string//  "23:59"
+    "endTimeFormat": string//  "23:59"
     "evaluate": {
         total: number// 485,
-        evaluateList:EvaluateList[]
+        evaluateList: EvaluateList[]
     }
     "id": number// 1
     "latitude": number// 51.8903393
@@ -195,8 +195,8 @@ export interface ShopDetailResponse{
     "thumbnail": string//"public/0aff270dd06c4812b32c77b165b5ecf0"
 }
 
-export interface EvaluateList{
-    "complexStarLevel":number// 5
+export interface EvaluateList {
+    "complexStarLevel": number// 5
     "content": string//"Good as usual"
     "createTime": number// 1599221539000
     "id": number// 1750
@@ -209,27 +209,28 @@ export interface EvaluateList{
 }
 
 
-export interface ShopCategoriesLevelOneResponseArray{
+export interface ShopCategoriesLevelOneResponseArray {
     "id": number// 215
     "name": string //"Gluten Free & Vegetarian"
     "promotion": number //0
     "thumbnail": string //"public/dfde891713054186a64e76ed6fa4bc59"    
 }
-export interface UserOrderSubmitPost{
-    remark?:string,
-    diningType:number,
-    shopId:number,
-    reservation:BookTablePost
+export interface UserOrderSubmitPost {
+    remark?: string,
+    diningType: number,
+    shopId: number,
+    reservation: BookTablePost
 }
-export interface BookTablePost{
+export interface BookTablePost {
     "consignee": string //收货人
-    "sex": string // 性别
+    "sex": number // 性别
     "phone": number //  
     "peopleNumber": number //
     "diningTime": string // 
+    "shopId": Number
 }
 
-export interface AddToCartPost{
+export interface AddToCartPost {
     "consignee": string //收货人
     "sex": string // 性别
     "phone": number //  

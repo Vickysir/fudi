@@ -85,18 +85,15 @@ const Shop = (props) => {
         // 测试 api
         APIShopCategoriesLevelOne({ "shopId": 1 });
         APIGoodsSearch({ "shopId": 1, "goodsClassifyId": 148, "title": "Drinks" });
-        // APIBookTable({
-        //     "remark":"test",
-        //     "diningType":2,
-        //     "shopId":1,
-        //     "reservation":{
-        //         "consignee": "vicky" ,//收货人
-        //         "sex": "boy" ,// 性别
-        //         "phone": 18616350384 ,
-        //         "peopleNumber":3, 
-        //         "diningTime": "2021-05-02" ,
-        //     }
-        // });
+        APIBookTable({
+            // "remark":"test",
+            "shopId": 1,
+            "consignee": "vicky",//收货人
+            "sex": 0,// 性别
+            "phone": 18616350384,
+            "peopleNumber": 3,
+            "diningTime": 1620573823,
+        });
 
     }, [])
 

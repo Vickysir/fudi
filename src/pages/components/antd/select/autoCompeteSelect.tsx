@@ -1,86 +1,9 @@
 import React from 'react'
-import { message, Select } from 'antd';
-import { APICollectShopList } from '@/pages/api/request';
+import { Select, Spin } from 'antd';
+import { fetchPlacees } from '../../map/placeService';
 
 
 const { Option } = Select;
-
-let timeout;
-let currentValue;
-
-function fetch(type, value, callback) {
-    if (timeout) {
-        clearTimeout(timeout);
-        timeout = null;
-    }
-    currentValue = value;
-
-    async function fake() {
-        console.log(`type`, type)
-        switch (type) {
-            case "1": //"Collect"
-                {
-                    const { data } = await APICollectShopList();
-                    console.log(`object`, data)
-                    const result = [];
-                    data.forEach(r => {
-                        result.push({
-                            value: r.id,
-                            text: r.address,
-                        });
-                    });
-                    callback(result);
-                }
-                break;
-
-            default: { //"Delivery"
-                initService(value, (result) => {
-                    const data = [];
-                    result.forEach(r => {
-                        data.push({
-                            value: r.place_id,
-                            text: r.description,
-                        });
-                    });
-                    callback(data);
-                });
-            }
-                break;
-        }
-
-
-    }
-    timeout = setTimeout(fake, 300);
-}
-function initService(input, callback) {
-    try {
-        const google = window.google;
-        console.log(`google`, google)
-
-
-
-        const displaySuggestions = function (predictions, status) {
-            if (status != google.maps.places.PlacesServiceStatus.OK || !predictions) {
-                alert(status);
-                return;
-            }
-            console.log(`predictions`, predictions)
-            callback(predictions)
-
-        };
-        const service = new google.maps.places.AutocompleteService();
-        const irelandBounds = new google.maps.LatLngBounds(
-            new google.maps.LatLng(50.999929, -10.854492),
-            new google.maps.LatLng(55.354135, -5.339355)
-        );
-        service.getQueryPredictions({ input, bounds: irelandBounds, componentRestrictions: { country: "IE" } }, displaySuggestions);
-
-
-    } catch (err) {
-        console.log(`map err`, err)
-        message.error("map service init error")
-    }
-}
 
 
 interface Props {
@@ -93,11 +16,13 @@ export class AutoCompeteSelect extends React.Component<Props> {
     state = {
         data: [],
         value: undefined,
+        fetching: false
     };
 
     handleSearch = value => {
         if (value) {
-            fetch(this.props.orderType, value, data => this.setState({ data }));
+            this.setState({ fetching: true })
+            fetchPlacees(this.props.orderType, value, data => this.setState({ data, fetching: false }));
         } else {
             this.setState({ data: [] });
         }
@@ -109,7 +34,8 @@ export class AutoCompeteSelect extends React.Component<Props> {
     };
 
     render() {
-        const options = this.state.data.map(d => <Option key={d.value} value={d.value}>{d.text}</Option>);
+        const { fetching } = this.state
+        const options = this.state.data.map(d => <Option key={d.value} value={d.value}>{d.label}</Option>);
         return (
             <Select
                 showSearch
@@ -121,7 +47,7 @@ export class AutoCompeteSelect extends React.Component<Props> {
                 filterOption={false}
                 onSearch={this.handleSearch}
                 onChange={this.handleChange}
-                notFoundContent={null}
+                notFoundContent={fetching ? <Spin size="small" /> : null}
                 size="large"
             >
                 {options}

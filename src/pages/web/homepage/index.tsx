@@ -36,6 +36,7 @@ import { DELIVERYTYPE_DELIVERY } from '@/utils/constant';
 import MessageModal from '@/pages/components/antd/modal/messageModal';
 import { AutoCompeteSelect } from '@/pages/components/antd/select/autoCompeteSelect';
 import { withRouter } from 'react-router-dom';
+import RoundSearchSelect from '@/pages/components/antd/select/searchSelect';
 
 
 const Homepage = (props) => {
@@ -121,37 +122,47 @@ const Homepage = (props) => {
                 <h3>Don’t Wait. Order Now.</h3>
                 <div className="homepage-banner-search">
                     <div style={{ width: "70%" }} >
-                        {/* <RoundInput /> */}
-                        <AutoCompeteSelect
-                            placeholder="Place input address ..."
-                            style={{ width: "100%" }}
-                            handleAutoCompeteSelectOnChange={handleAutoCompeteSelectOnChange}
-                            orderType={orderType}
-                        />
                         {
                             orderType === `${DELIVERYTYPE_DELIVERY}` ?
-                                <p onClick={
-                                    async () => {
-                                        try {
-                                            const { data } = await APIUserAddressList();
-                                            if (data.length === 0) {
-                                                return message.info("You don't have previous addresses")
-                                            }
-                                            setDeliveryIsOpen(true)
-                                            setDeliveryList(data)
-                                        } catch (err) {
-                                            console.log(`err`, err)
-                                        }
-                                    }
-                                }>Previous Addresses</p>
-                                : null
-                        }
 
+                                (
+                                    <>
+                                        <AutoCompeteSelect
+                                            placeholder="Place input delivery address ..."
+                                            style={{ width: "100%" }}
+                                            handleAutoCompeteSelectOnChange={handleAutoCompeteSelectOnChange}
+                                            orderType={orderType}
+                                        />
+                                        <p onClick={
+                                            async () => {
+                                                try {
+                                                    const { data } = await APIUserAddressList();
+                                                    if (data.length === 0) {
+                                                        return message.info("You don't have previous addresses")
+                                                    }
+                                                    setDeliveryIsOpen(true)
+                                                    setDeliveryList(data)
+                                                } catch (err) {
+                                                    console.log(`err`, err)
+                                                }
+                                            }
+                                        }>Previous Addresses</p>
+                                    </>
+                                )
+                                :
+                                <RoundSearchSelect
+                                    style={{ width: "100%" }}
+                                    type="collect"
+                                    // needDefaultValue={true}
+                                    placeholder="Place select collect address ..."
+                                    onChange={handleAutoCompeteSelectOnChange}
+                                />
+                        }
                     </div>
                     <RoundSelect
                         style={{ width: "15rem" }}
                         type="orderType"
-                        defaultValue={{ "key": "0", "value": "0", "label": "Delivery" }}
+                        needDefaultValue={true}
                         onChange={handleSelectChange}
                     />
                     <RoundButton

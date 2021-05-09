@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Select } from 'antd';
 import './index.less'
+import { fetchPlacees } from '../../map/placeService';
+import { APICollectShopList } from '@/pages/api/request';
 
 const { Option } = Select;
 
@@ -12,14 +14,17 @@ type SelectValue = {
 interface props {
     type: string // select 类型
     style?: any
-    defaultValue?: SelectValue
+    needDefaultValue?: boolean
+    showArrow?: boolean
     onChange: (value: SelectValue) => void
 }
 
 const RoundSelect = (props: props) => {
-    const [selectValue, setSelectValue] = useState(props.defaultValue)
+    const { type, needDefaultValue = false, showArrow = true, } = props;
+    const [selectValue, setSelectValue] = useState(undefined)
+    let optionList = [];
+
     const getOption = (type: string) => {
-        let optionList = [];
         switch (type) {
             case "orderType": {
                 optionList = [
@@ -27,22 +32,23 @@ const RoundSelect = (props: props) => {
                     { key: "1", label: "Collect", value: "1", },
                 ]
             }
-
                 break;
 
             default:
                 optionList = []
                 break;
         }
-
         return optionList.map((item, index) => {
-            return <Option key={item.key} value={item.key}>{item.label}</Option>
+            return <Option key={item.value} value={item.value}>{item.label}</Option>
         })
     }
     const handleOnChange = (value: SelectValue) => {
         setSelectValue(value)
         props.onChange(value)
     }
+    useEffect(() => {
+        if (needDefaultValue) setSelectValue(optionList[0])
+    }, [])
     return (
         <div className="orderType-wrap">
             <Select
@@ -50,13 +56,13 @@ const RoundSelect = (props: props) => {
                 size="large"
                 defaultActiveFirstOption
                 labelInValue
-                showArrow={true}  //样式乱了
+                showArrow={showArrow}
                 value={selectValue}
                 {...props}
                 onChange={handleOnChange}
 
             >
-                {getOption(props.type)}
+                {getOption(type)}
             </Select>
         </div>
     )

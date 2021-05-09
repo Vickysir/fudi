@@ -33,7 +33,7 @@ export function initAxiosConfig() {
         config.headers.common['Authorization-Timestamp'] = timestamp;
         config.headers.common['Accept-Language'] = "en-US";
         // config.headers['Content-Type'] = 'application/json; charset=UTF-8'
-        console.log(`config`, config)
+        // console.log(`config`, config)
 
         return config
     });

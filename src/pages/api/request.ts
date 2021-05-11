@@ -197,6 +197,10 @@ export const APIBookTable = async (params: BookTablePost) => {
 export const APIAddToCart = async (params: AddToCartPost) => {
     return await axios.post(apiPath.addToCart, params)
 }
+// 商品详情
+export const APIGoodsDetails = async (params: { id: number }) => {
+    return await axios.post(apiPath.goodsDetails, params)
+}
 
 
 

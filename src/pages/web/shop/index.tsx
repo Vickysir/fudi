@@ -24,7 +24,7 @@ import MessageModal from '@/pages/components/antd/modal/messageModal';
 import AddReview from '@/pages/components/antd/modal/formModal';
 import { Link, withRouter } from 'react-router-dom';
 import V_Map from '@/pages/components/map';
-import { APIBookTable, APIGoodsSearch, APIShopCategoriesLevelOne, APIShopDetail } from '@/pages/api/request';
+import { APIBookTable, APIGoodsDetails, APIGoodsSearch, APIShopCategoriesLevelOne, APIShopDetail } from '@/pages/api/request';
 
 const { Search } = Input;
 const { Meta } = Card;
@@ -90,10 +90,11 @@ const Shop = (props) => {
             "shopId": 1,
             "consignee": "vicky",//收货人
             "sex": 0,// 性别
-            "phone": 18616350384,
+            "phone": "18616350384",
             "peopleNumber": 3,
-            "diningTime": 1620573823,
+            "diningTime": 1620711483,
         });
+        APIGoodsDetails({ "id": 234 })
 
     }, [])
 

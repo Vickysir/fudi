@@ -50,6 +50,7 @@ export const apiPath = {
     "goodsSearch": "/goods/search", // shop 页面搜索接口
     "bookTable": "/user/shop_reservation/save", //book table
     "orderSubmit": "/user/order/submit/v3", //book table
-    "addToCart": "/user/cart/add/v3" //add to cart
+    "addToCart": "/user/cart/add/v3", //add to cart
+    "goodsDetails": "/goods/detail/v2" //add to cart
 
 }

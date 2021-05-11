@@ -8,7 +8,7 @@
  */
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
-import { Button, Rate, Input, Card, Divider, BackTop, Tooltip } from 'antd'
+import { Button, Rate, Input, Card, Tabs, BackTop, Tooltip, message } from 'antd'
 import Icon, { ArrowLeftOutlined, EnvironmentOutlined, FieldTimeOutlined, SearchOutlined, CalendarOutlined } from '@ant-design/icons';
 import iconchat from '@/assets/images/common/icon/icon-chat.svg'
 import goodPlaceholder from '@/assets/images/common/icon/good-placeholder.svg';
@@ -25,14 +25,16 @@ import AddReview from '@/pages/components/antd/modal/formModal';
 import { Link, withRouter } from 'react-router-dom';
 import V_Map from '@/pages/components/map';
 import { APIBookTable, APIGoodsDetails, APIGoodsSearch, APIShopCategoriesLevelOne, APIShopDetail } from '@/pages/api/request';
+import { openOnlineChat } from '@/utils';
 
 const { Search } = Input;
 const { Meta } = Card;
-const desc = ['3.5', 'bad', 'normal', 'good', 'wonderful'];
+const { TabPane } = Tabs;
+const desc = ['1.0', '2.0', '3.0', '4.0', '5.0'];
 
 const Shop = (props) => {
     const { history, match } = props;
-    const [rateValue, setrateValue] = useState(1)
+    const [rateValue, setrateValue] = useState(5)
     const [isOpen, setisOpen] = useState(false)
     const [issend, setissend] = useState(false)
     const [shopData, setShopData] = useState({
@@ -42,8 +44,12 @@ const Shop = (props) => {
         },
         address: null,
         startTimeFormat: "00:00",
-        endTimeFormat: "23:59"
+        endTimeFormat: "23:59",
+        phone: ""
+
     })
+    const [isSearch, setIsSearch] = useState(false)
+
 
     const suffix = (
         <SearchOutlined
@@ -51,7 +57,15 @@ const Shop = (props) => {
         />
     );
 
-    const onSearch = value => console.log(value);
+    const onSearch = e => {
+        console.log(e.target.value)
+        const value = e.target.value;
+        if (value) {
+            setIsSearch(true)
+        } else {
+            setIsSearch(false)
+        }
+    };
     const handleChange = value => {
         setrateValue(value);
     };
@@ -121,6 +135,7 @@ const Shop = (props) => {
                         <div>
                             <span style={{ "display": "flex", "alignItems": "center" }}>
                                 <Rate
+                                    disabled
                                     tooltips={desc}
                                     onChange={handleChange}
                                     value={rateValue}
@@ -139,17 +154,31 @@ const Shop = (props) => {
                                     <EnvironmentOutlined className="shop-icon" />{shopData.address}
                                 </Tooltip>
                             </li>
-                            <li><Icon component={iconchat} className={`${style.iconFill} shop-icon`} />Online Chart</li>
+                            <li
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                    if (shopData?.phone) {
+                                        openOnlineChat(shopData.phone)
+                                    } else {
+                                        message.error("The shop don't have phone number")
+                                    }
+                                }}>
+                                <Icon component={iconchat} className={`${style.iconFill} shop-icon`} />Online Chart
+                            </li>
                         </ul>
                     </div>
                     <div className="shop-wrap-shopDesc-search">
-                        <div>
-                            <Button size="large" shape="round" onClick={() => scrollToAnchor('Pizza')}>Pizza</Button>
-                            <Button size="large" shape="round" onClick={() => scrollToAnchor('Pasta')}>Pasta</Button>
-                            <Button size="large" shape="round" onClick={() => scrollToAnchor('Salads')}>Salads</Button>
-                            <Button size="large" shape="round" onClick={() => scrollToAnchor('Drinks')}>Drinks</Button>
-                            <Button size="large" shape="round" onClick={() => scrollToAnchor('Sauces')}>Sauces</Button>
-                        </div>
+                        {
+                            !isSearch ? (
+                                <div>
+                                    <Button size="large" shape="round" onClick={() => scrollToAnchor('Pizza')}>Pizza</Button>
+                                    <Button size="large" shape="round" onClick={() => scrollToAnchor('Pasta')}>Pasta</Button>
+                                    <Button size="large" shape="round" onClick={() => scrollToAnchor('Salads')}>Salads</Button>
+                                    <Button size="large" shape="round" onClick={() => scrollToAnchor('Drinks')}>Drinks</Button>
+                                    <Button size="large" shape="round" onClick={() => scrollToAnchor('Sauces')}>Sauces</Button>
+                                </div>
+                            ) : <div></div>
+                        }
                         <div style={{ "width": "100%", "textAlign": "center" }}>
                             <Input
                                 style={{ "width": "45%", "paddingLeft": "2rem", "paddingRight": "2rem" }}
@@ -164,102 +193,112 @@ const Shop = (props) => {
                 <div className="shop-wrap-shopCategoriesList" style={{ "paddingTop": "40rem" }}>
                     <div>
                         <h1 id="Pizza">Pizza</h1>
-                        <div className="shop-wrap-shopCategoriesList-box">
-                            <div>
-                                <div>
-                                    {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
-                                    <Icon
-                                        component={goodPlaceholder}
-                                        className={` ${style.iconFill}`}
-                                        style={{ fontSize: "12rem" }}
-                                    />
+                        <Tabs size="large" defaultActiveKey="1" centered>
+                            <TabPane tab="Tab 1" key="1">
+                                <div className="shop-wrap-shopCategoriesList-box">
+                                    <div>
+                                        <div>
+                                            {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
+                                            <Icon
+                                                component={goodPlaceholder}
+                                                className={` ${style.iconFill}`}
+                                                style={{ fontSize: "12rem" }}
+                                            />
+                                        </div>
+                                        <div>
+                                            <h3 className="intwoline">Design your Own 14’’ pizza Design your Own 14’’ pizza</h3>
+                                            <h6 className="inaline">Starts from <span>€ 3 / portion</span>Design your Own 14’’ pizza</h6>
+                                            <p className="inthreeline">Tomato sauce, mozzarella, parmesan, eggs, and bacon.Tomato sauce, mozzarella, parmesan, eggs, and bacon.</p>
+                                            <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to="/goodsDetails">Order</Link></Button>
+                                        </div>
+                                    </div>
+                                    {/* 商品盒子 */}
+                                    <div>
+                                        <div>
+                                            {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
+                                            <Icon
+                                                component={goodPlaceholder}
+                                                className={` ${style.iconFill}`}
+                                                style={{ fontSize: "12rem" }}
+                                            />
+                                        </div>
+                                        <div>
+                                            <h3 className="intwoline">Design your Own 14’’ pizza</h3>
+                                            <h6 className="inaline">Starts from <span>€ 3 / portion</span></h6>
+                                            <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block>Order</Button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
+                                            <Icon
+                                                component={goodPlaceholder}
+                                                className={` ${style.iconFill}`}
+                                                style={{ fontSize: "12rem" }}
+                                            />
+                                        </div>
+                                        <div>
+                                            <h3 className="intwoline">Design your Own 14’’ pizza</h3>
+                                            <h6 className="inaline">Starts from <span>€ 3 / portion</span></h6>
+                                            <p className="inthreeline">Tomato sauce, mozzarella, parmesan, eggs, and bacon."</p>
+                                            <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block>Order</Button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
+                                            <Icon
+                                                component={goodPlaceholder}
+                                                className={` ${style.iconFill}`}
+                                                style={{ fontSize: "12rem" }}
+                                            />
+                                        </div>
+                                        <div>
+                                            <h3 className="intwoline">Design your Own 14’’ pizza</h3>
+                                            <h6 className="inaline">Starts from <span>€ 3 / portion</span></h6>
+                                            <p className="inthreeline">Tomato sauce, mozzarella, parmesan, eggs, and bacon."</p>
+                                            <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block>Order</Button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
+                                            <Icon
+                                                component={goodPlaceholder}
+                                                className={` ${style.iconFill}`}
+                                                style={{ fontSize: "12rem" }}
+                                            />
+                                        </div>
+                                        <div>
+                                            <h3 className="intwoline">Design your Own 14’’ pizza</h3>
+                                            <h6 className="inaline">Starts from <span>€ 3 / portion</span></h6>
+                                            <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block>Order</Button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
+                                            <Icon
+                                                component={goodPlaceholder}
+                                                className={` ${style.iconFill}`}
+                                                style={{ fontSize: "12rem" }}
+                                            />
+                                        </div>
+                                        <div>
+                                            <h3 className="intwoline">Design your Own 14’’ pizza</h3>
+                                            <h6 className="inaline">Starts from <span>€ 3 / portion</span></h6>
+                                            <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block>Order</Button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 className="intwoline">Design your Own 14’’ pizza Design your Own 14’’ pizza</h3>
-                                    <h6 className="inaline">Starts from <span>€ 3 / portion</span>Design your Own 14’’ pizza</h6>
-                                    <p className="inthreeline">Tomato sauce, mozzarella, parmesan, eggs, and bacon.Tomato sauce, mozzarella, parmesan, eggs, and bacon.</p>
-                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to="/goodsDetails">Order</Link></Button>
-                                </div>
-                            </div>
-                            {/* 商品盒子 */}
-                            <div>
-                                <div>
-                                    {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
-                                    <Icon
-                                        component={goodPlaceholder}
-                                        className={` ${style.iconFill}`}
-                                        style={{ fontSize: "12rem" }}
-                                    />
-                                </div>
-                                <div>
-                                    <h3 className="intwoline">Design your Own 14’’ pizza</h3>
-                                    <h6 className="inaline">Starts from <span>€ 3 / portion</span></h6>
-                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block>Order</Button>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
-                                    <Icon
-                                        component={goodPlaceholder}
-                                        className={` ${style.iconFill}`}
-                                        style={{ fontSize: "12rem" }}
-                                    />
-                                </div>
-                                <div>
-                                    <h3 className="intwoline">Design your Own 14’’ pizza</h3>
-                                    <h6 className="inaline">Starts from <span>€ 3 / portion</span></h6>
-                                    <p className="inthreeline">Tomato sauce, mozzarella, parmesan, eggs, and bacon."</p>
-                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block>Order</Button>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
-                                    <Icon
-                                        component={goodPlaceholder}
-                                        className={` ${style.iconFill}`}
-                                        style={{ fontSize: "12rem" }}
-                                    />
-                                </div>
-                                <div>
-                                    <h3 className="intwoline">Design your Own 14’’ pizza</h3>
-                                    <h6 className="inaline">Starts from <span>€ 3 / portion</span></h6>
-                                    <p className="inthreeline">Tomato sauce, mozzarella, parmesan, eggs, and bacon."</p>
-                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block>Order</Button>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
-                                    <Icon
-                                        component={goodPlaceholder}
-                                        className={` ${style.iconFill}`}
-                                        style={{ fontSize: "12rem" }}
-                                    />
-                                </div>
-                                <div>
-                                    <h3 className="intwoline">Design your Own 14’’ pizza</h3>
-                                    <h6 className="inaline">Starts from <span>€ 3 / portion</span></h6>
-                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block>Order</Button>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    {/* <img width="100%" alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> */}
-                                    <Icon
-                                        component={goodPlaceholder}
-                                        className={` ${style.iconFill}`}
-                                        style={{ fontSize: "12rem" }}
-                                    />
-                                </div>
-                                <div>
-                                    <h3 className="intwoline">Design your Own 14’’ pizza</h3>
-                                    <h6 className="inaline">Starts from <span>€ 3 / portion</span></h6>
-                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block>Order</Button>
-                                </div>
-                            </div>
-                        </div>
+                            </TabPane>
+                            <TabPane tab="Tab 2" key="2">
+                                Content of Tab Pane 2
+                            </TabPane>
+                            <TabPane tab="Tab 3" key="3">
+                                Content of Tab Pane 3
+                            </TabPane>
+                        </Tabs>
                     </div>
                 </div>
                 {/* 分类盒子 */}

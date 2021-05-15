@@ -106,9 +106,8 @@ const Shop = (props) => {
             "sex": 0,// 性别
             "phone": "18616350384",
             "peopleNumber": 3,
-            "diningTime": 1620711483,
+            "diningTime": 1620885361000,
         });
-        APIGoodsDetails({ "id": 234 })
 
     }, [])
 

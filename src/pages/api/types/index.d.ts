@@ -224,9 +224,9 @@ export interface UserOrderSubmitPost {
 export interface BookTablePost {
     "consignee": string //收货人
     "sex": number // 性别
-    "phone": number //  
+    "phone": string //  
     "peopleNumber": number //
-    "diningTime": string // 
+    "diningTime": number // 精确到毫秒 
     "shopId": Number
 }
 

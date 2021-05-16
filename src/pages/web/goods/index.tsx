@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
-import { ArrowLeftOutlined, PlusOutlined, MinusOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, PlusOutlined, MinusOutlined, PlusCircleOutlined, MinusCircleOutlined, CheckOutlined } from '@ant-design/icons';
 import SeasameSeeds from '@/assets/images/common/imgs/goodsDetails1-SeasameSeeds.svg'
 import Soybeans from '@/assets/images/common/imgs/goodsDetails2-Soybeans.svg'
 import Molluscs from '@/assets/images/common/imgs/goodsDetails3-Molluscs.svg'
@@ -14,10 +14,14 @@ import { withRouter } from 'react-router';
 import { useAppStore } from '@/__internal';
 import { isLogin } from '@/utils';
 import { APIGoodsDetails } from '@/pages/api/request';
+import style from '@/styles/theme/icon.less'
+
 
 const GoodsDetails = (props) => {
     const { history } = props;
     const [loading, setLoading] = useState(true);
+    const [noOnly, setNoOnly] = useState(false);
+    const [useOptionList, setUseOptionList] = useState({ "ingredientList": {} });
     const [dataSource, setDataSource] = useState({
         title: "Margherita",
         currentPrice: 5,
@@ -51,7 +55,9 @@ const GoodsDetails = (props) => {
                         name: "No",
                         only: 0,
                         required: 0
-                    }, {}
+                    }, {
+
+                    }
                 ]
             },
         ]
@@ -60,75 +66,13 @@ const GoodsDetails = (props) => {
     const [defaultOptions, noOnlyOptions] = options;
     const { ingredientClassifyList: defaultOptionsList } = defaultOptions;
     const { ingredientClassifyList: noOnlyOptionsList } = noOnlyOptions;
-    console.log(`noOnlyOptionsList`, noOnlyOptionsList)
     const authInfo = useAppStore("authInfo");
     const commonInfo = useAppStore("commonInfo");
+    const [totalPrice, setTotalPrice] = useState(0)
     const [basicPrice, setBasicPrice] = useState(currentPrice)
     const [count, setCount] = useState(1)
-    const [totalPrice, setTotalPrice] = useState(basicPrice + 0)
-    const [sizePrice, setSizePrice] = useState(0)
-    const [toppings1, setToppings1] = useState({ "price": 2, count: 0, label: "toppings1" })
-    const [toppings2, setToppings2] = useState({ "price": 3, count: 0, label: "toppings2" })
-    const [toppings3, setToppings3] = useState({ "price": 2, count: 0, label: "toppings3" })
-    const [toppings4, setToppings4] = useState({ "price": 3, count: 0, label: "toppings4" })
 
-    const handleChangeSize = (optionName, value) => {
-        const toppings1Price = toppings1.price * toppings1.count;
-        const toppings2Price = toppings2.price * toppings2.count;
-        const toppings3Price = toppings3.price * toppings3.count;
-        const toppings4Price = toppings4.price * toppings4.count;
-        const total = (basicPrice + value + toppings1Price + toppings2Price + toppings3Price + toppings4Price) * count
-        setSizePrice(value);
-        setTotalPrice(total)
-    }
-    const handleChangTopping = (action, type) => {
-        let toppingsCount;
-        let total;
-        if (action === "plus") {
-            toppingsCount = type.count + 1;
-        } else if (action === "minus") {
-            if (type.count === 0) {
-                message.error("The quantity is already zero")
-                return
-            }
-            toppingsCount = type.count - 1;
-        }
-        switch (type.label) {
-            case "toppings1": {
-                setToppings1({ ...toppings1, "count": toppingsCount })
-                const toppings2Price = toppings2.price * toppings2.count;
-                const toppings3Price = toppings3.price * toppings3.count;
-                const toppings4Price = toppings4.price * toppings4.count;
-                total = (basicPrice + sizePrice + type.price * toppingsCount + toppings2Price + toppings3Price + toppings4Price) * count;
-                break;
-            }
-            case "toppings2": {
-                setToppings2({ ...toppings2, "count": toppingsCount })
-                const toppings1Price = toppings1.price * toppings1.count;
-                const toppings3Price = toppings3.price * toppings3.count;
-                const toppings4Price = toppings4.price * toppings4.count;
-                total = (basicPrice + sizePrice + type.price * toppingsCount + toppings1Price + toppings3Price + toppings4Price) * count;
-                break;
-            }
-            case "toppings3": {
-                setToppings3({ ...toppings3, "count": toppingsCount })
-                const toppings1Price = toppings1.price * toppings1.count;
-                const toppings2Price = toppings2.price * toppings2.count;
-                const toppings4Price = toppings4.price * toppings4.count;
-                total = (basicPrice + sizePrice + type.price * toppingsCount + toppings1Price + toppings2Price + toppings4Price) * count;
-                break;
-            }
-            case "toppings4": {
-                setToppings4({ ...toppings4, "count": toppingsCount })
-                const toppings1Price = toppings1.price * toppings1.count;
-                const toppings2Price = toppings2.price * toppings2.count;
-                const toppings3Price = toppings3.price * toppings3.count;
-                total = (basicPrice + sizePrice + type.price * toppingsCount + toppings1Price + toppings2Price + toppings3Price) * count;
-                break;
-            }
-        }
-        setTotalPrice(total)
-    }
+
     const handleChangeGoodsCount = (action) => {
         let goodCount;
         if (action === "plus") {
@@ -140,24 +84,13 @@ const GoodsDetails = (props) => {
             }
             goodCount = count - 1;
         }
-        const toppings1Price = toppings1.price * toppings1.count;
-        const toppings2Price = toppings2.price * toppings2.count;
-        const toppings3Price = toppings3.price * toppings3.count;
-        const toppings4Price = toppings4.price * toppings4.count;
-        const total = (basicPrice + sizePrice + toppings1Price + toppings2Price + toppings3Price + toppings4Price) * goodCount
         setCount(goodCount);
-        setTotalPrice(total)
     }
     const handleClickAddToOrder = () => {
         const currentShopping = {
             basicPrice,
             count,
             totalPrice,
-            sizePrice,
-            toppings1,
-            toppings2,
-            toppings3,
-            toppings4,
         }
         APP_STORE.commonInfo = {
             ...APP_STORE.commonInfo,
@@ -172,16 +105,65 @@ const GoodsDetails = (props) => {
             }, 3000)
         }
     }
+    const calculatTotal = () => {
+        let total = basicPrice;
+        Object.keys(useOptionList).map((item) => {
+            console.log(`useOptionList`, useOptionList)
+            console.log(`item`, item)
+            if (!useOptionList[item]) return;
+            for (let i in useOptionList[item]) {
+                if (useOptionList[item][i].option) {
+                    total = total + useOptionList[item][i].price
+                }
+            }
+        })
+        setTotalPrice(total * count)
+    }
     useEffect(() => {
         async function ftetchApi() {
 
             const { data } = await APIGoodsDetails({ "id": 234 })
-            setDataSource(data)
-            setBasicPrice(data.currentPrice)
-            setLoading(false)
+            setDataSource(data);
+            setBasicPrice(data.currentPrice);
+            setLoading(false);
+            // 设置默认值
+            let _useOptionList = { "ingredientList": {} };
+            data?.ingredientClassifyGroupList[0].ingredientClassifyList.map((item) => {
+                if (item.defaultSelect === -1) return
+                _useOptionList[item.name] = {
+                    [item.defaultSelect]: {
+                        option: true,
+                        price: item.ingredientList.filter((el) => el.id === item.defaultSelect)[0].currentPrice
+                    }
+                }
+            })
+            setUseOptionList(_useOptionList);
         }
         ftetchApi();
     }, [])
+    useEffect(() => {
+        calculatTotal();
+    }, [basicPrice, useOptionList, count])
+
+    //判断必填
+    const chooseAtLeast = (item: {
+        name: string,
+        free: number,
+        required: number,
+        only: number,
+        defaultSelect: number
+    }, el: {
+        currentPrice: number
+        id: number
+        name: string
+        originalPrice: number
+    }) => {
+        // 是否必选
+        if (useOptionList[item.name] && useOptionList[item.name][el.id] && item.required) {
+            const res = Object.keys(useOptionList[item.name][el.id]).filter((i) => i.option)
+            if (res.length === 0) return message.error("Place choose at least one option")
+        }
+    }
     return (
         <>
             <WebHeader />
@@ -198,13 +180,11 @@ const GoodsDetails = (props) => {
                                 <ArrowLeftOutlined />Back to All Dishes
                         </Button>
                         </div>
-                        <div style={{ background: `url(${goodsDetailsBanner})`, backgroundSize: "cover" }}>
-                            {/* goods image */}
-                        </div>
+                        <div style={{ background: `url(${goodsDetailsBanner})`, backgroundSize: "cover" }}></div>
                     </div>
                     <div className="goodsDetails-wrap-product">
                         <div className="goodsDetails-wrap-product-title">
-                            <h3><span>{title}</span><span>€ {basicPrice} / portion</span></h3>
+                            <h3><span>{title}</span><span>€ {currentPrice} / portion</span></h3>
                             <p>Pizza with tomato sauce and fresh mozzarella cheese.</p>
                             <div>
                                 <img style={{ marginRight: "1rem" }} src={SeasameSeeds} alt="" />
@@ -216,7 +196,7 @@ const GoodsDetails = (props) => {
                         <Divider />
                         {
                             defaultOptionsList?.map((item, index) => {
-                                if (item.only === 1) {
+                                if (item.only === 1) { // 单选
                                     return (
                                         <>
                                             <div className="goodsDetails-wrap-product-size" key={item.id}>
@@ -225,71 +205,78 @@ const GoodsDetails = (props) => {
                                                 </Tooltip>
                                                 <div>
                                                     {
-                                                        item.ingredientList.map((item, index) => {
-                                                            return <Button key={item.id} className="goodsDetails-wrap-product-size-style" onClick={() => { handleChangeSize(item.id) }} type={sizePrice === item.id ? "primary" : null}>{`${item.currentPrice}” - ${item.name}`}</Button>
-
+                                                        item.ingredientList.map((el, index) => {
+                                                            return (
+                                                                <Button
+                                                                    key={el.id}
+                                                                    className="goodsDetails-wrap-product-size-style"
+                                                                    type={useOptionList[item.name] && useOptionList[item.name][el.id]?.option ? "primary" : null}
+                                                                    onClick={() => {
+                                                                        chooseAtLeast(item, el);
+                                                                        setUseOptionList(
+                                                                            {
+                                                                                ...useOptionList,
+                                                                                [item.name]: {
+                                                                                    [el.id]: {
+                                                                                        option: useOptionList[item.name] && useOptionList[item.name][el.id]?.option ? false : true,
+                                                                                        price: el.currentPrice
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        )
+                                                                    }}
+                                                                >
+                                                                    {el.currentPrice === 0 ? `${el.name}` : `${el.currentPrice}” - ${el.name}`}
+                                                                </Button>
+                                                            )
                                                         })
                                                     }
-                                                    {/* <Button className="goodsDetails-wrap-product-size-style" onClick={() => { handleChangeSize(0) }} type={sizePrice === 0 ? "primary" : null}>8” - Small</Button>
-                                                    <Button className="goodsDetails-wrap-product-size-style" onClick={() => { handleChangeSize(2) }} type={sizePrice === 2 ? "primary" : null}>10” - Regular  + € 2</Button>
-                                                    <Button className="goodsDetails-wrap-product-size-style" onClick={() => { handleChangeSize(5) }} type={sizePrice === 5 ? "primary" : null}>12” - Big  + € 5</Button>
-                                                    <Button className="goodsDetails-wrap-product-size-style" onClick={() => { handleChangeSize(6) }} type={sizePrice === 6 ? "primary" : null}>14” - Giant  + € 6</Button>
-                                                    <Button className="goodsDetails-wrap-product-size-style" onClick={() => { handleChangeSize(7) }} type={sizePrice === 7 ? "primary" : null}>14” - Giant  + € 7</Button>
-                                                    <Button className="goodsDetails-wrap-product-size-style" onClick={() => { handleChangeSize(8) }} type={sizePrice === 8 ? "primary" : null}>14” - Giant  + € 8</Button> */}
                                                 </div>
                                             </div>
                                             <Divider />
                                         </>
                                     )
-                                } else {
+                                } else { // 多选
                                     return (
                                         <>
                                             <div className="goodsDetails-wrap-product-toppings">
                                                 <Tooltip title={item.free > 0 ? `The first ${item.free} options are free` : ""}>
-                                                    <h3>{item.name}</h3>
+                                                    <h3>
+                                                        {item.name}
+                                                        <span className=""> {item.free > 0 ? `( The first ${item.free} options are free )` : ""}</span>
+                                                    </h3>
                                                 </Tooltip>
-
                                                 <ul>
                                                     {
-                                                        item.ingredientList.map((item, index) => {
+                                                        item.ingredientList.map((el, index) => {
                                                             return (
-                                                                <li key={item.id}>
-                                                                    <div className="toppings-title"><h5>{item.name}</h5><span>+ € {item.currentPrice} </span></div>
+                                                                <li key={el.id}>
+                                                                    <div className={`toppings-title`}><h5>{el.name}</h5><span>{el.currentPrice === 0 ? "" : `+ € ${el.currentPrice} `}</span></div>
                                                                     <div>
-                                                                        <PlusOutlined onClick={() => handleChangTopping("plus", toppings1)} />
-                                                                        <span className={toppings2.count > 0 && "active-color"}>{toppings1.count}</span>
-                                                                        <MinusOutlined onClick={() => handleChangTopping("minus", toppings1)} />
+                                                                        <CheckOutlined
+                                                                            className={useOptionList[item.name] && useOptionList[item.name][el.id]?.option ? style.themeColor : ""}
+                                                                            onClick={() => {
+                                                                                chooseAtLeast(item, el)
+                                                                                message.success(useOptionList[item.name] && useOptionList[item.name][el.id]?.option ? `- ${item.name}, total: € ${totalPrice - (index < item.free ? 0 : el.currentPrice)}` : `+ ${item.name}, total: € ${totalPrice + (index < item.free ? 0 : el.currentPrice)}`)
+                                                                                setUseOptionList(
+                                                                                    {
+                                                                                        ...useOptionList,
+                                                                                        [item.name]: {
+                                                                                            ...useOptionList[item.name],
+                                                                                            [el.id]: {
+                                                                                                option: useOptionList[item.name] && useOptionList[item.name][el.id]?.option ? false : true,
+                                                                                                price: index < item.free ? 0 : el.currentPrice
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                )
+                                                                            }}
+                                                                        />
                                                                     </div>
                                                                 </li>
                                                             )
                                                         })
                                                     }
-
-                                                    {/* <li>
-                                                        <div className="toppings-title"><h5>Sundried Tomatoes</h5><span>+ € {toppings2.price} </span></div>
-                                                        <div>
-                                                            <PlusOutlined onClick={() => handleChangTopping("plus", toppings2)} />
-                                                            <span className={toppings2.count > 0 && "active-color"}>{toppings2.count}</span>
-                                                            <MinusOutlined onClick={() => handleChangTopping("minus", toppings2)} />
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div className="toppings-title"><h5>Olives</h5><span>+ € {toppings3.price} </span></div>
-                                                        <div>
-                                                            <PlusOutlined onClick={() => handleChangTopping("plus", toppings3)} />
-                                                            <span className={toppings3.count > 0 && "active-color"}>{toppings3.count}</span>
-                                                            <MinusOutlined onClick={() => handleChangTopping("minus", toppings3)} />
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div className="toppings-title"><h5>Sweetcorn</h5><span>+ € {toppings4.price} </span></div>
-                                                        <div>
-                                                            <PlusOutlined onClick={() => handleChangTopping("plus", toppings4)} />
-                                                            <span className={toppings4.count > 0 && "active-color"}>{toppings4.count}</span>
-                                                            <MinusOutlined onClick={() => handleChangTopping("minus", toppings4)} />
-
-                                                        </div>
-                                                    </li> */}
                                                 </ul>
                                             </div>
                                             <Divider />
@@ -298,31 +285,53 @@ const GoodsDetails = (props) => {
                                 }
                             })
                         }
-                        <div className="goodsDetails-wrap-product-noOnly">
-                            <Tooltip title={""}>
-                                <h3>no&only <Switch checkedChildren="only" unCheckedChildren="no" defaultChecked /></h3>
-                            </Tooltip>
-                            <ul>
-                                {
-                                    noOnlyOptionsList && noOnlyOptionsList[0].ingredientList?.map((item, index) => {
-                                        return (
-                                            <li key={item.id}>
-                                                <div className="toppings-title"><h5>{item.name}</h5><span>+ € {item.currentPrice} </span></div>
-                                                {/* <div>
-                                                    <PlusOutlined onClick={() => handleChangTopping("plus", toppings3)} />
-                                                    <span className={toppings3.count > 0 && "active-color"}>{toppings3.count}</span>
-                                                    <MinusOutlined onClick={() => handleChangTopping("minus", toppings3)} />
-                                                </div> */}
-                                                <div></div>
-                                            </li>
-                                        )
-                                    })
-                                }
-
-                            </ul>
-                        </div>
-                        <Divider />
-
+                        {
+                            noOnlyOptionsList &&
+                            <>
+                                <div className="goodsDetails-wrap-product-noOnly">
+                                    <Tooltip title={""}>
+                                        <h3>Ingredient <Switch checkedChildren="only" unCheckedChildren="no" defaultChecked
+                                            onChange={(value) => {
+                                                setUseOptionList({ ...useOptionList, "ingredientList": {} })
+                                                setNoOnly(value)
+                                            }} /></h3>
+                                    </Tooltip>
+                                    <ul>
+                                        {
+                                            noOnlyOptionsList[noOnly ? 0 : 1].ingredientList?.map((item, index) => {
+                                                return (
+                                                    <li key={item.id}>
+                                                        <div className="toppings-title"><h5>{item.name}</h5><span>{item.currentPrice === 0 ? "" : `+ € ${item.currentPrice} `}</span></div>
+                                                        <div>
+                                                            <CheckOutlined
+                                                                className={useOptionList?.ingredientList[item.id]?.option ? style.themeColor : ""}
+                                                                onClick={() => {
+                                                                    chooseAtLeast(useOptionList, item);
+                                                                    message.success(useOptionList.ingredientList[item.id]?.option ? `- ${item.name}, total: € ${totalPrice - item.currentPrice}` : `+ ${item.name}, total: € ${totalPrice + item.currentPrice}`)
+                                                                    setUseOptionList(
+                                                                        {
+                                                                            ...useOptionList,
+                                                                            "ingredientList": {
+                                                                                ...useOptionList.ingredientList,
+                                                                                [item.id]: {
+                                                                                    option: useOptionList.ingredientList[item.id]?.option ? false : true,
+                                                                                    price: index < useOptionList.free ? 0 : item.currentPrice
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    )
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+                                <Divider />
+                            </>
+                        }
                         <div className="goodsDetails-wrap-product-total">
                             <div>
                                 <h3>Total <span>€ {totalPrice}</span></h3>

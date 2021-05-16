@@ -69,6 +69,6 @@ googlemaplist
 - 地图搜索预测更偏向，限制范围 Ireland， 去掉地图  ✅
 - shop 搜索交互，用户点击搜索后，产品分类信息改为搜索结果
 - shop 添加一个二级分类
-- book table 接口 
-- goods detail 接口  
+- book table 接口 ✅
+- goods detail 接口  ✅
 - 添加购物车接口

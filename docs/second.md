@@ -6,8 +6,15 @@
  * @Description: In User Settings Edit
  * @FilePath: /fudi/docs/second.md
 -->
+## 目录
 
-### homepage 搜索
+<br>
+
+- [homepage](#homepage搜索)<br>
+- [shop](#shop)<br>
+- [goodsDetails](#goodsDetails)<br>
+
+### homepage搜索
 
 接口文档：
 
@@ -66,7 +73,9 @@ type 两种类型
      <!-- - continue
                - 跳转至shop页面  -->
 
-### shop {"shopId":1,"goodsClassifyId":131}数据最全
+### shop 
+
+{"shopId":1,"goodsClassifyId":131}数据最全
 
 接口文档：
 
@@ -99,7 +108,9 @@ dom 结构
         - 直接进入商品详情
     - 分类商品list
 
-### goodsDetails {"id": 234}数据最全
+### goodsDetails 
+
+{"id": 234}数据最全
 
 接口文档：
 

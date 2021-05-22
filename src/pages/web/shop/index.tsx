@@ -34,7 +34,7 @@ const desc = ['1.0', '2.0', '3.0', '4.0', '5.0'];
 
 const Shop = (props) => {
     const { history, match } = props;
-    const [rateValue, setrateValue] = useState(5)
+    const [rateValue, setrateValue] = useState(0)
     const [isOpen, setisOpen] = useState(false)
     const [issend, setissend] = useState(false)
     const [shopData, setShopData] = useState({
@@ -45,8 +45,8 @@ const Shop = (props) => {
         address: null,
         startTimeFormat: "00:00",
         endTimeFormat: "23:59",
-        phone: ""
-
+        phone: "",
+        rate: 0
     })
     const [isSearch, setIsSearch] = useState(false)
 
@@ -99,15 +99,17 @@ const Shop = (props) => {
         // 测试 api
         APIShopCategoriesLevelOne({ "shopId": 1 });
         APIGoodsSearch({ "shopId": 1, "goodsClassifyId": 148, "title": "Drinks" });
-        APIBookTable({
-            // "remark":"test",
-            "shopId": 1,
-            "consignee": "vicky",//收货人
-            "sex": 0,// 性别
-            "phone": "18616350384",
-            "peopleNumber": 3,
-            "diningTime": 1620885361000,
-        });
+
+        // 未登录时，无法预定
+        // APIBookTable({
+        //     "remark":"test",
+        //     "shopId": 1,
+        //     "consignee": "vicky",//收货人
+        //     "sex": 0,// 性别
+        //     "phone": "18616350384",
+        //     "peopleNumber": 3,
+        //     "diningTime": 1620885361000,
+        // });
 
     }, [])
 

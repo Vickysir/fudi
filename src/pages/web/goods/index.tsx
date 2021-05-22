@@ -7,14 +7,16 @@ import Soybeans from '@/assets/images/common/imgs/goodsDetails2-Soybeans.svg'
 import Molluscs from '@/assets/images/common/imgs/goodsDetails3-Molluscs.svg'
 import Crustaceans from '@/assets/images/common/imgs/goodsDetails4-Crustaceans.svg'
 import goodsDetailsBanner from '@/assets/images/fudi/goodsDetails-banner.png';
+import { defaultStorage } from '@/utils/uploadUseS3';
 
-import './index.less'
 import { Button, Divider, message, Spin, Switch, Tooltip } from 'antd';
 import { withRouter } from 'react-router';
 import { useAppStore } from '@/__internal';
 import { isLogin } from '@/utils';
-import { APIGoodsDetails } from '@/pages/api/request';
+import { APIGetCommon, APIGoodsDetails } from '@/pages/api/request';
 import style from '@/styles/theme/icon.less'
+import './index.less'
+
 
 
 const GoodsDetails = (props) => {
@@ -22,9 +24,11 @@ const GoodsDetails = (props) => {
     const [loading, setLoading] = useState(true);
     const [noOnly, setNoOnly] = useState(false);
     const [useOptionList, setUseOptionList] = useState({ "ingredientList": {} });
+    const [richText, setRichText] = useState('')
     const [dataSource, setDataSource] = useState({
         title: "Margherita",
         currentPrice: 5,
+        richtext: "",
         ingredientClassifyGroupList: [
             {
                 id: 1,
@@ -62,6 +66,8 @@ const GoodsDetails = (props) => {
             },
         ]
     });
+    const [count, setCount] = useState(1)
+
     const { title, currentPrice, ingredientClassifyGroupList: options } = dataSource;
     const [defaultOptions, noOnlyOptions] = options;
     const { ingredientClassifyList: defaultOptionsList } = defaultOptions;
@@ -70,7 +76,6 @@ const GoodsDetails = (props) => {
     const commonInfo = useAppStore("commonInfo");
     const [totalPrice, setTotalPrice] = useState(0)
     const [basicPrice, setBasicPrice] = useState(currentPrice)
-    const [count, setCount] = useState(1)
 
 
     const handleChangeGoodsCount = (action) => {
@@ -138,8 +143,18 @@ const GoodsDetails = (props) => {
                 }
             })
             setUseOptionList(_useOptionList);
+
+            APIGetCommon(`${defaultStorage.S3header}${data.richtext}`)
+                .then(function (response) {
+                    return response.text()
+                })
+                .then(function (myJson) {
+                    console.log(myJson);
+                    setRichText(`${myJson}`);
+                });
         }
         ftetchApi();
+
     }, [])
     useEffect(() => {
         calculatTotal();
@@ -185,13 +200,13 @@ const GoodsDetails = (props) => {
                     <div className="goodsDetails-wrap-product">
                         <div className="goodsDetails-wrap-product-title">
                             <h3><span>{title}</span><span>€ {currentPrice} / portion</span></h3>
-                            <p>Pizza with tomato sauce and fresh mozzarella cheese.</p>
                             <div>
                                 <img style={{ marginRight: "1rem" }} src={SeasameSeeds} alt="" />
                                 <img style={{ marginRight: "1rem" }} src={Soybeans} alt="" />
                                 <img style={{ marginRight: "1rem" }} src={Molluscs} alt="" />
                                 <img style={{ marginRight: "1rem" }} src={Crustaceans} alt="" />
                             </div>
+                            <div dangerouslySetInnerHTML={{ __html: `${richText}` }} ></div>
                         </div>
                         <Divider />
                         {

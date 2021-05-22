@@ -201,6 +201,10 @@ export const APIAddToCart = async (params: AddToCartPost) => {
 export const APIGoodsDetails = async (params: { id: number }) => {
     return await axios.post(apiPath.goodsDetails, params)
 }
+//通用接口
+export const APIGetCommon = async (url) => {
+    return fetch(url)
+}
 
 
 

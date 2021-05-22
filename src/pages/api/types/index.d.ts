@@ -216,10 +216,10 @@ export interface ShopCategoriesLevelOneResponseArray {
     "thumbnail": string //"public/dfde891713054186a64e76ed6fa4bc59"    
 }
 export interface UserOrderSubmitPost {
-    remark?: string,
-    diningType: number,
-    shopId: number,
-    reservation: BookTablePost
+    "remark"?: string,
+    "diningType": number,
+    "shopId": number,
+    "reservation": BookTablePost
 }
 export interface BookTablePost {
     "consignee": string //收货人
@@ -231,11 +231,11 @@ export interface BookTablePost {
 }
 
 export interface AddToCartPost {
-    "consignee": string //收货人
-    "sex": string // 性别
-    "phone": number //  
-    "peopleNumber": number //
-    "diningTime": string // 
+    "quantity": number // 1,  数量
+    "goodsId": number //86, 
+    "remark"?: string// "hello world .", 
+    "goodsIngredientList": number[] //[1141, 1144, 2132], 
+    "shopId": number//1 
 }
 
 

@@ -13,7 +13,7 @@ import { Button, Divider, message, Spin, Switch, Tooltip } from 'antd';
 import { withRouter } from 'react-router';
 import { useAppStore } from '@/__internal';
 import { isLogin } from '@/utils';
-import { APIGetCommon, APIGoodsDetails } from '@/pages/api/request';
+import { APIAddToCart, APIGetCommon, APIGoodsDetails } from '@/pages/api/request';
 import style from '@/styles/theme/icon.less'
 import './index.less'
 
@@ -102,7 +102,9 @@ const GoodsDetails = (props) => {
             currentShopping
         };
         if (isLogin(authInfo)) {
-            message.success("Successful")
+            message.success("Successful");
+            //添加至购物车
+            // APIAddToCart({ "quantity": 1, "goodsId": 86, "remark": "hello world .", "goodsIngredientList": [1141, 1144, 2132], "shopId": 1 })
         } else {
             message.warning("您还未登录，3s后为您跳转登录");
             setTimeout(() => {

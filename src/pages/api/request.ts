@@ -31,7 +31,10 @@ import {
     BookTablePost,
     UserOrderSubmitPost,
     AddToCartPost,
+    UpdateToCartPost,
+    DeliveryFeePost,
 } from './types';
+import { String } from 'aws-sdk/clients/cloudhsm';
 
 
 // 注册  获取手机验证码
@@ -120,13 +123,6 @@ export const APIPersonalCenterObtainCoupon = async (params: PersonalCenterObtain
 export const APIGets3UploadKey = async () => {
     return await axios.post<Gets3UploadKeyPostResponse>(apiPath.gets3UploadKey)
 }
-
-// accessKeyId: "ASIAUXKDVFS5CEWGBVRC"  "ASIAUXKDVFS5EJ3SMRVE"
-// expiration: 1616938542000
-// objectKey: "public/220d53c31810437b93a02fa8dc1fb85e"
-// secretAccessKey: "Ks/U1hxVoMIRgVa1kcRj5B+IjbnziYeby5q7wF/M"
-// sessionToken: "FwoGZXIvYXdzEA4aDBUSe0VNouU97dCXNiLAAnVZGP4080S6oX176A1Fh31BVP08b8Wc4H5AxmV5kLqDVQamIZOLubzaNIlVkV9pM6ZTvRFPo6vSBy/1QvfhcV0u2eJGajqkt4in+4/TjOre8hcFXu8ir4KvEGSBnJTUt5QY0/6eHH/xT5h+Y7s94e7uBiwjtPmsdUjl0Q8
-
 // 个人中心 上传头像
 export const APIPersonalCenterUpdateIcon = async (params: PersonalCenterUpdateIconPost) => {
     return await axios.post(apiPath.personalCenterUpdateIcon, params)
@@ -175,7 +171,6 @@ export const APICollectShopList = async () => {
 export const APITranslatePlaceIdToLocation = async (place_id: string) => {
     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?place_id=${place_id}&key=AIzaSyDU8SBtzx84CB2gf2kfZhC_Y9BRP6U7znw`)
 }
-
 // 商铺shop详情
 export const APIShopDetail = async (params: { id: number }) => {
     return await axios.post<ShopDetailResponse>(apiPath.shopDetail, params)
@@ -184,7 +179,6 @@ export const APIShopDetail = async (params: { id: number }) => {
 export const APIShopCategoriesLevelOne = async (params: { shopId: number }) => {
     return await axios.post<ShopCategoriesLevelOneResponseArray[]>(apiPath.categoriesInHomePages, params)
 }
-
 // shop页面 搜索
 export const APIGoodsSearch = async (params: { shopId: number, goodsClassifyId: number, title: string }) => {
     return await axios.post(apiPath.goodsSearch, params)
@@ -202,10 +196,37 @@ export const APIGoodsDetails = async (params: { id: number }) => {
     return await axios.post(apiPath.goodsDetails, params)
 }
 //通用接口
-export const APIGetCommon = async (url) => {
+export const APIGetCommon = async (url: string) => {
     return fetch(url)
 }
 
 
 
+//获取购物车
+export const APIGetCartList = async (params: { shopId: number }) => {
+    return await axios.post(apiPath.cartList, params)
+}
+//更新购物车
+export const APIUpdateCartList = async (params: UpdateToCartPost) => {
+    return await axios.post(apiPath.updateCartList, params)
+}
+//remove 购物车
+export const APIRemoveCartList = async (params: { shopId: number, id: number }) => {
+    return await axios.post(apiPath.removeCartList, params)
+}
 
+
+//获取配送费
+export const APIDeliveryFee = async (params: DeliveryFeePost) => {
+    return await axios.post(apiPath.deliveryFee, params)
+}
+//在线支付
+export const APIPaymentOnline = async (params: { userOrderId: number }) => {
+    return await axios.post(apiPath.paymentOnline, params)
+}
+
+
+//获得订单详情
+export const APIOrderDetail = async (params: { id: number }) => {
+    return await axios.post(apiPath.orderDetail, params)
+}

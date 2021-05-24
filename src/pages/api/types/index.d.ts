@@ -238,6 +238,18 @@ export interface AddToCartPost {
     "shopId": number//1 
 }
 
+export interface UpdateToCartPost {
+    "shopId": number//1 
+    "quantity": number // 1,  数量
+    "id": number // Shopping Cart number
+}
+
+export interface DeliveryFeePost {
+    "shopId": number//1 
+    "userFreightCouponId": number // user delivery fee coupon number
+    "userShippingAddressId": number // Shopping Cart number
+}
+
 
 
 

@@ -51,6 +51,17 @@ export const apiPath = {
     "bookTable": "/user/shop_reservation/save", //book table
     "orderSubmit": "/user/order/submit/v3", //book table
     "addToCart": "/user/cart/add/v3", //add to cart
-    "goodsDetails": "/goods/detail/v2" //add to cart
+    "goodsDetails": "/goods/detail/v2", // goods detail
+
+    // 三期
+    //购物车list
+    "cartList": "/user/cart/list/v3",// 购物车
+    "updateCartList": "/user/cart/update/quantity/v2",// update 购物车
+    "removeCartList": "/user/cart/remove/v2",// remove 购物车 
+    //确认订单
+    "deliveryFee": "/user/order/freight_price/v3", // 配送费
+    "paymentOnline": "/user/order/payment/online", // 在线支付
+    //个人中心-订单
+    "orderDetail": "/user/order/detail/v3",// order 详情
 
 }

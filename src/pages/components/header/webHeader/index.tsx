@@ -20,6 +20,8 @@ import style from '@/styles/theme/icon.less'
 import './index.less'
 import { useAppStore } from '@/__internal'
 import { openOnlineChat } from '@/utils'
+import { APIGetCartList, APIRemoveCartList, APIUpdateCartList } from '@/pages/api/request'
+import CartList from '../../antd/popconfirm/CartList'
 
 interface Props extends RouteChildrenProps {
 }
@@ -39,65 +41,84 @@ const WebHeader = (props: Props) => {
         history.push("/personalCenter/index?id=1")
     }
 
+    useEffect(() => {
+        async function fetchData() {
+            await APIGetCartList({ shopId: 1 });
+            // await APIUpdateCartList({ shopId: 1, id: 576123, quantity: 10 });
+            // await APIRemoveCartList({})
+        }
+        fetchData();
+    }, [])
     return (
-        <div className="webHeader">
-            {
-                commonInfo?.websitePhone ?
-                    <ul className="webHeader-tel">
-                        <li>
-                            <img src={imgphone} alt="imgphone" />
-                            <span>{commonInfo.websitePhone}</span>
-                        </li>
-                        <li onClick={handleClick}>
-                            <Icon component={iconchat} className={style.iconFill} />
-                            <span className="chat">Online Chat</span>
-                        </li>
-                    </ul>
-                    : <ul></ul>
-            }
-            <div className="webHeader-logo">
-                <Link to="/home">
-                    <img src={logoOne} alt="logo" />
-                </Link>
-            </div>
-            <ul className="webHeader-menu">
+        <>
+            <div className="webHeader">
                 {
-                    !isLogin &&
-                    <li>
-                        {
-                            pathname === "/login" ?
-                                <Link to="/home">
-                                    <Button type="primary" shape="round">Home</Button>
-                                </Link>
-                                :
-                                <Link to="/login">
-                                    <Button type="primary" shape="round">Login</Button>
-                                </Link>
-                        }
-                    </li>
+                    commonInfo?.websitePhone ?
+                        <ul className="webHeader-tel">
+                            <li>
+                                <img src={imgphone} alt="imgphone" />
+                                <span>{commonInfo.websitePhone}</span>
+                            </li>
+                            <li onClick={handleClick}>
+                                <Icon component={iconchat} className={style.iconFill} />
+                                <span className="chat">Online Chat</span>
+                            </li>
+                        </ul>
+                        : <ul></ul>
                 }
-                {
-                    isLogin &&
-                    <>
+                <div className="webHeader-logo">
+                    <Link to="/home">
+                        <img src={logoOne} alt="logo" />
+                    </Link>
+                </div>
+                <ul className="webHeader-menu">
+                    {
+                        !isLogin &&
                         <li>
-                            <Badge count={5}>
-                                <Icon component={iconorder} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
-                            </Badge>
+                            {
+                                pathname === "/login" ?
+                                    <Link to="/home">
+                                        <Button type="primary" shape="round">Home</Button>
+                                    </Link>
+                                    :
+                                    <Link to="/login">
+                                        <Button type="primary" shape="round">Login</Button>
+                                    </Link>
+                            }
                         </li>
-                        <li>
-                            <Badge count={5}>
-                                <Icon component={iconnott} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
-                            </Badge>
-                        </li>
-                        <li onClick={goTo}>
-                            <Avatar size="large" style={{ backgroundColor: '#fde3cf', "cursor": "pointer" }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                        </li>
-                    </>
-                }
+                    }
+                    {
+                        isLogin &&
+                        <>
+                            <li>
+                                <CartList
+                                    Children={(
+                                        <Badge count={5}>
+                                            <Icon component={iconorder} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
+                                        </Badge>
+                                    )}>
+                                </CartList>
+                            </li>
+                            <li>
+                                <Badge count={5}>
+                                    <Icon component={iconnott} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
+                                </Badge>
+                            </li>
+                            <li onClick={goTo}>
+                                <Avatar size="large" style={{ backgroundColor: '#fde3cf', "cursor": "pointer" }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                            </li>
+                        </>
+                    }
 
-            </ul>
-        </div>
+                </ul>
+            </div>
+        </>
+
     )
 }
 
 export default withRouter(WebHeader)
+function updateCartList() {
+    throw new Error('Function not implemented.')
+}
+

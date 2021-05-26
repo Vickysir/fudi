@@ -83,8 +83,8 @@ const GoodsDetails = (props) => {
         if (action === "plus") {
             goodCount = count + 1;
         } else if (action === "minus") {
-            if (count === 0) {
-                message.error("The quantity is already zero")
+            if (count === 1) {
+                message.error("The quantity is require")
                 return
             }
             goodCount = count - 1;

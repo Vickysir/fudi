@@ -28,6 +28,7 @@ interface Props extends RouteChildrenProps {
 const WebHeader = (props: Props) => {
     const { history } = props;
     const { pathname } = history.location;
+    const [cartdata, setCartdata] = useState<any>([]);
     const commonInfo = useAppStore("commonInfo");
     const authInfo = useAppStore("authInfo");
     const token = authInfo?.token;
@@ -41,12 +42,11 @@ const WebHeader = (props: Props) => {
         history.push("/personalCenter/index?id=1")
     }
 
+    const fetchData = async () => {
+        const { data } = await APIGetCartList({ shopId: 1 });
+        setCartdata(data);
+    }
     useEffect(() => {
-        async function fetchData() {
-            await APIGetCartList({ shopId: 1 });
-            // await APIUpdateCartList({ shopId: 1, id: 576123, quantity: 10 });
-            // await APIRemoveCartList({})
-        }
         fetchData();
     }, [])
     return (
@@ -93,7 +93,7 @@ const WebHeader = (props: Props) => {
                             <li>
                                 <CartList
                                     Children={(
-                                        <Badge count={5}>
+                                        <Badge count={cartdata?.length}>
                                             <Icon component={iconorder} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
                                         </Badge>
                                     )}>

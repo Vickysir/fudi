@@ -4,10 +4,11 @@ import React, { ReactNode } from 'react'
 
 interface Props {
     Children: ReactNode,
+    refreshHeader: () => void
 }
 const CartList = (props: Props) => {
-    const { Children } = props;
-    const content = (<OrderDetailsList />
+    const { Children, refreshHeader } = props;
+    const content = (<OrderDetailsList refreshHeader={refreshHeader} />
     );
     const title = (
         <div style={{ width: "500px", display: 'flex', justifyContent: 'space-between', alignItems: "center" }}>

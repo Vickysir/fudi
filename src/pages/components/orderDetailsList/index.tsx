@@ -1,12 +1,14 @@
-import { APIGetCartList, APIUpdateCartList } from '@/pages/api/request'
+import { APIGetCartList, APIRemoveCartList, APIUpdateCartList } from '@/pages/api/request'
 import { message, Spin } from 'antd'
 import React, { ReactNode, useEffect, useState } from 'react'
 import RoundButton from '../antd/button'
 import './index.less'
 
 interface Props {
+    refreshHeader: () => void
 }
 const OrderDetailsList = (props: Props) => {
+    const { refreshHeader } = props;
     const [total, setTotal] = useState(0);
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -18,8 +20,10 @@ const OrderDetailsList = (props: Props) => {
 
         } else if (action === "minus") {
             if (count === 1) {
-                message.error("The quantity is already zero")
-                // await APIRemoveCartList({})
+                setLoading(true);
+                await APIRemoveCartList({ shopId: 1, id });
+                await fetchData();
+                await refreshHeader();
                 return
             }
             goodCount = count - 1;

@@ -76,7 +76,7 @@ const GoodsDetails = (props) => {
     const commonInfo = useAppStore("commonInfo");
     const [totalPrice, setTotalPrice] = useState(0)
     const [basicPrice, setBasicPrice] = useState(currentPrice)
-
+    const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
 
     const handleChangeGoodsCount = (action) => {
         let goodCount;
@@ -91,7 +91,7 @@ const GoodsDetails = (props) => {
         }
         setCount(goodCount);
     }
-    const handleClickAddToOrder = () => {
+    const handleClickAddToOrder = async () => {
         const currentShopping = {
             basicPrice,
             count,
@@ -104,7 +104,8 @@ const GoodsDetails = (props) => {
         if (isLogin(authInfo)) {
             message.success("Successful");
             //添加至购物车
-            // APIAddToCart({ "quantity": 1, "goodsId": 86, "remark": "hello world .", "goodsIngredientList": [1141, 1144, 2132], "shopId": 1 })
+            await APIAddToCart({ "quantity": 1, "goodsId": 86, "remark": "hello world .", "goodsIngredientList": [1141, 1144, 2132], "shopId": 1 })
+            setRefreshHeaderCart(new Date().getTime());
         } else {
             message.warning("您还未登录，3s后为您跳转登录");
             setTimeout(() => {
@@ -151,7 +152,6 @@ const GoodsDetails = (props) => {
                     return response.text()
                 })
                 .then(function (myJson) {
-                    console.log(myJson);
                     setRichText(`${myJson}`);
                 });
         }
@@ -183,7 +183,7 @@ const GoodsDetails = (props) => {
     }
     return (
         <>
-            <WebHeader />
+            <WebHeader refreshCart={refreshHeaderCart} />
             <Spin spinning={loading} size="large" tip="Loading...">
                 <div className="goodsDetails-wrap">
                     <div className="goodsDetails-wrap-banner">

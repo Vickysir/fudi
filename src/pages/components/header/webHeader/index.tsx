@@ -24,9 +24,10 @@ import { APIGetCartList, APIRemoveCartList, APIUpdateCartList } from '@/pages/ap
 import CartList from '../../antd/popconfirm/CartList'
 
 interface Props extends RouteChildrenProps {
+    refreshCart: number
 }
 const WebHeader = (props: Props) => {
-    const { history } = props;
+    const { history, refreshCart } = props;
     const { pathname } = history.location;
     const [cartdata, setCartdata] = useState<any>([]);
     const commonInfo = useAppStore("commonInfo");
@@ -49,6 +50,9 @@ const WebHeader = (props: Props) => {
     useEffect(() => {
         fetchData();
     }, [])
+    useEffect(() => {
+        fetchData();
+    }, [refreshCart])
     return (
         <>
             <div className="webHeader">
@@ -92,6 +96,7 @@ const WebHeader = (props: Props) => {
                         <>
                             <li>
                                 <CartList
+                                    refreshHeader={fetchData}
                                     Children={(
                                         <Badge count={cartdata?.length}>
                                             <Icon component={iconorder} className={style.iconFill} style={{ fontSize: "2.5rem" }} />

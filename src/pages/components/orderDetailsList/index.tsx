@@ -1,14 +1,15 @@
 import { APIGetCartList, APIRemoveCartList, APIUpdateCartList } from '@/pages/api/request'
 import { message, Spin } from 'antd'
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import RoundButton from '../antd/button'
 import './index.less'
 
-interface Props {
+interface Props extends RouteComponentProps {
     refreshHeader: () => void
 }
 const OrderDetailsList = (props: Props) => {
-    const { refreshHeader } = props;
+    const { refreshHeader, history } = props;
     const [total, setTotal] = useState(0);
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -78,10 +79,19 @@ const OrderDetailsList = (props: Props) => {
                 </ul>
             </Spin>
             <div>
-                <RoundButton type="primary" block>Confirm Order € {total}</RoundButton>
+                <RoundButton
+                    disabled={data.length === 0}
+                    type="primary"
+                    block
+                    onClick={() => {
+                        history.push('/orderConfirm')
+                    }}
+                >
+                    Confirm Order € {total}
+                </RoundButton>
             </div>
         </div>
     )
 }
 
-export default OrderDetailsList
+export default withRouter(OrderDetailsList)

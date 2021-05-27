@@ -40,6 +40,7 @@ export function WebRoutes() {
         <Route path="/personalCenter" component={PersonalCenter} />
         <Route path="/shop/:id" component={Shop} />
         <Route path="/goodsdetails" component={GoodsDetails} />
+        <Route path="/orderConfirm" component={GoodsDetails} />
     </Router>
 }
 

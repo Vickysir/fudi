@@ -15,7 +15,7 @@ import logoOne from '@/assets/images/fudi/logoOne.svg'
 import { Avatar, Badge, Button } from 'antd';
 import Icon from '@ant-design/icons';
 import { LoginOutlined, } from '@ant-design/icons';
-import { Link, RouteChildrenProps, withRouter } from 'react-router-dom'
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import style from '@/styles/theme/icon.less'
 import './index.less'
 import { useAppStore } from '@/__internal'
@@ -23,7 +23,7 @@ import { openOnlineChat } from '@/utils'
 import { APIGetCartList, APIRemoveCartList, APIUpdateCartList } from '@/pages/api/request'
 import CartList from '../../antd/popconfirm/CartList'
 
-interface Props extends RouteChildrenProps {
+interface Props extends RouteComponentProps {
     refreshCart: number
 }
 const WebHeader = (props: Props) => {
@@ -123,7 +123,5 @@ const WebHeader = (props: Props) => {
 }
 
 export default withRouter(WebHeader)
-function updateCartList() {
-    throw new Error('Function not implemented.')
-}
+
 

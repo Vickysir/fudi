@@ -1,0 +1,31 @@
+.notifacationDetailsList-wrap{
+    width: 600px;
+    padding: 1rem 2rem;
+    &-detail{
+        >li{
+            >ul{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 0.5rem;
+                li:nth-child(1){
+                    font-size: @title20;
+                    color:@theme-color;
+                };
+                li:nth-child(2){
+                    font-size: @title16;
+                    color:@theme-gray;
+                };
+            }
+            p{
+                margin:0;
+                font-size: @title16;
+            }
+        }
+        
+    }
+    
+}
+.ant-popover-inner{
+    border-radius: 2rem !important;
+}

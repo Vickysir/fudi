@@ -22,6 +22,7 @@ import { useAppStore } from '@/__internal'
 import { openOnlineChat } from '@/utils'
 import { APIGetCartList, APIRemoveCartList, APIUpdateCartList } from '@/pages/api/request'
 import CartList from '../../antd/popconfirm/CartList'
+import NotifacationList from '../../antd/popconfirm/NotifacationList'
 
 interface Props extends RouteComponentProps {
     refreshCart?: number
@@ -105,9 +106,14 @@ const WebHeader = (props: Props) => {
                                 </CartList>
                             </li>
                             <li>
-                                <Badge count={0}>
-                                    <Icon component={iconnott} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
-                                </Badge>
+                                <NotifacationList
+                                    refreshHeader={fetchData}
+                                    Children={(
+                                        <Badge count={2}>
+                                            <Icon component={iconnott} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
+                                        </Badge>
+                                    )}>
+                                </NotifacationList>
                             </li>
                             <li onClick={goTo}>
                                 <Avatar size="large" style={{ backgroundColor: '#fde3cf', "cursor": "pointer" }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />

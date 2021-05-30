@@ -286,7 +286,7 @@ export interface BookTablePost {
 
 export interface AddToCartPost {
     "quantity": number // 1,  数量
-    "goodsId": number //86, 
+    "goodsId": number // product number
     "remark"?: string// "hello world .", 
     "goodsIngredientList": number[] //[1141, 1144, 2132], 
     "shopId": number//1 

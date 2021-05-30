@@ -132,9 +132,9 @@ const Shop = (props) => {
                                     />
                                     <span className="ant-rate-text shop-rate" style={{ marginLeft: '1rem' }}>{shopData?.rate}</span>
                                 </span>
-                                <span className="shop-reviews">
+                                {/* <span className="shop-reviews">
                                     Reviews: {shopData?.evaluate?.total || 0}
-                                </span>
+                                </span> */}
                             </div>
                             <ul>
                                 <li><FieldTimeOutlined className="shop-icon" />{`${shopData?.startTimeFormat} - ${shopData?.endTimeFormat}`}</li>
@@ -210,7 +210,7 @@ const Shop = (props) => {
                                                                                     <h3 className="intwoline">{v.title}</h3>
                                                                                     <h6 className="inaline"><span className="originalPrice">€ {v.originalPrice}</span><span>€ {v.currentPrice} / portion</span></h6>
                                                                                     <p className="inthreeline">{v.title}</p>
-                                                                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to={`/goodsDetails/${v.id}`}>Order</Link></Button>
+                                                                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to={`/goodsDetails/${v.id}/${params.id}`}>Order</Link></Button>
                                                                                 </div>
                                                                             </div>
                                                                         )

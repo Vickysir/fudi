@@ -21,64 +21,30 @@ import { GoodsDetailsResponse } from '@/pages/api/types';
 
 
 const GoodsDetails = (props) => {
-    const { history, match: { params: { id } } } = props;
+    const { history, match: { params: { id, shopId } } } = props;
     const [loading, setLoading] = useState(true);
     const [noOnly, setNoOnly] = useState(false);
     const [useOptionList, setUseOptionList] = useState({ "ingredientList": {} });
     const [richText, setRichText] = useState('')
-    const [dataSource, setDataSource] = useState<GoodsDetailsResponse>({
-        title: "Margherita",
-        currentPrice: 5,
-        richtext: "",
-        ingredientClassifyGroupList: [
-            {
-                id: 1,
-                name: "default",
-                type: 0,
-                ingredientClassifyList: [ // defaultOptionsList
-                    {
-                        defaultSelect: 2328,
-                        free: 0,
-                        id: 8,
-                        ingredientList: [{ originalPrice: 0, name: "Tofu", currentPrice: 0, id: 2328 }],
-                        name: "Main",
-                        only: 1,
-                        required: 1
-                    }
-                ]
-            },
-            {
-                id: 1,
-                name: "No & Only",
-                type: 1,
-                ingredientClassifyGroupList: [
-                    {
-                        defaultSelect: -1,
-                        free: 0,
-                        id: 6,
-                        ingredientList: [],
-                        name: "No",
-                        only: 0,
-                        required: 0
-                    }, {
-
-                    }
-                ]
-            },
-        ]
-    });
+    const [dataSource, setDataSource] = useState<GoodsDetailsResponse>();
     const [count, setCount] = useState(1)
-
-    const { title, currentPrice, originalPrice, ingredientClassifyGroupList: options } = dataSource;
-    const [defaultOptions, noOnlyOptions] = options;
-    const { ingredientClassifyList: defaultOptionsList } = defaultOptions;
-    const { ingredientClassifyList: noOnlyOptionsList } = noOnlyOptions;
     const authInfo = useAppStore("authInfo");
     const commonInfo = useAppStore("commonInfo");
     const [totalPrice, setTotalPrice] = useState(0)
-    const [basicPrice, setBasicPrice] = useState(currentPrice)
+    const [basicPrice, setBasicPrice] = useState(0)
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
 
+    const dealUseOptionListToBackend = (useOptionList) => {
+        const goodsIngredientList = [];
+        Object.keys(useOptionList).map((item) => {
+            Object.keys(useOptionList[item]).map((el) => {
+                if (useOptionList[item][el].option) {
+                    goodsIngredientList.push(Number(el));
+                }
+            })
+        })
+        return goodsIngredientList
+    }
     const handleChangeGoodsCount = (action) => {
         let goodCount;
         if (action === "plus") {
@@ -93,11 +59,17 @@ const GoodsDetails = (props) => {
         setCount(goodCount);
     }
     const handleClickAddToOrder = async () => {
+        const goodsIngredientList = dealUseOptionListToBackend(useOptionList);
+
+
         const currentShopping = {
             basicPrice,
             count,
             totalPrice,
+            goodsIngredientList
         }
+        console.log("买的啥", currentShopping)
+
         APP_STORE.commonInfo = {
             ...APP_STORE.commonInfo,
             currentShopping
@@ -105,10 +77,10 @@ const GoodsDetails = (props) => {
         if (isLogin(authInfo)) {
             message.success("Successful");
             //添加至购物车
-            await APIAddToCart({ "quantity": 1, "goodsId": 86, "remark": "hello world .", "goodsIngredientList": [1141, 1144, 2132], "shopId": 1 })
+            await APIAddToCart({ "quantity": count, "goodsId": Number(id), "remark": "", "goodsIngredientList": goodsIngredientList, "shopId": Number(shopId) })
             setRefreshHeaderCart(new Date().getTime());
         } else {
-            message.warning("您还未登录，3s后为您跳转登录");
+            message.error("You are not logged in, you will be redirected to log in after 3s");
             setTimeout(() => {
                 history.push("/login")
             }, 3000)
@@ -131,7 +103,7 @@ const GoodsDetails = (props) => {
     useEffect(() => {
         async function ftetchApi() {
             try {
-                const { data } = await APIGoodsDetails({ "id": Number(234) })
+                const { data } = await APIGoodsDetails({ "id": Number(id) })
                 setDataSource(data);
                 setBasicPrice(data.currentPrice);
                 setLoading(false);
@@ -206,10 +178,10 @@ const GoodsDetails = (props) => {
                     <div className="goodsDetails-wrap-product">
                         <div className="goodsDetails-wrap-product-title">
                             <h3>
-                                <span>{title}</span>
+                                <span>{dataSource?.title}</span>
                                 <span>
-                                    <span className="originalPrice">€ {originalPrice}</span>
-                                    € {currentPrice} / portion
+                                    <span className="originalPrice">€ {dataSource?.originalPrice}</span>
+                                    € {dataSource?.currentPrice} / portion
                                     </span>
                             </h3>
                             <div>
@@ -222,7 +194,7 @@ const GoodsDetails = (props) => {
                         </div>
                         <Divider />
                         {
-                            defaultOptionsList?.map((item, index) => {
+                            dataSource?.ingredientClassifyGroupList[0]?.ingredientClassifyList?.map((item, index) => {
                                 if (item.only === 1) { // 单选
                                     return (
                                         <>
@@ -313,7 +285,7 @@ const GoodsDetails = (props) => {
                             })
                         }
                         {
-                            noOnlyOptionsList &&
+                            dataSource?.ingredientClassifyGroupList[1] &&
                             <>
                                 <div className="goodsDetails-wrap-product-noOnly">
                                     <Tooltip title={""}>
@@ -325,7 +297,7 @@ const GoodsDetails = (props) => {
                                     </Tooltip>
                                     <ul>
                                         {
-                                            noOnlyOptionsList[noOnly ? 0 : 1].ingredientList?.map((item, index) => {
+                                            dataSource?.ingredientClassifyGroupList[1]?.ingredientClassifyList[noOnly ? 0 : 1].ingredientList?.map((item, index) => {
                                                 return (
                                                     <li key={item.id}>
                                                         <div className="toppings-title"><h5>{item.name}</h5><span>{item.currentPrice === 0 ? "" : `+ € ${item.currentPrice} `}</span></div>

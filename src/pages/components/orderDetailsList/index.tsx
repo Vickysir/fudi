@@ -58,7 +58,7 @@ const OrderDetailsList = (props: Props) => {
             <Spin spinning={loading}>
                 <ul className="orderDetailsList-wrap-detail">{
                     data?.map((item) => {
-                        const { goods: { currentPrice, title } } = item;
+                        const { goods: { currentPrice, title, ingredientClassify } } = item;
                         return (
                             <li key={item.id}>
                                 <ul>
@@ -68,9 +68,20 @@ const OrderDetailsList = (props: Props) => {
                                 </ul>
                                 <ul>
                                     <li><h3>{title}</h3></li>
-                                    <li><p>Size: 14” - Giant</p></li>
-                                    <li><p>Toppings: Extra Cheese, Sundried tomatoes</p></li>
+                                    {
+                                        ingredientClassify.map((el) => {
+                                            const optionList = [];
+                                            el.ingredientList.map((v) => {
+                                                optionList.push(v.name);
+                                                // TODO free如何计算 currentPrice
+                                            })
+                                            return (
+                                                <li><p>{el.name}: {optionList.join(',')}</p></li>
+                                            )
+                                        })
+                                    }
                                 </ul>
+                                {/* TODO js计算精度的问题 */}
                                 <div>€ {currentPrice * item.quantity}</div>
                             </li>
                         )

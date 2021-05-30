@@ -24,7 +24,7 @@ import { APIGetCartList, APIRemoveCartList, APIUpdateCartList } from '@/pages/ap
 import CartList from '../../antd/popconfirm/CartList'
 
 interface Props extends RouteComponentProps {
-    refreshCart: number
+    refreshCart?: number
 }
 const WebHeader = (props: Props) => {
     const { history, refreshCart } = props;
@@ -105,7 +105,7 @@ const WebHeader = (props: Props) => {
                                 </CartList>
                             </li>
                             <li>
-                                <Badge count={5}>
+                                <Badge count={0}>
                                     <Icon component={iconnott} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
                                 </Badge>
                             </li>

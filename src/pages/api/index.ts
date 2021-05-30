@@ -47,6 +47,7 @@ export const apiPath = {
     "shopInRange": "/shop/in_range/v2", //判断搜索地址是否在配送范围的店铺
     "shopDetail": "/shop/detail/v2",//shop(restaurant) detail
     "categoriesInHomePages": "/goods/classify/list/first/v2",//商品分类：categories in home page ,只返回一级分类
+    "shopGoodsListAll": "/goods/list/all",//返回二级分类，及所有商品
     "goodsSearch": "/goods/search", // shop 页面搜索接口
     "bookTable": "/user/shop_reservation/save", //book table
     "orderSubmit": "/user/order/submit/v3", //book table

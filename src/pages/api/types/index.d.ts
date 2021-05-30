@@ -193,6 +193,60 @@ export interface ShopDetailResponse {
     "startTime": number// 0
     "startTimeFormat": string// "00:00"
     "thumbnail": string//"public/0aff270dd06c4812b32c77b165b5ecf0"
+    "rate": number
+}
+export interface ShopGoodsListAllResponseArray {
+    "secondGoodsClassify":
+    {
+        "activeTimeFormat": string//"00:00:00",
+        "name": string// "Stir Fry",
+        "quietTimeFormat": string// "00:00:00",
+        "goodsList": [
+            {
+                "thumbnail": string//"public/b3136171c5e24941be57d3d872fc318e",
+                "originalPrice": number//9.9,
+                "currentPrice": number//9.9,
+                "id": number//117,
+                "title": string//"Sweet & Sour Chicken"
+            }
+        ],
+        "id": number //133
+    }[]
+    "activeTimeFormat": string// "00:00:00",
+    "name": string//"Main",
+    "quietTimeFormat": string//"00:00:00",
+    "id": number//131
+}
+export interface GoodsDetailsResponse {
+    activeTime: string// "00:00:00"
+    currentPrice: number // 9.9
+    id: number //234
+    onSale: number //1
+    originalPrice: number //9.9
+    quietTime: string//"00:00:00"
+    richtext: string//"public/6c3a636c5a604bf79a11eda411249d98"
+    thumbnail: string//"public/354e965af3db416f8c6df160af1084cf"
+    timeLimit: number //0
+    title: string//"Oyster Stir Fry"
+    ingredientClassifyGroupList: {
+        id: number //1
+        name: string// "default"
+        type: number //0
+        ingredientClassifyList: {
+            defaultSelect: number // -1
+            free: number // 3
+            id: number //10
+            name: string// "Vegetables"
+            only: number // 0
+            required: number // 0
+            ingredientList: {
+                currentPrice: number //0.5
+                id: number //7031
+                name: string//"Red Onions"
+                originalPrice: number // 0.5
+            }[]
+        }[]
+    }[]
 }
 
 export interface EvaluateList {

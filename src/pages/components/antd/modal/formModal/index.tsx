@@ -5,12 +5,13 @@ import moment from 'moment';
 import './index.less'
 import { isLogin } from '@/utils';
 import { useAppStore } from '@/__internal';
+import { APIBookTable } from '@/pages/api/request';
 
 const { TextArea } = Input;
 const { Option } = Select;
 
 const FormModal = (props) => {
-    const { isOpen, isClose } = props;
+    const { isOpen, isClose, shopId } = props;
     const authInfo = useAppStore("authInfo");
 
     const [visible, setvisible] = useState(false)
@@ -23,14 +24,14 @@ const FormModal = (props) => {
     const [isEditForNum, setIsEditForNum] = useState(false)
     const [editForNumValue, setEditForNumValue] = useState(1)
     const [isEditForTime, setIsEditForTime] = useState(false)
-    const [editForTimeValue, setEditForTimeValue] = useState("")
+    const [editForTimeValue, setEditForTimeValue] = useState<number>(moment(new Date()).valueOf())
     const [editForNoteValue, setEditForNoteValue] = useState("")
 
     useEffect(() => {
         setvisible(isOpen);
     }, [isOpen])
 
-    const handleOk = () => {
+    const handleOk = async () => {
         if (editForWhoValue.value === 1) {// for me
             if (!isLogin(authInfo)) return message.error("Book table for yourself, Place login! or Book for Others！")
             setEditForNameValue(authInfo.nickname)
@@ -42,19 +43,26 @@ const FormModal = (props) => {
         if (!editForTimeValue) return message.error("Place input book time !")
 
         const submint = {
-            editForWhoValue,
-            editForNameValue,
-            editForPhoneValue,
-            editForNumValue,
-            editForTimeValue,
-            editForNoteValue
+            "consignee": editForNameValue, //收货人
+            "sex": 0,// 性别
+            "phone": editForPhoneValue, //  电话
+            "peopleNumber": editForNumValue, //
+            "diningTime": editForTimeValue,    // 精确到毫秒 
+            "shopId": shopId,
+            //editForNoteValue
         }
         console.log(submint);
-        setvisible(false);
-        isClose("ok");
+        try {
+            await APIBookTable(submint);
+            setvisible(false);
+            isClose("ok");
+
+        } catch (err) {
+            console.log(err);
+        }
+
     }
     const handleCancel = (e) => {
-        console.log(e);
         setvisible(false);
         isClose("cancel");
     }
@@ -68,6 +76,17 @@ const FormModal = (props) => {
     const handleChangeForWho = (value) => {
         setEditForWhoValue(value)
         setIsEditForWho(false);
+        if (value.value === 1) {// for me
+            if (!isLogin(authInfo)) {
+                setEditForNameValue('')
+                setEditForPhoneValue('')
+                return message.error("Book table for yourself, Place login! or Book for Others！")
+
+            } else {
+                setEditForNameValue(authInfo.nickname)
+                setEditForPhoneValue(authInfo.phone)
+            }
+        }
     }
     const handleEditForName = () => {
         setIsEditForName(true);
@@ -94,8 +113,9 @@ const FormModal = (props) => {
         setIsEditForTime(true);
     }
     const handleChangeForTime = (value) => {
-        console.log(`value`, value)
-        setEditForTimeValue(value)
+        const time = moment(value).valueOf();
+        console.log(`time`, time)
+        setEditForTimeValue(time)
     }
     const handleChangeForNote = (e) => {
         const value = e.target.value;
@@ -106,7 +126,10 @@ const FormModal = (props) => {
 
     function disabledDate(current) {
         // Can not select days before today and today
-        return current && current < moment().endOf('day');
+        // return current && current < moment().endOf('day');
+
+        // 只能选择今天跟今天之后的日期：
+        return current < moment().startOf('day');
     }
     function disabledDateTime() {
         return {
@@ -115,6 +138,15 @@ const FormModal = (props) => {
             disabledSeconds: () => [55, 56],
         };
     }
+    useEffect(() => {
+        if (!isLogin(authInfo)) {
+            setEditForNameValue('')
+            setEditForPhoneValue('')
+        } else {
+            setEditForNameValue(authInfo.nickname)
+            setEditForPhoneValue(authInfo.phone)
+        }
+    }, [])
 
     return (
         <Modal
@@ -234,12 +266,12 @@ const FormModal = (props) => {
                                             onChange={handleChangeForTime}
                                             onOk={() => setIsEditForTime(false)}
                                             disabledDate={disabledDate}
-                                            disabledTime={disabledDateTime}
+                                        // disabledTime={disabledDateTime}
                                         />
                                     </div>
                                     :
                                     <>
-                                        <span>19:00, 21 Jan 2021</span>
+                                        <span>{moment(editForTimeValue).format('"HH:mm, DD MMMM YYYY"').replace(/\"/g, "")}</span>
                                         <div onClick={handleEditForTime}>
                                             <RightOutlined />
                                         </div>

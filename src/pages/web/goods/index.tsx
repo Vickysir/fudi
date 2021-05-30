@@ -16,16 +16,17 @@ import { isLogin } from '@/utils';
 import { APIAddToCart, APIGetCommon, APIGoodsDetails } from '@/pages/api/request';
 import style from '@/styles/theme/icon.less'
 import './index.less'
+import { GoodsDetailsResponse } from '@/pages/api/types';
 
 
 
 const GoodsDetails = (props) => {
-    const { history } = props;
+    const { history, match: { params: { id } } } = props;
     const [loading, setLoading] = useState(true);
     const [noOnly, setNoOnly] = useState(false);
     const [useOptionList, setUseOptionList] = useState({ "ingredientList": {} });
     const [richText, setRichText] = useState('')
-    const [dataSource, setDataSource] = useState({
+    const [dataSource, setDataSource] = useState<GoodsDetailsResponse>({
         title: "Margherita",
         currentPrice: 5,
         richtext: "",
@@ -68,7 +69,7 @@ const GoodsDetails = (props) => {
     });
     const [count, setCount] = useState(1)
 
-    const { title, currentPrice, ingredientClassifyGroupList: options } = dataSource;
+    const { title, currentPrice, originalPrice, ingredientClassifyGroupList: options } = dataSource;
     const [defaultOptions, noOnlyOptions] = options;
     const { ingredientClassifyList: defaultOptionsList } = defaultOptions;
     const { ingredientClassifyList: noOnlyOptionsList } = noOnlyOptions;
@@ -129,31 +130,34 @@ const GoodsDetails = (props) => {
     }
     useEffect(() => {
         async function ftetchApi() {
-
-            const { data } = await APIGoodsDetails({ "id": 234 })
-            setDataSource(data);
-            setBasicPrice(data.currentPrice);
-            setLoading(false);
-            // 设置默认值
-            let _useOptionList = { "ingredientList": {} };
-            data?.ingredientClassifyGroupList[0].ingredientClassifyList.map((item) => {
-                if (item.defaultSelect === -1) return
-                _useOptionList[item.name] = {
-                    [item.defaultSelect]: {
-                        option: true,
-                        price: item.ingredientList.filter((el) => el.id === item.defaultSelect)[0].currentPrice
+            try {
+                const { data } = await APIGoodsDetails({ "id": Number(234) })
+                setDataSource(data);
+                setBasicPrice(data.currentPrice);
+                setLoading(false);
+                // 设置默认值
+                let _useOptionList = { "ingredientList": {} };
+                data?.ingredientClassifyGroupList[0].ingredientClassifyList.map((item) => {
+                    if (item.defaultSelect === -1) return
+                    _useOptionList[item.name] = {
+                        [item.defaultSelect]: {
+                            option: true,
+                            price: item.ingredientList.filter((el) => el.id === item.defaultSelect)[0].currentPrice
+                        }
                     }
-                }
-            })
-            setUseOptionList(_useOptionList);
-
-            APIGetCommon(`${defaultStorage.S3header}${data.richtext}`)
-                .then(function (response) {
-                    return response.text()
                 })
-                .then(function (myJson) {
-                    setRichText(`${myJson}`);
-                });
+                setUseOptionList(_useOptionList);
+
+                APIGetCommon(`${defaultStorage.S3header}${data.richtext}`)
+                    .then(function (response) {
+                        return response.text()
+                    })
+                    .then(function (myJson) {
+                        setRichText(`${myJson}`);
+                    });
+            } catch (err) {
+                console.log(`err`, err)
+            }
         }
         ftetchApi();
 
@@ -197,11 +201,17 @@ const GoodsDetails = (props) => {
                                 <ArrowLeftOutlined />Back to All Dishes
                         </Button>
                         </div>
-                        <div style={{ background: `url(${goodsDetailsBanner})`, backgroundSize: "cover" }}></div>
+                        <div style={{ background: dataSource?.thumbnail ? `url(${defaultStorage.S3header}${dataSource.thumbnail})` : `url(${goodsDetailsBanner})`, backgroundSize: "cover" }}></div>
                     </div>
                     <div className="goodsDetails-wrap-product">
                         <div className="goodsDetails-wrap-product-title">
-                            <h3><span>{title}</span><span>€ {currentPrice} / portion</span></h3>
+                            <h3>
+                                <span>{title}</span>
+                                <span>
+                                    <span className="originalPrice">€ {originalPrice}</span>
+                                    € {currentPrice} / portion
+                                    </span>
+                            </h3>
                             <div>
                                 <img style={{ marginRight: "1rem" }} src={SeasameSeeds} alt="" />
                                 <img style={{ marginRight: "1rem" }} src={Soybeans} alt="" />

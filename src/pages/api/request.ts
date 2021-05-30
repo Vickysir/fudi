@@ -33,6 +33,8 @@ import {
     AddToCartPost,
     UpdateToCartPost,
     DeliveryFeePost,
+    ShopGoodsListAllResponseArray,
+    GoodsDetailsResponse,
 } from './types';
 import { String } from 'aws-sdk/clients/cloudhsm';
 
@@ -175,12 +177,16 @@ export const APITranslatePlaceIdToLocation = async (place_id: string) => {
 export const APIShopDetail = async (params: { id: number }) => {
     return await axios.post<ShopDetailResponse>(apiPath.shopDetail, params)
 }
-//返回 shop 一级商品分类
+//返回 shop 一级商品分类  （暂时不用）
 export const APIShopCategoriesLevelOne = async (params: { shopId: number }) => {
     return await axios.post<ShopCategoriesLevelOneResponseArray[]>(apiPath.categoriesInHomePages, params)
 }
+// 获取shop所有分类及商品
+export const APIShopGoodsListAll = async (params: { shopId: number }) => {
+    return await axios.post<ShopGoodsListAllResponseArray[]>(apiPath.shopGoodsListAll, params)
+}
 // shop页面 搜索
-export const APIGoodsSearch = async (params: { shopId: number, goodsClassifyId: number, title: string }) => {
+export const APIGoodsSearch = async (params: { shopId: number, title: string, goodsClassifyId?: number, }) => {
     return await axios.post(apiPath.goodsSearch, params)
 }
 // bookTable
@@ -193,7 +199,7 @@ export const APIAddToCart = async (params: AddToCartPost) => {
 }
 // 商品详情
 export const APIGoodsDetails = async (params: { id: number }) => {
-    return await axios.post(apiPath.goodsDetails, params)
+    return await axios.post<GoodsDetailsResponse>(apiPath.goodsDetails, params)
 }
 //通用接口
 export const APIGetCommon = async (url: string) => {

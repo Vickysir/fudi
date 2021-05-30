@@ -62,9 +62,9 @@ const OrderDetailsList = (props: Props) => {
                         return (
                             <li key={item.id}>
                                 <ul>
-                                    <li onClick={() => handleChangeGoodsCount("plus", item.id, item.quantity)}>+</li>
+                                    <li style={{ cursor: "pointer" }} onClick={() => handleChangeGoodsCount("plus", item.id, item.quantity)}>+</li>
                                     <li>{item.quantity}</li>
-                                    <li onClick={() => handleChangeGoodsCount("minus", item.id, item.quantity)}>-</li>
+                                    <li style={{ cursor: "pointer" }} onClick={() => handleChangeGoodsCount("minus", item.id, item.quantity)}>-</li>
                                 </ul>
                                 <ul>
                                     <li><h3>{title}</h3></li>

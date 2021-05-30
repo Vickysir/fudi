@@ -1,19 +1,39 @@
 .orderDetailsList-wrap{
+    padding: 1rem 2rem;
+    >h5{
+        font-size: @title20;
+        color: @theme-gray;
+    }
     &-detail{
         min-height: 100px;
         >li{
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
+            margin:2rem 0;
             >ul:first-child{ // 加减数量
-                width: 30%;
+                width: 20%;
                 padding-right: 1.5rem;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                font-size: @title20;
+                color: @theme-color;
+            }
+            >ul:nth-child(2){
+                h3{
+                    font-size: @title20;
+                }
+                p{
+                    font-size: @title16;
+                    color: @theme-gray;
+                    margin:0;
+                }
             }
             >div{
                 width: 15%;
+                font-size: @title20;
+                color: @theme-color;
             }
         }
     }

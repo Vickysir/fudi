@@ -21,6 +21,7 @@ import HelpCenter from "@/pages/web/helpCenter";
 import PersonalCenter from "@/pages/web/personalCenter";
 import Shop from "@/pages/web/shop";
 import GoodsDetails from "@/pages/web/goods";
+import OrderComfirm from "@/pages/web/orderComfirm";
 
 
 
@@ -40,7 +41,7 @@ export function WebRoutes() {
         <Route path="/personalCenter" component={PersonalCenter} />
         <Route path="/shop/:id" component={Shop} />
         <Route path="/goodsdetails/:id/:shopId" component={GoodsDetails} />
-        <Route path="/orderConfirm" component={GoodsDetails} />
+        <Route path="/orderConfirm" component={OrderComfirm} />
     </Router>
 }
 

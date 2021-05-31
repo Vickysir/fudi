@@ -95,7 +95,7 @@ const OrderDetailsList = (props: Props) => {
                     type="primary"
                     block
                     onClick={() => {
-                        // history.push('/orderConfirm')
+                        history.push('/orderConfirm')
                     }}
                 >
                     Confirm Order € {total}

@@ -1,0 +1,34 @@
+.orderComfirm-wrap{
+    width: 56.77%;
+    margin: 0 auto;
+    padding-bottom: 5rem;
+    &-header{
+        margin: 3rem 0;
+    }
+    &-body{
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        >div:nth-child(1){
+            width: 68%;
+            min-height: 800px;
+            border-radius: 1rem;
+            box-shadow: 0 5px 5px 0 @theme-lessGray, 0 0 4px 0 @theme-lessGray;
+            padding: 2rem;
+            >h1{
+                color:@theme-color;
+                font-size: @title37;
+                padding: 1rem 2rem;
+                margin:0;
+            }
+
+        }
+        >div:nth-child(2){
+            width: 30%;
+            min-height: 500px;
+            border-radius: 1rem;
+            box-shadow: 0 5px 5px 0 @theme-lessGray, 0 0 4px 0 @theme-lessGray;
+
+        }
+    }
+}

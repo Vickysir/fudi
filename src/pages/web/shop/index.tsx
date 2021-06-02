@@ -25,9 +25,10 @@ import AddReview from '@/pages/components/antd/modal/formModal';
 import { Link, withRouter } from 'react-router-dom';
 import V_Map from '@/pages/components/map';
 import { APIGoodsSearch, APIShopDetail, APIShopGoodsListAll } from '@/pages/api/request';
-import { openOnlineChat } from '@/utils';
+import { isLogin, openOnlineChat } from '@/utils';
 import { ShopDetailResponse, ShopGoodsListAllResponseArray } from '@/pages/api/types';
 import { defaultStorage } from '@/utils/uploadUseS3';
+import { useAppStore } from '@/__internal';
 
 
 const { Search } = Input;
@@ -43,7 +44,9 @@ const Shop = (props) => {
     const [shopData, setShopData] = useState<ShopDetailResponse>();
     const [goods, setGoods] = useState<ShopGoodsListAllResponseArray[]>();
     const [loading, setLoading] = useState(true);
-    const [isSearch, setIsSearch] = useState(false)
+    const [isSearch, setIsSearch] = useState(false);
+    const authInfo = useAppStore("authInfo");
+
     let timer = null;
 
     const suffix = (
@@ -119,7 +122,16 @@ const Shop = (props) => {
                     </div>
                     <div className="shop-wrap-shopDesc">
                         <div className="shop-wrap-shopDesc-box">
-                            <p className="shop-wrap-shopDesc-book" ><span onClick={() => setisOpen(true)}>Book a table</span></p>
+                            <p className="shop-wrap-shopDesc-book" ><span onClick={() => {
+                                if (!isLogin(authInfo)) {
+                                    message.error("You are not logged in, you will be redirected to log in after 3s");
+                                    setTimeout(() => {
+                                        history.push("/login")
+                                    }, 3000)
+                                    return
+                                }
+                                setisOpen(true)
+                            }}>Book a table</span></p>
                             <h1>{shopData?.name}</h1>
                             <div>
                                 <span style={{ "display": "flex", "alignItems": "center" }}>

@@ -43,6 +43,8 @@ const GoodsDetails = (props) => {
                 }
             })
         })
+        console.log(`goodsIngredientList`, goodsIngredientList);
+
         return goodsIngredientList
     }
     const handleChangeGoodsCount = (action) => {
@@ -90,7 +92,6 @@ const GoodsDetails = (props) => {
         let total = basicPrice;
         Object.keys(useOptionList).map((item) => {
             console.log(`useOptionList`, useOptionList)
-            console.log(`item`, item)
             if (!useOptionList[item]) return;
             for (let i in useOptionList[item]) {
                 if (useOptionList[item][i].option) {
@@ -110,6 +111,7 @@ const GoodsDetails = (props) => {
                 // 设置默认值
                 let _useOptionList = { "ingredientList": {} };
                 data?.ingredientClassifyGroupList[0].ingredientClassifyList.map((item) => {
+                    _useOptionList = Object.assign(_useOptionList, { [item.name]: {} })
                     if (item.defaultSelect === -1) return
                     _useOptionList[item.name] = {
                         [item.defaultSelect]: {
@@ -118,6 +120,8 @@ const GoodsDetails = (props) => {
                         }
                     }
                 })
+                console.log(`_useOptionList`, _useOptionList);
+
                 setUseOptionList(_useOptionList);
 
                 APIGetCommon(`${defaultStorage.S3header}${data.richtext}`)
@@ -239,10 +243,10 @@ const GoodsDetails = (props) => {
                                     return (
                                         <>
                                             <div className="goodsDetails-wrap-product-toppings">
-                                                <Tooltip title={item.free > 0 ? `The first ${item.free} options are free` : ""}>
+                                                <Tooltip title={item.free > 0 ? `The first any ${item.free} options are free` : ""}>
                                                     <h3>
                                                         {item.name}
-                                                        <span className=""> {item.free > 0 ? `( The first ${item.free} options are free )` : ""}</span>
+                                                        <span className=""> {item.free > 0 ? `( The first any ${item.free} options are free )` : ""}</span>
                                                     </h3>
                                                 </Tooltip>
                                                 <ul>
@@ -264,7 +268,7 @@ const GoodsDetails = (props) => {
                                                                                             ...useOptionList[item.name],
                                                                                             [el.id]: {
                                                                                                 option: useOptionList[item.name] && useOptionList[item.name][el.id]?.option ? false : true,
-                                                                                                price: index < item.free ? 0 : el.currentPrice
+                                                                                                price: index < item.free ? 0 : el.currentPrice,
                                                                                             }
                                                                                         }
                                                                                     }

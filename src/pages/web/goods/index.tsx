@@ -8,6 +8,7 @@ import Molluscs from '@/assets/images/common/imgs/goodsDetails3-Molluscs.svg'
 import Crustaceans from '@/assets/images/common/imgs/goodsDetails4-Crustaceans.svg'
 import goodsDetailsBanner from '@/assets/images/fudi/goodsDetails-banner.png';
 import { defaultStorage } from '@/utils/uploadUseS3';
+import _ from 'lodash'
 
 import { Button, Divider, message, Spin, Switch, Tooltip } from 'antd';
 import { withRouter } from 'react-router';
@@ -24,7 +25,7 @@ const GoodsDetails = (props) => {
     const { history, match: { params: { id, shopId } } } = props;
     const [loading, setLoading] = useState(true);
     const [noOnly, setNoOnly] = useState(false);
-    const [useOptionList, setUseOptionList] = useState({ "ingredientList": {} });
+    const [useOptionList, setUseOptionList] = useState({ "ingredientList": [] });
     const [richText, setRichText] = useState('')
     const [dataSource, setDataSource] = useState<GoodsDetailsResponse>();
     const [count, setCount] = useState(1)
@@ -37,14 +38,10 @@ const GoodsDetails = (props) => {
     const dealUseOptionListToBackend = (useOptionList) => {
         const goodsIngredientList = [];
         Object.keys(useOptionList).map((item) => {
-            Object.keys(useOptionList[item]).map((el) => {
-                if (useOptionList[item][el].option) {
-                    goodsIngredientList.push(Number(el));
-                }
+            useOptionList[item].map((el) => {
+                goodsIngredientList.push(Number(el.id));
             })
         })
-        console.log(`goodsIngredientList`, goodsIngredientList);
-
         return goodsIngredientList
     }
     const handleChangeGoodsCount = (action) => {
@@ -91,34 +88,33 @@ const GoodsDetails = (props) => {
     const calculatTotal = () => {
         let total = basicPrice;
         Object.keys(useOptionList).map((item) => {
-            console.log(`useOptionList`, useOptionList)
             if (!useOptionList[item]) return;
-            for (let i in useOptionList[item]) {
-                if (useOptionList[item][i].option) {
-                    total = total + useOptionList[item][i].price
-                }
-            }
+
+            useOptionList[item]?.map((el) => {
+                total = total + el.price
+
+            })
+
         })
         setTotalPrice(total * count)
     }
     useEffect(() => {
         async function ftetchApi() {
             try {
+                // const { data } = await APIGoodsDetails({ "id": Number(234) })
                 const { data } = await APIGoodsDetails({ "id": Number(id) })
                 setDataSource(data);
                 setBasicPrice(data.currentPrice);
                 setLoading(false);
                 // 设置默认值
-                let _useOptionList = { "ingredientList": {} };
+                let _useOptionList = { "ingredientList": [] };
                 data?.ingredientClassifyGroupList[0].ingredientClassifyList.map((item) => {
-                    _useOptionList = Object.assign(_useOptionList, { [item.name]: {} })
+                    _useOptionList = Object.assign(_useOptionList, { [item.name]: [] })
                     if (item.defaultSelect === -1) return
-                    _useOptionList[item.name] = {
-                        [item.defaultSelect]: {
-                            option: true,
-                            price: item.ingredientList.filter((el) => el.id === item.defaultSelect)[0].currentPrice
-                        }
-                    }
+                    _useOptionList[item.name].push({
+                        id: item.defaultSelect,
+                        price: item.ingredientList.filter((el) => el.id === item.defaultSelect)[0].currentPrice
+                    })
                 })
                 console.log(`_useOptionList`, _useOptionList);
 
@@ -149,16 +145,16 @@ const GoodsDetails = (props) => {
         required: number,
         only: number,
         defaultSelect: number
-    }, el: {
-        currentPrice: number
-        id: number
-        name: string
-        originalPrice: number
-    }) => {
+    }, arr: any[]) => {
         // 是否必选
-        if (useOptionList[item.name] && useOptionList[item.name][el.id] && item.required) {
-            const res = Object.keys(useOptionList[item.name][el.id]).filter((i) => i.option)
-            if (res.length === 0) return message.error("Place choose at least one option")
+        if (item.required) {
+            const res = arr.length; // 用户选择的list
+            if (res === 0) {
+                message.error("Place choose at least one option")
+                return true
+            } else {
+                return false
+            }
         }
     }
     return (
@@ -213,18 +209,24 @@ const GoodsDetails = (props) => {
                                                                 <Button
                                                                     key={el.id}
                                                                     className="goodsDetails-wrap-product-size-style"
-                                                                    type={useOptionList[item.name] && useOptionList[item.name][el.id]?.option ? "primary" : null}
+                                                                    type={useOptionList[item.name] && _.findIndex(useOptionList[item.name], ['id', el.id]) !== -1 ? "primary" : null}
                                                                     onClick={() => {
-                                                                        chooseAtLeast(item, el);
+                                                                        let arr = useOptionList[item.name];
+                                                                        const index = _.findIndex(arr, ['id', el.id]);
+                                                                        if (index == -1) {
+                                                                            arr = [];
+                                                                            arr.push({
+                                                                                id: el.id,
+                                                                                price: el.currentPrice
+                                                                            })
+                                                                        } else {
+                                                                            arr.splice(index, 1);
+                                                                        }
+                                                                        if (chooseAtLeast(item, arr)) return;
                                                                         setUseOptionList(
                                                                             {
                                                                                 ...useOptionList,
-                                                                                [item.name]: {
-                                                                                    [el.id]: {
-                                                                                        option: useOptionList[item.name] && useOptionList[item.name][el.id]?.option ? false : true,
-                                                                                        price: el.currentPrice
-                                                                                    }
-                                                                                }
+                                                                                [item.name]: arr
                                                                             }
                                                                         )
                                                                     }}
@@ -257,20 +259,26 @@ const GoodsDetails = (props) => {
                                                                     <div className={`toppings-title`}><h5>{el.name}</h5><span>{el.currentPrice === 0 ? "" : `+ € ${el.currentPrice} `}</span></div>
                                                                     <div>
                                                                         <CheckOutlined
-                                                                            className={useOptionList[item.name] && useOptionList[item.name][el.id]?.option ? style.themeColor : ""}
+                                                                            className={useOptionList[item.name] && useOptionList[item.name].length > 0 && _.findIndex(useOptionList[item.name], ['id', el.id]) !== -1 ? style.themeColor : ""}
                                                                             onClick={() => {
-                                                                                chooseAtLeast(item, el)
-                                                                                message.success(useOptionList[item.name] && useOptionList[item.name][el.id]?.option ? `- ${item.name}, total: € ${totalPrice - (index < item.free ? 0 : el.currentPrice)}` : `+ ${item.name}, total: € ${totalPrice + (index < item.free ? 0 : el.currentPrice)}`)
+
+                                                                                let arr = useOptionList[item.name];
+                                                                                const index = _.findIndex(arr, ['id', el.id]);
+                                                                                if (index == -1) {
+                                                                                    arr.push({
+                                                                                        id: el.id,
+                                                                                        price: arr.length < item.free ? 0 : el.currentPrice,
+                                                                                    })
+                                                                                } else {
+                                                                                    arr.splice(index, 1);
+                                                                                }
+                                                                                if (chooseAtLeast(item, arr)) return;
+                                                                                // message.success(_.findIndex(useOptionList[item.name], ['id', el.id]) == -1 ? `- ${item.name}:${el.name}, total: € ${totalPrice - (arr.length <= item.free ? 0 : el.currentPrice)}` : `+ ${item.name}:${el.name}, total: € ${totalPrice + (arr.length <= item.free ? 0 : el.currentPrice)}`)
+
                                                                                 setUseOptionList(
                                                                                     {
                                                                                         ...useOptionList,
-                                                                                        [item.name]: {
-                                                                                            ...useOptionList[item.name],
-                                                                                            [el.id]: {
-                                                                                                option: useOptionList[item.name] && useOptionList[item.name][el.id]?.option ? false : true,
-                                                                                                price: index < item.free ? 0 : el.currentPrice,
-                                                                                            }
-                                                                                        }
+                                                                                        [item.name]: arr
                                                                                     }
                                                                                 )
                                                                             }}
@@ -295,7 +303,7 @@ const GoodsDetails = (props) => {
                                     <Tooltip title={""}>
                                         <h3>Ingredient <Switch checkedChildren="only" unCheckedChildren="no" defaultChecked
                                             onChange={(value) => {
-                                                setUseOptionList({ ...useOptionList, "ingredientList": {} })
+                                                setUseOptionList({ ...useOptionList, "ingredientList": [] })
                                                 setNoOnly(value)
                                             }} /></h3>
                                     </Tooltip>
@@ -307,20 +315,22 @@ const GoodsDetails = (props) => {
                                                         <div className="toppings-title"><h5>{item.name}</h5><span>{item.currentPrice === 0 ? "" : `+ € ${item.currentPrice} `}</span></div>
                                                         <div>
                                                             <CheckOutlined
-                                                                className={useOptionList?.ingredientList[item.id]?.option ? style.themeColor : ""}
+                                                                className={_.findIndex(useOptionList?.ingredientList, ['id', item.id]) !== -1 ? style.themeColor : ""}
                                                                 onClick={() => {
-                                                                    chooseAtLeast(useOptionList, item);
-                                                                    message.success(useOptionList.ingredientList[item.id]?.option ? `- ${item.name}, total: € ${totalPrice - item.currentPrice}` : `+ ${item.name}, total: € ${totalPrice + item.currentPrice}`)
+                                                                    let arr = useOptionList.ingredientList;
+                                                                    const index = _.findIndex(arr, ['id', item.id]);
+                                                                    if (index == -1) {
+                                                                        arr.push({
+                                                                            id: item.id,
+                                                                            price: arr.length < dataSource?.ingredientClassifyGroupList[1]?.ingredientClassifyList[noOnly ? 0 : 1].free ? 0 : item.currentPrice,
+                                                                        })
+                                                                    } else {
+                                                                        arr.splice(index, 1);
+                                                                    }
                                                                     setUseOptionList(
                                                                         {
                                                                             ...useOptionList,
-                                                                            "ingredientList": {
-                                                                                ...useOptionList.ingredientList,
-                                                                                [item.id]: {
-                                                                                    option: useOptionList.ingredientList[item.id]?.option ? false : true,
-                                                                                    price: index < useOptionList.free ? 0 : item.currentPrice
-                                                                                }
-                                                                            }
+                                                                            "ingredientList": arr
                                                                         }
                                                                     )
                                                                 }}

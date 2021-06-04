@@ -18,9 +18,15 @@ import { APIAddToCart, APIGetCommon, APIGoodsDetails } from '@/pages/api/request
 import style from '@/styles/theme/icon.less'
 import './index.less'
 import { GoodsDetailsResponse } from '@/pages/api/types';
+import { create, all } from 'mathjs'
 
 
 
+const config = {
+    number: 'BigNumber',
+    precision: 20
+}
+const math = create(all, config)
 const GoodsDetails = (props) => {
     const { history, match: { params: { id, shopId } } } = props;
     const [loading, setLoading] = useState(true);
@@ -31,7 +37,7 @@ const GoodsDetails = (props) => {
     const [count, setCount] = useState(1)
     const authInfo = useAppStore("authInfo");
     const commonInfo = useAppStore("commonInfo");
-    const [totalPrice, setTotalPrice] = useState(0)
+    const [totalPrice, setTotalPrice] = useState("0")
     const [basicPrice, setBasicPrice] = useState(0)
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
 
@@ -86,17 +92,18 @@ const GoodsDetails = (props) => {
         }
     }
     const calculatTotal = () => {
-        let total = basicPrice;
+        let total = String(basicPrice);
         Object.keys(useOptionList).map((item) => {
             if (!useOptionList[item]) return;
 
             useOptionList[item]?.map((el) => {
-                total = total + el.price
+                total = math.format(math.chain(math.bignumber(total)).add(math.bignumber(el.price)).done());
 
             })
 
         })
-        setTotalPrice(total * count)
+        const price = math.format(math.chain(math.bignumber(total)).multiply(math.bignumber(count)).done());
+        setTotalPrice(price)
     }
     useEffect(() => {
         async function ftetchApi() {

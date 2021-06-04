@@ -3,14 +3,20 @@ import { message, Spin } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import RoundButton from '../antd/button'
+import { create, all } from 'mathjs'
 import './index.less'
 
+const config = {
+    number: 'BigNumber',
+    precision: 20
+}
+const math = create(all, config)
 interface Props extends RouteComponentProps {
     refreshHeader: () => void
 }
 const OrderDetailsList = (props: Props) => {
     const { refreshHeader, history } = props;
-    const [total, setTotal] = useState(0);
+    const [total, setTotal] = useState("0");
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     const handleChangeGoodsCount = async (action, id, count) => {
@@ -36,9 +42,11 @@ const OrderDetailsList = (props: Props) => {
     }
 
     const caculateTotal = (data) => {
-        let totlePrice = 0;
+        let totlePrice = "0";
         data?.map((item) => {
-            totlePrice += (item.quantity * item.goods.currentPrice)
+            const total = math.format(math.chain(math.bignumber(item.goods.currentPrice)).multiply(math.bignumber(item.quantity)).done());
+            totlePrice = math.format(math.chain(math.bignumber(totlePrice)).add(math.bignumber(total)).done());
+
         })
         setTotal(totlePrice)
     }
@@ -78,9 +86,9 @@ const OrderDetailsList = (props: Props) => {
                                                 optionList.push(v.name);
                                                 // free option 计算 currentPrice
                                                 if (index < freeOption) {
-                                                    price = price + 0;
+                                                    price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(0)).done());
                                                 } else {
-                                                    price = price + v.currentPrice
+                                                    price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(v.currentPrice)).done());
                                                 }
                                             })
                                             return (
@@ -89,8 +97,7 @@ const OrderDetailsList = (props: Props) => {
                                         })
                                     }
                                 </ul>
-                                {/* TODO js计算精度的问题 */}
-                                <div>€ {price * item.quantity}</div>
+                                <div>€ {math.format(math.chain(math.bignumber(price)).multiply(math.bignumber(item.quantity)).done())}</div>
                             </li>
                         )
                     })

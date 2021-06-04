@@ -52,6 +52,7 @@ const OrderDetailsList = (props: Props) => {
     useEffect(() => {
         fetchData();
     }, [])
+
     return (
         <div className="orderDetailsList-wrap">
             <h5>Order Detials</h5>
@@ -59,6 +60,7 @@ const OrderDetailsList = (props: Props) => {
                 <ul className="orderDetailsList-wrap-detail">{
                     data?.map((item) => {
                         const { goods: { currentPrice, title, ingredientClassify } } = item;
+                        let price = currentPrice;
                         return (
                             <li key={item.id}>
                                 <ul>
@@ -71,9 +73,15 @@ const OrderDetailsList = (props: Props) => {
                                     {
                                         ingredientClassify.map((el) => {
                                             const optionList = [];
-                                            el.ingredientList.map((v) => {
+                                            const freeOption = el.free;
+                                            el.ingredientList.map((v, index) => {
                                                 optionList.push(v.name);
-                                                // TODO free如何计算 currentPrice
+                                                // free option 计算 currentPrice
+                                                if (index < freeOption) {
+                                                    price = price + 0;
+                                                } else {
+                                                    price = price + v.currentPrice
+                                                }
                                             })
                                             return (
                                                 <li><p>{el.name}: {optionList.join(',')}</p></li>
@@ -82,7 +90,7 @@ const OrderDetailsList = (props: Props) => {
                                     }
                                 </ul>
                                 {/* TODO js计算精度的问题 */}
-                                <div>€ {currentPrice * item.quantity}</div>
+                                <div>€ {price * item.quantity}</div>
                             </li>
                         )
                     })

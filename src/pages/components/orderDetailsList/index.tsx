@@ -13,9 +13,11 @@ const config = {
 const math = create(all, config)
 interface Props extends RouteComponentProps {
     refreshHeader: () => void
+    comfirmBtn?: boolean
+    orderListPrice?: (total: string) => void
 }
 const OrderDetailsList = (props: Props) => {
-    const { refreshHeader, history } = props;
+    const { refreshHeader, comfirmBtn = true, orderListPrice, history } = props;
     const [total, setTotal] = useState("0");
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -48,7 +50,8 @@ const OrderDetailsList = (props: Props) => {
             totlePrice = math.format(math.chain(math.bignumber(totlePrice)).add(math.bignumber(total)).done());
 
         })
-        setTotal(totlePrice)
+        setTotal(totlePrice);
+        orderListPrice(totlePrice);
     }
 
     const fetchData = async () => {
@@ -104,18 +107,21 @@ const OrderDetailsList = (props: Props) => {
                 }
                 </ul>
             </Spin>
-            <div>
-                <RoundButton
-                    disabled={data.length === 0}
-                    type="primary"
-                    block
-                    onClick={() => {
-                        history.push('/orderConfirm')
-                    }}
-                >
-                    Confirm Order € {total}
-                </RoundButton>
-            </div>
+            {
+                comfirmBtn && <div>
+                    <RoundButton
+                        disabled={data.length === 0}
+                        type="primary"
+                        block
+                        onClick={() => {
+                            history.push('/orderConfirm')
+                        }}
+                    >
+                        Confirm Order € {total}
+                    </RoundButton>
+                </div>
+            }
+
         </div>
     )
 }

@@ -12,11 +12,16 @@ import RoundButton from '@/pages/components/antd/button';
 
 const OrderComfirm = () => {
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
+    const [total, setTotal] = useState("0");
     const [form] = Form.useForm();
 
 
     const fetchData = async () => {
         setRefreshHeaderCart(new Date().getTime())
+    }
+
+    const getOrderListPrice = (total) => {
+        setTotal(total)
     }
     return (
         <div>
@@ -35,7 +40,7 @@ const OrderComfirm = () => {
                 <div className="orderComfirm-wrap-body">
                     <div>
                         <h1>Confirm Order</h1>
-                        <OrderDetailsList refreshHeader={fetchData} />
+                        <OrderDetailsList refreshHeader={fetchData} comfirmBtn={false} orderListPrice={getOrderListPrice} />
                         <Form
                             form={form}
                             layout="vertical"
@@ -78,7 +83,7 @@ const OrderComfirm = () => {
                                     }}
                                     style={{ marginTop: "4rem" }}
                                 >
-                                    Pay Now € 118
+                                    Pay Now € {total}
                                 </RoundButton>
                             </Form.Item>
                         </Form>

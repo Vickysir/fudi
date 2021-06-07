@@ -9,11 +9,14 @@ import './index.less'
 import { APIGetCartList } from '@/pages/api/request';
 import TextArea from 'antd/lib/input/TextArea';
 import RoundButton from '@/pages/components/antd/button';
+import DeliveryCom from './delivery';
+import CollectCom from './collect';
 
 const OrderComfirm = () => {
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
     const [total, setTotal] = useState("0");
     const [form] = Form.useForm();
+    const type = 2;
 
 
     const fetchData = async () => {
@@ -88,7 +91,11 @@ const OrderComfirm = () => {
                             </Form.Item>
                         </Form>
                     </div>
-                    <div></div>
+                    <div>
+                        {
+                            type === 1 ? <DeliveryCom /> : <CollectCom />
+                        }
+                    </div>
                 </div>
             </div>
             <WebFooter />

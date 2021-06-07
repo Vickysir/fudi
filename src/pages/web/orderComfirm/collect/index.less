@@ -1,0 +1,28 @@
+.orderComfirmType-wrap{
+    width: 100%;
+    height: 100%;
+    &-restaurant{
+        padding: 2rem;
+        h5{
+            font-size: @title18;
+            color: @theme-gray;
+        }
+        h3{
+            font-size: @title20;
+            color: @theme-black;
+        }
+        >ul{
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            >li:nth-child(1){
+                width: 20%;
+            }
+            >li:nth-child(2){
+                h3,h5{
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

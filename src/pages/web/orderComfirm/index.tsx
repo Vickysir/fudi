@@ -16,7 +16,9 @@ const OrderComfirm = () => {
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
     const [total, setTotal] = useState("0");
     const [form] = Form.useForm();
+    //TODO 从localStorage里面取
     const type = 2;
+    const shopId = 1;
 
 
     const fetchData = async () => {
@@ -83,6 +85,8 @@ const OrderComfirm = () => {
                                     type="primary"
                                     block
                                     onClick={() => {
+                                        // TODO payment 为现金直接下单
+                                        // TODO payment 为online ,需要填写银行卡
                                     }}
                                     style={{ marginTop: "4rem" }}
                                 >
@@ -93,7 +97,7 @@ const OrderComfirm = () => {
                     </div>
                     <div>
                         {
-                            type === 1 ? <DeliveryCom /> : <CollectCom />
+                            type === 1 ? <DeliveryCom /> : <CollectCom shopId={shopId} />
                         }
                     </div>
                 </div>

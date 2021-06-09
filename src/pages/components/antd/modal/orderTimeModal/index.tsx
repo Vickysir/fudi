@@ -9,7 +9,6 @@ import {
   PhoneOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
-import "./index.less";
 import { isLogin } from "@/utils";
 import { useAppStore } from "@/__internal";
 import { APIBookTable } from "@/pages/api/request";
@@ -81,7 +80,7 @@ const OrderTimeModal = (props) => {
       disabledSeconds: () => [55, 56],
     };
   }
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   return (
     <Modal visible={visible} onCancel={handleCancel} footer={null}>
@@ -106,7 +105,7 @@ const OrderTimeModal = (props) => {
                     onChange={handleChangeForTime}
                     onOk={() => setIsEditForTime(false)}
                     disabledDate={disabledDate}
-                    // disabledTime={disabledDateTime}
+                  // disabledTime={disabledDateTime}
                   />
                 </div>
               ) : (

@@ -8,7 +8,6 @@ import {
   PhoneOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
-import "./index.less";
 import { isLogin } from "@/utils";
 import { useAppStore } from "@/__internal";
 import { APIBookTable } from "@/pages/api/request";

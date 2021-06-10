@@ -77,7 +77,6 @@ const OrderComfirm = () => {
                                             <Radio.Button value="b">Card</Radio.Button>
                                         </Radio.Group>
                                     </Form.Item>
-                                    // TODO
                                     <span>+ Add Voucher</span>
                                 </Row>
                             </Form.Item>

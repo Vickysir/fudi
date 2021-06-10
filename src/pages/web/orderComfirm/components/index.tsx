@@ -6,6 +6,7 @@ import Icon, {
 } from "@ant-design/icons";
 import iconEdit from "@/assets/images/common/icon/icon-edit.svg";
 import OrderForModal from "@/pages/components/antd/modal/orderForModal";
+import OrderTimeModal from "@/pages/components/antd/modal/orderTimeModal";
 
 import style from "@/styles/theme/icon.less";
 import "./index.less";
@@ -14,10 +15,14 @@ interface Props {
   type: string;
 }
 const OrderMethod = (props: Props) => {
-  const [isOpen, setisOpen] = useState(false);
+  const [isOrderForModal, setisOrderForModal] = useState(false);
+  const [isOpenOrderTimeModal, setisOpenOrderTimeModal] = useState(false);
   const { type } = props;
-  const addReviewClose = () => {
-    setisOpen(false);
+  const orderForModalClose = () => {
+    setisOrderForModal(false);
+  };
+  const orderTimeModalClose = () => {
+    setisOpenOrderTimeModal(false);
   };
   return (
     <div className="orderMethod-wrap">
@@ -32,7 +37,11 @@ const OrderMethod = (props: Props) => {
                 </span>
                 <p>19:00</p>
               </div>
-              <span>
+              <span
+                onClick={() => {
+                  setisOpenOrderTimeModal(true);
+                }}
+              >
                 <Icon
                   component={iconEdit}
                   className={` ${style.iconFill}`}
@@ -54,7 +63,7 @@ const OrderMethod = (props: Props) => {
               </div>
               <span
                 onClick={() => {
-                  setisOpen(true);
+                  setisOrderForModal(true);
                 }}
               >
                 <Icon
@@ -126,8 +135,13 @@ const OrderMethod = (props: Props) => {
         </>
       )}
       <OrderForModal
-        isOpen={isOpen}
-        isClose={addReviewClose}
+        isOpen={isOrderForModal}
+        isClose={orderForModalClose}
+        shopId={Number(1)}
+      />
+      <OrderTimeModal
+        isOpen={isOpenOrderTimeModal}
+        isClose={orderTimeModalClose}
         shopId={Number(1)}
       />
     </div>

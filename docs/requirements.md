@@ -72,3 +72,22 @@ googlemaplist
 - book table 接口 ✅
 - goods detail 接口  ✅
 - 添加购物车接口
+
+
+### 2021-06-10 二期调整
+- goods页面，标题一行，价格一行
+- good 的价格计算保证准确
+- shop 页面商品排列可能太挤
+- shop 页面search有问题 【bug】
+- banner 图片 重复问题
+- header 用户icon
+- 第三方登录，在用户未绑定手机号时，中断操作后，发现已经登录【bug】
+- 第三方授权登录，set手机号的时候，understand
+- 购物车 Change to Collection 去掉
+
+
+### 2021-06-13 讨论主题
+- 下单规则
+- 优惠券规则
+- 接口核对
+- 订单允许评论

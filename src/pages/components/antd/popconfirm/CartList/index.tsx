@@ -14,7 +14,7 @@ const CartList = (props: Props) => {
     const title = (
         <div className="cartList-title">
             <h3>My Basket</h3>
-            <h5>Change to Collection</h5>
+            {/* <h5>Change to Collection</h5> */}
         </div>
     )
     return (

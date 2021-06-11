@@ -90,20 +90,24 @@ const GoodsDetails = (props) => {
                 history.push("/login")
             }, 3000)
         }
-    }
+	}
+	// TODO 待写测试用例
     const calculatTotal = () => {
-        let total = String(basicPrice);
-        Object.keys(useOptionList).map((item) => {
-            if (!useOptionList[item]) return;
+        // 裸价
+		let total = String(basicPrice);
+		Object.keys(useOptionList).map((item) => {
+			if (!useOptionList[item]) return;
 
-            useOptionList[item]?.map((el) => {
-                total = math.format(math.chain(math.bignumber(total)).add(math.bignumber(el.price)).done());
+			useOptionList[item]?.map((el) => {
+				// 商品单价 = 裸价 + 附加的option 价格
+				total = math.format(math.chain(math.bignumber(total)).add(math.bignumber(el.price)).done());
 
-            })
+			})
 
-        })
-        const price = math.format(math.chain(math.bignumber(total)).multiply(math.bignumber(count)).done());
-        setTotalPrice(price)
+		})
+		// 总价 = 商品单价 * 商品数量
+		const price = math.format(math.chain(math.bignumber(total)).multiply(math.bignumber(count)).done());
+		setTotalPrice(price)
     }
     useEffect(() => {
         async function ftetchApi() {
@@ -186,17 +190,20 @@ const GoodsDetails = (props) => {
                         <div className="goodsDetails-wrap-product-title">
                             <h3>
                                 <span>{dataSource?.title}</span>
-                                <span>
+                            </h3>
+							<div>
+								<span>
                                     <span className="originalPrice">€ {dataSource?.originalPrice}</span>
                                     € {dataSource?.currentPrice} / portion
-                                    </span>
-                            </h3>
-                            <div>
+                                </span>
+							</div>
+							{/* 一排 小 icon */}
+                            {/* <div>
                                 <img style={{ marginRight: "1rem" }} src={SeasameSeeds} alt="" />
                                 <img style={{ marginRight: "1rem" }} src={Soybeans} alt="" />
                                 <img style={{ marginRight: "1rem" }} src={Molluscs} alt="" />
                                 <img style={{ marginRight: "1rem" }} src={Crustaceans} alt="" />
-                            </div>
+                            </div> */}
                             <div dangerouslySetInnerHTML={{ __html: `${richText}` }} ></div>
                         </div>
                         <Divider />

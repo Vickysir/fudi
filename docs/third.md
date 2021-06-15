@@ -32,7 +32,7 @@
 <div style="color:red">购物车随着用户选择的店铺切换？如果用户未选择，则不显示购物车？</div>
 <br>
 
-### header 通知 list
+### header 通知 list【 隐藏 】
 
 <br>
 <div style="color:green">接口文档：</div>
@@ -57,10 +57,12 @@
 <br>
 <div style="color:green">接口文档：</div>
 
-    - 获取购物车内容  /user/cart/list/v3
+    - 获取购物车内容  /user/cart/list/v3 ❎  preview v4
     - 根据 type = deliver、collect，展示右侧的相关信息
     - delivery fee  /user/order/freight_price/v3
-    - 修改联系人，获取联系人列表
+    - delivery 地址 是用户在homepage 输入的地址
+    - 配送时间（当前时间往后延一个小时，必须要在营业时间范围内。不在营业范围之类，只能立刻送 ）
+    - 修改联系人，获取联系人列表 
     - 优惠券列表 /user/order/coupon/list/v2
     - 添加优惠券 /user/order/coupon/obtain/v2
     - 在线支付 /user/order/payment/online
@@ -68,7 +70,7 @@
 
 <div style="color:green">交互</div>
 
-    - 左侧订单详情，可支持增删商品数量，并计算好总价显示
+    - 左侧订单详情 仅展示
     - 右侧信息
         - 地图查看位置
         - 修改时间
@@ -76,7 +78,7 @@
         - 修改order option
     - 点击+ Add Voucher，添加优惠券
     - Payment Method，二选一
-        - 现金
+        - 现金 （默认）
             - 点击pay now ，下单，下单成功
         - 银行卡
             - 点击pay now 下单
@@ -101,8 +103,9 @@
 
 <div style="color:green">接口文档：</div>
 
+    - 获取order详情 /user/order/list/v3
     - 获取order详情 /user/order/detail/v3
-    - 实时获取消息的socket websocket/position/subscribe?userOrderId={{userOrderId}}
+    - 实时获取消息的socket websocket/position/subscribe?userOrderId={{userOrderId}} 【先不做】
     - 添加评论接口
 
 <div style="color:green">交互</div>
@@ -110,15 +113,15 @@
     - 点击详情
         - 根据api渲染order详情
         - 根据socket实时渲染位置信息
-    - 点击Add a Review
+    - 点击Add a Review 状态为4的时候可评论
         - 添加评论
-    - Repeat Order
+    - Repeat Order 【删除】
 
 <div style="color:red">Repeat Order怎么做？</div>
 <div style="color:red">添加评论接口？</div>
 <br>
 
-### 个人中心-通知
+### 个人中心-通知 【隐藏】
 
 <div style="color:green">接口文档：</div>
 

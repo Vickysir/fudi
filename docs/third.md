@@ -2,21 +2,22 @@
 
 <br>
 
-- [header购物车list](#header购物车list)<br>
-- [header通知list](#header通知list)<br>
+- [header 购物车 list](#header购物车list)<br>
+- [header 通知 list](#header通知list)<br>
 - [确认订单](#确认订单)<br>
 - [个人中心-订单](#个人中心-订单)<br>
 - [个人中心-通知](#个人中心-通知)<br>
 - [主题色](#主题色)<br>
 
-### header购物车list
+### header 购物车 list
+
 <br>
 <div style="color:green">接口文档：</div>
 
-
     - 获取购物车 /user/cart/list/v3
-    - 修改购物车，商品商量 /user/cart/update/quantity/v2 
-    - 删除购物车 商品 /user/cart/remove/v2 
+    - 修改购物车，商品商量 /user/cart/update/quantity/v2
+    - 删除购物车 商品 /user/cart/remove/v2
+
 <br>
 
 <div style="color:green">购物车交互</div>
@@ -27,17 +28,17 @@
         - 点击Confirm Order 跳转到 确认订单页面
         - change to collecttion
 
-
-<div style="color:red">点击change to collecttion，接下来交互是什么？</div>
+<div style="color:red">点击change to collecttion，接下来交互是什么？【删掉】</div>
+<div style="color:red">购物车随着用户选择的店铺切换？如果用户未选择，则不显示购物车？</div>
 <br>
 
-### header通知list
+### header 通知 list
+
 <br>
 <div style="color:green">接口文档：</div>
 
     - 获取消息内容api
     - 实时获取消息的socket
-
 
 <div style="color:green">交互</div>
 
@@ -52,6 +53,7 @@
 <br>
 
 ### 确认订单
+
 <br>
 <div style="color:green">接口文档：</div>
 
@@ -63,9 +65,6 @@
     - 添加优惠券 /user/order/coupon/obtain/v2
     - 在线支付 /user/order/payment/online
     - 下单 /user/order/submit/v3
-
-
-
 
 <div style="color:green">交互</div>
 
@@ -80,22 +79,24 @@
         - 现金
             - 点击pay now ，下单，下单成功
         - 银行卡
-            - 点击pay now 下单 
+            - 点击pay now 下单
                 - 获得订单号
                 - 添加银行卡完成，comfirm,支付成功
-    
-    
+
+
     - 下单
         - 下单成功，清空购物车，回到首页
 
 <div style="color:red">确认一下接口文档和交互</div>
+<div style="color:red">右侧信息，type是在homePage搜索的时候保存的吗？</div>
 <div style="color:red">Order Option 的list是什么？</div>
 <div style="color:red">Payment Method默认值是？现金？online？</div>
-<div style="color:red">添加 payment 信息是否需要调api保存下来？</div>
+<div style="color:red">添加 payment 交互？信息是否需要调api保存下来？</div>
 <div style="color:red">Add Voucher，添加优惠券，此处的交互?</div>
 <br>
 
 ### 个人中心-订单
+
 <br>
 
 <div style="color:green">接口文档：</div>
@@ -103,7 +104,6 @@
     - 获取order详情 /user/order/detail/v3
     - 实时获取消息的socket websocket/position/subscribe?userOrderId={{userOrderId}}
     - 添加评论接口
-
 
 <div style="color:green">交互</div>
 
@@ -125,7 +125,6 @@
     - 获取通知list
     - 删除接口
     - 已读、未读update通知状态的接口
-
 
 <div style="color:green">交互</div>
 

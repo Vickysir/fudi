@@ -90,24 +90,24 @@ const GoodsDetails = (props) => {
                 history.push("/login")
             }, 3000)
         }
-	}
-	// TODO 待写测试用例
+    }
+    // TODO 待写测试用例
     const calculatTotal = () => {
         // 裸价
-		let total = String(basicPrice);
-		Object.keys(useOptionList).map((item) => {
-			if (!useOptionList[item]) return;
+        let total = String(basicPrice);
+        Object.keys(useOptionList).map((item) => {
+            if (!useOptionList[item]) return;
 
-			useOptionList[item]?.map((el) => {
-				// 商品单价 = 裸价 + 附加的option 价格
-				total = math.format(math.chain(math.bignumber(total)).add(math.bignumber(el.price)).done());
+            useOptionList[item]?.map((el) => {
+                // 商品单价 = 裸价 + 附加的option 价格
+                total = math.format(math.chain(math.bignumber(total)).add(math.bignumber(el.price)).done());
 
-			})
+            })
 
-		})
-		// 总价 = 商品单价 * 商品数量
-		const price = math.format(math.chain(math.bignumber(total)).multiply(math.bignumber(count)).done());
-		setTotalPrice(price)
+        })
+        // 总价 = 商品单价 * 商品数量
+        const price = math.format(math.chain(math.bignumber(total)).multiply(math.bignumber(count)).done());
+        setTotalPrice(price)
     }
     useEffect(() => {
         async function ftetchApi() {
@@ -184,20 +184,20 @@ const GoodsDetails = (props) => {
                                 <ArrowLeftOutlined />Back to All Dishes
                         </Button>
                         </div>
-                        <div style={{ background: dataSource?.thumbnail ? `url(${defaultStorage.S3header}${dataSource.thumbnail})` : `url(${goodsDetailsBanner})`, backgroundSize: "cover" }}></div>
+                        <div className="goodsDetails-wrap-banner-bg" style={{ background: dataSource?.thumbnail ? `url(${defaultStorage.S3header}${dataSource.thumbnail}) center center no-repeat` : `url(${goodsDetailsBanner}) center center no-repeat` }}></div>
                     </div>
                     <div className="goodsDetails-wrap-product">
                         <div className="goodsDetails-wrap-product-title">
                             <h3>
                                 <span>{dataSource?.title}</span>
                             </h3>
-							<div>
-								<span>
+                            <div>
+                                <span>
                                     <span className="originalPrice">€ {dataSource?.originalPrice}</span>
                                     € {dataSource?.currentPrice} / portion
                                 </span>
-							</div>
-							{/* 一排 小 icon */}
+                            </div>
+                            {/* 一排 小 icon */}
                             {/* <div>
                                 <img style={{ marginRight: "1rem" }} src={SeasameSeeds} alt="" />
                                 <img style={{ marginRight: "1rem" }} src={Soybeans} alt="" />

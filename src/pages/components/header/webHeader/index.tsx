@@ -51,15 +51,17 @@ const WebHeader = (props: Props) => {
     }
     useEffect(() => {
         fetchData();
-        APISettingPageInfo()
-            .then((res) => {
-                const { data } = res;
-                if (data?.head) {
-                    setHeadImg(`${defaultStorage.S3header}${data.head}`)
-                }
-            }).catch((err) => {
-                console.log(`APISettingPageInfo err`, err)
-            })
+        if (isLogin) {
+            APISettingPageInfo()
+                .then((res) => {
+                    const { data } = res;
+                    if (data?.head) {
+                        setHeadImg(`${defaultStorage.S3header}${data.head}`)
+                    }
+                }).catch((err) => {
+                    console.log(`APISettingPageInfo err`, err)
+                })
+        }
     }, [])
     useEffect(() => {
         fetchData();

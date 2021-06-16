@@ -20,9 +20,10 @@ import style from '@/styles/theme/icon.less'
 import './index.less'
 import { useAppStore } from '@/__internal'
 import { openOnlineChat } from '@/utils'
-import { APIGetCartList, APIRemoveCartList, APIUpdateCartList } from '@/pages/api/request'
+import { APIGetCartList, APIRemoveCartList, APISettingPageInfo, APIUpdateCartList } from '@/pages/api/request'
 import CartList from '../../antd/popconfirm/CartList'
 import NotifacationList from '../../antd/popconfirm/NotifacationList'
+import { defaultStorage } from '@/utils/uploadUseS3'
 
 interface Props extends RouteComponentProps {
     refreshCart?: number
@@ -31,11 +32,11 @@ const WebHeader = (props: Props) => {
     const { history, refreshCart } = props;
     const { pathname } = history.location;
     const [cartdata, setCartdata] = useState<any>([]);
+    const [headImg, setHeadImg] = useState("https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png");
     const commonInfo = useAppStore("commonInfo");
     const authInfo = useAppStore("authInfo");
     const token = authInfo?.token;
     const isLogin = token && authInfo?.nickname;
-
     websitePhone: "353858275002"
     function handleClick() {
         openOnlineChat(commonInfo?.websitePhone)
@@ -50,6 +51,15 @@ const WebHeader = (props: Props) => {
     }
     useEffect(() => {
         fetchData();
+        APISettingPageInfo()
+            .then((res) => {
+                const { data } = res;
+                if (data?.head) {
+                    setHeadImg(`${defaultStorage.S3header}${data.head}`)
+                }
+            }).catch((err) => {
+                console.log(`APISettingPageInfo err`, err)
+            })
     }, [])
     useEffect(() => {
         fetchData();
@@ -116,7 +126,7 @@ const WebHeader = (props: Props) => {
                                 </NotifacationList>
                             </li>
                             <li onClick={goTo}>
-                                <Avatar size="large" style={{ backgroundColor: '#fde3cf', "cursor": "pointer" }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                <Avatar size="large" style={{ backgroundColor: '#fde3cf', "cursor": "pointer" }} src={headImg} />
                             </li>
                         </>
                     }

@@ -117,7 +117,7 @@ const WebHeader = (props: Props) => {
                                     )}>
                                 </CartList>
                             </li>
-                            <li>
+                            {/* <li>
                                 <NotifacationList
                                     refreshHeader={fetchData}
                                     Children={(
@@ -126,7 +126,7 @@ const WebHeader = (props: Props) => {
                                         </Badge>
                                     )}>
                                 </NotifacationList>
-                            </li>
+                            </li> */}
                             <li onClick={goTo}>
                                 <Avatar size="large" style={{ backgroundColor: '#fde3cf', "cursor": "pointer" }} src={headImg} />
                             </li>

@@ -43,6 +43,7 @@ const Shop = (props) => {
     const [issend, setissend] = useState(false)
     const [shopData, setShopData] = useState<ShopDetailResponse>();
     const [goods, setGoods] = useState<ShopGoodsListAllResponseArray[]>();
+    const [searchGoodsList, setSearchGoodsList] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [isSearch, setIsSearch] = useState(false);
     const authInfo = useAppStore("authInfo");
@@ -57,15 +58,19 @@ const Shop = (props) => {
     // 防抖
     function debounce(value: string) {
         clearTimeout(timer);
-        timer = setTimeout(function () {
+        timer = setTimeout(async function () {
             setIsSearch(true);
-            APIGoodsSearch({ "shopId": Number(params.id), "title": value });
+            setLoading(false);
+            const { data } = await APIGoodsSearch({ "shopId": Number(params.id), "title": value });
+            console.log(data.map((item) => item.goodsList).flat())
+            setSearchGoodsList(data.map((item) => item.goodsList).flat());
         }, 1000);
     }
     const onSearch = e => {
         const value = e.target.value;
         if (value) {
             debounce(value);
+            setLoading(true);
         } else {
             clearTimeout(timer);
             setIsSearch(false);
@@ -95,7 +100,7 @@ const Shop = (props) => {
     useEffect(() => {
         async function ftetchApi() {
             const { data: shopDetails } = await APIShopDetail({ "id": Number(params.id) });
-            const { data: goods } = await APIShopGoodsListAll({ "shopId": 1 });
+            const { data: goods } = await APIShopGoodsListAll({ "shopId": Number(params.id) });
 
             setShopData(shopDetails);
             setGoods(goods);
@@ -192,7 +197,7 @@ const Shop = (props) => {
                         </div>
                     </div>
                     {
-                        goods?.map((item, index) => {
+                        !isSearch && goods?.map((item, index) => {
                             return (
                                 <div className="shop-wrap-shopCategoriesList" key={item.id}>
                                     <div>
@@ -238,6 +243,40 @@ const Shop = (props) => {
                                 </div>
                             )
                         })
+                    }
+                    {
+                        isSearch && (
+                            <div className="shop-wrap-shopCategoriesList" >
+                                <div className="shop-wrap-shopCategoriesList-box">
+                                    {
+                                        searchGoodsList.map((v) => {
+                                            console.log(`vVVVVVVVV`, v)
+                                            return (
+                                                <div key={v.id}>
+                                                    <div>
+                                                        {
+                                                            v?.thumbnail ?
+                                                                <img width="100%" alt="example" src={defaultStorage.S3header + v.thumbnail} />
+                                                                : <Icon
+                                                                    component={goodPlaceholder}
+                                                                    className={` ${style.iconFill}`}
+                                                                    style={{ fontSize: "12rem" }}
+                                                                />
+                                                        }
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="intwoline">{v.title}</h3>
+                                                        <h6 className="inaline"><span className="originalPrice">€ {v.originalPrice}</span><span>€ {v.currentPrice} / portion</span></h6>
+                                                        <p className="inthreeline">{v.title}</p>
+                                                        <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to={`/goodsDetails/${v.id}/${params.id}`}>Order</Link></Button>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        )
                     }
                     {/* <div style={{ width: "100%", height: "1000px" }}>
                     <V_Map />

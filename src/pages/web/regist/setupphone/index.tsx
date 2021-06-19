@@ -165,7 +165,7 @@ const Setupphone = (props) => {
                         </Form.Item>
                         <Form.Item>
                             {
-                                commonInfo ?
+                                commonInfo && commonInfo.count ?
                                     <Button
                                         type="primary"
                                         htmlType="submit"

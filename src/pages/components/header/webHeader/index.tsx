@@ -36,7 +36,7 @@ const WebHeader = (props: Props) => {
     const commonInfo = useAppStore("commonInfo");
     const authInfo = useAppStore("authInfo");
     const token = authInfo?.token;
-    const isLogin = token && authInfo?.nickname;
+    const isLogin = token && authInfo?.nickname && authInfo.phone;
     websitePhone: "353858275002"
     function handleClick() {
         openOnlineChat(commonInfo?.websitePhone)

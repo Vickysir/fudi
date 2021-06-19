@@ -51,25 +51,28 @@ const Shop = (props) => {
     let timer = null;
 
     const suffix = (
-        <SearchOutlined
-            className="shop-theme-color"
-        />
+        <div>
+            <span style={{ marginRight: "0.5rem" }}>Search</span>
+            <SearchOutlined
+                className="shop-theme-color"
+            />
+        </div>
     );
     // 防抖
     function debounce(value: string) {
         clearTimeout(timer);
         timer = setTimeout(async function () {
-            setIsSearch(true);
-            setLoading(false);
             const { data } = await APIGoodsSearch({ "shopId": Number(params.id), "title": value });
             console.log(data.map((item) => item.goodsList).flat())
             setSearchGoodsList(data.map((item) => item.goodsList).flat());
-        }, 1000);
+            setLoading(false);
+        }, 0);
     }
-    const onSearch = e => {
-        const value = e.target.value;
+    const onSearch = value => {
+        // const value = e.target.value;
         if (value) {
             debounce(value);
+            setIsSearch(true);
             setLoading(true);
         } else {
             clearTimeout(timer);
@@ -186,12 +189,13 @@ const Shop = (props) => {
                                 ) : <div></div>
                             }
                             <div style={{ "width": "100%", "textAlign": "center" }}>
-                                <Input
-                                    style={{ "width": "45%", "paddingLeft": "2rem", "paddingRight": "2rem" }}
-                                    placeholder="Search"
+                                <Search
+                                    style={{ "width": "60%", "paddingLeft": "2rem", "paddingRight": "2rem" }}
+                                    placeholder=" Search ..."
                                     size="large"
-                                    suffix={suffix}
-                                    onChange={onSearch}
+                                    enterButton={suffix}
+                                    allowClear
+                                    onSearch={onSearch}
                                 />
                             </div>
                         </div>

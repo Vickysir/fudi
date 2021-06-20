@@ -31,7 +31,7 @@ const PhoneVerification = (props) => {
             try {
                 await APIRegist(authinfo);
                 APP_STORE.registInfo = null;
-                history.push("/login");
+                history.push("/home/login");
             } catch (err) {
                 console.log('err', err)
             }
@@ -59,7 +59,6 @@ const PhoneVerification = (props) => {
 
     return (
         <>
-            <WebHeader />
             <div>
                 <BaackTitle titleContent="Set up Phone" />
                 <div className="login-wrap">
@@ -97,7 +96,6 @@ const PhoneVerification = (props) => {
                     </Form>
                 </div>
             </div>
-            <WebFooter />
         </>
     )
 }

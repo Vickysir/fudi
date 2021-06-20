@@ -115,7 +115,6 @@ const Shop = (props) => {
 
     return (
         <>
-            <WebHeader />
             <Spin spinning={loading} size="large" tip="Loading...">
                 <div className="shop-wrap">
                     <div className="shop-wrap-banner" style={{ background: shopData?.thumbnail ? `url(${defaultStorage.S3header}${shopData?.thumbnail})` : `url(${homeBanner})` }}>
@@ -134,7 +133,7 @@ const Shop = (props) => {
                                 if (!isLogin(authInfo)) {
                                     message.error("You are not logged in, you will be redirected to log in after 3s");
                                     setTimeout(() => {
-                                        history.push("/login")
+                                        history.push("/home/login")
                                     }, 3000)
                                     return
                                 }
@@ -231,7 +230,7 @@ const Shop = (props) => {
                                                                                     <h3 className="intwoline">{v.title}</h3>
                                                                                     <h6 className="inaline"><span className="originalPrice">€ {v.originalPrice}</span><span>€ {v.currentPrice} / portion</span></h6>
                                                                                     <p className="inthreeline">{v.title}</p>
-                                                                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to={`/goodsDetails/${v.id}/${params.id}`}>Order</Link></Button>
+                                                                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to={`/home/goodsDetails/${v.id}/${params.id}`}>Order</Link></Button>
                                                                                 </div>
                                                                             </div>
                                                                         )
@@ -272,7 +271,7 @@ const Shop = (props) => {
                                                         <h3 className="intwoline">{v.title}</h3>
                                                         <h6 className="inaline"><span className="originalPrice">€ {v.originalPrice}</span><span>€ {v.currentPrice} / portion</span></h6>
                                                         <p className="inthreeline">{v.title}</p>
-                                                        <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to={`/goodsDetails/${v.id}/${params.id}`}>Order</Link></Button>
+                                                        <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to={`/home/goodsDetails/${v.id}/${params.id}`}>Order</Link></Button>
                                                     </div>
                                                 </div>
                                             )
@@ -290,7 +289,6 @@ const Shop = (props) => {
                     </BackTop>
                 </div>
             </Spin>
-            <WebFooter />
             <AddReview
                 isOpen={isOpen}
                 isClose={addReviewClose}

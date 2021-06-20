@@ -6,6 +6,7 @@ export interface CommonInfo {
     "uploadAvatar"?: string,
     "currentShopping"?: any
     "websitePhone"?: string,
+    "refreshCart"?: number,
 }
 
 export interface PhoneVerificationCodePost {

@@ -4,7 +4,7 @@ import OrderDetailsList from '../../components/orderDetailsList'
 import { Button, Form, Radio, Row } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.less'
 import { APIGetCartList } from '@/pages/api/request';
 import TextArea from 'antd/lib/input/TextArea';
@@ -22,7 +22,11 @@ const OrderComfirm = () => {
 
 
     const fetchData = async () => {
-        setRefreshHeaderCart(new Date().getTime())
+        // setRefreshHeaderCart(new Date().getTime())
+        APP_STORE.commonInfo = {
+            ...APP_STORE.commonInfo,
+            refreshCart: new Date().getTime()
+        };
     }
 
     const getOrderListPrice = (total) => {
@@ -30,7 +34,6 @@ const OrderComfirm = () => {
     }
     return (
         <div>
-            <WebHeader refreshCart={refreshHeaderCart} />
             <div className="orderComfirm-wrap">
                 <div className="orderComfirm-wrap-header">
                     <Button
@@ -102,7 +105,6 @@ const OrderComfirm = () => {
                     </div>
                 </div>
             </div>
-            <WebFooter />
         </div>
     )
 }

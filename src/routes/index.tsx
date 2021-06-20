@@ -22,26 +22,15 @@ import PersonalCenter from "@/pages/web/personalCenter";
 import Shop from "@/pages/web/shop";
 import GoodsDetails from "@/pages/web/goods";
 import OrderComfirm from "@/pages/web/orderComfirm";
+import Web from "@/pages/web";
+
 
 
 
 export function WebRoutes() {
     return <Router>
         <Route exact path="/" render={() => <Redirect to="/home" />} />
-        <Route path="/home" component={Homepage} />
-        {/* <CheckTokenRoute path="/home" component={Web} /> */}
-        <Route path="/login" component={Login} />
-        <Route path="/restpassword" component={Restpassword} />
-        <Route path="/changepassword" component={Changepassword} />
-        <Route path="/regist" component={Regist} />
-        <Route exact path="/setupphone" component={Setupphone} />
-        <Route path="/setupphone/verification" component={PhoneVerification} />
-        <Route path="/faq" component={FAQ} />
-        <Route path="/helpCenter" component={HelpCenter} />
-        <Route path="/personalCenter" component={PersonalCenter} />
-        <Route path="/shop/:id" component={Shop} />
-        <Route path="/goodsdetails/:id/:shopId" component={GoodsDetails} />
-        <Route path="/orderConfirm" component={OrderComfirm} />
+        <Route path="/home" component={Web} />
     </Router>
 }
 

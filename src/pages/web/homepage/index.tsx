@@ -78,7 +78,7 @@ const Homepage = (props) => {
         switch (orderType) {
             //"Collect"
             case "1":
-                history.push(`/shop/${autoCompeteSelectValue}`)
+                history.push(`/home/shop/${autoCompeteSelectValue}`)
                 break;
             //"Delivery"
             default:
@@ -92,7 +92,7 @@ const Homepage = (props) => {
                             const { location } = json.results[0].geometry
                             const { data } = await APIShopInRange({ latitude: location.lat, longitude: location.lng })
                             if (!data || data.length === 0) return message.error("The address is out of our delivery range. Please input again.")
-                            history.push(`/shop/${data.id}`)
+                            history.push(`/home/shop/${data.id}`)
                             console.log(`data`, data)
                         });
 
@@ -115,7 +115,6 @@ const Homepage = (props) => {
     }
     return (
         <>
-            <WebHeader />
             <div className="homepage-banner">
                 <img src={homeBanner} alt="banner" />
                 <p>Are You Hungry?</p>
@@ -247,7 +246,6 @@ const Homepage = (props) => {
                     <Dowmloadmarket />
                 </div>
             </div>
-            <WebFooter />
             <MessageModal
                 isOpen={deliveryIsOpen}
                 isClose={() => { setDeliveryIsOpen(false) }}
@@ -265,7 +263,7 @@ const Homepage = (props) => {
                             })
                         }
 
-                        <Button type="primary" shape="round" block onClick={() => { history.push(`/shop/${selectShopId.shopId}`) }}>Continue</Button>
+                        <Button type="primary" shape="round" block onClick={() => { history.push(`/home/shop/${selectShopId.shopId}`) }}>Continue</Button>
                     </>
                 }
             />

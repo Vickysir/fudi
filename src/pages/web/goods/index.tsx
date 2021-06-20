@@ -83,11 +83,15 @@ const GoodsDetails = (props) => {
             message.success("Successful");
             //添加至购物车
             await APIAddToCart({ "quantity": count, "goodsId": Number(id), "remark": "", "goodsIngredientList": goodsIngredientList, "shopId": Number(shopId) })
-            setRefreshHeaderCart(new Date().getTime());
+            APP_STORE.commonInfo = {
+                ...APP_STORE.commonInfo,
+                refreshCart: new Date().getTime()
+            };
+            // setRefreshHeaderCart(new Date().getTime());
         } else {
             message.error("You are not logged in, you will be redirected to log in after 3s");
             setTimeout(() => {
-                history.push("/login")
+                history.push("/home/login")
             }, 3000)
         }
     }
@@ -170,7 +174,6 @@ const GoodsDetails = (props) => {
     }
     return (
         <>
-            <WebHeader refreshCart={refreshHeaderCart} />
             <Spin spinning={loading} size="large" tip="Loading...">
                 <div className="goodsDetails-wrap">
                     <div className="goodsDetails-wrap-banner">
@@ -373,7 +376,6 @@ const GoodsDetails = (props) => {
                     </div>
                 </div>
             </Spin>
-            <WebFooter />
         </>
     )
 }

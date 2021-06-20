@@ -38,30 +38,30 @@ const LeftMenu = (props: Props) => {
         setselectedKeys(selectedKeys);
         switch (e.key) {
             case "1":
-                history.push("/personalCenter/myOrders")
+                history.push("/home/personalCenter/myOrders")
                 break;
             case "2":
-                history.push("/personalCenter/vouchers")
+                history.push("/home/personalCenter/vouchers")
                 break;
             case "3":
-                history.push("/personalCenter/invitation")
+                history.push("/home/personalCenter/invitation")
                 break;
             case "4":
-                history.push("/personalCenter/notification")
+                history.push("/home/personalCenter/notification")
                 break;
             case "5":
-                history.push("/personalCenter/myInfor")
+                history.push("/home/personalCenter/myInfor")
                 break;
             case "6":
-                history.push("/personalCenter/changepwd")
+                history.push("/home/personalCenter/changepwd")
                 break;
-            case "7": history.push("/personalCenter/sendQ")
+            case "7": history.push("/home/personalCenter/sendQ")
                 break;
             case "8":
                 clearStore();
-                history.push("/login");
+                history.push("/home/login");
                 break;
-            default: history.push("/personalCenter/myOrders")
+            default: history.push("/home/personalCenter/myOrders")
         }
     };
 

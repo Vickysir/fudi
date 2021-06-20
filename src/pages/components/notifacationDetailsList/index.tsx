@@ -82,7 +82,7 @@ const NotifacationDetailsList = (props: Props) => {
                     type="primary"
                     block
                     onClick={() => {
-                        history.push('/personalCenter/notification')
+                        history.push('/home/personalCenter/notification')
                     }}
                 >
                     See All

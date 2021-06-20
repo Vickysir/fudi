@@ -70,7 +70,7 @@ const Login = (props) => {
             websitePhone: "+353858275002"
         };
         if (data.phone === "" || data.phone === undefined || data.phone === null) {
-            history.push("/setupphone?update");
+            history.push("/home/setupphone?update");
         } else {
             history.push("/home");
         }
@@ -98,7 +98,6 @@ const Login = (props) => {
 
     return (
         <>
-            <WebHeader />
             <div className="login-wrap">
                 <h1>Log In</h1>
                 <div>
@@ -133,7 +132,7 @@ const Login = (props) => {
                         </Form.Item>
                         <Form.Item>
                             <div className="login-form-forgot">
-                                <Link to='/restpassword'>Forgot password</Link>
+                                <Link to='/home/restpassword'>Forgot password</Link>
                             </div>
                         </Form.Item>
 
@@ -156,10 +155,9 @@ const Login = (props) => {
                     <img src={fb} onClick={onFacebookSignIn} alt="icon" />
                 </div>
                 <div className="login-form-regist">
-                    Don’t have an account?<Link to='/regist'>Sign Up</Link>
+                    Don’t have an account?<Link to='/home/regist'>Sign Up</Link>
                 </div>
             </div>
-            <WebFooter />
         </>
     )
 }

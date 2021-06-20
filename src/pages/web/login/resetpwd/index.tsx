@@ -29,7 +29,7 @@ const Restpassword = (props) => {
                 // token 存入store
                 let resetPwdInfo = Object.assign(APP_STORE.resetPwdInfo, { ...data })
                 APP_STORE.resetPwdInfo = resetPwdInfo;
-                history.push("/changepassword");
+                history.push("/home/changepassword");
             }
         } catch (err) {
             console.log('err', err);
@@ -37,7 +37,6 @@ const Restpassword = (props) => {
     };
     return (
         <>
-            <WebHeader />
             <div>
                 <BaackTitle titleContent="Reset Password" />
                 <div className="login-wrap">
@@ -78,7 +77,6 @@ const Restpassword = (props) => {
                     </Form>
                 </div>
             </div>
-            <WebFooter />
         </>
     )
 }

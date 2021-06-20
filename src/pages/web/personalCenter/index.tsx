@@ -32,7 +32,7 @@ const PersonalCenter = (props) => {
         reload();
     }, [])
     useEffect(() => {
-        if (location.pathname = "/personalCenter/index") {
+        if (location.pathname = "/home/personalCenter/index") {
             updateChildState()
         }
     }, [location.search])
@@ -58,7 +58,6 @@ const PersonalCenter = (props) => {
 
     return (
         <>
-            <WebHeader />
             <div className="personalCenter-wrap">
                 <Button
                     type="primary"
@@ -74,18 +73,17 @@ const PersonalCenter = (props) => {
                     </div>
                     <div>
                         <Router>
-                            <Route path="/personalCenter/myOrders" component={MyOrders} />
-                            <Route path="/personalCenter/vouchers" component={Vouchers} />
-                            <Route path="/personalCenter/changepwd" component={Changepwd} />
-                            <Route path="/personalCenter/invitation" component={Invitation} />
-                            <Route path="/personalCenter/myInfor" component={MyInfor} />
-                            <Route path="/personalCenter/notification" component={NotificationCenter} />
-                            <Route path="/personalCenter/sendQ" component={SendQ} />
+                            <Route path="/home/personalCenter/myOrders" component={MyOrders} />
+                            <Route path="/home/personalCenter/vouchers" component={Vouchers} />
+                            <Route path="/home/personalCenter/changepwd" component={Changepwd} />
+                            <Route path="/home/personalCenter/invitation" component={Invitation} />
+                            <Route path="/home/personalCenter/myInfor" component={MyInfor} />
+                            <Route path="/home/personalCenter/notification" component={NotificationCenter} />
+                            <Route path="/home/personalCenter/sendQ" component={SendQ} />
                         </Router>
                     </div>
                 </div>
             </div>
-            <WebFooter />
         </>
     )
 }

@@ -23,7 +23,6 @@ const HelpCenter = () => {
     }
     return (
         <>
-            <WebHeader />
             <div>
                 <BaackTitle titleContent="Help Center" />
                 <ul className="login-wrap helpCenter">
@@ -48,7 +47,6 @@ const HelpCenter = () => {
                     </li>
                 </ul>
             </div>
-            <WebFooter />
         </>
     )
 }

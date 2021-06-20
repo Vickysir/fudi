@@ -33,7 +33,6 @@ const FAQ = () => {
     }, [])
     return (
         <>
-            <WebHeader />
             <div>
                 <BaackTitle titleContent="Frequently Asked Questions" />
                 <div className="login-wrap">
@@ -48,7 +47,6 @@ const FAQ = () => {
                     </Collapse>
                 </div>
             </div>
-            <WebFooter />
         </>
     )
 }

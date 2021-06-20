@@ -5,11 +5,10 @@ import './index.less'
 
 interface Props {
     Children: ReactNode,
-    refreshHeader: () => void
 }
 const CartList = (props: Props) => {
-    const { Children, refreshHeader } = props;
-    const content = (<OrderDetailsList refreshHeader={refreshHeader} />
+    const { Children } = props;
+    const content = (<OrderDetailsList />
     );
     const title = (
         <div className="cartList-title">

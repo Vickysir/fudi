@@ -5,6 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import RoundButton from '../antd/button'
 import { create, all } from 'mathjs'
 import './index.less'
+import { useAppStore } from '@/__internal';
 
 const config = {
     number: 'BigNumber',
@@ -12,12 +13,12 @@ const config = {
 }
 const math = create(all, config)
 interface Props extends RouteComponentProps {
-    refreshHeader: () => void
     comfirmBtn?: boolean
     orderListPrice?: (total: string) => void
 }
 const OrderDetailsList = (props: Props) => {
-    const { refreshHeader, comfirmBtn = true, orderListPrice, history } = props;
+    const { comfirmBtn = true, orderListPrice, history } = props;
+    const commonInfo = useAppStore("commonInfo");
     const [total, setTotal] = useState("0");
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -26,21 +27,23 @@ const OrderDetailsList = (props: Props) => {
         if (action === "plus") {
             goodCount = count + 1;
             await APIUpdateCartList({ shopId: 1, id, quantity: goodCount });
+            await refreshHeader();
 
         } else if (action === "minus") {
             if (count === 1) {
                 setLoading(true);
                 await APIRemoveCartList({ shopId: 1, id });
-                await fetchData();
+                await refreshHeader();
                 await refreshHeader();
                 return
             }
             goodCount = count - 1;
             await APIUpdateCartList({ shopId: 1, id, quantity: goodCount });
+            await refreshHeader();
 
         }
         setLoading(true);
-        fetchData();
+        await refreshHeader();
     }
 
     const caculateTotal = (data) => {
@@ -60,9 +63,19 @@ const OrderDetailsList = (props: Props) => {
         setLoading(false)
         caculateTotal(data)
     }
+    const refreshHeader = async () => {
+        APP_STORE.commonInfo = {
+            ...APP_STORE.commonInfo,
+            refreshCart: new Date().getTime()
+        };
+    }
+
     useEffect(() => {
         fetchData();
     }, [])
+    useEffect(() => {
+        fetchData();
+    }, [commonInfo?.refreshCart])
 
     return (
         <div className="orderDetailsList-wrap">
@@ -114,7 +127,7 @@ const OrderDetailsList = (props: Props) => {
                         type="primary"
                         block
                         onClick={() => {
-                            history.push('/orderConfirm')
+                            history.push('/home/orderConfirm')
                         }}
                     >
                         Confirm Order € {total}

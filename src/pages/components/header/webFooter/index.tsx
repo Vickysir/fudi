@@ -36,10 +36,10 @@ const WebFooter = () => {
                 <img src={logo} alt="logo" />
                 <ul className="webFooter-menu">
                     <li>
-                        <Link to="/faq" style={{ color: "rgba(255, 255, 255, 0.8)" }}>FAQ</Link>
+                        <Link to="/home/faq" style={{ color: "rgba(255, 255, 255, 0.8)" }}>FAQ</Link>
                     </li>
                     <li>
-                        <Link to="/helpCenter" style={{ color: "rgba(255, 255, 255, 0.8)" }}>Help Center</Link>
+                        <Link to="/home/helpCenter" style={{ color: "rgba(255, 255, 255, 0.8)" }}>Help Center</Link>
                     </li>
                     <li>
                         Terms and Conditions

@@ -34,7 +34,7 @@ const Changepassword = (props) => {
                 message.success("Password reset successfully");
                 // 重置store
                 APP_STORE.resetPwdInfo = null;
-                history.push("/login");
+                history.push("/home/login");
 
             }
         } catch (err) {
@@ -44,7 +44,6 @@ const Changepassword = (props) => {
 
     return (
         <>
-            <WebHeader />
             <div>
                 <BaackTitle titleContent="Change Password" />
                 <div className="login-wrap">
@@ -113,7 +112,6 @@ const Changepassword = (props) => {
                     </Form>
                 </div>
             </div>
-            <WebFooter />
         </>
     )
 }

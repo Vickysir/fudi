@@ -42,7 +42,7 @@ const WebHeader = (props: Props) => {
         openOnlineChat(commonInfo?.websitePhone)
     }
     function goTo() {
-        history.push("/personalCenter/index?id=1")
+        history.push("/home/personalCenter/index?id=1")
     }
 
     const fetchData = async () => {
@@ -65,7 +65,8 @@ const WebHeader = (props: Props) => {
     }, [])
     useEffect(() => {
         fetchData();
-    }, [refreshCart])
+    }, [commonInfo?.refreshCart])
+
     return (
         <>
             <div className="webHeader">
@@ -98,7 +99,7 @@ const WebHeader = (props: Props) => {
                                         <Button type="primary" shape="round">Home</Button>
                                     </Link>
                                     :
-                                    <Link to="/login">
+                                    <Link to="/home/login">
                                         <Button type="primary" shape="round">Login</Button>
                                     </Link>
                             }
@@ -109,7 +110,6 @@ const WebHeader = (props: Props) => {
                         <>
                             <li>
                                 <CartList
-                                    refreshHeader={fetchData}
                                     Children={(
                                         <Badge count={cartdata?.length}>
                                             <Icon component={iconorder} className={style.iconFill} style={{ fontSize: "2.5rem" }} />

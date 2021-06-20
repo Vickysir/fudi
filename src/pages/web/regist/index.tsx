@@ -38,7 +38,7 @@ const Regist = (props) => {
 
 
     const onFinish = (values: any) => {
-        history.push("/setupphone");
+        history.push("/home/setupphone");
         // 存入store
         APP_STORE.registInfo = values;
     };
@@ -46,7 +46,6 @@ const Regist = (props) => {
 
     return (
         <>
-            <WebHeader />
             <div>
                 <BaackTitle titleContent="Sign up" />
                 <div className="login-wrap">
@@ -141,11 +140,10 @@ const Regist = (props) => {
                         <img src={fb} alt="icon" />
                     </div> */}
                     <div className="login-form-regist">
-                        Already have an account?<Link to='/login'>Log In</Link>
+                        Already have an account?<Link to='/home/login'>Log In</Link>
                     </div>
                 </div>
             </div>
-            <WebFooter />
         </>
     )
 }

@@ -54,7 +54,7 @@ const Setupphone = (props) => {
                 };
                 //计时器
                 handleClickTimer();
-                history.push("/setupphone/verification");
+                history.push("/home/setupphone/verification");
 
             } catch (err) {
                 console.log(`err`, err)
@@ -77,7 +77,7 @@ const Setupphone = (props) => {
                 };
                 //计时器
                 handleClickTimer();
-                history.push("/setupphone/verification?update");
+                history.push("/home/setupphone/verification?update");
             } catch (err) {
                 console.log('err', err);
             }
@@ -132,7 +132,6 @@ const Setupphone = (props) => {
 
     return (
         <>
-            <WebHeader />
             <div>
                 <BaackTitle titleContent="Set up Phone" />
                 <div className="login-wrap">
@@ -194,7 +193,6 @@ const Setupphone = (props) => {
                     </Form>
                 </div>
             </div>
-            <WebFooter />
         </>
     )
 }

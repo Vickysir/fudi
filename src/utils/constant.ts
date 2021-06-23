@@ -1,3 +1,4 @@
+export const websitePhone = '353858275002';
 //邀请朋友
 export const INVITATEFRIENDS_INVITIED = 0
 export const INVITATEFRIENDS_COMPLETE = 1

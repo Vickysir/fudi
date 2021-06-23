@@ -19,6 +19,7 @@ import './index.less'
 import firebase from 'firebase';
 import { firebaseConfig } from '@/utils/firebase';
 import { LoginPostResponse } from '@/pages/api/types';
+import { websitePhone } from '@/utils/constant';
 
 
 
@@ -63,11 +64,10 @@ const Login = (props) => {
     // check是否存在手机号
     const afterLogin = (data: LoginPostResponse) => {
         APP_STORE.authInfo = { ...data };
-        // TODO  设置shopId
+        // TODO  websitePhone
         APP_STORE.commonInfo = {
             ...APP_STORE.commonInfo,
-            shopId: 1,
-            websitePhone: "+353858275002"
+            websitePhone: websitePhone
         };
         if (data.phone === "" || data.phone === undefined || data.phone === null) {
             history.push("/home/setupphone?update");
@@ -84,11 +84,10 @@ const Login = (props) => {
             const { data } = await APILogin(values);
             message.success("Login successful")
             APP_STORE.authInfo = { ...data };
-            // TODO  设置shopId
+            // TODO  websitePhone
             APP_STORE.commonInfo = {
                 ...APP_STORE.commonInfo,
-                shopId: 1,
-                websitePhone: "+353858275002"
+                websitePhone: websitePhone
             };
             history.push("/home");
         } catch (err) {

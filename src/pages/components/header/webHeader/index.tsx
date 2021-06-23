@@ -24,6 +24,7 @@ import { APIGetCartList, APIRemoveCartList, APISettingPageInfo, APIUpdateCartLis
 import CartList from '../../antd/popconfirm/CartList'
 import NotifacationList from '../../antd/popconfirm/NotifacationList'
 import { defaultStorage } from '@/utils/uploadUseS3'
+import { websitePhone } from '@/utils/constant'
 
 interface Props extends RouteComponentProps {
     refreshCart?: number
@@ -37,7 +38,6 @@ const WebHeader = (props: Props) => {
     const authInfo = useAppStore("authInfo");
     const token = authInfo?.token;
     const isLogin = token && authInfo?.nickname && authInfo.phone;
-    websitePhone: "353858275002"
     function handleClick() {
         openOnlineChat(commonInfo?.websitePhone)
     }
@@ -70,20 +70,16 @@ const WebHeader = (props: Props) => {
     return (
         <>
             <div className="webHeader">
-                {
-                    commonInfo?.websitePhone ?
-                        <ul className="webHeader-tel">
-                            <li>
-                                <img src={imgphone} alt="imgphone" />
-                                <span>{commonInfo.websitePhone}</span>
-                            </li>
-                            <li onClick={handleClick}>
-                                <Icon component={iconchat} className={style.iconFill} />
-                                <span className="chat">Online Chat</span>
-                            </li>
-                        </ul>
-                        : <ul></ul>
-                }
+                <ul className="webHeader-tel">
+                    <li>
+                        <img src={imgphone} alt="imgphone" />
+                        <span>{commonInfo?.websitePhone ? commonInfo.websitePhone : websitePhone}</span>
+                    </li>
+                    <li onClick={handleClick}>
+                        <Icon component={iconchat} className={style.iconFill} />
+                        <span className="chat">Online Chat</span>
+                    </li>
+                </ul>
                 <div className="webHeader-logo">
                     <Link to="/home">
                         <img src={logoOne} alt="logo" />

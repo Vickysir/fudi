@@ -1,4 +1,5 @@
 import { IAuthInfo } from "@/config/customStore";
+import { websitePhone } from "./constant";
 
 export const havePlaceholder = (value: number | string | undefined | null, thePlaceholderKey: string = "-"): string => {
     let content = null;
@@ -14,7 +15,7 @@ export const havePlaceholder = (value: number | string | undefined | null, thePl
 }
 
 export const openOnlineChat = (telphopne: string | number) => {
-    const tel = telphopne ? telphopne : 353858275002;
+    const tel = telphopne ? telphopne : websitePhone;
     window.open(`https://wa.me/${tel}`)
 }
 export const openAppStore = (type: string) => {

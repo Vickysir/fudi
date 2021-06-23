@@ -48,7 +48,7 @@ const Homepage = (props) => {
     const [selectShopId, setSelectShopId] = useState({ id: null, "shopId": null })
     const [autoCompeteSelectValue, setAutoCompeteSelectValue] = useState(undefined)
 
-
+    // 该接口要知道shopId ，去请求获取 ShopServicePhone
     useEffect(() => {
         if (commonInfo?.shopId) {
             APIShopServicePhone(commonInfo.shopId)

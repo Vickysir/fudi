@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import './index.less'
 import { useAppStore } from '@/__internal';
 import { openOnlineChat } from '@/utils';
+import { websitePhone } from '@/utils/constant';
 
 const WebFooter = () => {
     const commonInfo = useAppStore("commonInfo");
@@ -25,14 +26,10 @@ const WebFooter = () => {
     return (
         <>
             <div className="webFooter">
-                {
-                    commonInfo?.websitePhone ?
-                        <ul className="webFooter-tel">
-                            <li><img src={iconphone} alt="iconphone" /><span>{commonInfo.websitePhone}</span></li>
-                            <li onClick={handleClick}><img src={iconchat} alt="iconchat" /><span>Online Chat</span></li>
-                        </ul>
-                        : <ul></ul>
-                }
+                <ul className="webFooter-tel">
+                    <li><img src={iconphone} alt="iconphone" /><span>{commonInfo?.websitePhone ? commonInfo.websitePhone : websitePhone}</span></li>
+                    <li onClick={handleClick}><img src={iconchat} alt="iconchat" /><span>Online Chat</span></li>
+                </ul>
                 <img src={logo} alt="logo" />
                 <ul className="webFooter-menu">
                     <li>

@@ -15,6 +15,7 @@ import BaackTitle from '../components/baackTitle'
 import './index.less'
 import { openOnlineChat } from '@/utils'
 import { useAppStore } from '@/__internal'
+import { websitePhone } from '@/utils/constant'
 
 const HelpCenter = () => {
     const storeAtt = useAppStore("commonInfo");
@@ -42,7 +43,7 @@ const HelpCenter = () => {
                         <span>Or Call Us</span>
                         <p className="helpCenter-call">
                             <img src={imgphone} alt="imgphone" />
-                            <span>{storeAtt?.websitePhone}</span>
+                            <span>{storeAtt?.websitePhone ? storeAtt.websitePhone : websitePhone}</span>
                         </p>
                     </li>
                 </ul>

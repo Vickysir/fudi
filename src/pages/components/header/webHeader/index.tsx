@@ -62,9 +62,6 @@ const WebHeader = (props: Props) => {
                     console.log(`APISettingPageInfo err`, err)
                 })
         }
-    }, [])
-    useEffect(() => {
-        fetchData();
     }, [commonInfo?.refreshCart])
 
     return (

@@ -47,12 +47,18 @@ export default class UploadAvatar extends React.Component<Props> {
     handleChange = async (info) => {
         if (info.file?.imageUrl) {
             console.log(`info`, info)
-            message.success("Uploaded successfully")
+            await APIPersonalCenterUpdateIcon({ "head": info.file.path })
             this.setState({
                 imageUrl: info.file.imageUrl,
                 head: info.file.path
             })
-            await APIPersonalCenterUpdateIcon({ "head": info.file.path })
+            message.success("Uploaded successfully")
+            // 更新header
+            APP_STORE.commonInfo = {
+                ...APP_STORE.commonInfo,
+                refreshCart: new Date().getTime()
+            };
+
         }
     };
 

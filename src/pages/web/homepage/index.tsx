@@ -62,7 +62,11 @@ const Homepage = (props) => {
                     console.log(`ShopServicePhone err`, err)
                 })
         }
-
+        // 更新header
+        APP_STORE.commonInfo = {
+            ...APP_STORE.commonInfo,
+            refreshCart: new Date().getTime()
+        };
     }, [])
     const handleSelectChange = (value) => {
         console.log(`selected `, value);

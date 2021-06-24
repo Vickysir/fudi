@@ -26,19 +26,19 @@ const OrderDetailsList = (props: Props) => {
         let goodCount;
         if (action === "plus") {
             goodCount = count + 1;
-            await APIUpdateCartList({ shopId: 1, id, quantity: goodCount });
+            await APIUpdateCartList({ shopId: commonInfo?.shopId, id, quantity: goodCount });
             await refreshHeader();
 
         } else if (action === "minus") {
             if (count === 1) {
                 setLoading(true);
-                await APIRemoveCartList({ shopId: 1, id });
+                await APIRemoveCartList({ shopId: commonInfo?.shopId, id });
                 await refreshHeader();
                 await refreshHeader();
                 return
             }
             goodCount = count - 1;
-            await APIUpdateCartList({ shopId: 1, id, quantity: goodCount });
+            await APIUpdateCartList({ shopId: commonInfo?.shopId, id, quantity: goodCount });
             await refreshHeader();
 
         }
@@ -58,7 +58,7 @@ const OrderDetailsList = (props: Props) => {
     }
 
     const fetchData = async () => {
-        const { data } = await APIGetCartList({ shopId: 1 });
+        const { data } = await APIGetCartList({ shopId: commonInfo?.shopId });
         setData(data);
         setLoading(false)
         caculateTotal(data)

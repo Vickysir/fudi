@@ -11,14 +11,18 @@ import TextArea from 'antd/lib/input/TextArea';
 import RoundButton from '@/pages/components/antd/button';
 import DeliveryCom from './delivery';
 import CollectCom from './collect';
+import { useAppStore } from '@/__internal';
+import { DELIVERYTYPE_DELIVERY } from '@/utils/constant';
 
 const OrderComfirm = () => {
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
     const [total, setTotal] = useState("0");
     const [form] = Form.useForm();
+    const commonInfo = useAppStore("commonInfo");
+
     //TODO 从localStorage里面取
-    const type = 2;
-    const shopId = 1;
+    const orderType = commonInfo?.orderType;
+    const shopId = commonInfo?.shopId;
 
 
     const fetchData = async () => {
@@ -100,7 +104,7 @@ const OrderComfirm = () => {
                     </div>
                     <div>
                         {
-                            type === 1 ? <DeliveryCom /> : <CollectCom shopId={shopId} />
+                            Number(orderType) === DELIVERYTYPE_DELIVERY ? <DeliveryCom /> : <CollectCom shopId={shopId} />
                         }
                     </div>
                 </div>

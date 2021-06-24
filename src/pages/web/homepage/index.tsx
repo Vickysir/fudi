@@ -32,7 +32,7 @@ import { useAppStore } from '@/__internal';
 import RoundInput from '@/pages/components/antd/input';
 import RoundSelect from '@/pages/components/antd/select';
 import RoundButton from '@/pages/components/antd/button';
-import { DELIVERYTYPE_DELIVERY } from '@/utils/constant';
+import { DELIVERYTYPE_COLLECTION, DELIVERYTYPE_DELIVERY } from '@/utils/constant';
 import MessageModal from '@/pages/components/antd/modal/messageModal';
 import { AutoCompeteSelect } from '@/pages/components/antd/select/autoCompeteSelect';
 import { withRouter } from 'react-router-dom';
@@ -79,11 +79,19 @@ const Homepage = (props) => {
     }
     const handleSearch = async () => {
         if (!autoCompeteSelectValue) return message.error("Place select address")
-        switch (orderType) {
+        switch (Number(orderType)) {
             //"Collect"
-            case "1":
+            case DELIVERYTYPE_COLLECTION: {
+                APP_STORE.commonInfo = {
+                    ...APP_STORE.commonInfo,
+                    orderType: DELIVERYTYPE_COLLECTION,
+                    shopId: autoCompeteSelectValue,
+                    refreshCart: new Date().getTime()
+                };
                 history.push(`/home/shop/${autoCompeteSelectValue}`)
                 break;
+            }
+
             //"Delivery"
             default:
                 {
@@ -96,6 +104,12 @@ const Homepage = (props) => {
                             const { location } = json.results[0].geometry
                             const { data } = await APIShopInRange({ latitude: location.lat, longitude: location.lng })
                             if (!data || data.length === 0) return message.error("The address is out of our delivery range. Please input again.")
+                            APP_STORE.commonInfo = {
+                                ...APP_STORE.commonInfo,
+                                orderType: DELIVERYTYPE_DELIVERY,
+                                shopId: data.id,
+                                refreshCart: new Date().getTime()
+                            };
                             history.push(`/home/shop/${data.id}`)
                             console.log(`data`, data)
                         });

@@ -46,11 +46,14 @@ const WebHeader = (props: Props) => {
     }
 
     const fetchData = async () => {
-        const { data } = await APIGetCartList({ shopId: 1 });
+
+        const { data } = await APIGetCartList({ shopId: commonInfo.shopId });
         setCartdata(data);
     }
     useEffect(() => {
-        fetchData();
+        if (commonInfo?.shopId) {
+            fetchData();
+        }
         if (isLogin) {
             APISettingPageInfo()
                 .then((res) => {
@@ -102,13 +105,17 @@ const WebHeader = (props: Props) => {
                         isLogin &&
                         <>
                             <li>
-                                <CartList
-                                    Children={(
-                                        <Badge count={cartdata?.length}>
-                                            <Icon component={iconorder} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
-                                        </Badge>
-                                    )}>
-                                </CartList>
+                                {
+                                    commonInfo?.shopId && (
+                                        <CartList
+                                            Children={(
+                                                <Badge count={cartdata?.length}>
+                                                    <Icon component={iconorder} className={style.iconFill} style={{ fontSize: "2.5rem" }} />
+                                                </Badge>
+                                            )}>
+                                        </CartList>
+                                    )
+                                }
                             </li>
                             {/* <li>
                                 <NotifacationList

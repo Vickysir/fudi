@@ -1,6 +1,7 @@
 export interface CommonInfo {
     "shopServicePhone"?: string,
     "shopId"?: number,
+    "orderType"?: number,
     "count"?: number, // 倒计时
     "liked"?: boolean,
     "uploadAvatar"?: string,

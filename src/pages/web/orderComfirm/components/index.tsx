@@ -7,6 +7,8 @@ import Icon, {
 import iconEdit from "@/assets/images/common/icon/icon-edit.svg";
 import OrderForModal from "@/pages/components/antd/modal/orderForModal";
 import OrderTimeModal from "@/pages/components/antd/modal/orderTimeModal";
+import { orderTimeType, ORDERTIME_ASAP } from "@/utils/constant";
+import moment from "moment";
 
 import style from "@/styles/theme/icon.less";
 import "./index.less";
@@ -17,12 +19,20 @@ interface Props {
 const OrderMethod = (props: Props) => {
   const [isOrderForModal, setisOrderForModal] = useState(false);
   const [isOpenOrderTimeModal, setisOpenOrderTimeModal] = useState(false);
+  const [timeData, setTimeData] = useState<{
+    timeType: number;
+    diningTime?: number;
+  }>({ timeType: ORDERTIME_ASAP });
   const { type } = props;
   const orderForModalClose = () => {
     setisOrderForModal(false);
   };
   const orderTimeModalClose = () => {
     setisOpenOrderTimeModal(false);
+  };
+  const setTimeDataFn = (data) => {
+    console.log(`time data`, data);
+    setTimeData(data);
   };
   return (
     <div className="orderMethod-wrap">
@@ -35,7 +45,13 @@ const OrderMethod = (props: Props) => {
                 <span>
                   <ClockCircleOutlined style={{ fontSize: "1.5rem" }} />
                 </span>
-                <p>19:00</p>
+                <p>
+                  {timeData?.timeType === ORDERTIME_ASAP
+                    ? orderTimeType.get(ORDERTIME_ASAP)
+                    : moment(timeData.diningTime)
+                        .format('"HH:mm, DD MMMM YYYY"')
+                        .replace(/\"/g, "")}
+                </p>
               </div>
               <span
                 onClick={() => {
@@ -134,14 +150,15 @@ const OrderMethod = (props: Props) => {
           </ul>
         </>
       )}
-      <OrderForModal
-        isOpen={isOrderForModal}
-        isClose={orderForModalClose}
-        shopId={Number(1)}
-      />
       <OrderTimeModal
         isOpen={isOpenOrderTimeModal}
         isClose={orderTimeModalClose}
+        shopId={Number(1)}
+        finishFn={setTimeDataFn}
+      />
+      <OrderForModal
+        isOpen={isOrderForModal}
+        isClose={orderForModalClose}
         shopId={Number(1)}
       />
     </div>

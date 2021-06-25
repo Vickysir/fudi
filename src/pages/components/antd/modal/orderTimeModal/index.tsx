@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Rate, Modal, Input, Button, Select, DatePicker, message } from "antd";
-import {
-  RightOutlined,
-  UserOutlined,
-  TeamOutlined,
-  HistoryOutlined,
-  CheckOutlined,
-  PhoneOutlined,
-} from "@ant-design/icons";
+import { Modal, Input, Button, Select, DatePicker, message } from "antd";
+import { CheckOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { isLogin } from "@/utils";
 import { useAppStore } from "@/__internal";
-import { APIBookTable } from "@/pages/api/request";
-
-const { TextArea } = Input;
-const { Option } = Select;
+import {
+  orderTimeType,
+  ORDERTIME_ASAP,
+  ORDERTIME_ONTIME,
+} from "@/utils/constant";
+import "./index.less";
 
 const OrderTimeModal = (props) => {
-  const { isOpen, isClose, shopId } = props;
+  const { isOpen, isClose, shopId, finishFn } = props;
   const authInfo = useAppStore("authInfo");
 
   const [visible, setvisible] = useState(false);
-
+  const [timeType, setTimeType] = useState(ORDERTIME_ASAP);
   const [isEditForTime, setIsEditForTime] = useState(false);
   const [editForTimeValue, setEditForTimeValue] = useState<number>(
     moment(new Date()).valueOf()
@@ -32,20 +26,22 @@ const OrderTimeModal = (props) => {
   }, [isOpen]);
 
   const handleOk = async () => {
-    if (!editForTimeValue) return message.error("Place input book time !");
+    if (!editForTimeValue) return message.error("Place select time !");
+    let submint;
+    if (timeType === ORDERTIME_ASAP) {
+      submint = {
+        timeType: timeType,
+      };
+    } else {
+      submint = {
+        timeType: timeType,
+        diningTime: editForTimeValue, // 精确到毫秒
+      };
+    }
 
-    const submint = {
-      consignee: "", //收货人
-      sex: 0, // 性别
-      phone: "", //  电话
-      peopleNumber: 0, //
-      diningTime: editForTimeValue, // 精确到毫秒
-      shopId: shopId,
-      //editForNoteValue
-    };
-    console.log(submint);
     try {
-      await APIBookTable(submint);
+      // 提交数据
+      finishFn(submint);
       setvisible(false);
       isClose("ok");
     } catch (err) {
@@ -80,19 +76,28 @@ const OrderTimeModal = (props) => {
       disabledSeconds: () => [55, 56],
     };
   }
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
+  const onSelectTimeTypeChange = (type) => {
+    setTimeType(type);
+    setIsEditForTime(false);
 
+    if (type === 2) {
+      handleEditForTime();
+    }
+  };
   return (
     <Modal visible={visible} onCancel={handleCancel} footer={null}>
       <div className="model-content">
         <header>
           <h1>Order Time</h1>
         </header>
-        <ul>
-          <li>
-            <p>
-              <HistoryOutlined />
-            </p>
+        <ul id="orderTimeModal-content">
+          <li onClick={() => onSelectTimeTypeChange(ORDERTIME_ASAP)}>
+            <p>{orderTimeType.get(ORDERTIME_ASAP)}</p>
+            <div>{timeType === ORDERTIME_ASAP && <CheckOutlined />}</div>
+          </li>
+          <li onClick={() => onSelectTimeTypeChange(ORDERTIME_ONTIME)}>
+            <p>{orderTimeType.get(ORDERTIME_ONTIME)}</p>
             <div>
               {isEditForTime ? (
                 <div style={{ width: "100% " }}>
@@ -103,9 +108,12 @@ const OrderTimeModal = (props) => {
                     showNow={false}
                     format="HH:mm, DD MMMM YYYY"
                     onChange={handleChangeForTime}
-                    onOk={() => setIsEditForTime(false)}
+                    onOk={() => {
+                      console.log(`isEditForTime`, isEditForTime);
+                      setIsEditForTime(false);
+                    }}
                     disabledDate={disabledDate}
-                  // disabledTime={disabledDateTime}
+                    // disabledTime={disabledDateTime}
                   />
                 </div>
               ) : (
@@ -115,8 +123,8 @@ const OrderTimeModal = (props) => {
                       .format('"HH:mm, DD MMMM YYYY"')
                       .replace(/\"/g, "")}
                   </span>
-                  <div onClick={handleEditForTime}>
-                    <RightOutlined />
+                  <div>
+                    {timeType === ORDERTIME_ONTIME && <CheckOutlined />}
                   </div>
                 </>
               )}

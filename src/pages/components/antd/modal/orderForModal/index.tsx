@@ -15,7 +15,7 @@ import { APIBookTable } from "@/pages/api/request";
 const { Option } = Select;
 
 const OrderForModal = (props) => {
-  const { isOpen, isClose, shopId } = props;
+  const { isOpen, isClose, shopId, finishFn } = props;
   const authInfo = useAppStore("authInfo");
 
   const [visible, setvisible] = useState(false);
@@ -50,16 +50,11 @@ const OrderForModal = (props) => {
 
     const submint = {
       consignee: editForNameValue, //收货人
-      sex: 0, // 性别
       phone: editForPhoneValue, //  电话
-      peopleNumber: 0, //
-      diningTime: 0, // 精确到毫秒
-      shopId: shopId,
-      //editForNoteValue
     };
     console.log(submint);
     try {
-      await APIBookTable(submint);
+      finishFn(submint);
       setvisible(false);
       isClose("ok");
     } catch (err) {

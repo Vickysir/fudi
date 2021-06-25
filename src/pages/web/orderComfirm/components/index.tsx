@@ -8,6 +8,7 @@ import iconEdit from "@/assets/images/common/icon/icon-edit.svg";
 import OrderForModal from "@/pages/components/antd/modal/orderForModal";
 import OrderTimeModal from "@/pages/components/antd/modal/orderTimeModal";
 import { orderTimeType, ORDERTIME_ASAP } from "@/utils/constant";
+import { useAppStore } from "@/__internal";
 import moment from "moment";
 
 import style from "@/styles/theme/icon.less";
@@ -17,23 +18,32 @@ interface Props {
   type: string;
 }
 const OrderMethod = (props: Props) => {
+  const authInfo = useAppStore("authInfo");
   const [isOrderForModal, setisOrderForModal] = useState(false);
   const [isOpenOrderTimeModal, setisOpenOrderTimeModal] = useState(false);
-  const [timeData, setTimeData] = useState<{
-    timeType: number;
-    diningTime?: number;
-  }>({ timeType: ORDERTIME_ASAP });
+  const [orderData, setOrderData] = useState<
+    {
+      timeType: number;
+      diningTime?: number;
+    } & { consignee: string; phone: number | string }
+  >({
+    timeType: ORDERTIME_ASAP,
+    consignee: authInfo.nickname,
+    phone: authInfo.phone,
+  });
   const { type } = props;
+
   const orderForModalClose = () => {
     setisOrderForModal(false);
   };
   const orderTimeModalClose = () => {
     setisOpenOrderTimeModal(false);
   };
-  const setTimeDataFn = (data) => {
+  const setDataFn = (data) => {
     console.log(`time data`, data);
-    setTimeData(data);
+    setOrderData(data);
   };
+
   return (
     <div className="orderMethod-wrap">
       {type === "collect" && (
@@ -46,9 +56,9 @@ const OrderMethod = (props: Props) => {
                   <ClockCircleOutlined style={{ fontSize: "1.5rem" }} />
                 </span>
                 <p>
-                  {timeData?.timeType === ORDERTIME_ASAP
+                  {orderData?.timeType === ORDERTIME_ASAP
                     ? orderTimeType.get(ORDERTIME_ASAP)
-                    : moment(timeData.diningTime)
+                    : moment(orderData.diningTime)
                         .format('"HH:mm, DD MMMM YYYY"')
                         .replace(/\"/g, "")}
                 </p>
@@ -74,7 +84,7 @@ const OrderMethod = (props: Props) => {
                   <UserOutlined style={{ fontSize: "1.5rem" }} />
                 </span>
                 <p className="inaline">
-                  John <span>+310540009998</span>
+                  {orderData.consignee} <span>+{orderData.phone}</span>
                 </p>
               </div>
               <span
@@ -154,12 +164,13 @@ const OrderMethod = (props: Props) => {
         isOpen={isOpenOrderTimeModal}
         isClose={orderTimeModalClose}
         shopId={Number(1)}
-        finishFn={setTimeDataFn}
+        finishFn={setDataFn}
       />
       <OrderForModal
         isOpen={isOrderForModal}
         isClose={orderForModalClose}
         shopId={Number(1)}
+        finishFn={setDataFn}
       />
     </div>
   );

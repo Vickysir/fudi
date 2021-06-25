@@ -10,7 +10,7 @@ import {
 import moment from "moment";
 import { isLogin } from "@/utils";
 import { useAppStore } from "@/__internal";
-import { APIBookTable } from "@/pages/api/request";
+import { APIBookTable, APIHistoricalContacts } from "@/pages/api/request";
 
 const { Option } = Select;
 
@@ -109,6 +109,10 @@ const OrderForModal = (props) => {
       setEditForNameValue(authInfo.nickname);
       setEditForPhoneValue(authInfo.phone);
     }
+    async function getPersonList() {
+      await APIHistoricalContacts({ limit: 5 });
+    }
+    getPersonList();
   }, []);
 
   return (

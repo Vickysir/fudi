@@ -64,5 +64,7 @@ export const apiPath = {
     "paymentOnline": "/user/order/payment/online", // 在线支付
     //个人中心-订单
     "orderDetail": "/user/order/detail/v3",// order 详情
+    //确认订单
+    "historicalContacts": "/user/order/historical_contacts", // 联系人列表
 
 }

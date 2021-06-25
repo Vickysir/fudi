@@ -2,11 +2,11 @@
 
 <br>
 
-- [header 购物车 list](#header购物车list)<br>
-- [header 通知 list](#header通知list)<br>
+- [header 购物车 list](#header购物车list) ✅<br>
+- [header 通知 list](#header通知list) 【暂缓】<br>
 - [确认订单](#确认订单)<br>
 - [个人中心-订单](#个人中心-订单)<br>
-- [个人中心-通知](#个人中心-通知)<br>
+- [个人中心-通知](#个人中心-通知) 【暂缓】<br>
 - [主题色](#主题色)<br>
 
 ### header 购物车 list
@@ -26,10 +26,8 @@
         - 修改商品数量，减到0时，删除该商品
         - 修改商品数量时，计算出total价格显示出来
         - 点击Confirm Order 跳转到 确认订单页面
-        - change to collecttion
+        - change to collecttion 【删掉】
 
-<div style="color:red">点击change to collecttion，接下来交互是什么？【删掉】</div>
-<div style="color:red">购物车随着用户选择的店铺切换？如果用户未选择，则不显示购物车？</div>
 <br>
 
 ### header 通知 list【 隐藏 】
@@ -46,9 +44,7 @@
     - 点击小铃铛，通过api获取消息内容，展示消息内容
         - 点击see all，进入消息中心
 
-<div style="color:red">获取消息内容的api ?</div>
-<div style="color:red">实时获取消息的socket ?</div>
-<div style="color:red">获取消息内容的api，会返回几条消息？默认展示几条在页面？</div>
+<!-- <div style="color:red">获取消息内容的api，会返回几条消息？默认展示几条在页面？</div> -->
 
 <br>
 
@@ -57,26 +53,43 @@
 <br>
 <div style="color:green">接口文档：</div>
 
-    - 获取购物车内容  /user/cart/list/v3 ❎  preview v4
-    - 根据 type = deliver、collect，展示右侧的相关信息
+    - 获取购物车内容  /user/cart/list/v3 ❌ preview v4
+    - 根据 type = deliver、collect，展示右侧的相关信息 ✅
     - delivery fee  /user/order/freight_price/v3
     - delivery 地址 是用户在homepage 输入的地址
-    - 配送时间（当前时间往后延一个小时，必须要在营业时间范围内。不在营业范围之类，只能立刻送 ）
-    - 修改联系人，获取联系人列表 
+    - 修改配送时间（当前时间往后延一个小时，必须要在营业时间范围内。不在营业范围之类，只能立刻送 ）
+    - 修改联系人，获取联系人列表 /user/order/historical_contacts
     - 优惠券列表 /user/order/coupon/list/v2
     - 添加优惠券 /user/order/coupon/obtain/v2
-    - 在线支付 /user/order/payment/online
+    - 在线支付
+        - /user/order/payment/online
+        - /user/order/payment/encrypt/rsa
+        - /user/order/payment/online/entity
+    - 现金支付
+        - /user/order/payment/offline
     - 下单 /user/order/submit/v3
 
 <div style="color:green">交互</div>
 
     - 左侧订单详情 仅展示
     - 右侧信息
-        - 地图查看位置
+        - 地图查看位置 【删掉】
         - 修改时间
+            - ASAP 立刻送
+            - On Time
         - 修改people
+            - for self 为自己
+            - order for another person
+                - 联系人列表
+                - 选择联系人
         - 修改order option
+            - Meet in front of the door
+            - Drop near the door
     - 点击+ Add Voucher，添加优惠券
+        - 优惠券列表
+        - 添加优惠券
+        - 选择优惠券
+
     - Payment Method，二选一
         - 现金 （默认）
             - 点击pay now ，下单，下单成功
@@ -84,17 +97,10 @@
             - 点击pay now 下单
                 - 获得订单号
                 - 添加银行卡完成，comfirm,支付成功
-
-
     - 下单
         - 下单成功，清空购物车，回到首页
 
-<div style="color:red">确认一下接口文档和交互</div>
-<div style="color:red">右侧信息，type是在homePage搜索的时候保存的吗？</div>
 <div style="color:red">Order Option 的list是什么？</div>
-<div style="color:red">Payment Method默认值是？现金？online？</div>
-<div style="color:red">添加 payment 交互？信息是否需要调api保存下来？</div>
-<div style="color:red">Add Voucher，添加优惠券，此处的交互?</div>
 <br>
 
 ### 个人中心-订单
@@ -106,19 +112,19 @@
     - 获取order详情 /user/order/list/v3
     - 获取order详情 /user/order/detail/v3
     - 实时获取消息的socket websocket/position/subscribe?userOrderId={{userOrderId}} 【先不做】
-    - 添加评论接口
+    - 添加评论接口 /user/order/evaluate/save/v2
 
 <div style="color:green">交互</div>
 
     - 点击详情
         - 根据api渲染order详情
-        - 根据socket实时渲染位置信息
+        - 地图渲染出一个location
+        - 根据socket实时渲染位置信息 【先不做】
     - 点击Add a Review 状态为4的时候可评论
         - 添加评论
     - Repeat Order 【删除】
 
-<div style="color:red">Repeat Order怎么做？</div>
-<div style="color:red">添加评论接口？</div>
+<div style="color:red">添加评论的具体交互设计？</div>
 <br>
 
 ### 个人中心-通知 【隐藏】
@@ -137,7 +143,6 @@
         - 更新该消息的状态为已读
     - 点击删除，删除该消息，更新list
 
-<div style="color:red">相关接口？</div>
 <br>
 
 ### 主题色

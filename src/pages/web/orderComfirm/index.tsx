@@ -24,15 +24,6 @@ const OrderComfirm = () => {
     const orderType = commonInfo?.orderType;
     const shopId = commonInfo?.shopId;
 
-
-    const fetchData = async () => {
-        // setRefreshHeaderCart(new Date().getTime())
-        APP_STORE.commonInfo = {
-            ...APP_STORE.commonInfo,
-            refreshCart: new Date().getTime()
-        };
-    }
-
     const getOrderListPrice = (total) => {
         setTotal(total)
     }
@@ -52,7 +43,7 @@ const OrderComfirm = () => {
                 <div className="orderComfirm-wrap-body">
                     <div>
                         <h1>Confirm Order</h1>
-                        <OrderDetailsList refreshHeader={fetchData} comfirmBtn={false} orderListPrice={getOrderListPrice} />
+                        <OrderDetailsList comfirmBtn={false} orderListPrice={getOrderListPrice} />
                         <Form
                             form={form}
                             layout="vertical"

@@ -41,9 +41,9 @@ export const DeliveryType = new Map([
 // paymentType
 export const PAYMENTTYPE_ONLINE = 0; //online
 export const PAYMENTTYPE_OFFLINE = 1; //offline
-export const PaymentType = new Map([
-  [0, "online"],
-  [1, "offline"],
+export const paymentType = new Map([
+  [0, "card"],
+  [1, "cash"],
 ]);
 
 // 优惠券相关

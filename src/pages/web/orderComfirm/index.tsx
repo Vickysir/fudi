@@ -12,12 +12,13 @@ import RoundButton from '@/pages/components/antd/button';
 import DeliveryCom from './delivery';
 import CollectCom from './collect';
 import { useAppStore } from '@/__internal';
-import { DELIVERYTYPE_DELIVERY } from '@/utils/constant';
+import { DELIVERYTYPE_DELIVERY, paymentType, PAYMENTTYPE_OFFLINE, PAYMENTTYPE_ONLINE } from '@/utils/constant';
 import { OrderOtherInfoFormData } from './components';
 
 const OrderComfirm = () => {
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
     const [total, setTotal] = useState("0");
+    const [otherOrderInfo, setOtherOrderInfo] = useState<OrderOtherInfoFormData>();
     const [form] = Form.useForm();
     const commonInfo = useAppStore("commonInfo");
 
@@ -29,6 +30,7 @@ const OrderComfirm = () => {
     }
     const getOtherOrderInfo = (params: OrderOtherInfoFormData) => {
         console.log(`params`, params)
+        setOtherOrderInfo(params);
     }
     return (
         <div>
@@ -50,7 +52,7 @@ const OrderComfirm = () => {
                         <Form
                             form={form}
                             layout="vertical"
-                            initialValues={{ payment: "a" }}
+                            initialValues={{ payment: PAYMENTTYPE_OFFLINE }}
                             style={{ margin: "1rem 2rem" }}
                         >
 
@@ -74,8 +76,8 @@ const OrderComfirm = () => {
                                 <Row className="orderComfirm-wrap-body-form-payment">
                                     <Form.Item noStyle name="payment">
                                         <Radio.Group buttonStyle="solid">
-                                            <Radio.Button value="a">Cash</Radio.Button>
-                                            <Radio.Button value="b">Card</Radio.Button>
+                                            <Radio.Button value={PAYMENTTYPE_OFFLINE}>{paymentType.get(PAYMENTTYPE_OFFLINE)}</Radio.Button>
+                                            <Radio.Button value={PAYMENTTYPE_ONLINE}>{paymentType.get(PAYMENTTYPE_ONLINE)}</Radio.Button>
                                         </Radio.Group>
                                     </Form.Item>
                                     <span>+ Add Voucher</span>
@@ -88,6 +90,11 @@ const OrderComfirm = () => {
                                     onClick={() => {
                                         // TODO payment 为现金直接下单
                                         // TODO payment 为online ,需要填写银行卡
+                                        const submit = {
+                                            ...otherOrderInfo,
+                                            ...form.getFieldsValue()
+                                        }
+                                        console.log(`联合表单`, submit)
                                     }}
                                     style={{ marginTop: "4rem" }}
                                 >

@@ -21,7 +21,11 @@ const CollectCom = (props: Props) => {
         const { data } = await APIShopDetail({ "id": Number(shopId) });
         setshopDetails(data);
         setLoading(false);
-
+        APP_STORE.commonInfo = {
+            ...APP_STORE.commonInfo,
+            startTimeFormat: data.startTimeFormat,
+            endTimeFormat: data.endTimeFormat
+        };
     }
     useEffect(() => {
         fetchShopDetails();

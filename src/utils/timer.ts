@@ -12,9 +12,19 @@ export const formatDateTime = (dateTime, format = 'YYYY/MM/DD HH:mm:ss') => mome
 export const formatDateToDay = (dateTime, format = 'DD MMMM YYYY') => moment(new Date(dateTime)).format(format);
 export const formatDateToHour = (dataTime, format = 'HH:mm') => moment(new Date(dataTime)).format(format);
 
-
-
-
+// endTimeFormat: "23:59" 分割出小时与分钟
+export const segmentationTime = (time) => {
+    const arr = time.split(':')
+    let hh = arr[0];
+    let mm = arr[1];
+    if (hh < 10) {
+        hh = hh.substr(1, 1)
+    }
+    if (mm < 10) {
+        mm = mm.substr(1, 1)
+    }
+    return { h: hh, m: mm }
+}
 
 // 倒计时 逻辑
 // 开启倒计时，需要给初始值

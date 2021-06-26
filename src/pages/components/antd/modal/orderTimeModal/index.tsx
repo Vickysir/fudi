@@ -9,10 +9,14 @@ import {
   ORDERTIME_ONTIME,
 } from "@/utils/constant";
 import "./index.less";
+import { getDefaultProps } from "antd-mobile/lib/picker/AbstractPicker";
+import { formatDateToHour, segmentationTime } from "@/utils/timer";
+import { number } from "mathjs";
 
 const OrderTimeModal = (props) => {
   const { isOpen, isClose, shopId, finishFn } = props;
   const authInfo = useAppStore("authInfo");
+  const commonInfo = useAppStore("commonInfo");
 
   const [visible, setvisible] = useState(false);
   const [timeType, setTimeType] = useState(ORDERTIME_ASAP);
@@ -20,9 +24,16 @@ const OrderTimeModal = (props) => {
   const [editForTimeValue, setEditForTimeValue] = useState<number>(
     moment(new Date()).valueOf()
   );
+  const [isCloseShop, setIsCloseShop] = useState(false)
+  const openTIme = segmentationTime(commonInfo.startTimeFormat);
+  const closeTIme = segmentationTime(commonInfo.endTimeFormat);
+
+  console.log(`openTIme`, openTIme)
+  console.log(`closeTIme`, closeTIme)
 
   useEffect(() => {
     setvisible(isOpen);
+
   }, [isOpen]);
 
   const handleOk = async () => {
@@ -58,25 +69,116 @@ const OrderTimeModal = (props) => {
   };
   const handleChangeForTime = (value) => {
     const time = moment(value).valueOf();
-    console.log(`time`, time);
     setEditForTimeValue(time);
   };
 
   function disabledDate(current) {
     // Can not select days before today and today
-    // return current && current < moment().endOf('day');
+    //  return current && current < moment().endOf('day');
+    // return current < moment().startOf("minute");
+    return current && moment(current).isBefore(moment(), 'minute');
 
-    // 只能选择今天跟今天之后的日期：
-    return current < moment().startOf("day");
   }
-  function disabledDateTime() {
+  const range = (start, end) => {
+    const result = [];
+    for (let i = start; i < end; i++) {
+      result.push(i);
+    }
+    return result;
+  }
+  const getDisableHours = (start: number, end: number, minutesEnd: number) => {
+    const current = moment().hours()
+
+    let arry
+    if (current <= start) {
+      console.log(`arry 在营业时间开始前`)
+
+      arry = [...range(0, 24).splice(0, start + 1), ...range(0, 24).splice(end, 24 - end)]
+    }
+    if (current > start && current <= (end - 1)) {
+      if (minutesEnd > 0) {
+        console.log(`minutesEnd >0`)
+
+        arry = [...range(0, 24).splice(0, current + 1), ...range(0, 24).splice(end + 1, 24 - (end + 1))]
+      } else {
+        console.log(`整点`)
+
+        arry = [...range(0, 24).splice(0, current + 1), ...range(0, 24).splice((end - 1), 24 - (end - 1))]
+      }
+      console.log(`arry 在营业区间`)
+    }
+    if (current > (end - 1)) {
+      console.log(`arry 在营业时间结束后`)
+
+      arry = [...range(0, 24)]
+    }
+    return arry
+  }
+
+  const getDisableMinutes = (disabledHours: number[], userSelectHour: number, closeTIme) => {
+    console.log(`disabledHours`, disabledHours)
+    const currentMinutes = moment().minutes()
+
+
+    if (disabledHours.indexOf(userSelectHour) > 0) { // 小时都被禁用时
+      return range(0, 60)
+
+    } else {
+      if (userSelectHour === moment().hours() + 1) {
+        console.log(`配送1小时`)
+        return range(0, 60).splice(0, currentMinutes);
+      }
+      if (userSelectHour === Number(closeTIme.h)) {
+        console.log(`结束时间`)
+        return range(0, 60).splice(Number(closeTIme.m), 60 - Number(closeTIme.m));
+      }
+      if (currentMinutes >= Number(closeTIme.m)) {
+        return range(0, 60) //全部禁用
+      }
+      return []
+    }
+  }
+  const getDefaultTime = (start, end) => {
+    const currentDay = moment().days();
+    const currentHour = moment().hours();
+    const currentMinutes = moment().minutes();
+    let h = 0;
+
+    if (currentHour <= Number(start.h)) {
+      h = Number(start.h) + 1
+    }
+    if (currentHour > Number(start.h) && currentHour < Number(end.h)) {
+      h = currentHour + 1
+    }
+    if (currentHour >= Number(end.h)) {
+    }
+
+    return `${h}:${currentMinutes}`
+  }
+
+  const disabledTime = current => {
+    const hours = moment().hours()
+    const minutes = moment().minutes()
+    // const seconds = moment().seconds()
+    const currentHour = moment(current).hour();
+    if (current && moment(current).date() === moment().date()) {
+      const hoursArry = getDisableHours(Number(openTIme.h), Number(closeTIme.h), Number(closeTIme.m));
+      // setDisabledHoursArry(hoursArry);
+      console.log(`营业时间：${commonInfo.startTimeFormat} - ${commonInfo.endTimeFormat}`)
+      return {
+        disabledHours: () => hoursArry,
+        disabledMinutes: () => getDisableMinutes(hoursArry, currentHour, closeTIme)
+      }
+    }
+    // TODO 其他日期，应该禁用掉非营业时间
     return {
-      disabledHours: () => [1, 20],
-      disabledMinutes: () => [30, 60],
-      disabledSeconds: () => [55, 56],
-    };
+      disabledHours: () => [],
+      disabledMinutes: () => [],
+      // disabledSeconds: () => [],
+    }
   }
-  useEffect(() => {}, []);
+
+  useEffect(() => { }, []);
   const onSelectTimeTypeChange = (type) => {
     setTimeType(type);
     setIsEditForTime(false);
@@ -99,36 +201,35 @@ const OrderTimeModal = (props) => {
           <li onClick={() => onSelectTimeTypeChange(ORDERTIME_ONTIME)}>
             <p>{orderTimeType.get(ORDERTIME_ONTIME)}</p>
             <div>
-              {isEditForTime ? (
-                <div style={{ width: "100% " }}>
-                  <DatePicker
-                    style={{ width: "100% " }}
-                    placeholder="Select time"
-                    showTime
-                    showNow={false}
-                    format="HH:mm, DD MMMM YYYY"
-                    onChange={handleChangeForTime}
-                    onOk={() => {
-                      console.log(`isEditForTime`, isEditForTime);
-                      setIsEditForTime(false);
-                    }}
-                    disabledDate={disabledDate}
-                    // disabledTime={disabledDateTime}
-                  />
-                </div>
-              ) : (
-                <>
-                  <span>
-                    {moment(editForTimeValue)
-                      .format('"HH:mm, DD MMMM YYYY"')
-                      .replace(/\"/g, "")}
-                  </span>
-                  <div>
-                    {timeType === ORDERTIME_ONTIME && <CheckOutlined />}
-                  </div>
-                </>
-              )}
+              {timeType === ORDERTIME_ONTIME && <CheckOutlined />}
             </div>
+          </li>
+          <li>
+            {isEditForTime ? (
+              <div style={{ width: "100% " }}>
+                <DatePicker
+                  style={{ width: "100% " }}
+                  placeholder="Select time"
+                  showTime={
+                    { defaultValue: moment(getDefaultTime(openTIme, closeTIme), 'HH:mm') }
+                  }
+                  showNow={false}
+                  format="HH:mm, DD MMMM YYYY"
+                  disabledDate={disabledDate}
+                  disabledTime={disabledTime}
+                  onChange={handleChangeForTime}
+                  onOk={() => {
+                    setIsEditForTime(false);
+                  }}
+                />
+              </div>
+            ) : (
+              <span className="orderTimeModal-content-ontime">
+                {moment(editForTimeValue)
+                  .format('"HH:mm, DD MMMM YYYY"')
+                  .replace(/\"/g, "")}
+              </span>
+            )}
           </li>
         </ul>
         <div className="model-content-action">

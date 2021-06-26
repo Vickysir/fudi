@@ -105,7 +105,7 @@ const OrderComfirm = () => {
                     </div>
                     <div>
                         {
-                            Number(orderType) === DELIVERYTYPE_DELIVERY ? <DeliveryCom setFormData={getOtherOrderInfo} /> : <CollectCom shopId={shopId} />
+                            Number(orderType) === DELIVERYTYPE_DELIVERY ? <DeliveryCom setFormData={getOtherOrderInfo} /> : <CollectCom shopId={shopId} setFormData={getOtherOrderInfo} />
                         }
                     </div>
                 </div>

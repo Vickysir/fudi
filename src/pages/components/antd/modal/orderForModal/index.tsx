@@ -11,6 +11,8 @@ import moment from "moment";
 import { isLogin } from "@/utils";
 import { useAppStore } from "@/__internal";
 import { APIBookTable, APIHistoricalContacts } from "@/pages/api/request";
+import style from '@/styles/theme/icon.less'
+import './index.less'
 
 const { Option } = Select;
 
@@ -28,7 +30,12 @@ const OrderForModal = (props) => {
   const [editForNameValue, setEditForNameValue] = useState("");
   const [isEditForPhone, setIsEditForPhone] = useState(false);
   const [editForPhoneValue, setEditForPhoneValue] = useState("");
-
+  const [historyContacts, setHistoryContacts] = useState<{ name: string, phone: string, id: number }[]>()
+  const [historyContactsId, setHistoryContactsId] = useState(0)
+  async function getPersonList() {
+    const { data } = await APIHistoricalContacts({ limit: 5 });
+    setHistoryContacts([{ name: 'Sam', phone: '186120644567', id: 1 }, { name: 'Jonh', phone: '18212069305', id: 2 }]);
+  }
   useEffect(() => {
     setvisible(isOpen);
   }, [isOpen]);
@@ -69,7 +76,7 @@ const OrderForModal = (props) => {
   const handleEditForWho = () => {
     setIsEditForWho(true);
   };
-  const handleChangeForWho = (value) => {
+  const handleChangeForWho = async (value) => {
     setEditForWhoValue(value);
     setIsEditForWho(false);
     if (value.value === 1) {
@@ -84,10 +91,14 @@ const OrderForModal = (props) => {
         setEditForNameValue(authInfo.nickname);
         setEditForPhoneValue(authInfo.phone);
       }
+    } else {
+      await getPersonList();
     }
   };
   const handleEditForName = () => {
     setIsEditForName(true);
+    setHistoryContactsId(0)
+
   };
   const handleChangeForName = (e) => {
     const value = e.target.value;
@@ -95,12 +106,19 @@ const OrderForModal = (props) => {
   };
   const handleEditForPhone = () => {
     setIsEditForPhone(true);
+    setHistoryContactsId(0)
+
   };
   const handleChangeForPhone = (e) => {
     const value = e.target.value;
     setEditForPhoneValue(value);
   };
 
+  const handleClickHitoryContacts = (item) => {
+    setHistoryContactsId(item.id)
+    setEditForNameValue(item.name);
+    setEditForPhoneValue(item.phone)
+  }
   useEffect(() => {
     if (!isLogin(authInfo)) {
       setEditForNameValue("");
@@ -109,10 +127,7 @@ const OrderForModal = (props) => {
       setEditForNameValue(authInfo.nickname);
       setEditForPhoneValue(authInfo.phone);
     }
-    async function getPersonList() {
-      await APIHistoricalContacts({ limit: 5 });
-    }
-    getPersonList();
+
   }, []);
 
   return (
@@ -121,7 +136,7 @@ const OrderForModal = (props) => {
         <header>
           <h1>Order for</h1>
         </header>
-        <ul>
+        <ul id="historyContacts-box">
           <li>
             <p>
               <UserOutlined />
@@ -204,6 +219,23 @@ const OrderForModal = (props) => {
               )}
             </li>
           )}
+          {
+            editForWhoValue.value === 2 && historyContacts?.map((item) => {
+              return (
+                <li
+                  key={item.id}
+                  className="historyContacts-box-li"
+                  onClick={() => handleClickHitoryContacts(item)}
+                >
+                  <div>
+                    <h5>{item.name}</h5>
+                    <p>+ {item.phone}</p>
+                  </div>
+                  <CheckOutlined className={item.id === historyContactsId ? style.themeColor : ""} />
+                </li>
+              )
+            })
+          }
         </ul>
         <div className="model-content-action">
           <Button shape="round" type="primary" block onClick={handleOk}>

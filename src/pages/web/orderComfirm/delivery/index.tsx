@@ -1,11 +1,14 @@
 import React from 'react'
 import Icon, { EnvironmentOutlined, WalletOutlined, HomeOutlined } from '@ant-design/icons';
-import OrderMethod from '../components'
+import OrderMethod, { OrderOtherInfoFormData } from '../components'
 import iconMap from '@/assets/images/common/icon/icon-map.svg';
 import style from '@/styles/theme/icon.less'
 import './index.less'
 
-const DeliveryCom = () => {
+interface Props {
+    setFormData: (params: OrderOtherInfoFormData) => void
+}
+const DeliveryCom = (props: Props) => {
     return (
         <div className="orderComfirmType-wrap">
             <div className="orderComfirmType-wrap-address">
@@ -17,11 +20,11 @@ const DeliveryCom = () => {
                             <p className="inaline">Grafton Street, Dublin</p>
                         </div>
                         <span>
-                            <Icon
+                            {/* <Icon
                                 component={iconMap}
                                 className={` ${style.iconFill}`}
                                 style={{ fontSize: "1.5rem", }}
-                            />
+                            /> */}
                         </span>
                     </li>
                     <li>
@@ -41,7 +44,7 @@ const DeliveryCom = () => {
                     <li>Delivery Fee: <span className="delivery-fee">€ 6</span></li>
                 </ul>
             </div>
-            <OrderMethod type="delivery" />
+            <OrderMethod type="delivery" {...props} />
         </div>
     )
 }

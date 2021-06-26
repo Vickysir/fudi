@@ -83,3 +83,10 @@ export const orderTimeType = new Map([
   [1, "ASAP"],
   [2, "On Time"],
 ]);
+
+export const DELIVERYOPTION_FRONT = 1;
+export const DELIVERYOPTION_NEAR = 2;
+export const deliveryOption = new Map([
+  [1, "Meet in front of the door"],
+  [2, "Drop near the door"],
+]);

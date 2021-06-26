@@ -6,12 +6,13 @@ import iconShopGoods from '@/assets/images/common/icon/icon-shop-goods.svg';
 import style from '@/styles/theme/icon.less'
 
 import './index.less'
-import OrderMethod from '../components';
+import OrderMethod, { OrderOtherInfoFormData } from '../components';
 import { APIShopDetail } from '@/pages/api/request';
 import { ShopDetailResponse } from '@/pages/api/types';
 
 interface Props {
     shopId: number
+    setFormData: (params: OrderOtherInfoFormData) => void
 }
 const CollectCom = (props: Props) => {
     const { shopId } = props;
@@ -51,7 +52,7 @@ const CollectCom = (props: Props) => {
                     </ul>
                 </Spin>
             </div>
-            <OrderMethod type="collect" />
+            <OrderMethod type="collect" {...props} />
         </div>
     )
 }

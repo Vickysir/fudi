@@ -7,7 +7,8 @@ import Icon, {
 import iconEdit from "@/assets/images/common/icon/icon-edit.svg";
 import OrderForModal from "@/pages/components/antd/modal/orderForModal";
 import OrderTimeModal from "@/pages/components/antd/modal/orderTimeModal";
-import { orderTimeType, ORDERTIME_ASAP } from "@/utils/constant";
+import OrderForOptionModal from "@/pages/components/antd/modal/orderForOptionModal";
+import { deliveryOption, DELIVERYOPTION_FRONT, orderTimeType, ORDERTIME_ASAP } from "@/utils/constant";
 import { useAppStore } from "@/__internal";
 import moment from "moment";
 
@@ -16,32 +17,48 @@ import "./index.less";
 
 interface Props {
   type: string;
+  setFormData: (params: OrderOtherInfoFormData) => void
+}
+export interface OrderOtherInfoFormData {
+  timeType: number;
+  diningTime?: number; consignee: string; phone: number | string
+  orderOption: {
+    label: string,
+    value: number,
+  }
 }
 const OrderMethod = (props: Props) => {
   const authInfo = useAppStore("authInfo");
   const [isOrderForModal, setisOrderForModal] = useState(false);
+  const [isOrderForOptionModal, setisOrderForOptionModal] = useState(false);
   const [isOpenOrderTimeModal, setisOpenOrderTimeModal] = useState(false);
-  const [orderData, setOrderData] = useState<
-    {
-      timeType: number;
-      diningTime?: number;
-    } & { consignee: string; phone: number | string }
-  >({
+  const [orderData, setOrderData] = useState<OrderOtherInfoFormData>({
     timeType: ORDERTIME_ASAP,
     consignee: authInfo.nickname,
     phone: authInfo.phone,
+    orderOption: {
+      label: deliveryOption.get(DELIVERYOPTION_FRONT),
+      value: DELIVERYOPTION_FRONT,
+    }
   });
-  const { type } = props;
+  const { type, setFormData } = props;
 
   const orderForModalClose = () => {
     setisOrderForModal(false);
+  };
+  const orderForOptionModalClose = () => {
+    setisOrderForOptionModal(false);
   };
   const orderTimeModalClose = () => {
     setisOpenOrderTimeModal(false);
   };
   const setDataFn = (data) => {
-    console.log(`time data`, data);
-    setOrderData(data);
+    const formData = {
+      ...orderData,
+      ...data
+    }
+    setOrderData(formData);
+    setFormData(formData)
   };
 
   return (
@@ -59,8 +76,8 @@ const OrderMethod = (props: Props) => {
                   {orderData?.timeType === ORDERTIME_ASAP
                     ? orderTimeType.get(ORDERTIME_ASAP)
                     : moment(orderData.diningTime)
-                        .format('"HH:mm, DD MMMM YYYY"')
-                        .replace(/\"/g, "")}
+                      .format('"HH:mm, DD MMMM YYYY"')
+                      .replace(/\"/g, "")}
                 </p>
               </div>
               <span
@@ -111,9 +128,19 @@ const OrderMethod = (props: Props) => {
                 <span>
                   <ClockCircleOutlined style={{ fontSize: "1.5rem" }} />
                 </span>
-                <p>ASAP</p>
+                <p>
+                  {orderData?.timeType === ORDERTIME_ASAP
+                    ? orderTimeType.get(ORDERTIME_ASAP)
+                    : moment(orderData.diningTime)
+                      .format('"HH:mm, DD MMMM YYYY"')
+                      .replace(/\"/g, "")}
+                </p>
               </div>
-              <span>
+              <span
+                onClick={() => {
+                  setisOpenOrderTimeModal(true);
+                }}
+              >
                 <Icon
                   component={iconEdit}
                   className={` ${style.iconFill}`}
@@ -125,15 +152,19 @@ const OrderMethod = (props: Props) => {
           <ul>
             <li>Order for</li>
             <li>
-              <div>
+              <div className="inaline">
                 <span>
                   <UserOutlined style={{ fontSize: "1.5rem" }} />
                 </span>
-                <p>
-                  ASAP <span></span>
+                <p className="inaline">
+                  {orderData.consignee} <span>+{orderData.phone}</span>
                 </p>
               </div>
-              <span>
+              <span
+                onClick={() => {
+                  setisOrderForModal(true);
+                }}
+              >
                 <Icon
                   component={iconEdit}
                   className={` ${style.iconFill}`}
@@ -147,10 +178,16 @@ const OrderMethod = (props: Props) => {
             <li>
               <div className="inaline">
                 <p className="inaline" style={{ margin: 0 }}>
-                  Meet in front of the door
+                  {
+                    orderData.orderOption.label
+                  }
                 </p>
               </div>
-              <span>
+              <span
+                onClick={() => {
+                  setisOrderForOptionModal(true);
+                }}
+              >
                 <DownOutlined
                   className="themeColor"
                   style={{ fontSize: "1.5rem" }}
@@ -169,6 +206,12 @@ const OrderMethod = (props: Props) => {
       <OrderForModal
         isOpen={isOrderForModal}
         isClose={orderForModalClose}
+        shopId={Number(1)}
+        finishFn={setDataFn}
+      />
+      <OrderForOptionModal
+        isOpen={isOrderForOptionModal}
+        isClose={orderForOptionModalClose}
         shopId={Number(1)}
         finishFn={setDataFn}
       />

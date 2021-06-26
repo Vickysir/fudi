@@ -13,6 +13,7 @@ import DeliveryCom from './delivery';
 import CollectCom from './collect';
 import { useAppStore } from '@/__internal';
 import { DELIVERYTYPE_DELIVERY } from '@/utils/constant';
+import { OrderOtherInfoFormData } from './components';
 
 const OrderComfirm = () => {
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
@@ -20,12 +21,14 @@ const OrderComfirm = () => {
     const [form] = Form.useForm();
     const commonInfo = useAppStore("commonInfo");
 
-    //TODO 从localStorage里面取
     const orderType = commonInfo?.orderType;
     const shopId = commonInfo?.shopId;
 
     const getOrderListPrice = (total) => {
         setTotal(total)
+    }
+    const getOtherOrderInfo = (params: OrderOtherInfoFormData) => {
+        console.log(`params`, params)
     }
     return (
         <div>
@@ -95,7 +98,7 @@ const OrderComfirm = () => {
                     </div>
                     <div>
                         {
-                            Number(orderType) === DELIVERYTYPE_DELIVERY ? <DeliveryCom /> : <CollectCom shopId={shopId} />
+                            Number(orderType) === DELIVERYTYPE_DELIVERY ? <DeliveryCom setFormData={getOtherOrderInfo} /> : <CollectCom shopId={shopId} />
                         }
                     </div>
                 </div>

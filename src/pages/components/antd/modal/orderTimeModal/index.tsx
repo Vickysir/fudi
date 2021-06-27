@@ -25,8 +25,8 @@ const OrderTimeModal = (props) => {
     moment(new Date()).valueOf()
   );
   const [isCloseShop, setIsCloseShop] = useState(false)
-  const openTIme = segmentationTime(commonInfo.startTimeFormat);
-  const closeTIme = segmentationTime(commonInfo.endTimeFormat);
+  const openTIme = segmentationTime(commonInfo?.startTimeFormat);
+  const closeTIme = segmentationTime(commonInfo?.endTimeFormat);
 
   console.log(`openTIme`, openTIme)
   console.log(`closeTIme`, closeTIme)

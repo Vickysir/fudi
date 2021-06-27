@@ -14,11 +14,13 @@ import CollectCom from './collect';
 import { useAppStore } from '@/__internal';
 import { DELIVERYTYPE_DELIVERY, paymentType, PAYMENTTYPE_OFFLINE, PAYMENTTYPE_ONLINE } from '@/utils/constant';
 import { OrderOtherInfoFormData } from './components';
+import OrderForVoucherModal from '@/pages/components/antd/modal/orderForVoucherModal';
 
 const OrderComfirm = () => {
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
     const [total, setTotal] = useState("0");
     const [otherOrderInfo, setOtherOrderInfo] = useState<OrderOtherInfoFormData>();
+    const [isOrderForVoucherModal, setisOrderForVoucherModal] = useState(false);
     const [form] = Form.useForm();
     const commonInfo = useAppStore("commonInfo");
 
@@ -32,6 +34,16 @@ const OrderComfirm = () => {
         console.log(`params`, params)
         setOtherOrderInfo(params);
     }
+    const orderForVoucherModalClose = () => {
+        setisOrderForVoucherModal(false);
+    };
+    const setDataFn = (data) => {
+        const voucherData = {
+            ...data
+        }
+        console.log(`voucherData`, voucherData)
+    };
+
     return (
         <div>
             <div className="orderComfirm-wrap">
@@ -71,7 +83,6 @@ const OrderComfirm = () => {
                             </Form.Item>
                             <Form.Item
                                 noStyle
-                                style={{ color: 'red' }}
                             >
                                 <Row className="orderComfirm-wrap-body-form-payment">
                                     <Form.Item noStyle name="payment">
@@ -80,7 +91,7 @@ const OrderComfirm = () => {
                                             <Radio.Button value={PAYMENTTYPE_ONLINE}>{paymentType.get(PAYMENTTYPE_ONLINE)}</Radio.Button>
                                         </Radio.Group>
                                     </Form.Item>
-                                    <span>+ Add Voucher</span>
+                                    <span style={{ "cursor": "pointer" }} onClick={() => setisOrderForVoucherModal(true)}>+ Add Voucher</span>
                                 </Row>
                             </Form.Item>
                             <Form.Item>
@@ -108,6 +119,12 @@ const OrderComfirm = () => {
                             Number(orderType) === DELIVERYTYPE_DELIVERY ? <DeliveryCom setFormData={getOtherOrderInfo} /> : <CollectCom shopId={shopId} setFormData={getOtherOrderInfo} />
                         }
                     </div>
+                    <OrderForVoucherModal
+                        isOpen={isOrderForVoucherModal}
+                        isClose={orderForVoucherModalClose}
+                        shopId={Number(1)}
+                        finishFn={setDataFn}
+                    />
                 </div>
             </div>
         </div>

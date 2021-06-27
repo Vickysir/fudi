@@ -53,12 +53,12 @@
 <br>
 <div style="color:green">接口文档：</div>
 
-    - 获取购物车内容  /user/cart/list/v3 ❌ preview v4
+    - 获取购物车内容  /user/cart/list/v3 ❌ preview v4 
     - 根据 type = deliver、collect，展示右侧的相关信息 ✅
-    - delivery fee  /user/order/freight_price/v3
-    - delivery 地址 是用户在homepage 输入的地址
-    - 修改配送时间（当前时间往后延一个小时，必须要在营业时间范围内。不在营业范围之类，只能立刻送 ）
-    - 修改联系人，获取联系人列表 /user/order/historical_contacts
+    - delivery fee  /user/order/freight_price/v3 
+    - delivery 地址 是用户在homepage 输入的地址 ✅
+    - 修改配送时间（当前时间往后延一个小时，必须要在营业时间范围内。不在营业范围之类，只能立刻送 ）✅
+    - 修改联系人，获取联系人列表 /user/order/historical_contacts ✅
     - 优惠券列表 /user/order/coupon/list/v2
     - 添加优惠券 /user/order/coupon/obtain/v2
     - 在线支付
@@ -74,15 +74,15 @@
     - 左侧订单详情 仅展示
     - 右侧信息
         - 地图查看位置 【删掉】
-        - 修改时间
+        - 修改时间 ✅
             - ASAP 立刻送
             - On Time
-        - 修改people
+        - 修改people ✅
             - for self 为自己
             - order for another person
                 - 联系人列表
                 - 选择联系人
-        - 修改order option
+        - 修改order option ✅
             - Meet in front of the door
             - Drop near the door
     - 点击+ Add Voucher，添加优惠券

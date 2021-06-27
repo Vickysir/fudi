@@ -14,7 +14,7 @@ export const formatDateToHour = (dataTime, format = 'HH:mm') => moment(new Date(
 
 // endTimeFormat: "23:59" 分割出小时与分钟
 export const segmentationTime = (time) => {
-    if (!timer) return
+    if (timer === "" || time === undefined || time === null) return
     const arr = time.split(':')
     let hh = arr[0];
     let mm = arr[1];

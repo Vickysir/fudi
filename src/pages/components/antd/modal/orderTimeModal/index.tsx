@@ -24,12 +24,8 @@ const OrderTimeModal = (props) => {
   const [editForTimeValue, setEditForTimeValue] = useState<number>(
     moment(new Date()).valueOf()
   );
-  const [isCloseShop, setIsCloseShop] = useState(false)
   const openTIme = segmentationTime(commonInfo?.startTimeFormat);
   const closeTIme = segmentationTime(commonInfo?.endTimeFormat);
-
-  console.log(`openTIme`, openTIme)
-  console.log(`closeTIme`, closeTIme)
 
   useEffect(() => {
     setvisible(isOpen);
@@ -116,9 +112,7 @@ const OrderTimeModal = (props) => {
   }
 
   const getDisableMinutes = (disabledHours: number[], userSelectHour: number, closeTIme) => {
-    console.log(`disabledHours`, disabledHours)
     const currentMinutes = moment().minutes()
-
 
     if (disabledHours.indexOf(userSelectHour) > 0) { // 小时都被禁用时
       return range(0, 60)

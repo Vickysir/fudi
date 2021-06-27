@@ -59,8 +59,8 @@
     - delivery 地址 是用户在homepage 输入的地址 ✅
     - 修改配送时间（当前时间往后延一个小时，必须要在营业时间范围内。不在营业范围之类，只能立刻送 ）✅
     - 修改联系人，获取联系人列表 /user/order/historical_contacts ✅
-    - 优惠券列表 /user/order/coupon/list/v2
-    - 添加优惠券 /user/order/coupon/obtain/v2
+    - 优惠券列表 /user/order/coupon/list/v2 
+    - 添加优惠券 /user/order/coupon/obtain/v2  ✅
     - 在线支付
         - /user/order/payment/online
         - /user/order/payment/encrypt/rsa

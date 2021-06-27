@@ -16,6 +16,7 @@ import PersonalCenter from "@/pages/web/personalCenter";
 import Shop from "@/pages/web/shop";
 import GoodsDetails from "@/pages/web/goods";
 import OrderComfirm from "@/pages/web/orderComfirm";
+import Payment from "@/pages/web/payment";
 
 const Web = () => {
     return (
@@ -37,6 +38,7 @@ const Web = () => {
                     <Route path="/home/shop/:id" component={Shop} />
                     <Route path="/home/goodsdetails/:id/:shopId" component={GoodsDetails} />
                     <Route path="/home/orderConfirm" component={OrderComfirm} />
+                    <Route path="/home/payment" component={Payment} />
                 </Router>
             </div>
             <WebFooter />

@@ -15,8 +15,10 @@ import { useAppStore } from '@/__internal';
 import { DELIVERYTYPE_DELIVERY, paymentType, PAYMENTTYPE_OFFLINE, PAYMENTTYPE_ONLINE } from '@/utils/constant';
 import { OrderOtherInfoFormData } from './components';
 import OrderForVoucherModal from '@/pages/components/antd/modal/orderForVoucherModal';
+import { withRouter } from 'react-router';
 
-const OrderComfirm = () => {
+const OrderComfirm = (props) => {
+    const { history } = props;
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
     const [total, setTotal] = useState("0");
     const [otherOrderInfo, setOtherOrderInfo] = useState<OrderOtherInfoFormData>();
@@ -106,6 +108,9 @@ const OrderComfirm = () => {
                                             ...form.getFieldsValue()
                                         }
                                         console.log(`联合表单`, submit)
+                                        if (submit.payment === PAYMENTTYPE_ONLINE) {
+                                            history.push("/home/payment");
+                                        }
                                     }}
                                     style={{ marginTop: "4rem" }}
                                 >
@@ -131,4 +136,4 @@ const OrderComfirm = () => {
     )
 }
 
-export default OrderComfirm
+export default withRouter(OrderComfirm)

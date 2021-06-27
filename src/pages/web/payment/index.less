@@ -1,0 +1,56 @@
+.payment-wrap{
+    width: 42.18%;
+    margin: 0 auto;
+    padding-bottom: 5rem;
+    &-header{
+        margin: 3rem 0;
+    }
+    &-body{
+        >div:nth-child(1){
+            min-height: 600px;
+            border-radius: 1rem;
+            box-shadow: 0 5px 5px 0 @theme-lessGray, 0 0 4px 0 @theme-lessGray;
+            padding: 3rem;
+            >h1{
+                color:@theme-color;
+                font-size: @title37;
+                padding: 1rem 2rem;
+                margin:0;
+            }
+            .payment-wrap-body-cardInfo{
+                margin: 2rem 2rem 3rem;
+                padding: 3rem;
+                border-radius: 1rem;
+                box-shadow: 0 5px 5px 0 @theme-lessGray, 0 0 4px 0 @theme-lessGray;
+                background-color: #ffffff;
+                >li{
+                    margin:1rem 0;
+                }
+                >li:nth-child(2){
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    >div:nth-child(2){
+                        width: 30%;
+                    }
+                }
+                &-title{
+                    font-size: @title20;
+                    font-weight: 500;
+                    color: @theme-lessGray;
+                    margin-bottom: 0.5rem;
+                }
+            }
+            >div{
+                margin:2rem;
+                >p{
+                    text-align:center;
+                    font-size: @title20;
+                    font-weight: 500;
+                }
+            }
+    
+        }
+    }
+    
+}

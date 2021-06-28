@@ -107,7 +107,10 @@ const MyOrders = () => {
                                                         <p>Estimated Time:<span><HistoryOutlined /> {formatDateToHour(item.createTime)}</span></p>
                                                         <p>Status:<span>{OrderStatus.get(item.status)}</span></p>
                                                     </div>
-                                                    <div className="myOrders-wrap-list-footer">Order #{item.id}</div>
+                                                    <ul className="myOrders-wrap-list-footer">
+                                                        <li>Order #{item.id}</li>
+                                                        <li onClick={addReview}>Add Review</li>
+                                                    </ul>
                                                 </div>
                                             )
                                         })
@@ -136,31 +139,16 @@ const MyOrders = () => {
                                                         <p>Estimated Time:<span className="completed"><HistoryOutlined /> {formatDateToHour(item.createTime)}</span></p>
                                                         <p>Status:<span className="completed">{OrderStatus.get(item.status)}</span></p>
                                                     </div>
-                                                    <div className="myOrders-wrap-list-footer footer-completed">Order #{item.id}</div>
+                                                    <ul className="myOrders-wrap-list-footer footer-completed">
+                                                        <li>Order #{item.id}</li>
+                                                        <li onClick={addReview}>Add Review</li>
+                                                    </ul>
                                                 </div>
                                             )
                                         })
                                 }
                             </div>
                         }
-
-                        {/* <div>
-                            <h3 style={{ marginTop: 0 }}>Completed</h3>
-                            <div className="myOrders-wrap-list">
-                                <ul className="myOrders-wrap-list-title title-completed">
-                                    <li>Jungle Pizza <span>·</span> Delivery <span>·</span> 3Item <span>·</span> €71</li>
-                                    <li><InfoCircleOutlined /></li>
-                                </ul>
-                                <div className="myOrders-wrap-list-content">
-                                    <p>Estimated Time:<span className="completed"><HistoryOutlined /> 18:00</span></p>
-                                    <p>Status:<span className="completed">Recieved</span></p>
-                                </div>
-                                <ul className="myOrders-wrap-list-footer footer-completed">
-                                    <li>Order #3235</li>
-                                    <li onClick={addReview}>Add Review</li>
-                                </ul>
-                            </div>
-                        </div> */}
                     </>
                     : <img src={logoOne} alt="logo" />
             }

@@ -301,7 +301,7 @@ const Shop = (props) => {
                 content={
                     <>
                         Your table<br />booked successfully!
-                        <p className="booktableSuccess-content"><CalendarOutlined /><span style={{ marginLeft: "1rem" }} >Add to Calendar</span></p>
+                        {/* <p className="booktableSuccess-content"><CalendarOutlined /><span style={{ marginLeft: "1rem" }} >Add to Calendar</span></p> */}
                     </>
                 }
             />

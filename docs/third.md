@@ -86,9 +86,18 @@
             - Meet in front of the door
             - Drop near the door
     - 点击+ Add Voucher，添加优惠券
-        - 优惠券列表
+        - 优惠券列表 会返回 realm 字段
         - 添加优惠券
         - 选择优惠券
+        解释：在/user/order/submit/v3 新增 couponRealm字段，
+            如果realm为0，则优惠券 ID为couponList.id
+            如果realm为1，则优惠券 ID为couponList.couponId
+        优惠券的使用规则：
+        - type = 0 是for food；type = 1 是for delivery fee
+        - discounttype = 0, 不包含打折的商品；= 1，全部商品
+        - money: moneyType = 0，为折扣的金额；如果moneyType=1折扣的百分比，值为0-1，=0.8则表示打8折，有20%的优惠；
+        - moneyType = 0,直接从价格中扣除，=1按照百分百扣除，=2全部免费
+        - monyLimit = -1,没有限制；=100，则消费必须要达到100
 
     - Payment Method，二选一
         - 现金 （默认）

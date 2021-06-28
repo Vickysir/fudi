@@ -71,7 +71,7 @@ export const discountRateConversion = (money: number) => {
 export const moneyType = new Map([
   [0, "directly deduct from the price"], //直接从价格中扣除
   [1, "deduct as the percentage"], //按百分比扣除
-  [1, "all free"], //全部免费
+  [2, "all free"], //全部免费
 ]);
 export const moneyLimit = new Map([
   [-1, "there is no limit"], //则没有限价

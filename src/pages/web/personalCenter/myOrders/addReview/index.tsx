@@ -38,7 +38,7 @@ const AddReview = (props) => {
                     <ul>
                         <li>
                             <p>Margherita</p>
-                            <div style={{ "justifyContent": "flex-end" }}>
+                            <div style={{ width: "20%", "justifyContent": "flex-end" }}>
                                 <span>
                                     <Rate count={1} style={{ fontSize: "2rem" }} />
                                 </span>
@@ -49,7 +49,7 @@ const AddReview = (props) => {
                         </li>
                         <li>
                             <p>Design your own 14’’ pizza </p>
-                            <div style={{ "justifyContent": "flex-end" }}>
+                            <div style={{ width: "20%", "justifyContent": "flex-end" }}>
                                 <span>
                                     <Rate count={1} style={{ fontSize: "2rem" }} />
                                 </span>
@@ -60,7 +60,7 @@ const AddReview = (props) => {
                         </li>
                         <li>
                             <p>Onion Rings</p>
-                            <div style={{ "justifyContent": "flex-end" }}>
+                            <div style={{ width: "20%", "justifyContent": "flex-end" }}>
                                 <span>
                                     <Rate count={1} style={{ fontSize: "2rem" }} />
                                 </span>

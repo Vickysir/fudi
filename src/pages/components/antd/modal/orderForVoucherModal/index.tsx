@@ -8,9 +8,16 @@ import {
 import moment from "moment";
 import { isLogin } from "@/utils";
 import { useAppStore } from "@/__internal";
-import { APIBookTable, APIHistoricalContacts, APIPersonalCenterCouponList, APIPersonalCenterObtainCoupon } from "@/pages/api/request";
-import style from '@/styles/theme/icon.less'
-import './index.less'
+import {
+  APIBookTable,
+  APIHistoricalContacts,
+  APIOrderCouponList,
+  APIOrderObtainCoupon,
+  APIPersonalCenterCouponList,
+  APIPersonalCenterObtainCoupon,
+} from "@/pages/api/request";
+import style from "@/styles/theme/icon.less";
+import "./index.less";
 import { formatDateToDay } from "@/utils/timer";
 
 const { Option } = Select;
@@ -22,11 +29,11 @@ const OrderForVoucherModal = (props) => {
   const [visible, setvisible] = useState(false);
   const [isEditForVoucher, setIsEditForVoucher] = useState(false);
   const [editForVoucherValue, setEditForVoucherValue] = useState("");
-  const [CouponList, setCouponList] = useState<any>()
-  const [selectCouponId, setSelectCouponId] = useState(0)
+  const [CouponList, setCouponList] = useState<any>();
+  const [selectCouponId, setSelectCouponId] = useState(0);
   async function getPersonList() {
-    const { data } = await APIPersonalCenterCouponList({ "shopId": commonInfo?.shopId });
-    console.log(`APIPersonalCenterCouponList`, data)
+    const { data } = await APIOrderCouponList({ shopId: commonInfo?.shopId });
+    console.log(`APIPersonalCenterCouponList`, data);
     setCouponList(data);
   }
 
@@ -57,33 +64,33 @@ const OrderForVoucherModal = (props) => {
   const handleEditForName = async () => {
     setIsEditForVoucher(true);
     setSelectCouponId(0);
-    setEditForVoucherValue("")
+    setEditForVoucherValue("");
   };
   const handleSaveForName = async () => {
     // 从列表里选择了某个优惠券
-    if (selectCouponId !== 0) return setIsEditForVoucher(false)
+    if (selectCouponId !== 0) return setIsEditForVoucher(false);
     // 添加优惠券，更新优惠券列表
-    APIPersonalCenterObtainCoupon({ code: editForVoucherValue })
+    APIOrderObtainCoupon({ code: editForVoucherValue })
       .then((res) => {
+        //TODO 重新设置优惠券列表
         getPersonList();
-        setSelectCouponId(res.data.id)
-        setIsEditForVoucher(false)
+        setSelectCouponId(res.data.id);
+        setIsEditForVoucher(false);
       })
       .catch((err) => {
-        setEditForVoucherValue("")
-        console.log(`APIPersonalCenterCouponList err`, err)
-      })
-
-  }
+        setEditForVoucherValue("");
+        console.log(`APIPersonalCenterCouponList err`, err);
+      });
+  };
   const handleChangeForName = (e) => {
     const value = e.target.value;
     setEditForVoucherValue(value);
   };
 
   const handleClickHitoryContacts = (item) => {
-    setSelectCouponId(item.id)
+    setSelectCouponId(item.id);
     setEditForVoucherValue(item.title);
-  }
+  };
   useEffect(() => {
     getPersonList();
   }, []);
@@ -95,7 +102,7 @@ const OrderForVoucherModal = (props) => {
           <h1>Add Voucher</h1>
         </header>
         <ul id="historyContacts-box">
-          {(
+          {
             <li>
               <p>
                 <ContainerOutlined />
@@ -107,9 +114,7 @@ const OrderForVoucherModal = (props) => {
                     placeholder="Add Voucher Number ..."
                     style={{ width: "100% " }}
                     onChange={handleChangeForName}
-                    suffix={
-                      <CheckOutlined onClick={handleSaveForName} />
-                    }
+                    suffix={<CheckOutlined onClick={handleSaveForName} />}
                   />
                 </div>
               ) : (
@@ -121,27 +126,29 @@ const OrderForVoucherModal = (props) => {
                 </div>
               )}
             </li>
-          )}
-          {
-            CouponList?.map((item) => {
-              return (
-                <li
-                  key={item.id}
-                  className="historyContacts-box-li"
-                  onClick={() => handleClickHitoryContacts(item)}
-                >
-                  <div className="vouchers-wrap-box">
-                    <div>
-                      <h5>{item.title}</h5>
-                      <p>Available</p>
-                    </div>
-                    <p>{`${formatDateToDay(item.activeDate)} - ${formatDateToDay(item.quietDate)}`}</p>
-                  </div>
-                  <CheckOutlined className={item.id === selectCouponId ? style.themeColor : ""} />
-                </li>
-              )
-            })
           }
+          {CouponList?.map((item) => {
+            return (
+              <li
+                key={item.id}
+                className="historyContacts-box-li"
+                onClick={() => handleClickHitoryContacts(item)}
+              >
+                <div className="vouchers-wrap-box">
+                  <div>
+                    <h5>{item.title}</h5>
+                    <p>Available</p>
+                  </div>
+                  <p>{`${formatDateToDay(item.activeDate)} - ${formatDateToDay(
+                    item.quietDate
+                  )}`}</p>
+                </div>
+                <CheckOutlined
+                  className={item.id === selectCouponId ? style.themeColor : ""}
+                />
+              </li>
+            );
+          })}
         </ul>
         <div className="model-content-action">
           <Button shape="round" type="primary" block onClick={handleOk}>

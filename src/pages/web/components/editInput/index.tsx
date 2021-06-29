@@ -38,8 +38,8 @@ const EditInput = (props: Props) => {
     const handleClickEdit = () => {
         setIsEdit(false);
     }
-    const handleClickDelete = () => {
-        deleteInputPost(props.type)
+    const handleClickDelete = async () => {
+        await deleteInputPost(props.type)
         props.refetchAdressList();
     }
     const handleClickSave = (type: string) => {

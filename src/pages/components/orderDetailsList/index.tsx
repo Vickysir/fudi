@@ -48,13 +48,31 @@ const OrderDetailsList = (props: Props) => {
 
     const caculateTotal = (data) => {
         let totlePrice = "0";
-        data?.map((item) => {
-            const total = math.format(math.chain(math.bignumber(item.goods.currentPrice)).multiply(math.bignumber(item.quantity)).done());
-            totlePrice = math.format(math.chain(math.bignumber(totlePrice)).add(math.bignumber(total)).done());
 
+        const list = data?.map((item) => {
+            const { goods: { currentPrice, ingredientClassify } } = item;
+            let price = currentPrice;
+            ingredientClassify.map((el) => {
+                const freeOption = el.free;
+                el.ingredientList.map((v, index) => {
+                    // free option 计算 currentPrice
+                    if (index < freeOption || (index === 0 && index === freeOption)) {
+                        price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(0)).done());
+                    } else {
+                        price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(v.currentPrice)).done());
+                    }
+                })
+            })
+            return math.format(math.chain(math.bignumber(price)).multiply(math.bignumber(item.quantity)).done());
         })
+
+
+        list?.map((item) => {
+            totlePrice = math.format(math.chain(math.bignumber(item)).add(math.bignumber(totlePrice)).done());
+        })
+        //更新
         setTotal(totlePrice);
-        orderListPrice(totlePrice);
+        orderListPrice && orderListPrice(totlePrice);
     }
 
     const fetchData = async () => {
@@ -101,7 +119,7 @@ const OrderDetailsList = (props: Props) => {
                                             el.ingredientList.map((v, index) => {
                                                 optionList.push(v.name);
                                                 // free option 计算 currentPrice
-                                                if (index < freeOption) {
+                                                if (index < freeOption || (index === 0 && index === freeOption)) {
                                                     price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(0)).done());
                                                 } else {
                                                     price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(v.currentPrice)).done());

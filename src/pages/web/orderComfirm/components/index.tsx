@@ -8,7 +8,12 @@ import iconEdit from "@/assets/images/common/icon/icon-edit.svg";
 import OrderForModal from "@/pages/components/antd/modal/orderForModal";
 import OrderTimeModal from "@/pages/components/antd/modal/orderTimeModal";
 import OrderForOptionModal from "@/pages/components/antd/modal/orderForOptionModal";
-import { deliveryOption, DELIVERYOPTION_FRONT, orderTimeType, ORDERTIME_ASAP } from "@/utils/constant";
+import {
+  deliveryOption,
+  DELIVERYOPTION_FRONT,
+  orderTimeType,
+  ORDERTIME_ASAP,
+} from "@/utils/constant";
 import { useAppStore } from "@/__internal";
 import moment from "moment";
 
@@ -17,15 +22,17 @@ import "./index.less";
 
 interface Props {
   type: string;
-  setFormData: (params: OrderOtherInfoFormData) => void
+  setFormData: (params: OrderOtherInfoFormData) => void;
 }
 export interface OrderOtherInfoFormData {
   timeType: number;
-  diningTime?: number; consignee: string; phone: number | string
+  diningTime?: number;
+  consignee: string;
+  phone: number | string;
   orderOption: {
-    label: string,
-    value: number,
-  }
+    label: string;
+    value: number;
+  };
 }
 const OrderMethod = (props: Props) => {
   const authInfo = useAppStore("authInfo");
@@ -39,7 +46,7 @@ const OrderMethod = (props: Props) => {
     orderOption: {
       label: deliveryOption.get(DELIVERYOPTION_FRONT),
       value: DELIVERYOPTION_FRONT,
-    }
+    },
   });
   const { type, setFormData } = props;
 
@@ -55,10 +62,10 @@ const OrderMethod = (props: Props) => {
   const setDataFn = (data) => {
     const formData = {
       ...orderData,
-      ...data
-    }
+      ...data,
+    };
     setOrderData(formData);
-    setFormData(formData)
+    setFormData(formData);
   };
 
   return (
@@ -76,8 +83,8 @@ const OrderMethod = (props: Props) => {
                   {orderData?.timeType === ORDERTIME_ASAP
                     ? orderTimeType.get(ORDERTIME_ASAP)
                     : moment(orderData.diningTime)
-                      .format('"HH:mm, DD MMMM YYYY"')
-                      .replace(/\"/g, "")}
+                        .format('"HH:mm"')
+                        .replace(/\"/g, "")}
                 </p>
               </div>
               <span
@@ -132,8 +139,8 @@ const OrderMethod = (props: Props) => {
                   {orderData?.timeType === ORDERTIME_ASAP
                     ? orderTimeType.get(ORDERTIME_ASAP)
                     : moment(orderData.diningTime)
-                      .format('"HH:mm, DD MMMM YYYY"')
-                      .replace(/\"/g, "")}
+                        .format('"HH:mm"')
+                        .replace(/\"/g, "")}
                 </p>
               </div>
               <span
@@ -178,9 +185,7 @@ const OrderMethod = (props: Props) => {
             <li>
               <div className="inaline">
                 <p className="inaline" style={{ margin: 0 }}>
-                  {
-                    orderData.orderOption.label
-                  }
+                  {orderData.orderOption.label}
                 </p>
               </div>
               <span

@@ -26,6 +26,85 @@ export const segmentationTime = (time) => {
     }
     return { h: hh, m: mm }
 }
+//禁用时间
+const getAfterNowDisabledHours=()=> {
+    let HOURS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+    var myDate = new Date();
+    // myDate.getHours(); //获取当前小时数(0-23)
+    // myDate.getMinutes(); //获取当前分钟数(0-59)
+    let hours = []
+    let HOURSDate=[];
+    // let time = this.startTime
+    let timeArr = [myDate.getHours(),myDate.getMinutes()]
+    // let timeArr = time.split(':')
+    for (var i = 0; i < (timeArr[0]); i++) {
+    console.log('hoursiiiiiiiiii', HOURS, i, HOURS.indexOf(i));
+    hours.push(i)
+    }
+    for ( var i = 0; i < HOURS.length; i++) {
+    if (hours.indexOf(i) < 0) {
+    HOURSDate.push(i)
+    }
+    }
+    return HOURSDate
+    }
+const getAfterNowDisabledMinutes=(selectedHour)=> {
+    var MINITES = []
+    for(var i = 0;i<60;i++){
+    MINITES.push(i)
+    }
+    var myDate = new Date();
+    // myDate.getHours(); //获取当前小时数(0-23)
+    // myDate.getMinutes(); //获取当前分钟数(0-59)
+    let timeArr = [myDate.getHours(), myDate.getMinutes()]
+    let minutes = []
+    let MINITESDATE=[]
+    if (selectedHour == (timeArr[0])) {
+    for (var i = 0; i < (timeArr[1]); i++) {
+    minutes.push(i)
+    }
+    }
+    for(var i = 0;i<MINITES.length;i++){
+    if (minutes.indexOf(i) < 0) {
+    MINITESDATE.push(i)
+    }
+    }
+    return MINITESDATE
+}
+const getBeforNowDisabledHours =(startTime)=> {
+    let hours = []
+    let time = startTime
+    let timeArr = time.split(':')
+    for (var i = 0; i < parseInt(timeArr[0]); i++) {
+    hours.push(i)
+    }
+    return hours
+    }
+const getBeforNowDisabledMinutes =(selectedHour,startTime) =>{
+    let time = startTime
+    let timeArr = time.split(':')
+    let minutes = []
+    if (selectedHour == parseInt(timeArr[0])) {
+    for(var i = 0; i < parseInt(timeArr[1]); i++) {
+    minutes.push(i)
+    }
+    }
+    return minutes
+    }
+     
+const getBeforNowDisabledSeconds =(selectedHour, selectedMinute,startTime)=> {
+    let time = startTime
+    let timeArr = time.split(':')
+    let second = []
+    if (selectedHour == parseInt(timeArr[0]) && selectedMinute == parseInt(timeArr[1])) {
+    for(var i = 0; i <= parseInt(timeArr[2]); i++) {
+    second.push(i)
+    }
+    }
+    return second
+    }
+    
+
 
 // 倒计时 逻辑
 // 开启倒计时，需要给初始值

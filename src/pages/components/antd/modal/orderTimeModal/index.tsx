@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Input, Button, Select, DatePicker, message } from "antd";
+import { Modal, Input, Button, Select, DatePicker, message, TimePicker } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useAppStore } from "@/__internal";
@@ -201,16 +201,17 @@ const OrderTimeModal = (props) => {
           <li>
             {isEditForTime ? (
               <div style={{ width: "100% " }}>
-                <DatePicker
+                <TimePicker
                   style={{ width: "100% " }}
                   placeholder="Select time"
-                  showTime={
-                    { defaultValue: moment(getDefaultTime(openTIme, closeTIme), 'HH:mm') }
-                  }
+                  // showTime={
+                  //   { defaultValue: moment(getDefaultTime(openTIme, closeTIme), 'HH:mm') }
+                  // }
+                  showMinute
                   showNow={false}
-                  format="HH:mm, DD MMMM YYYY"
-                  disabledDate={disabledDate}
-                  disabledTime={disabledTime}
+                  format="HH:mm"
+                  // disabledDate={disabledDate}
+                  // disabledTime={disabledTime}
                   onChange={handleChangeForTime}
                   onOk={() => {
                     setIsEditForTime(false);
@@ -220,7 +221,7 @@ const OrderTimeModal = (props) => {
             ) : (
               <span className="orderTimeModal-content-ontime">
                 {moment(editForTimeValue)
-                  .format('"HH:mm, DD MMMM YYYY"')
+                  .format('HH:mm')
                   .replace(/\"/g, "")}
               </span>
             )}

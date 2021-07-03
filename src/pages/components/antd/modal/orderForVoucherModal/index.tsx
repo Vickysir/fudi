@@ -31,9 +31,9 @@ const OrderForVoucherModal = (props) => {
   const [editForVoucherValue, setEditForVoucherValue] = useState("");
   const [CouponList, setCouponList] = useState<any>();
   const [selectCouponId, setSelectCouponId] = useState(0);
-  async function getPersonList() {
-    const { data } = await APIOrderCouponList({ shopId: commonInfo?.shopId });
-    console.log(`APIPersonalCenterCouponList`, data);
+  async function getOrderCouponList() {
+    const { data } = await APIOrderCouponList({ shopId: commonInfo?.shopId, diningType: commonInfo?.orderType });
+    console.log(`APIOrderCouponList`, data);
     setCouponList(data);
   }
 
@@ -70,10 +70,10 @@ const OrderForVoucherModal = (props) => {
     // 从列表里选择了某个优惠券
     if (selectCouponId !== 0) return setIsEditForVoucher(false);
     // 添加优惠券，更新优惠券列表
-    APIOrderObtainCoupon({ code: editForVoucherValue })
+    APIOrderObtainCoupon({ code: editForVoucherValue, diningType: commonInfo?.orderType, shopId: commonInfo?.shopId })
       .then((res) => {
         //TODO 重新设置优惠券列表
-        getPersonList();
+        getOrderCouponList();
         setSelectCouponId(res.data.id);
         setIsEditForVoucher(false);
       })
@@ -92,7 +92,7 @@ const OrderForVoucherModal = (props) => {
     setEditForVoucherValue(item.title);
   };
   useEffect(() => {
-    getPersonList();
+    getOrderCouponList();
   }, []);
 
   return (

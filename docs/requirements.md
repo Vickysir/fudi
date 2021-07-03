@@ -104,3 +104,12 @@ googlemaplist
   - 订单详情
   - 添加评论
 - 最迟时间截点：7 月 18 日交付
+
+### 2021-07-03 
+[issues/40](https://github.com/Vickysir/fudi/issues/40)
+回复：
+- 优惠券，接口需要增加参数
+- save address ，name ，phone，等参数先不管
+  - 先跑通保存地址，然后正确获取到deliver fee
+- online 下单接口 
+

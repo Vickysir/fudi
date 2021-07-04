@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Icon, { EnvironmentOutlined, HomeOutlined, WalletOutlined } from '@ant-design/icons';
-import { Divider, Modal } from 'antd';
+import { Divider, Modal, Spin } from 'antd';
 import V_Map from '@/pages/components/map';
 import OrderDetailsList from 'src/pages/components/orderDetailsList'
 
@@ -13,6 +13,7 @@ import { OrderStatus, paymentType } from '@/utils/constant';
 
 const OrderDetails = (props) => {
     const [visible, setvisible] = useState(false)
+    const [loading, setIsLoading] = useState(true)
     const { isOpen, isClose, orderId } = props;
     const [data, setData] = useState<OrderDetailResponse>();
 
@@ -27,9 +28,11 @@ const OrderDetails = (props) => {
         isClose();
     }
     useEffect(() => {
+        setIsLoading(true)
         async function fetchDetails() {
             const { data } = await APIOrderDetail({ id: orderId });
             setData(data);
+            setIsLoading(false)
         }
         fetchDetails();
     }, [orderId])
@@ -41,61 +44,63 @@ const OrderDetails = (props) => {
                 footer={null}
                 width='56.78%'
             >
-                <div className="model-content orderDetials" style={{ padding: 0 }}>
-                    <div className="orderDetials-left">
-                        <ul className="orderDetials-left-shop">
-                            <li>
-                                <p>Order #{data?.id}</p>
-                            </li>
-                            <li>
-                                <h3>{data?.shop?.name}</h3>
-                                <p>{OrderStatus.get(data?.status)}</p>
-                            </li>
-                            <li>
-                                <p>Total</p><span> € {data?.totalAmount}</span>
-                            </li>
-                        </ul>
-                        <Divider />
-                        {/* <OrderDetailsList comfirmBtn={false} />
+                <Spin spinning={loading}>
+                    <div className="model-content orderDetials" style={{ padding: 0 }}>
+                        <div className="orderDetials-left">
+                            <ul className="orderDetials-left-shop">
+                                <li>
+                                    <p>Order #{data?.id}</p>
+                                </li>
+                                <li>
+                                    <h3>{data?.shop?.name}</h3>
+                                    <p>{OrderStatus.get(data?.status)}</p>
+                                </li>
+                                <li>
+                                    <p>Total</p><span> € {data?.totalAmount}</span>
+                                </li>
+                            </ul>
+                            <Divider />
+                            {/* <OrderDetailsList comfirmBtn={false} />
                         <Divider /> */}
-                        <ul className="orderDetials-left-address" >
-                            <li>
-                                <p><EnvironmentOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.detail}</p>
-                            </li>
-                            <li>
-                                <p><HomeOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.houseNumber}</p>
-                                <p><WalletOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.zipCode}</p>
-                            </li>
-                        </ul>
-                        <Divider />
-                        <ul className="orderDetials-left-options">
-                            <li>
-                                <div>
-                                    <p>Delivery Fee: <span>€ {data?.freightAmount}</span> </p>
-                                </div>
-                                <div>
-                                    <p>Order for: <span>{data?.userShippingAddress.consignee}</span> </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <p>Delivery Time: <span>ASAP</span> </p>
-                                </div>
-                                <div>
-                                    <p>Payment Method: <span>{paymentType.get(data?.paymentType)}</span> </p>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <p>Notes: <span>{data?.remark}</span> </p>
-                                </div>
-                            </li>
-                        </ul>
+                            <ul className="orderDetials-left-address" >
+                                <li>
+                                    <p><EnvironmentOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.detail}</p>
+                                </li>
+                                <li>
+                                    <p><HomeOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.houseNumber}</p>
+                                    <p><WalletOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.zipCode}</p>
+                                </li>
+                            </ul>
+                            <Divider />
+                            <ul className="orderDetials-left-options">
+                                <li>
+                                    <div>
+                                        <p>Delivery Fee: <span>€ {data?.freightAmount}</span> </p>
+                                    </div>
+                                    <div>
+                                        <p>Order for: <span>{data?.userShippingAddress.consignee}</span> </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <p>Delivery Time: <span>ASAP</span> </p>
+                                    </div>
+                                    <div>
+                                        <p>Payment Method: <span>{paymentType.get(data?.paymentType)}</span> </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <p>Notes: <span>{data?.remark}</span> </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="orderDetials-right">
+                            <V_Map />
+                        </div>
                     </div>
-                    <div className="orderDetials-right">
-                        <V_Map />
-                    </div>
-                </div>
+                </Spin>
             </Modal>
         </div>
     )

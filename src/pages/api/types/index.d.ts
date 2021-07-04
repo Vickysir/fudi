@@ -272,7 +272,7 @@ export interface OrderDetailResponse {
     "freightAmount": number;
     "paymentStatus": number;
     "paymentType": number;
-    "remark": string
+    "remark": string;
     "userShippingAddress": {
         consignee: string
         detail: string
@@ -284,6 +284,24 @@ export interface OrderDetailResponse {
         sex: number;
         zipCode: string
     }
+    "goodsList": {
+        "id": number;
+        "price": number;
+        "quantity": number;
+        "remark": string;
+        "thumbnail": string;
+        "title": string;
+        "userOrderDetailId": number;
+        "ingredientClassifyList": {
+            "id": number;
+            "name": string
+            "ingredientList": {
+                "id": number;
+                "name": string;
+                "price": number;
+            }[]
+        }[]
+    }[]
 }
 
 export interface EvaluateList {

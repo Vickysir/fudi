@@ -63,8 +63,40 @@ const OrderDetails = (props) => {
                                 </li>
                             </ul>
                             <Divider />
-                            {/* <OrderDetailsList comfirmBtn={false} />
-                        <Divider /> */}
+                            <div className="orderDetials-left-order">
+                                <p>Order Detials</p>
+                                <ul >
+                                    {
+                                        data?.goodsList?.map((item) => {
+                                            return (
+                                                <li key={item.id}>
+                                                    <span style={{ width: "10%" }}>{item.quantity}</span>
+                                                    <div>
+                                                        <p>{item.title}</p>
+                                                        {
+                                                            item.ingredientClassifyList.map((el) => {
+                                                                return (
+                                                                    <ul key={el.name}>
+                                                                        {
+                                                                            el.ingredientList.map((v) => {
+                                                                                return (
+                                                                                    <li key={v.id}>{el.name}:{v.name}</li>
+                                                                                )
+                                                                            })
+                                                                        }
+                                                                    </ul>
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
+                                                    <span style={{ width: "20%", textAlign: "right" }}>€ {item.price}</span>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                            <Divider />
                             {
                                 data?.userShippingAddress ? (
                                     <ul className="orderDetials-left-address" >

@@ -36,6 +36,9 @@ const OrderDetails = (props) => {
         }
         fetchDetails();
     }, [orderId])
+    const location = data?.userShippingAddress ?
+        { "lat": data?.userShippingAddress.latitude, "lng": data?.userShippingAddress.longitude }
+        : { "lat": data?.shop?.latitude, "lng": data?.shop?.longitude }
     return (
         <div>
             <Modal
@@ -97,7 +100,7 @@ const OrderDetails = (props) => {
                             </ul>
                         </div>
                         <div className="orderDetials-right">
-                            <V_Map />
+                            <V_Map markerLatLng={location} />
                         </div>
                     </div>
                 </Spin>

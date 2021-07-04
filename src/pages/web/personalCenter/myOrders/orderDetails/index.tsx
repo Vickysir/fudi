@@ -65,15 +65,26 @@ const OrderDetails = (props) => {
                             <Divider />
                             {/* <OrderDetailsList comfirmBtn={false} />
                         <Divider /> */}
-                            <ul className="orderDetials-left-address" >
-                                <li>
-                                    <p><EnvironmentOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.detail}</p>
-                                </li>
-                                <li>
-                                    <p><HomeOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.houseNumber}</p>
-                                    <p><WalletOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.zipCode}</p>
-                                </li>
-                            </ul>
+                            {
+                                data?.userShippingAddress ? (
+                                    <ul className="orderDetials-left-address" >
+                                        <li>
+                                            <p><EnvironmentOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.detail}</p>
+                                        </li>
+                                        <li>
+                                            <p><HomeOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.houseNumber}</p>
+                                            <p><WalletOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.zipCode}</p>
+                                        </li>
+                                    </ul>
+                                ) : (
+                                    <ul className="orderDetials-left-address" >
+                                        <li>
+                                            <p><EnvironmentOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.shop.address}</p>
+                                        </li>
+                                    </ul>
+                                )
+                            }
+
                             <Divider />
                             <ul className="orderDetials-left-options">
                                 <li>
@@ -85,9 +96,9 @@ const OrderDetails = (props) => {
                                     </div>
                                 </li>
                                 <li>
-                                    <div>
+                                    {/* <div>
                                         <p>Delivery Time: <span>ASAP</span> </p>
-                                    </div>
+                                    </div> */}
                                     <div>
                                         <p>Payment Method: <span>{paymentType.get(data?.paymentType)}</span> </p>
                                     </div>

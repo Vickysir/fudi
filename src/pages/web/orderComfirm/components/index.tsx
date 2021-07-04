@@ -41,8 +41,8 @@ const OrderMethod = (props: Props) => {
   const [isOpenOrderTimeModal, setisOpenOrderTimeModal] = useState(false);
   const [orderData, setOrderData] = useState<OrderOtherInfoFormData>({
     timeType: ORDERTIME_ASAP,
-    consignee: authInfo.nickname,
-    phone: authInfo.phone,
+    consignee: authInfo?.nickname,
+    phone: authInfo?.phone,
     orderOption: {
       label: deliveryOption.get(DELIVERYOPTION_FRONT),
       value: DELIVERYOPTION_FRONT,
@@ -83,8 +83,8 @@ const OrderMethod = (props: Props) => {
                   {orderData?.timeType === ORDERTIME_ASAP
                     ? orderTimeType.get(ORDERTIME_ASAP)
                     : moment(orderData.diningTime)
-                        .format('"HH:mm"')
-                        .replace(/\"/g, "")}
+                      .format('"HH:mm"')
+                      .replace(/\"/g, "")}
                 </p>
               </div>
               <span
@@ -139,8 +139,8 @@ const OrderMethod = (props: Props) => {
                   {orderData?.timeType === ORDERTIME_ASAP
                     ? orderTimeType.get(ORDERTIME_ASAP)
                     : moment(orderData.diningTime)
-                        .format('"HH:mm"')
-                        .replace(/\"/g, "")}
+                      .format('"HH:mm"')
+                      .replace(/\"/g, "")}
                 </p>
               </div>
               <span

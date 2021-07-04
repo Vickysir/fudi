@@ -49,8 +49,11 @@ export function initAxiosConfig() {
                 //-----------------------------------------------------------
                 {//异常code举例：处理401
                     if (data.event == "UNAUTHORIZED") {//认证失败
-                        APP_STORE?.clear();
-                        // window.location.reload();
+                        message.error("Login has expired，you will jump to the login page in 3 seconds")
+                        setTimeout(() => {
+                            APP_STORE?.clear();
+                            window.location.href = `${window.location.origin}/#/home/login`;
+                        }, 3000)
                     }
                 }
                 message.error(data.describe);

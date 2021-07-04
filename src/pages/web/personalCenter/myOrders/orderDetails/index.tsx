@@ -1,0 +1,104 @@
+import React, { useState, useEffect } from 'react'
+import Icon, { EnvironmentOutlined, HomeOutlined, WalletOutlined } from '@ant-design/icons';
+import { Divider, Modal } from 'antd';
+import V_Map from '@/pages/components/map';
+import OrderDetailsList from 'src/pages/components/orderDetailsList'
+
+import { APIOrderDetail } from '@/pages/api/request';
+import './index.less'
+import { OrderDetailResponse } from '@/pages/api/types';
+import { OrderStatus, paymentType } from '@/utils/constant';
+
+
+
+const OrderDetails = (props) => {
+    const [visible, setvisible] = useState(false)
+    const { isOpen, isClose, orderId } = props;
+    const [data, setData] = useState<OrderDetailResponse>();
+
+    useEffect(() => {
+        setvisible(isOpen);
+    }, [isOpen])
+
+
+    const handleCancel = (e) => {
+        console.log(e);
+        setvisible(false);
+        isClose();
+    }
+    useEffect(() => {
+        async function fetchDetails() {
+            const { data } = await APIOrderDetail({ id: orderId });
+            setData(data);
+        }
+        fetchDetails();
+    }, [orderId])
+    return (
+        <div>
+            <Modal
+                visible={visible}
+                onCancel={handleCancel}
+                footer={null}
+                width='56.78%'
+            >
+                <div className="model-content orderDetials" style={{ padding: 0 }}>
+                    <div className="orderDetials-left">
+                        <ul className="orderDetials-left-shop">
+                            <li>
+                                <p>Order #{data?.id}</p>
+                            </li>
+                            <li>
+                                <h3>{data?.shop?.name}</h3>
+                                <p>{OrderStatus.get(data?.status)}</p>
+                            </li>
+                            <li>
+                                <p>Total</p><span> € {data?.totalAmount}</span>
+                            </li>
+                        </ul>
+                        <Divider />
+                        {/* <OrderDetailsList comfirmBtn={false} />
+                        <Divider /> */}
+                        <ul className="orderDetials-left-address" >
+                            <li>
+                                <p><EnvironmentOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.detail}</p>
+                            </li>
+                            <li>
+                                <p><HomeOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.houseNumber}</p>
+                                <p><WalletOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.zipCode}</p>
+                            </li>
+                        </ul>
+                        <Divider />
+                        <ul className="orderDetials-left-options">
+                            <li>
+                                <div>
+                                    <p>Delivery Fee: <span>€ {data?.freightAmount}</span> </p>
+                                </div>
+                                <div>
+                                    <p>Order for: <span>{data?.userShippingAddress.consignee}</span> </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <p>Delivery Time: <span>ASAP</span> </p>
+                                </div>
+                                <div>
+                                    <p>Payment Method: <span>{paymentType.get(data?.paymentType)}</span> </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <p>Notes: <span>{data?.remark}</span> </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="orderDetials-right">
+                        <V_Map />
+                    </div>
+                </div>
+            </Modal>
+        </div>
+    )
+}
+
+export default OrderDetails

@@ -23,7 +23,6 @@ import './index.less'
 import MessageModal from '@/pages/components/antd/modal/messageModal';
 import AddReview from '@/pages/components/antd/modal/formModal';
 import { Link, withRouter } from 'react-router-dom';
-import V_Map from '@/pages/components/map';
 import { APIGoodsSearch, APIShopDetail, APIShopGoodsListAll } from '@/pages/api/request';
 import { isLogin, openOnlineChat } from '@/utils';
 import { ShopDetailResponse, ShopGoodsListAllResponseArray } from '@/pages/api/types';
@@ -281,9 +280,6 @@ const Shop = (props) => {
                             </div>
                         )
                     }
-                    {/* <div style={{ width: "100%", height: "1000px" }}>
-                    <V_Map />
-                </div> */}
                     <BackTop>
                         <div className="backUp">UP</div>
                     </BackTop>

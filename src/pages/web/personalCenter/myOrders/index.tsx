@@ -17,6 +17,7 @@ import { useAppStore } from '@/__internal';
 import { ORDERSTATUS_RECEIVED, ORDERSTATUS_COOKING, ORDERSTATUS_DELIVERING, OrderStatus, DeliveryType } from '@/utils/constant';
 import { Spin } from 'antd';
 import { formatDateToHour } from '@/utils/timer';
+import OrderDetails from './orderDetails';
 
 
 
@@ -25,6 +26,8 @@ import { formatDateToHour } from '@/utils/timer';
 const MyOrders = () => {
     const [isOpen, setisOpen] = useState(false)
     const [issend, setissend] = useState(false)
+    const [isOpenDetails, setOpenDetails] = useState(false)
+    const [orderId, setOrderId] = useState(0)
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState({
         activeGroup: [],
@@ -46,6 +49,9 @@ const MyOrders = () => {
         setissend(false);
     }
 
+    const closeDetails = () => {
+        setOpenDetails(false);
+    }
     useEffect(() => {
         const params = {
             shopId: commonInfo?.shopId,
@@ -101,7 +107,7 @@ const MyOrders = () => {
                                                 <div key={item.id} className="myOrders-wrap-list">
                                                     <ul className="myOrders-wrap-list-title">
                                                         <li>{item.shop.name} <span>·</span> {DeliveryType.get(item.deliveryType)} <span>·</span> {item.goodsList.length}Item <span>·</span> €{item.actualAmount}</li>
-                                                        <li><InfoCircleOutlined /></li>
+                                                        <li onClick={() => { setOpenDetails(true); setOrderId(item.id) }}><InfoCircleOutlined /></li>
                                                     </ul>
                                                     <div className="myOrders-wrap-list-content">
                                                         <p>Estimated Time:<span><HistoryOutlined /> {formatDateToHour(item.createTime)}</span></p>
@@ -154,6 +160,7 @@ const MyOrders = () => {
             }
             <AddReview isOpen={isOpen} isClose={addReviewClose} />
             <SendSuccess isOpen={issend} isClose={sendSuccessClose} />
+            <OrderDetails isOpen={isOpenDetails} isClose={closeDetails} orderId={orderId} />
         </div>
     )
 

@@ -118,7 +118,7 @@
 
 <div style="color:green">接口文档：</div>
 
-    - 获取order详情 /user/order/list/v3
+    - 获取orderlist /user/order/list/v3
     - 获取order详情 /user/order/detail/v3
     - 实时获取消息的socket websocket/position/subscribe?userOrderId={{userOrderId}} 【先不做】
     - 添加评论接口 /user/order/evaluate/save/v2

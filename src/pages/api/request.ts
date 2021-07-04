@@ -41,6 +41,7 @@ import {
   DeliveryFeePost,
   ShopGoodsListAllResponseArray,
   GoodsDetailsResponse,
+  OrderDetailResponse,
 } from "./types";
 import { String } from "aws-sdk/clients/cloudhsm";
 
@@ -281,8 +282,8 @@ export const APIPaymentOnline = async (params: { userOrderId: number }) => {
 };
 
 //获得订单详情
-export const APIOrderDetail = async (params: { id: number }) => {
-  return await axios.post(apiPath.orderDetail, params);
+export const APIOrderDetail = async (params: { id: string }) => { //订单编号
+  return await axios.post<OrderDetailResponse>(apiPath.orderDetail, params);
 };
 //获取联系人列表
 export const APIHistoricalContacts = async (params: { limit: number }) => {

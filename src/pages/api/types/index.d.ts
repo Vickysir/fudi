@@ -252,6 +252,39 @@ export interface GoodsDetailsResponse {
         }[]
     }[]
 }
+export interface OrderDetailResponse {
+    "id": string;
+    "shop": {
+        address: string;
+        id: number;
+        latitude: number;
+        longitude: number;
+        name: string;
+        phone: string;
+        whatsapp: string;
+    }
+    "status": number;
+    "totalAmount": number;
+    "actualAmount": number;
+    "bonusAmount": number;
+    "couponAmount": number;
+    "createTime": number;
+    "freightAmount": number;
+    "paymentStatus": number;
+    "paymentType": number;
+    "remark": string
+    "userShippingAddress": {
+        consignee: string
+        detail: string
+        houseNumber: string
+        latitude: number;
+        longitude: number;
+        phone: string
+        region: string
+        sex: number;
+        zipCode: string
+    }
+}
 
 export interface EvaluateList {
     "complexStarLevel": number// 5

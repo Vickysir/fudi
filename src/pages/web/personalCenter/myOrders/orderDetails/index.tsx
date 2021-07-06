@@ -34,7 +34,9 @@ const OrderDetails = (props) => {
             setData(data);
             setIsLoading(false)
         }
-        fetchDetails();
+        if(orderId!==0){
+            fetchDetails();
+        }
     }, [orderId])
     const location = data?.userShippingAddress ?
         { "lat": data?.userShippingAddress.latitude, "lng": data?.userShippingAddress.longitude }

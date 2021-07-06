@@ -303,7 +303,16 @@ export interface OrderDetailResponse {
         }[]
     }[]
 }
-
+export interface OrderEvaluateSavePost {
+    "rate":number,
+    "review":string,
+    "goodsList":
+        {
+            "rate":number,
+            "userOrderDetailId":number
+        }[];
+    "id":string
+}
 export interface EvaluateList {
     "complexStarLevel": number// 5
     "content": string//"Good as usual"

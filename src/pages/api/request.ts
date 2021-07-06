@@ -42,6 +42,7 @@ import {
   ShopGoodsListAllResponseArray,
   GoodsDetailsResponse,
   OrderDetailResponse,
+  OrderEvaluateSavePost,
 } from "./types";
 import { String } from "aws-sdk/clients/cloudhsm";
 
@@ -285,6 +286,9 @@ export const APIPaymentOnline = async (params: { userOrderId: number }) => {
 export const APIOrderDetail = async (params: { id: string }) => { //订单编号
   return await axios.post<OrderDetailResponse>(apiPath.orderDetail, params);
 };
+export const APIOrderEvaluateSave= async (params:OrderEvaluateSavePost)=>{
+  return await  axios.post(apiPath.orderEvaluateSave,params)
+}
 //获取联系人列表
 export const APIHistoricalContacts = async (params: { limit: number }) => {
   return await axios.post(apiPath.historicalContacts, params);

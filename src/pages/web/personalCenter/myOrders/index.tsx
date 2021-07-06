@@ -115,7 +115,7 @@ const MyOrders = () => {
                                                     </div>
                                                     <ul className="myOrders-wrap-list-footer">
                                                         <li>Order #{item.id}</li>
-                                                        <li onClick={addReview}>Add Review</li>
+                                                        <li onClick={()=>{addReview();setOrderId(item.id) }}>Add Review</li>
                                                     </ul>
                                                 </div>
                                             )
@@ -147,7 +147,7 @@ const MyOrders = () => {
                                                     </div>
                                                     <ul className="myOrders-wrap-list-footer footer-completed">
                                                         <li>Order #{item.id}</li>
-                                                        <li onClick={addReview}>Add Review</li>
+                                                        <li onClick={()=>{addReview();setOrderId(item.id) }}>Add Review</li>
                                                     </ul>
                                                 </div>
                                             )
@@ -158,7 +158,7 @@ const MyOrders = () => {
                     </>
                     : <img src={logoOne} alt="logo" />
             }
-            <AddReview isOpen={isOpen} isClose={addReviewClose} />
+            <AddReview isOpen={isOpen} isClose={addReviewClose} orderId={orderId}/>
             <SendSuccess isOpen={issend} isClose={sendSuccessClose} />
             <OrderDetails isOpen={isOpenDetails} isClose={closeDetails} orderId={orderId} />
         </div>

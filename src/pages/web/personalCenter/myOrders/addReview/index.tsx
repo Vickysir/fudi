@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Rate, Modal, Input, Button, Spin } from 'antd';
-import './index.less'
+import { LikeOutlined, DislikeOutlined, } from '@ant-design/icons';
 import { OrderDetailResponse, OrderEvaluateSavePost } from '@/pages/api/types';
 import { APIOrderDetail, APIOrderEvaluateSave } from '@/pages/api/request';
+import style from '@/styles/theme/icon.less'
+
+import './index.less'
+
 
 const { TextArea } = Input;
 const AddReview = (props) => {
@@ -12,25 +16,15 @@ const AddReview = (props) => {
     const [data, setData] = useState<OrderDetailResponse>();
     const [shopRateValue, setShopRateValue] = useState<number>(0);
     const [remarkValue, setRemarkValue] = useState<string>('');
-    const [goodRateValue, setGoodRateValue] = useState<{
-        string: {
-            "rate": number,
-            "userOrderDetailId": number
-        }
-    }>();
-    const [goodsRateUp, setGoodsRateUp] = useState(false)
-    const [goodsRateDown, setGoodsRateDown] = useState(false)
-
-
+    const [goodRateValue, setGoodRateValue] = useState<any>();
 
     useEffect(() => {
         setvisible(isOpen);
     }, [isOpen])
 
     const handleOk = async (e) => {
-        console.log(e);
         try {
-            const sumbmit = {
+            const sumbmit: OrderEvaluateSavePost = {
                 id: data.id,
                 rate: shopRateValue,
                 review: remarkValue,
@@ -38,7 +32,7 @@ const AddReview = (props) => {
             }
             console.log(sumbmit)
 
-            // await APIOrderEvaluateSave(sumbmit)
+            await APIOrderEvaluateSave(sumbmit)
             setvisible(false);
             isClose("ok");
         } catch (err) {
@@ -50,33 +44,30 @@ const AddReview = (props) => {
         setvisible(false);
         isClose("cancel");
     }
-    const handleChange = (value, type, good?: any) => {
+    const handleChange = (value, type) => {
         if (type === 'shopRate') {
             setShopRateValue(value)
         } else if (type === 'remark') {
             setRemarkValue(value.target.value)
-        } else if (type === 'goodsRateUp') {
-            const result = {
+        }
+    }
+    const handleClickGoodRate = (item, value, otherValue) => {
+        if (goodRateValue[item.id].rate === 0 || goodRateValue[item.id].rate === otherValue) {
+            setGoodRateValue({
                 ...goodRateValue,
-                [good?.id]: {
-                    rate: value,
-                    userOrderDetailId: good?.userOrderDetailId
+                [item.id]: {
+                    "rate": value,
+                    "userOrderDetailId": item.userOrderDetailId
                 }
-            }
-            setGoodRateValue(result)
-
-            console.log(result)
-        } else if (type === 'goodsRateDown') {
-            const result = {
+            })
+        } else {
+            setGoodRateValue({
                 ...goodRateValue,
-                [good?.id]: {
-                    rate: value,
-                    userOrderDetailId: good?.userOrderDetailId
+                [item.id]: {
+                    "rate": 0,
+                    "userOrderDetailId": item.userOrderDetailId
                 }
-            }
-            setGoodRateValue(result)
-
-            console.log(result)
+            })
         }
     }
 
@@ -88,6 +79,15 @@ const AddReview = (props) => {
             const { data } = await APIOrderDetail({ id: orderId });
             setData(data);
             setIsLoading(false)
+            // 初始化评分数据
+            let rateList = {};
+            data?.goodsList.map((item) => {
+                rateList = {
+                    ...rateList,
+                    [item.id]: { rate: 0, userOrderDetailId: 0 }
+                }
+            })
+            setGoodRateValue(rateList)
         }
         if (orderId !== 0) {
             fetchDetails();
@@ -110,23 +110,20 @@ const AddReview = (props) => {
                         </div>
                         <ul>
                             {
-                                data?.goodsList.map((item) => {
+                                data?.goodsList.map((item, index) => {
                                     return (
                                         <li key={item.id}>
                                             <p>{item.title}</p>
                                             <div style={{ width: "20%", "justifyContent": "flex-end" }}>
-                                                <span>
-                                                    <Rate
-                                                        count={1}
-                                                        style={{ fontSize: "2rem" }}
-                                                        onChange={(value) => { handleChange(value, 'goodsRateUp', item) }} />
-                                                </span>
-                                                <span>
-                                                    <Rate
-                                                        count={1}
-                                                        style={{ fontSize: "2rem" }}
-                                                        onChange={(value) => { handleChange(value, 'goodsRateDown', item) }} />
-                                                </span>
+                                                <LikeOutlined
+                                                    className={goodRateValue && goodRateValue[item.id] && (goodRateValue[item.id]).rate === 1 ? style.themeColor : ""}
+                                                    onClick={() => handleClickGoodRate(item, 1, -1)}
+                                                />
+                                                <DislikeOutlined
+                                                    style={{ marginLeft: "1rem" }}
+                                                    className={goodRateValue && goodRateValue[item.id] && (goodRateValue[item.id]).rate === -1 ? style.themeColor : ""}
+                                                    onClick={() => handleClickGoodRate(item, -1, 1)}
+                                                />
                                             </div>
                                         </li>
                                     )

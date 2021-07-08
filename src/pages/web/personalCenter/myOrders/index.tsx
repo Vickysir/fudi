@@ -14,7 +14,7 @@ import SendSuccess from './sendSuccess';
 import './index.less'
 import { APIPersonalCenterOrderList } from '@/pages/api/request';
 import { useAppStore } from '@/__internal';
-import { ORDERSTATUS_RECEIVED, ORDERSTATUS_COOKING, ORDERSTATUS_DELIVERING, OrderStatus, DeliveryType } from '@/utils/constant';
+import { ORDERSTATUS_RECEIVED, ORDERSTATUS_COOKING, ORDERSTATUS_DELIVERING, OrderStatus, DeliveryType, ORDERSTATUS_DELIVERED } from '@/utils/constant';
 import { Spin } from 'antd';
 import { formatDateToHour } from '@/utils/timer';
 import OrderDetails from './orderDetails';
@@ -37,7 +37,6 @@ const MyOrders = () => {
 
 
     const addReview = () => {
-        console.log('open')
         setisOpen(true);
     }
     const addReviewClose = (type: string) => {
@@ -115,7 +114,11 @@ const MyOrders = () => {
                                                     </div>
                                                     <ul className="myOrders-wrap-list-footer">
                                                         <li>Order #{item.id}</li>
-                                                        <li onClick={()=>{addReview();setOrderId(item.id) }}>Add Review</li>
+                                                        {
+                                                            item.status === ORDERSTATUS_DELIVERED && (
+                                                                <li onClick={() => { addReview(); setOrderId(item.id) }}>Add Review</li>
+                                                            )
+                                                        }
                                                     </ul>
                                                 </div>
                                             )
@@ -147,7 +150,11 @@ const MyOrders = () => {
                                                     </div>
                                                     <ul className="myOrders-wrap-list-footer footer-completed">
                                                         <li>Order #{item.id}</li>
-                                                        <li onClick={()=>{addReview();setOrderId(item.id) }}>Add Review</li>
+                                                        {
+                                                            item.status === ORDERSTATUS_DELIVERED && (
+                                                                <li onClick={() => { addReview(); setOrderId(item.id) }}>Add Review</li>
+                                                            )
+                                                        }
                                                     </ul>
                                                 </div>
                                             )
@@ -158,7 +165,7 @@ const MyOrders = () => {
                     </>
                     : <img src={logoOne} alt="logo" />
             }
-            <AddReview isOpen={isOpen} isClose={addReviewClose} orderId={orderId}/>
+            <AddReview isOpen={isOpen} isClose={addReviewClose} orderId={orderId} />
             <SendSuccess isOpen={issend} isClose={sendSuccessClose} />
             <OrderDetails isOpen={isOpenDetails} isClose={closeDetails} orderId={orderId} />
         </div>

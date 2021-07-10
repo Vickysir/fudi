@@ -111,10 +111,7 @@ const OrderComfirm = (props) => {
                             >
                                 <Row className="orderComfirm-wrap-body-form-payment">
                                     <Form.Item noStyle name="paymentType">
-                                        <Radio.Group onChange={(e) => {
-                                            console.log(`e.target.value`, e.target.value)
-                                            form.setFieldsValue({ "paymentType": e.target.value });
-                                        }} buttonStyle="solid" >
+                                        <Radio.Group buttonStyle="solid" >
                                             <Radio.Button value={PAYMENTTYPE_OFFLINE}>{paymentType.get(PAYMENTTYPE_OFFLINE)}</Radio.Button>
                                             <Radio.Button value={PAYMENTTYPE_ONLINE}>{paymentType.get(PAYMENTTYPE_ONLINE)}</Radio.Button>
                                         </Radio.Group>
@@ -166,6 +163,7 @@ const OrderComfirm = (props) => {
                         isClose={orderForVoucherModalClose}
                         shopId={Number(1)}
                         finishFn={setDataFn}
+                        isIncludeDiscount={false}
                     />
                 </div>
             </div>

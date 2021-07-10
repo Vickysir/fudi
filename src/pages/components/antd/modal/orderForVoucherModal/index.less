@@ -1,4 +1,8 @@
 #historyContacts-box{
+    .historyContacts-box-li-title{
+        font-size: @title20;
+        color:@theme-gray;
+    }
     .historyContacts-box-li{
         display: flex;
         justify-content: space-between;
@@ -20,10 +24,16 @@
             }
             >p{
                 font-size: @title20;
-                color:@theme-color;
                 cursor: pointer;
+            }
+            .vouchers-ailable{
+                color:@theme-color;
+            }
+            .vouchers-unavailable{
+                color:@theme-gray;
             }
         }
     }        
     }
 }
+

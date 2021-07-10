@@ -89,7 +89,7 @@
     - 点击+ Add Voucher，添加优惠券 
         - 优惠券列表 会返回 realm 字段
         - 添加优惠券
-        - 选择优惠券 ，返回的结果会覆盖list的接口数据
+        - 选择优惠券 
         解释：在/user/order/submit/v3 请求参数新增 couponRealm字段，
             如果realm为0，则优惠券 ID为couponList.id
             如果realm为1，则优惠券 ID为couponList.couponId

@@ -24,7 +24,7 @@ export function initAxiosConfig() {
         const api = config.url;
         const timestamp = new Date().getTime();
         const device = "ios";
-        const version = "1.0";
+        const version = "8.0";
         const token = APP_STORE.authInfo?.token || ""
         const Authorization = getAuthorization(api, timestamp, device, version, token)
         config.headers.common['Authorization'] = Authorization;

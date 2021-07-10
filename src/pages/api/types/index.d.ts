@@ -406,6 +406,37 @@ export interface UpdateToCartPost {
     "quantity": number // 1,  数量
     "id": number // Shopping Cart number
 }
+export interface OrderCouponListResponse {
+    availableList: {
+        name: string// "Meal Voucher"
+        type: 0
+        couponList: OrderCouponList[]
+    }[],
+    unavailableList: {
+        name: string// "Meal Voucher"
+        type: number //0
+        couponList: OrderCouponList[]
+    }[]
+}
+export interface OrderCouponList {
+    activeDate: number //1625612400000
+    couponId: number //704
+    diningLimit: number[] //[0, 1, 2, 3, 4]
+    discountMoney: number //2.37
+    discountType: number // 0
+    id: number //13699
+    money: number //0.7
+    moneyLimit: number //-1
+    moneyType: number // 1
+    quietDate: number //1628290800000
+    realm: number // 0
+    rule: { goodsClassify: { except: number[] } }
+    shopLimit: number // 1
+    shopLimitList: number[] //[1, 2, 3, 4, 8]
+    thumbnail: string// "public/a237abff29c14365acddbab58a3ea565"
+    title: string//"DLtext"
+    type: number //0
+}
 
 export interface DeliveryFeePost {
     "shopId": number//1 

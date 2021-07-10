@@ -45,6 +45,7 @@ import {
   OrderEvaluateSavePost,
   PaymentEncryptRsaResponse,
   PaymentOnlineEntityPost,
+  OrderCouponListResponse,
 } from "./types";
 import { String } from "aws-sdk/clients/cloudhsm";
 
@@ -291,7 +292,7 @@ export const APIHistoricalContacts = async (params: { limit: number }) => {
 // 订单优惠券
 //列表
 export const APIOrderCouponList = async (params) => {
-  return await axios.post(apiPath.orderCouponList, params);
+  return await axios.post<OrderCouponListResponse>(apiPath.orderCouponList, params);
 };
 //添加
 export const APIOrderObtainCoupon = async (params) => {

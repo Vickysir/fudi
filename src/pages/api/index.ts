@@ -61,7 +61,6 @@ export const apiPath = {
   removeCartList: "/user/cart/remove/v2", // remove 购物车
   //确认订单
   deliveryFee: "/user/order/freight_price/v3", // 配送费
-  paymentOnline: "/user/order/payment/online", // 在线支付
   //个人中心-订单
   orderDetail: "/user/order/detail/v3", // order 详情
   orderEvaluateSave: "/user/order/evaluate/save/v2", // order 详情
@@ -70,4 +69,10 @@ export const apiPath = {
   historicalContacts: "/user/order/historical_contacts", // 联系人列表
   orderCouponList: "/user/order/coupon/list/v2", // 优惠券列表
   orderCouponObtain: "/user/order/coupon/obtain/v2", // 添加优惠券
+
+  paymentEncryptRsa: '/user/order/payment/encrypt/rsa', //获取在线支付key 
+  paymentOnlineEntity: '/user/order/payment/online/entity', //提交在线支付 
+  paymentOnlineCheck: '/user/order/payment/check/', //支付状态查询
+  paymentOnline: "/user/order/payment/online", // 在线支付
+
 };

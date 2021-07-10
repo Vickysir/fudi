@@ -43,6 +43,8 @@ import {
   GoodsDetailsResponse,
   OrderDetailResponse,
   OrderEvaluateSavePost,
+  PaymentEncryptRsaResponse,
+  PaymentOnlineEntityPost,
 } from "./types";
 import { String } from "aws-sdk/clients/cloudhsm";
 
@@ -303,6 +305,19 @@ export const APIDeliveryFee = async (params: DeliveryFeePost) => {
 export const APIOrderSubmit = async (params) => {
   return await axios.post(apiPath.orderSubmit, params);
 };
+
+// 获取在线支付key 
+export const APIPaymentEncryptRsa = async (params: { userOrderId: number }) => {
+  return await axios.post<PaymentEncryptRsaResponse>(apiPath.paymentEncryptRsa, params);
+};
+//提交在线支付
+export const APIPaymentOnlineEntity = async (params: PaymentOnlineEntityPost) => {
+  return await axios.post(apiPath.paymentOnlineEntity, params);
+};
+export const APIPaymentOnlineCheck = async (params: { userOrderId: number }) => {
+  return await axios.post(apiPath.paymentOnlineCheck, params);
+};
+
 //在线支付
 export const APIPaymentOnline = async (params: { userOrderId: number }) => {
   return await axios.post(apiPath.paymentOnline, params);

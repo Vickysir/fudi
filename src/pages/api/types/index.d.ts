@@ -369,9 +369,6 @@ export interface CollectionInfo {
     "deliveryTime": string; // 时间 ASAP ‘HH：mm’
 }
 
-
-
-
 export interface BookTablePost {
     "consignee": string //收货人
     "sex": number // 性别
@@ -380,6 +377,20 @@ export interface BookTablePost {
     "diningTime": number // 精确到毫秒 
     "shopId": Number
 }
+
+export interface PaymentEncryptRsaResponse {
+    "rsaKey": string
+    "publicKey": string
+}
+export interface PaymentOnlineEntityPost {
+    "userOrderId": string; //"D-P3NM",
+    "expiryDate": string; //"J6oFy1kMyL0htGBNuJOpwWYb5Y09xm47jammqscAIHI80hGZ32Yg2RcwWodpf9FL59oKXm+iNYlgr2Vi7V9S+A==",
+    "cvc": string; //"QPZuQ6TC2O2CNCvsTPufqqBsrwkvnbSAoYcsnOYqUeHsIRiBlRLjYUqtNJ2XFNejaWEmTvY27SOsM6VWxGcspg==",
+    "rsaKey": string; //"f8f0b9d015e54f22a2ec1cd4963c7f8b",
+    "cardNumber": string; //"iA0UGait92paSVn8WHRkublYU56QTjBFNEdADcLX0qAs7kP5TJu7JZIamrCYFmXzZvMfSIZfypowHCsZWNIPuQ==",
+    "customerName": string; //"gzE+CkoWjDql1Vc97UMc+zKRCjvfmxExRbBmkEnhGzxaBvf5KVaxSzJLUOeIxoAVlKOBL4/5AZw0Tf3Dv1tpDw=="
+}
+
 
 export interface AddToCartPost {
     "quantity": number // 1,  数量

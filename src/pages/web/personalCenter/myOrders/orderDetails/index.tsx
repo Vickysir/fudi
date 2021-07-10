@@ -30,11 +30,15 @@ const OrderDetails = (props) => {
     useEffect(() => {
         setIsLoading(true)
         async function fetchDetails() {
-            const { data } = await APIOrderDetail({ id: orderId });
-            setData(data);
-            setIsLoading(false)
+            try {
+                const { data } = await APIOrderDetail({ id: orderId });
+                setData(data);
+                setIsLoading(false)
+            } catch (err) {
+                console.log(`APIOrderDetail err`, err)
+            }
         }
-        if(orderId!==0){
+        if (orderId !== 0) {
             fetchDetails();
         }
         fetchDetails();

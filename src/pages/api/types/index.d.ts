@@ -10,6 +10,7 @@ export interface CommonInfo {
     "currentShopping"?: any
     "websitePhone"?: string,
     "refreshCart"?: number,
+    "userOrderId": string; //确认订单，生成的订单号 "D-P3NM",
 }
 
 export interface PhoneVerificationCodePost {

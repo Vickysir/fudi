@@ -23,7 +23,7 @@ const OrderComfirm = (props) => {
     const { history } = props;
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
     const [total, setTotal] = useState("0");
-    const [otherOrderInfo, setOtherOrderInfo] = useState<DeliveryInfo | CollectionInfo>(); // TODO 修改类型
+    const [otherOrderInfo, setOtherOrderInfo] = useState<DeliveryInfo | CollectionInfo>();
     const [isOrderForVoucherModal, setisOrderForVoucherModal] = useState(false);
     const [form] = Form.useForm();
     const commonInfo = useAppStore("commonInfo");
@@ -135,7 +135,13 @@ const OrderComfirm = (props) => {
                                         console.log(`联合表单`, submit)
 
                                         if (submit.paymentType === PAYMENTTYPE_ONLINE) {
-                                            // TODO payment 0 为online ,需要填写银行卡
+                                            // TODO payment 0 为online ,保存订单号
+                                            // const {data} = await APIOrderSubmit(submit)
+                                            // console.log(`APIOrderSubmit`, data)
+                                            // APP_STORE.commonInfo = {
+                                            //     ...APP_STORE.commonInfo,
+                                            //     userOrderId:''
+                                            // };
                                             history.push("/home/payment");
                                         } else {
                                             // TODO payment 1 为现金直接下单

@@ -5,7 +5,7 @@
 - [header 购物车 list](#header购物车list) ✅<br>
 - [header 通知 list](#header通知list) 【暂缓】<br>
 - [确认订单](#确认订单)<br>
-- [个人中心-订单](#个人中心-订单)<br>
+- [个人中心-订单](#个人中心-订单)<br> ✅
 - [个人中心-通知](#个人中心-通知) 【暂缓】<br>
 - [主题色](#主题色)<br>
 
@@ -76,7 +76,7 @@
         - 地图查看位置 【删掉】
         - 修改时间 ✅
             - ASAP 立刻送
-            - On Time
+            - On Time ❌
         - 修改people ✅
             - for self 为自己
             - order for another person
@@ -85,11 +85,12 @@
         - 修改order option ✅
             - Meet in front of the door
             - Drop near the door
-    - 点击+ Add Voucher，添加优惠券
+        - 地址，计算运费 
+    - 点击+ Add Voucher，添加优惠券 
         - 优惠券列表 会返回 realm 字段
         - 添加优惠券
-        - 选择优惠券
-        解释：在/user/order/submit/v3 新增 couponRealm字段，
+        - 选择优惠券 ，返回的结果会覆盖list的接口数据
+        解释：在/user/order/submit/v3 请求参数新增 couponRealm字段，
             如果realm为0，则优惠券 ID为couponList.id
             如果realm为1，则优惠券 ID为couponList.couponId
         优惠券的使用规则：
@@ -100,13 +101,13 @@
         - monyLimit = -1,没有限制；=100，则消费必须要达到100
 
     - Payment Method，二选一
-        - 现金 （默认）
-            - 点击pay now ，下单，下单成功
-        - 银行卡
+        - 现金 （默认） ✅
+            - 点击pay now ，下单，下单成功 
+        - 银行卡 ✅
             - 点击pay now 下单
                 - 获得订单号
                 - 添加银行卡完成，comfirm,支付成功
-    - 下单
+    - 下单 
         - 下单成功，清空购物车，回到首页
 
 <div style="color:red">Order Option 的list是什么？</div>

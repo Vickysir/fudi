@@ -6,7 +6,7 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import React, { useEffect, useState } from 'react'
 import './index.less'
-import { APIGetCartList } from '@/pages/api/request';
+import { APIGetCartList, APIOrderSubmit } from '@/pages/api/request';
 import TextArea from 'antd/lib/input/TextArea';
 import RoundButton from '@/pages/components/antd/button';
 import DeliveryCom from './delivery';
@@ -17,40 +17,47 @@ import { OrderOtherInfoFormData } from './components';
 import OrderForVoucherModal from '@/pages/components/antd/modal/orderForVoucherModal';
 import { withRouter } from 'react-router';
 import { CollectionInfo, DeliveryInfo, UserOrderBasicSubmit } from '@/pages/api/types';
+import moment from 'moment';
 
 const OrderComfirm = (props) => {
     const { history } = props;
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
     const [total, setTotal] = useState("0");
-    const [otherOrderInfo, setOtherOrderInfo] = useState<OrderOtherInfoFormData>(); // TODO 修改类型
+    const [otherOrderInfo, setOtherOrderInfo] = useState<DeliveryInfo | CollectionInfo>(); // TODO 修改类型
     const [isOrderForVoucherModal, setisOrderForVoucherModal] = useState(false);
     const [form] = Form.useForm();
     const commonInfo = useAppStore("commonInfo");
 
     const shopId = commonInfo?.shopId;
     const orderType = commonInfo?.orderType;
-    const basicRequireSubmint: UserOrderBasicSubmit = {
+    const basicRequireSubmint: Partial<UserOrderBasicSubmit> = {
         shopId,
         diningType: orderType,
-        ...form.getFieldsValue()
     }
 
     const getOrderListPrice = (total) => {
         setTotal(total)
     }
     const getOtherOrderInfo = (params: OrderOtherInfoFormData) => {
-        let otherOrderInfo: DeliveryInfo | CollectionInfo;
+        let otherOrderInfo;
         //TODO 处理需要提交的表单数据
         if (orderType === DELIVERYTYPE_DELIVERY) {
             //TODO diningType 为 delivery
+            otherOrderInfo = {
+                deliveryTime: moment(params.diningTime).format("HH:mm")
+            }
 
         }
         if (orderType === DELIVERYTYPE_COLLECTION) {
             //TODO diningType 为 collection
-
+            otherOrderInfo = {
+                contactName: params.consignee,
+                contactNumber: params.phone,
+                deliveryTime: moment(params.diningTime).format("HH:mm")
+            }
         }
         console.log(`params`, params)
-        setOtherOrderInfo(params);
+        setOtherOrderInfo(otherOrderInfo);
     }
     const orderForVoucherModalClose = () => {
         setisOrderForVoucherModal(false);
@@ -104,7 +111,10 @@ const OrderComfirm = (props) => {
                             >
                                 <Row className="orderComfirm-wrap-body-form-payment">
                                     <Form.Item noStyle name="paymentType">
-                                        <Radio.Group buttonStyle="solid">
+                                        <Radio.Group onChange={(e) => {
+                                            console.log(`e.target.value`, e.target.value)
+                                            form.setFieldsValue({ "paymentType": e.target.value });
+                                        }} buttonStyle="solid" >
                                             <Radio.Button value={PAYMENTTYPE_OFFLINE}>{paymentType.get(PAYMENTTYPE_OFFLINE)}</Radio.Button>
                                             <Radio.Button value={PAYMENTTYPE_ONLINE}>{paymentType.get(PAYMENTTYPE_ONLINE)}</Radio.Button>
                                         </Radio.Group>
@@ -116,18 +126,21 @@ const OrderComfirm = (props) => {
                                 <RoundButton
                                     type="primary"
                                     block
-                                    onClick={() => {
+                                    onClick={async () => {
                                         const submit = {
                                             ...basicRequireSubmint,
+                                            ...form.getFieldsValue(),
                                             collection: { ...otherOrderInfo },
                                         }
                                         console.log(`联合表单`, submit)
+
                                         if (submit.paymentType === PAYMENTTYPE_ONLINE) {
-                                            // TODO payment 为online ,需要填写银行卡
+                                            // TODO payment 0 为online ,需要填写银行卡
                                             history.push("/home/payment");
                                         } else {
-                                            // TODO payment 为现金直接下单
-
+                                            // TODO payment 1 为现金直接下单
+                                            // await APIOrderSubmit(submit)
+                                            history.push("/home");
                                         }
                                     }}
                                     style={{ marginTop: "4rem" }}

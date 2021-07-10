@@ -273,21 +273,14 @@ export const APIRemoveCartList = async (params: {
   return await axios.post(apiPath.removeCartList, params);
 };
 
-//获取配送费
-export const APIDeliveryFee = async (params: DeliveryFeePost) => {
-  return await axios.post(apiPath.deliveryFee, params);
-};
-//在线支付
-export const APIPaymentOnline = async (params: { userOrderId: number }) => {
-  return await axios.post(apiPath.paymentOnline, params);
-};
 
 //获得订单详情
 export const APIOrderDetail = async (params: { id: string }) => { //订单编号
   return await axios.post<OrderDetailResponse>(apiPath.orderDetail, params);
 };
-export const APIOrderEvaluateSave= async (params:OrderEvaluateSavePost)=>{
-  return await  axios.post(apiPath.orderEvaluateSave,params)
+// 添加评论
+export const APIOrderEvaluateSave = async (params: OrderEvaluateSavePost) => {
+  return await axios.post(apiPath.orderEvaluateSave, params)
 }
 //获取联系人列表
 export const APIHistoricalContacts = async (params: { limit: number }) => {
@@ -301,4 +294,16 @@ export const APIOrderCouponList = async (params) => {
 //添加
 export const APIOrderObtainCoupon = async (params) => {
   return await axios.post(apiPath.orderCouponObtain, params);
+};
+//获取配送费
+export const APIDeliveryFee = async (params: DeliveryFeePost) => {
+  return await axios.post(apiPath.deliveryFee, params);
+};
+// 提交订单，下单
+export const APIOrderSubmit = async (params) => {
+  return await axios.post(apiPath.orderSubmit, params);
+};
+//在线支付
+export const APIPaymentOnline = async (params: { userOrderId: number }) => {
+  return await axios.post(apiPath.paymentOnline, params);
 };

@@ -339,7 +339,7 @@ export interface UserOrderBasicSubmit {
     "diningType": number; // 0：delivery 1：collection 2：reservation 
     "paymentType": number; //0：online 1：offline
     "remark"?: string;
-    "couponRealm": number // 0:表示用户私有优惠券   1:表示平台公共优惠券
+    "couponRealm"?: number // 使用优惠券时(餐品或外送费券)，必传    0:表示用户私有优惠券   1:表示平台公共优惠券 
     "userGoodsCouponId"?: number;  // 商品优惠券
     "userFreightCouponId"?: number; // 运费优惠券
 }

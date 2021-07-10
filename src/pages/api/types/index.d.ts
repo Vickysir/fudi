@@ -304,14 +304,14 @@ export interface OrderDetailResponse {
     }[]
 }
 export interface OrderEvaluateSavePost {
-    "rate":number,
-    "review":string,
+    "rate": number,
+    "review": string,
     "goodsList":
-        {
-            "rate":number,
-            "userOrderDetailId":number
-        }[];
-    "id":string
+    {
+        "rate": number,
+        "userOrderDetailId": number
+    }[];
+    "id": string
 }
 export interface EvaluateList {
     "complexStarLevel": number// 5
@@ -333,12 +333,45 @@ export interface ShopCategoriesLevelOneResponseArray {
     "promotion": number //0
     "thumbnail": string //"public/dfde891713054186a64e76ed6fa4bc59"    
 }
-export interface UserOrderSubmitPost {
-    "remark"?: string,
-    "diningType": number,
-    "shopId": number,
-    "reservation": BookTablePost
+export interface UserOrderSubmitPost extends UserOrderDeliverySubmit, UserOrderDeliverySubmit, ReservationSubmit { }
+export interface UserOrderBasicSubmit {
+    "shopId": number;
+    "diningType": number; // 0：delivery 1：collection 2：reservation 
+    "paymentType": number; //0：online 1：offline
+    "remark"?: string;
+    "couponRealm": number // 0:表示用户私有优惠券   1:表示平台公共优惠券
+    "userGoodsCouponId"?: number;  // 商品优惠券
+    "userFreightCouponId"?: number; // 运费优惠券
 }
+export interface UserOrderDeliverySubmit {
+    "delivery": DeliveryInfo
+}
+export interface UserOrderCollectionSubmit {
+    "collection": CollectionInfo
+}
+export interface ReservationSubmit {
+    "reservation": Omit<BookTablePost, 'shopId'>
+}
+
+
+export interface DeliveryInfo {
+    "userShippingAddress": {
+        // 字段
+    };
+    "deliveryTime": string; // 时间 ASAP ‘HH：mm’
+    "deliveryOption": string; // Meet in front of the door or ...
+    // 联系人 字段
+    // 电话 字段
+}
+export interface CollectionInfo {
+    "contactName": string; // 联系人
+    "contactNumber": string; // 电话
+    "deliveryTime": string; // 时间 ASAP ‘HH：mm’
+}
+
+
+
+
 export interface BookTablePost {
     "consignee": string //收货人
     "sex": number // 性别

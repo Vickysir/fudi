@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Icon, {
   UserOutlined,
   ClockCircleOutlined,
@@ -68,6 +68,11 @@ const OrderMethod = (props: Props) => {
     setFormData(formData);
   };
 
+  useEffect(() => {
+    setFormData({ ...orderData });
+
+  }, [])
+
   return (
     <div className="orderMethod-wrap">
       {type === "collect" && (
@@ -83,7 +88,7 @@ const OrderMethod = (props: Props) => {
                   {orderData?.timeType === ORDERTIME_ASAP
                     ? orderTimeType.get(ORDERTIME_ASAP)
                     : moment(orderData.diningTime)
-                      .format('"HH:mm"')
+                      .format("HH:mm")
                       .replace(/\"/g, "")}
                 </p>
               </div>
@@ -139,7 +144,7 @@ const OrderMethod = (props: Props) => {
                   {orderData?.timeType === ORDERTIME_ASAP
                     ? orderTimeType.get(ORDERTIME_ASAP)
                     : moment(orderData.diningTime)
-                      .format('"HH:mm"')
+                      .format("HH:mm")
                       .replace(/\"/g, "")}
                 </p>
               </div>

@@ -12,27 +12,43 @@ import RoundButton from '@/pages/components/antd/button';
 import DeliveryCom from './delivery';
 import CollectCom from './collect';
 import { useAppStore } from '@/__internal';
-import { DELIVERYTYPE_DELIVERY, paymentType, PAYMENTTYPE_OFFLINE, PAYMENTTYPE_ONLINE } from '@/utils/constant';
+import { deliveryOption, DELIVERYTYPE_COLLECTION, DELIVERYTYPE_DELIVERY, paymentType, PAYMENTTYPE_OFFLINE, PAYMENTTYPE_ONLINE } from '@/utils/constant';
 import { OrderOtherInfoFormData } from './components';
 import OrderForVoucherModal from '@/pages/components/antd/modal/orderForVoucherModal';
 import { withRouter } from 'react-router';
+import { CollectionInfo, DeliveryInfo, UserOrderBasicSubmit } from '@/pages/api/types';
 
 const OrderComfirm = (props) => {
     const { history } = props;
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
     const [total, setTotal] = useState("0");
-    const [otherOrderInfo, setOtherOrderInfo] = useState<OrderOtherInfoFormData>();
+    const [otherOrderInfo, setOtherOrderInfo] = useState<OrderOtherInfoFormData>(); // TODO 修改类型
     const [isOrderForVoucherModal, setisOrderForVoucherModal] = useState(false);
     const [form] = Form.useForm();
     const commonInfo = useAppStore("commonInfo");
 
-    const orderType = commonInfo?.orderType;
     const shopId = commonInfo?.shopId;
+    const orderType = commonInfo?.orderType;
+    const basicRequireSubmint: UserOrderBasicSubmit = {
+        shopId,
+        diningType: orderType,
+        ...form.getFieldsValue()
+    }
 
     const getOrderListPrice = (total) => {
         setTotal(total)
     }
     const getOtherOrderInfo = (params: OrderOtherInfoFormData) => {
+        let otherOrderInfo: DeliveryInfo | CollectionInfo;
+        //TODO 处理需要提交的表单数据
+        if (orderType === DELIVERYTYPE_DELIVERY) {
+            //TODO diningType 为 delivery
+
+        }
+        if (orderType === DELIVERYTYPE_COLLECTION) {
+            //TODO diningType 为 collection
+
+        }
         console.log(`params`, params)
         setOtherOrderInfo(params);
     }
@@ -66,7 +82,7 @@ const OrderComfirm = (props) => {
                         <Form
                             form={form}
                             layout="vertical"
-                            initialValues={{ payment: PAYMENTTYPE_OFFLINE }}
+                            initialValues={{ paymentType: PAYMENTTYPE_OFFLINE }}
                             style={{ margin: "1rem 2rem" }}
                         >
 
@@ -87,7 +103,7 @@ const OrderComfirm = (props) => {
                                 noStyle
                             >
                                 <Row className="orderComfirm-wrap-body-form-payment">
-                                    <Form.Item noStyle name="payment">
+                                    <Form.Item noStyle name="paymentType">
                                         <Radio.Group buttonStyle="solid">
                                             <Radio.Button value={PAYMENTTYPE_OFFLINE}>{paymentType.get(PAYMENTTYPE_OFFLINE)}</Radio.Button>
                                             <Radio.Button value={PAYMENTTYPE_ONLINE}>{paymentType.get(PAYMENTTYPE_ONLINE)}</Radio.Button>
@@ -101,15 +117,17 @@ const OrderComfirm = (props) => {
                                     type="primary"
                                     block
                                     onClick={() => {
-                                        // TODO payment 为现金直接下单
-                                        // TODO payment 为online ,需要填写银行卡
                                         const submit = {
-                                            ...otherOrderInfo,
-                                            ...form.getFieldsValue()
+                                            ...basicRequireSubmint,
+                                            collection: { ...otherOrderInfo },
                                         }
                                         console.log(`联合表单`, submit)
-                                        if (submit.payment === PAYMENTTYPE_ONLINE) {
+                                        if (submit.paymentType === PAYMENTTYPE_ONLINE) {
+                                            // TODO payment 为online ,需要填写银行卡
                                             history.push("/home/payment");
+                                        } else {
+                                            // TODO payment 为现金直接下单
+
                                         }
                                     }}
                                     style={{ marginTop: "4rem" }}

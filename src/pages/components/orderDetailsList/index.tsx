@@ -11,10 +11,10 @@ const config = {
     number: 'BigNumber',
     precision: 20
 }
-const math = create(all, config)
+export const math = create(all, config)
 interface Props extends RouteComponentProps {
     comfirmBtn?: boolean
-    orderListPrice?: (total: string) => void
+    orderListPrice?: (total: { basicPricePart: string, discountPricePart: string }[]) => void
 }
 const OrderDetailsList = (props: Props) => {
     const { comfirmBtn = true, orderListPrice, history } = props;
@@ -50,29 +50,48 @@ const OrderDetailsList = (props: Props) => {
         let totlePrice = "0";
 
         const list = data?.map((item) => {
-            const { goods: { currentPrice, ingredientClassify } } = item;
-            let price = currentPrice;
+            const { goods: { currentPrice, originalPrice, ingredientClassify } } = item;
+            let discontPrice = '0';
+            let price = '0';
+            if (currentPrice === originalPrice) {
+                price = currentPrice;
+            } else {
+                discontPrice = currentPrice;
+            }
             ingredientClassify.map((el) => {
                 const freeOption = el.free;
                 el.ingredientList.map((v, index) => {
                     // free option 计算 currentPrice
                     if (index < freeOption || (index === 0 && index === freeOption)) {
-                        price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(0)).done());
+                        // 是否为打折商品
+                        if (v.currentPrice === v.originalPrice) {
+                            price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(0)).done());
+                        } else {
+                            discontPrice = math.format(math.chain(math.bignumber(discontPrice)).add(math.bignumber(0)).done());
+                        }
                     } else {
-                        price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(v.currentPrice)).done());
+                        // 是否为打折商品
+                        if (v.currentPrice === v.originalPrice) {
+                            price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(v.currentPrice)).done());
+                        } else {
+                            discontPrice = math.format(math.chain(math.bignumber(discontPrice)).add(math.bignumber(v.currentPrice)).done());
+                        }
                     }
                 })
             })
-            return math.format(math.chain(math.bignumber(price)).multiply(math.bignumber(item.quantity)).done());
+            return {
+                "basicPricePart": math.format(math.chain(math.bignumber(price)).multiply(math.bignumber(item.quantity)).done()),
+                "discountPricePart": math.format(math.chain(math.bignumber(discontPrice)).multiply(math.bignumber(item.quantity)).done())
+            };
         })
 
 
         list?.map((item) => {
-            totlePrice = math.format(math.chain(math.bignumber(item)).add(math.bignumber(totlePrice)).done());
+            totlePrice = math.format(math.chain(math.bignumber(item.basicPricePart)).add(math.bignumber(item.discountPricePart)).add(math.bignumber(totlePrice)).done());
         })
         //更新
         setTotal(totlePrice);
-        orderListPrice && orderListPrice(totlePrice);
+        orderListPrice && orderListPrice(list);
     }
 
     const fetchData = async () => {

@@ -18,7 +18,14 @@ import OrderForVoucherModal from '@/pages/components/antd/modal/orderForVoucherM
 import { withRouter } from 'react-router';
 import { CollectionInfo, DeliveryInfo, UserOrderBasicSubmit } from '@/pages/api/types';
 import moment from 'moment';
+import { create, all } from 'mathjs'
 
+
+const config = {
+    number: 'BigNumber',
+    precision: 20
+}
+export const math = create(all, config)
 const OrderComfirm = (props) => {
     const { history } = props;
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
@@ -36,7 +43,13 @@ const OrderComfirm = (props) => {
     }
 
     const getOrderListPrice = (total) => {
-        setTotal(total)
+        console.log("total", total)
+
+        let totlePrice = '0';
+        total?.map((item) => {
+            totlePrice = math.format(math.chain(math.bignumber(item.basicPricePart)).add(math.bignumber(item.discountPricePart)).add(math.bignumber(totlePrice)).done());
+        })
+        setTotal(totlePrice)
     }
     const getOtherOrderInfo = (params: OrderOtherInfoFormData) => {
         let otherOrderInfo;

@@ -20,13 +20,21 @@ import {
 import style from "@/styles/theme/icon.less";
 import "./index.less";
 import { formatDateToDay } from "@/utils/timer";
-import { COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT } from "@/utils/constant";
+import { COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT, moneyLimit } from "@/utils/constant";
 import { OrderCoupon, OrderCouponListResponse } from "@/pages/api/types";
+import { create, all } from 'mathjs'
+
 
 const { Option } = Select;
 
+
+const config = {
+  number: 'BigNumber',
+  precision: 20
+}
+const math = create(all, config)
 const OrderForVoucherModal = (props) => {
-  const { isOpen, isClose, shopId, finishFn, isIncludeDiscount } = props;
+  const { isOpen, isClose, shopId, finishFn, totalStructure } = props;
   const authInfo = useAppStore("authInfo");
   const commonInfo = useAppStore("commonInfo");
   const [visible, setvisible] = useState(false);
@@ -75,10 +83,10 @@ const OrderForVoucherModal = (props) => {
   };
 
   const handleClickHitoryContacts = (item) => {
-    // const canUse = item.discountType === COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT && !isIncludeDiscount;
-    // if (!canUse) {
-    //   return message.error('Sorry, this coupon cannot be used for this order')
-    // }
+    const canUse = handleCanUseVoucher(item);
+    if (!canUse) {
+      return message.error('Sorry, this coupon cannot be used for this order')
+    }
     if (item.id === selectCoupon?.id) {
       setEditForVoucherValue('');
       setSelectCoupon(undefined)
@@ -88,6 +96,27 @@ const OrderForVoucherModal = (props) => {
     setEditForVoucherValue(item.title);
     setIsEditForVoucher(false);
   };
+  const handleCanUseVoucher = (voucher: OrderCoupon): boolean => {
+    // monyLimit = -1,没有限制；=100，则消费必须要达到100
+    if (voucher?.moneyLimit !== -1) {
+      let totalPrice = '0';
+      let undisCountTotalPrice = '0';
+      let disCountTotalPrice = '0';
+
+      totalStructure?.map((item) => {
+        undisCountTotalPrice = math.format(math.chain(math.bignumber(item.basicPricePart)).add(math.bignumber(undisCountTotalPrice)).done());
+        disCountTotalPrice = math.format(math.chain(math.bignumber(item.discountPricePart)).add(math.bignumber(disCountTotalPrice)).done());
+      })
+
+      if (voucher?.discountType === COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT) {// 不打折的商品总价 是否 达到limit
+        return Number(undisCountTotalPrice) >= voucher?.moneyLimit
+      } else { // 全部商品总价 是否 达到limit
+        totalPrice = math.format(math.chain(math.bignumber(undisCountTotalPrice)).add(math.bignumber(disCountTotalPrice)).done());
+        return Number(totalPrice) >= voucher?.moneyLimit
+      }
+    }
+    return true
+  }
 
   useEffect(() => {
     setvisible(isOpen);
@@ -144,8 +173,7 @@ const OrderForVoucherModal = (props) => {
               <ul style={{ marginTop: "4rem" }} key={index}>
                 <li className="historyContacts-box-li-title">Available：{el.name}</li>
                 {el?.couponList?.map((item) => {
-                  // const canUse = item.discountType === COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT && !isIncludeDiscount;
-                  const canUse = true;
+                  const canUse = handleCanUseVoucher(item);
                   return (
                     <li
                       key={item.id}
@@ -157,9 +185,8 @@ const OrderForVoucherModal = (props) => {
                           <h5 className={canUse ? "" : 'vouchers-unavailable'}>{item.title}</h5>
                           <p className={canUse ? "vouchers-ailable" : 'vouchers-unavailable'}>Available</p>
                         </div>
-                        <p>{`${formatDateToDay(item.activeDate)} - ${formatDateToDay(
-                          item.quietDate
-                        )}`}</p>
+                        <p style={{ marginBottom: "0" }}>{`${formatDateToDay(item.activeDate)} - ${formatDateToDay(item.quietDate)}`}</p>
+                        <p style={{ marginBottom: "0" }}>{item.moneyLimit === -1 ? moneyLimit.get(-1) : `must reach € ${item.moneyLimit}`}</p>
                       </div>
                       <CheckOutlined
                         style={{ fontSize: '26px' }}

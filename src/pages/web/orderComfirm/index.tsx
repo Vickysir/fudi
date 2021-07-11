@@ -25,7 +25,7 @@ const config = {
     number: 'BigNumber',
     precision: 20
 }
-export const math = create(all, config)
+const math = create(all, config)
 const OrderComfirm = (props) => {
     const { history } = props;
     const [refreshHeaderCart, setRefreshHeaderCart] = useState(0);
@@ -104,7 +104,6 @@ const OrderComfirm = (props) => {
         // - discountType = 0, 不包含打折的商品；= 1，全部商品
         // - money: moneyType = 0，为折扣的金额；如果moneyType=1折扣的百分比，值为0-1，=0.8则表示打8折，有20%的优惠；
         // - moneyType = 0,直接从价格中扣除，=1按照百分百扣除，=2全部免费
-        // TODO monyLimit = -1,没有限制；=100，则消费必须要达到100
 
         if (voucher.discountType === COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT) {// 不包含打折的商品
             if (voucher.moneyType === MONEYTYPE_DEDUCT) { // 直接从价格中扣除
@@ -141,7 +140,7 @@ const OrderComfirm = (props) => {
                 if (Number(totalPrice) <= 0) {
                     totalPrice = '0'
                 }
-            } else if (voucher.moneyType === MONEYTYPE_FREE) { // 除去打折商品的部分，原价商品全部免费
+            } else if (voucher.moneyType === MONEYTYPE_FREE) {
                 totalPrice = '0'
             }
 
@@ -286,7 +285,7 @@ const OrderComfirm = (props) => {
                         isClose={orderForVoucherModalClose}
                         shopId={Number(1)}
                         finishFn={(data) => { getOrderInfo(data, 'voucher') }}
-                        isIncludeDiscount={false}
+                        totalStructure={totalStructure}
                     />
                 </div>
             </div>

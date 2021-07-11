@@ -79,7 +79,7 @@ export const MONEYTYPE_FREE = 2;
 
 
 export const moneyLimit = new Map([
-  [-1, "there is no limit"], //则没有限价
+  [-1, "there is no amount limit"], //则没有限价
 ]);
 
 export const ORDERTIME_ASAP = 1;

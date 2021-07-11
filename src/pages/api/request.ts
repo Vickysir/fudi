@@ -46,6 +46,7 @@ import {
   PaymentEncryptRsaResponse,
   PaymentOnlineEntityPost,
   OrderCouponListResponse,
+  DeliveryFeeResponse,
 } from "./types";
 import { String } from "aws-sdk/clients/cloudhsm";
 
@@ -300,7 +301,7 @@ export const APIOrderObtainCoupon = async (params) => {
 };
 //获取配送费
 export const APIDeliveryFee = async (params: DeliveryFeePost) => {
-  return await axios.post(apiPath.deliveryFee, params);
+  return await axios.post<DeliveryFeeResponse>(apiPath.deliveryFee, params);
 };
 // 提交订单，下单
 export const APIOrderSubmit = async (params) => {

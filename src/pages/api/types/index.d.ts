@@ -1,9 +1,13 @@
 export interface CommonInfo {
     "shopServicePhone"?: string,
     "shopId"?: number,
-    "startTimeFormat"?: string,
+    "startTimeFormat"?: string, //营业开始时间
     "endTimeFormat"?: string,
-    "orderType"?: number,
+    "orderType"?: number,// delivery  or  collection
+    "deliveryAddress"?: string,
+    "deliveryAddressId"?: number,
+    "deliveryHouseNumber"?: string,
+    "deliveryZipCode"?: string,
     "count"?: number, // 倒计时
     "liked"?: boolean,
     "uploadAvatar"?: string,
@@ -440,11 +444,12 @@ export interface OrderCouponList {
 
 export interface DeliveryFeePost {
     "shopId": number//1 
-    "userFreightCouponId": number // user delivery fee coupon number
     "userShippingAddressId": number // Shopping Cart number
+    "userFreightCouponId"?: number // user delivery fee coupon number
 }
-
-
+export interface DeliveryFeeResponse {
+    price: number
+}
 
 
 

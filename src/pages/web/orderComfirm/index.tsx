@@ -67,6 +67,7 @@ const OrderComfirm = (props) => {
             ...data
         }
         console.log(`voucherData`, voucherData)
+        // TODO 是否需要重新获取一遍 fee
     };
 
     return (

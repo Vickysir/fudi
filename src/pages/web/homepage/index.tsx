@@ -27,7 +27,7 @@ import Icon, { DeleteOutlined } from '@ant-design/icons';
 
 import style from '@/styles/theme/icon.less'
 import "./index.less"
-import { APIShopInRange, APIShopServicePhone, APITranslatePlaceIdToLocation, APIUserAddressList } from '@/pages/api/request';
+import { APISaveAddress, APIShopInRange, APIShopServicePhone, APITranslatePlaceIdToLocation, APIUserAddressList } from '@/pages/api/request';
 import { useAppStore } from '@/__internal';
 import RoundInput from '@/pages/components/antd/input';
 import RoundSelect from '@/pages/components/antd/select';
@@ -37,6 +37,7 @@ import MessageModal from '@/pages/components/antd/modal/messageModal';
 import { AutoCompeteSelect } from '@/pages/components/antd/select/autoCompeteSelect';
 import { withRouter } from 'react-router-dom';
 import RoundSearchSelect from '@/pages/components/antd/select/searchSelect';
+import { AddressListPostResponseArray, SaveAddressPost } from '@/pages/api/types';
 
 
 const Homepage = (props) => {
@@ -45,8 +46,10 @@ const Homepage = (props) => {
     const [orderType, setOrderType] = useState("0")
     const [deliveryIsOpen, setDeliveryIsOpen] = useState(false)
     const [deliveryList, setDeliveryList] = useState([])
-    const [selectShopId, setSelectShopId] = useState({ id: null, "shopId": null })
+    const [selectShopId, setSelectShopId] = useState<AddressListPostResponseArray>()
     const [autoCompeteSelectValue, setAutoCompeteSelectValue] = useState(undefined)
+    const [houseNumberValue, setHouseNumberValue] = useState(undefined)
+    const [zipCodeValue, setZipCodeValue] = useState(undefined)
 
     // 该接口要知道shopId ，去请求获取 ShopServicePhone
     useEffect(() => {
@@ -71,14 +74,27 @@ const Homepage = (props) => {
     const handleSelectChange = (value) => {
         console.log(`selected `, value);
         setOrderType(value.key)
-
+    }
+    const handleInputChange = (e, type) => {
+        const value = e.target.value;
+        switch (type) {
+            case 'houseNumber':
+                setHouseNumberValue(value);
+                break;
+            case 'zipCode':
+                setZipCodeValue(value);
+                break;
+            default:
+                break;
+        }
+        console.log(`selected `, value, type);
     }
     const handleAutoCompeteSelectOnChange = (value) => {
-        console.log(`selected `, value);
         setAutoCompeteSelectValue(value);
     }
     const handleSearch = async () => {
         if (!autoCompeteSelectValue) return message.error("Place select address")
+
         switch (Number(orderType)) {
             //"Collect"
             case DELIVERYTYPE_COLLECTION: {
@@ -95,23 +111,39 @@ const Homepage = (props) => {
             //"Delivery"
             default:
                 {
+                    if (!houseNumberValue) return message.error("Place select houseNumber")
+                    if (!zipCodeValue) return message.error("Place select zipCode")
                     APITranslatePlaceIdToLocation(autoCompeteSelectValue)
                         .then(function (response) {
                             return response.json();
                         })
                         .then(async function (json) {
-                            console.log(json);
-                            const { location } = json.results[0].geometry
-                            const { data } = await APIShopInRange({ latitude: location.lat, longitude: location.lng })
-                            if (!data || data.length === 0) return message.error("The address is out of our delivery range. Please input again.")
-                            APP_STORE.commonInfo = {
-                                ...APP_STORE.commonInfo,
-                                orderType: DELIVERYTYPE_DELIVERY,
-                                shopId: data.id,
-                                refreshCart: new Date().getTime()
-                            };
-                            history.push(`/home/shop/${data.id}`)
-                            console.log(`data`, data)
+                            try {
+                                const { location } = json.results[0].geometry;
+                                const detail = json.results[0].formatted_address;
+                                const { data } = await APIShopInRange({ latitude: location.lat, longitude: location.lng })
+                                if (!data || data.length === 0) return message.error("The address is out of our delivery range. Please input again.")
+                                //save houseNumber and zipCode 
+                                // TODO 接口有问题需要验证登录，补充联系人和手机信息
+                                const params = { "zipCode": zipCodeValue, "consignee": "Fudi&more", "phone": "13656690321", "sex": 0, "houseNumber": houseNumberValue, "detail": detail, "region": "", latitude: location.lat, longitude: location.lng }
+                                await APISaveAddress(params);
+
+                                //再获取一遍list ，get deliveryAddressId  存起来
+                                const deliveryAddressId = await handleFindAddressId(params);
+                                APP_STORE.commonInfo = {
+                                    ...APP_STORE.commonInfo,
+                                    orderType: DELIVERYTYPE_DELIVERY,
+                                    shopId: data.id,
+                                    refreshCart: new Date().getTime(),
+                                    deliveryAddress: autoCompeteSelectValue,
+                                    deliveryAddressId,
+                                    deliveryHouseNumber: houseNumberValue,
+                                    deliveryZipCode: zipCodeValue,
+                                };
+                                history.push(`/home/shop/${data.id}`)
+                            } catch (err) {
+                                console.log(`APITranslatePlaceIdToLocation err`, err)
+                            }
                         });
 
                 }
@@ -131,6 +163,32 @@ const Homepage = (props) => {
         const translate = new google.maps.Geocoder();
         translate.geocode({ placeId: params }, translateToLocation)
     }
+    const handleFindAddressId = async (el: SaveAddressPost) => {
+        try {
+            const { data } = await APIUserAddressList();
+            const ids = data.map((item, index) => {
+                if (item.longitude === el.longitude
+                    && item.latitude === el.latitude
+                    && item.houseNumber === el.houseNumber
+                    && item.zipCode === el.zipCode
+                    && item.detail === el.detail
+                ) {
+                    return item.id
+                }
+            })
+            if (ids.length === 1) {
+                return ids[0]
+
+            } else {
+                message.error('Sorry,save address error')
+                throw `FindAddressId error:${ids}`;
+            }
+
+        } catch (err) {
+            console.log(`APIUserAddressList err`, err)
+        }
+
+    }
     return (
         <>
             <div className="homepage-banner">
@@ -138,33 +196,37 @@ const Homepage = (props) => {
                 <p>Are You Hungry?</p>
                 <h3>Don’t Wait. Order Now.</h3>
                 <div className="homepage-banner-search">
-                    <div style={{ width: "70%" }} >
+                    <div style={{ width: "75%" }} >
                         {
                             orderType === `${DELIVERYTYPE_DELIVERY}` ?
 
                                 (
-                                    <>
-                                        <AutoCompeteSelect
-                                            placeholder="Place input delivery address ..."
-                                            style={{ width: "100%" }}
-                                            handleAutoCompeteSelectOnChange={handleAutoCompeteSelectOnChange}
-                                            orderType={orderType}
-                                        />
-                                        <p onClick={
-                                            async () => {
-                                                try {
-                                                    const { data } = await APIUserAddressList();
-                                                    if (data.length === 0) {
-                                                        return message.info("You don't have previous addresses")
+                                    <div style={{ display: "flex", alignContent: "center", justifyContent: "space-between" }}>
+                                        <div style={{ width: "60%" }}>
+                                            <AutoCompeteSelect
+                                                placeholder="Place input delivery address ..."
+                                                style={{ width: "100%" }}
+                                                handleAutoCompeteSelectOnChange={handleAutoCompeteSelectOnChange}
+                                                orderType={orderType}
+                                            />
+                                            <p onClick={
+                                                async () => {
+                                                    try {
+                                                        const { data } = await APIUserAddressList();
+                                                        if (data.length === 0) {
+                                                            return message.info("You don't have previous addresses")
+                                                        }
+                                                        setDeliveryIsOpen(true)
+                                                        setDeliveryList(data)
+                                                    } catch (err) {
+                                                        console.log(`err`, err)
                                                     }
-                                                    setDeliveryIsOpen(true)
-                                                    setDeliveryList(data)
-                                                } catch (err) {
-                                                    console.log(`err`, err)
                                                 }
-                                            }
-                                        }>Previous Addresses</p>
-                                    </>
+                                            }>Previous Addresses</p>
+                                        </div>
+                                        <div style={{ width: "20%" }}><RoundInput placeholder="houseNumber" value={houseNumberValue} onChange={(e) => { handleInputChange(e, "houseNumber") }} /></div>
+                                        <div style={{ width: "15%" }}><RoundInput placeholder="zipCode" value={zipCodeValue} onChange={(e) => { handleInputChange(e, "zipCode") }} /></div>
+                                    </div>
                                 )
                                 :
                                 <RoundSearchSelect
@@ -177,7 +239,7 @@ const Homepage = (props) => {
                         }
                     </div>
                     <RoundSelect
-                        style={{ width: "15rem" }}
+                        style={{ width: "10rem" }}
                         type="orderType"
                         needDefaultValue={true}
                         onChange={handleSelectChange}
@@ -273,7 +335,7 @@ const Homepage = (props) => {
                         {
                             deliveryList.map((item, index) => {
                                 return (
-                                    <p className={item.id === selectShopId.id ? "previousAddresses-content previousAddresses-content-active" : "previousAddresses-content"} key={index} onClick={() => { setSelectShopId({ id: item.id, "shopId": item.shopId }) }}>
+                                    <p className={item.id === selectShopId?.id ? "previousAddresses-content previousAddresses-content-active" : "previousAddresses-content"} key={index} onClick={() => { setSelectShopId(item) }}>
                                         {item.detail}
                                         {/* <span><DeleteOutlined /></span> */}
                                     </p>
@@ -281,7 +343,20 @@ const Homepage = (props) => {
                             })
                         }
 
-                        <Button type="primary" shape="round" block onClick={() => { history.push(`/home/shop/${selectShopId.shopId}`) }}>Continue</Button>
+                        <Button type="primary" shape="round" block onClick={() => {
+                            //save deliveryAddressId houseNumber and zipCode 
+                            APP_STORE.commonInfo = {
+                                ...APP_STORE.commonInfo,
+                                orderType: DELIVERYTYPE_DELIVERY,
+                                shopId: selectShopId.shopId,
+                                refreshCart: new Date().getTime(),
+                                deliveryAddress: selectShopId.detail,
+                                deliveryAddressId: selectShopId.id,
+                                deliveryHouseNumber: selectShopId.houseNumber,
+                                deliveryZipCode: selectShopId.zipCode,
+                            };
+                            history.push(`/home/shop/${selectShopId.shopId}`)
+                        }}>Continue</Button>
                     </>
                 }
             />

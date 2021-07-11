@@ -142,7 +142,7 @@ const MyOrders = () => {
                                                 <div key={item.id} className="myOrders-wrap-list">
                                                     <ul className="myOrders-wrap-list-title title-completed">
                                                         <li>{item.shop.name} <span>·</span> {DeliveryType.get(item.deliveryType)} <span>·</span> {item.goodsList.length}Item <span>·</span> €{item.actualAmount}</li>
-                                                        <li><InfoCircleOutlined /></li>
+                                                        <li onClick={() => { setOpenDetails(true); setOrderId(item.id) }}><InfoCircleOutlined /></li>
                                                     </ul>
                                                     <div className="myOrders-wrap-list-content">
                                                         <p>Estimated Time:<span className="completed"><HistoryOutlined /> {formatDateToHour(item.createTime)}</span></p>
@@ -168,7 +168,7 @@ const MyOrders = () => {
             <AddReview isOpen={isOpen} isClose={addReviewClose} orderId={orderId} />
             <SendSuccess isOpen={issend} isClose={sendSuccessClose} />
             <OrderDetails isOpen={isOpenDetails} isClose={closeDetails} orderId={orderId} />
-        </div>
+        </div >
     )
 
 }

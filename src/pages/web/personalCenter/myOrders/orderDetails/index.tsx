@@ -8,6 +8,7 @@ import { APIOrderDetail } from '@/pages/api/request';
 import './index.less'
 import { OrderDetailResponse } from '@/pages/api/types';
 import { OrderStatus, paymentType } from '@/utils/constant';
+import { havePlaceholder } from '@/utils';
 
 
 
@@ -41,7 +42,9 @@ const OrderDetails = (props) => {
         if (orderId !== 0) {
             fetchDetails();
         }
-        fetchDetails();
+        if (orderId !== 0) {
+            fetchDetails();
+        }
     }, [orderId])
     const location = data?.userShippingAddress ?
         { "lat": data?.userShippingAddress.latitude, "lng": data?.userShippingAddress.longitude }
@@ -108,11 +111,11 @@ const OrderDetails = (props) => {
                                 data?.userShippingAddress ? (
                                     <ul className="orderDetials-left-address" >
                                         <li>
-                                            <p><EnvironmentOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.detail}</p>
+                                            <p><EnvironmentOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{havePlaceholder(data?.userShippingAddress?.detail)}</p>
                                         </li>
                                         <li>
-                                            <p><HomeOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.houseNumber}</p>
-                                            <p><WalletOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{data?.userShippingAddress?.zipCode}</p>
+                                            <p><HomeOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{havePlaceholder(data?.userShippingAddress?.houseNumber)}</p>
+                                            <p><WalletOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{havePlaceholder(data?.userShippingAddress?.zipCode)}</p>
                                         </li>
                                     </ul>
                                 ) : (

@@ -1,6 +1,6 @@
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
-import OrderDetailsList from '../../components/orderDetailsList'
+import OrderDetailsList, { TotalStructure } from '../../components/orderDetailsList'
 import { Button, Form, Radio, Row } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
@@ -12,11 +12,11 @@ import RoundButton from '@/pages/components/antd/button';
 import DeliveryCom from './delivery';
 import CollectCom from './collect';
 import { useAppStore } from '@/__internal';
-import { deliveryOption, DELIVERYTYPE_COLLECTION, DELIVERYTYPE_DELIVERY, paymentType, PAYMENTTYPE_OFFLINE, PAYMENTTYPE_ONLINE } from '@/utils/constant';
+import { COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT, deliveryOption, DELIVERYTYPE_COLLECTION, DELIVERYTYPE_DELIVERY, moneyType, MONEYTYPE_DEDUCT, MONEYTYPE_FREE, MONEYTYPE_PERCENTAGE, paymentType, PAYMENTTYPE_OFFLINE, PAYMENTTYPE_ONLINE } from '@/utils/constant';
 import { OrderOtherInfoFormData } from './components';
 import OrderForVoucherModal from '@/pages/components/antd/modal/orderForVoucherModal';
 import { withRouter } from 'react-router';
-import { CollectionInfo, DeliveryInfo, UserOrderBasicSubmit } from '@/pages/api/types';
+import { CollectionInfo, DeliveryInfo, OrderCoupon, UserOrderBasicSubmit } from '@/pages/api/types';
 import moment from 'moment';
 import { create, all } from 'mathjs'
 
@@ -32,6 +32,9 @@ const OrderComfirm = (props) => {
     const [total, setTotal] = useState("0");
     const [otherOrderInfo, setOtherOrderInfo] = useState<DeliveryInfo | CollectionInfo>();
     const [isOrderForVoucherModal, setisOrderForVoucherModal] = useState(false);
+    const [totalStructure, setTotalStructure] = useState<TotalStructure[]>([])
+    const [voucher, setVoucher] = useState<OrderCoupon>(undefined)
+    const [fee, setFee] = useState<number>(0)
     const [form] = Form.useForm();
     const commonInfo = useAppStore("commonInfo");
 
@@ -42,15 +45,7 @@ const OrderComfirm = (props) => {
         diningType: orderType,
     }
 
-    const getOrderListPrice = (total) => {
-        console.log("total", total)
 
-        let totlePrice = '0';
-        total?.map((item) => {
-            totlePrice = math.format(math.chain(math.bignumber(item.basicPricePart)).add(math.bignumber(item.discountPricePart)).add(math.bignumber(totlePrice)).done());
-        })
-        setTotal(totlePrice)
-    }
     const getOtherOrderInfo = (params: OrderOtherInfoFormData) => {
         let otherOrderInfo;
         //TODO 处理需要提交的表单数据
@@ -75,13 +70,116 @@ const OrderComfirm = (props) => {
     const orderForVoucherModalClose = () => {
         setisOrderForVoucherModal(false);
     };
-    const setDataFn = (data) => {
-        const voucherData = {
-            ...data
+    const getOrderInfo = (data, type) => {
+        if (type === "totalStructure") {
+            console.log(`totalStructure`, data)
+            setTotalStructure(data)
         }
-        console.log(`voucherData`, voucherData)
-        // TODO 是否需要重新获取一遍 fee
+        if (type === "voucher") {
+            console.log(`voucherData`, data)
+            setVoucher(data)
+        }
+        if (type === "fee") {
+            console.log(`fee`, data)
+            setFee(data)
+        }
     };
+    const handleUseVoucher = (totalStructure: TotalStructure[], voucher: OrderCoupon) => {
+        let totalPrice = '0';
+        let undisCountTotalPrice = '0';
+        let disCountTotalPrice = '0';
+
+        totalStructure?.map((item) => {
+            undisCountTotalPrice = math.format(math.chain(math.bignumber(item.basicPricePart)).add(math.bignumber(undisCountTotalPrice)).done());
+            disCountTotalPrice = math.format(math.chain(math.bignumber(item.discountPricePart)).add(math.bignumber(disCountTotalPrice)).done());
+        })
+        console.log(`undisCountTotalPrice`, undisCountTotalPrice)
+        console.log(`disCountTotalPrice`, disCountTotalPrice)
+        // 优惠券限制 
+        // - discountType = 0, 不包含打折的商品；= 1，全部商品
+        // - money: moneyType = 0，为折扣的金额；如果moneyType=1折扣的百分比，值为0-1，=0.8则表示打8折，有20%的优惠；
+        // - moneyType = 0,直接从价格中扣除，=1按照百分百扣除，=2全部免费
+        // TODO monyLimit = -1,没有限制；=100，则消费必须要达到100
+
+        if (voucher.discountType === COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT) {// 不包含打折的商品
+            if (voucher.moneyType === MONEYTYPE_DEDUCT) { // 直接从价格中扣除
+                let undisCountPart = math.format(math.chain(math.bignumber(undisCountTotalPrice)).subtract(math.bignumber(voucher.money)).done());
+                if (Number(undisCountPart) <= 0) {
+                    undisCountPart = '0'
+                }
+                totalPrice = math.format(math.chain(math.bignumber(undisCountPart)).add(math.bignumber(disCountTotalPrice)).done());
+            } else if (voucher.moneyType === MONEYTYPE_PERCENTAGE) { // 按照百分百扣除
+                totalStructure?.map((item) => {
+                    let undisCountPart = math.format(math.chain(math.bignumber(undisCountTotalPrice)).multiply(math.bignumber(voucher.money)).done());
+                    if (Number(undisCountPart) <= 0) {
+                        undisCountPart = '0'
+                    }
+                    totalPrice = math.format(math.chain(math.bignumber(undisCountPart)).add(math.bignumber(disCountTotalPrice)).done());
+                })
+
+            } else if (voucher.moneyType === MONEYTYPE_FREE) { // 除去打折商品的部分，原价商品全部免费
+                totalStructure?.map((item) => {
+                    totalPrice = math.format(math.chain(math.bignumber(0)).add(math.bignumber(disCountTotalPrice)).done());
+                })
+            }
+        } else { // 全部商品都可以使用优惠券
+            totalPrice = math.format(math.chain(math.bignumber(undisCountTotalPrice)).add(math.bignumber(disCountTotalPrice)).done());
+
+            if (voucher.moneyType === MONEYTYPE_DEDUCT) { // 直接从价格中扣除
+                totalPrice = math.format(math.chain(math.bignumber(undisCountTotalPrice)).subtract(math.bignumber(voucher.money)).done());
+                if (Number(totalPrice) <= 0) {
+                    totalPrice = '0'
+                }
+
+            } else if (voucher.moneyType === MONEYTYPE_PERCENTAGE) { // 按照百分百扣除
+                totalPrice = math.format(math.chain(math.bignumber(undisCountTotalPrice)).multiply(math.bignumber(voucher.money)).done());
+                if (Number(totalPrice) <= 0) {
+                    totalPrice = '0'
+                }
+            } else if (voucher.moneyType === MONEYTYPE_FREE) { // 除去打折商品的部分，原价商品全部免费
+                totalPrice = '0'
+            }
+
+        }
+
+        return totalPrice
+    }
+
+    const handleCaculateTotalPrice = (totalStructure: TotalStructure[], fee: number, voucher: OrderCoupon) => {
+        if (voucher === undefined) {
+            // 未使用优惠券
+            let totalPrice = '0';
+            totalStructure?.map((item) => {
+                totalPrice = math.format(math.chain(math.bignumber(item.basicPricePart)).add(math.bignumber(item.discountPricePart)).add(math.bignumber(totalPrice)).done());
+            })
+            // 是否要加上运费
+            if (orderType === DELIVERYTYPE_DELIVERY) {
+                totalPrice = math.format(math.chain(math.bignumber(totalPrice)).add(math.bignumber(fee)).done());
+                setTotal(totalPrice);
+                return
+            }
+            setTotal(totalPrice);
+            return
+
+        } else {
+            // 使用优惠券
+            let totalPrice = '0';
+            totalPrice = handleUseVoucher(totalStructure, voucher);
+            // 是否需要加上运费
+            if (orderType === DELIVERYTYPE_DELIVERY) {
+                totalPrice = math.format(math.chain(math.bignumber(totalPrice)).add(math.bignumber(fee)).done());
+                setTotal(totalPrice);
+                return
+            }
+            setTotal(totalPrice);
+            return
+
+        }
+
+    }
+    useEffect(() => {
+        handleCaculateTotalPrice(totalStructure, fee, voucher);
+    }, [totalStructure, fee, voucher])
 
     return (
         <div>
@@ -99,7 +197,7 @@ const OrderComfirm = (props) => {
                 <div className="orderComfirm-wrap-body">
                     <div>
                         <h1>Confirm Order</h1>
-                        <OrderDetailsList comfirmBtn={false} orderListPrice={getOrderListPrice} />
+                        <OrderDetailsList comfirmBtn={false} orderListPrice={(data) => { getOrderInfo(data, "totalStructure") }} />
                         <Form
                             form={form}
                             layout="vertical"
@@ -169,14 +267,20 @@ const OrderComfirm = (props) => {
                     </div>
                     <div>
                         {
-                            Number(orderType) === DELIVERYTYPE_DELIVERY ? <DeliveryCom setFormData={getOtherOrderInfo} /> : <CollectCom shopId={shopId} setFormData={getOtherOrderInfo} />
+                            Number(orderType) === DELIVERYTYPE_DELIVERY
+                                ? <DeliveryCom
+                                    setFormData={getOtherOrderInfo}
+                                    setDeliverFee={(data) => { getOrderInfo(data, 'fee') }}
+                                    voucher={voucher}
+                                />
+                                : <CollectCom shopId={shopId} setFormData={getOtherOrderInfo} />
                         }
                     </div>
                     <OrderForVoucherModal
                         isOpen={isOrderForVoucherModal}
                         isClose={orderForVoucherModalClose}
                         shopId={Number(1)}
-                        finishFn={setDataFn}
+                        finishFn={(data) => { getOrderInfo(data, 'voucher') }}
                         isIncludeDiscount={false}
                     />
                 </div>

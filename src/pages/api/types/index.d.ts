@@ -414,15 +414,15 @@ export interface OrderCouponListResponse {
     availableList: {
         name: string// "Meal Voucher"
         type: 0
-        couponList: OrderCouponList[]
+        couponList: OrderCoupon[]
     }[],
     unavailableList: {
         name: string// "Meal Voucher"
         type: number //0
-        couponList: OrderCouponList[]
+        couponList: OrderCoupon[]
     }[]
 }
-export interface OrderCouponList {
+export interface OrderCoupon {
     activeDate: number //1625612400000
     couponId: number //704
     diningLimit: number[] //[0, 1, 2, 3, 4]

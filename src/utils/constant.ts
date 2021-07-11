@@ -73,6 +73,11 @@ export const moneyType = new Map([
   [1, "deduct as the percentage"], //按百分比扣除
   [2, "all free"], //全部免费
 ]);
+export const MONEYTYPE_DEDUCT = 0;
+export const MONEYTYPE_PERCENTAGE = 1;
+export const MONEYTYPE_FREE = 2;
+
+
 export const moneyLimit = new Map([
   [-1, "there is no limit"], //则没有限价
 ]);

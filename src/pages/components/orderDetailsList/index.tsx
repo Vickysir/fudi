@@ -12,9 +12,13 @@ const config = {
     precision: 20
 }
 export const math = create(all, config)
+export interface TotalStructure {
+    basicPricePart: string;
+    discountPricePart: string
+}
 interface Props extends RouteComponentProps {
     comfirmBtn?: boolean
-    orderListPrice?: (total: { basicPricePart: string, discountPricePart: string }[]) => void
+    orderListPrice?: (total: TotalStructure[]) => void
 }
 const OrderDetailsList = (props: Props) => {
     const { comfirmBtn = true, orderListPrice, history } = props;
@@ -145,7 +149,7 @@ const OrderDetailsList = (props: Props) => {
                                                 }
                                             })
                                             return (
-                                                <li><p>{el.name}: {optionList.join(',')}</p></li>
+                                                <li key={el.id}><p>{el.name}: {optionList.join(',')}</p></li>
                                             )
                                         })
                                     }

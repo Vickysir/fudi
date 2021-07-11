@@ -6,22 +6,34 @@ import style from '@/styles/theme/icon.less'
 import './index.less'
 import { APIDeliveryFee } from '@/pages/api/request';
 import { useAppStore } from '@/__internal';
+import { COUPONTYPE_DELIVERYFEE } from '@/utils/constant';
+import { OrderCoupon } from '@/pages/api/types';
 
 interface Props {
     setFormData: (params: OrderOtherInfoFormData) => void
+    setDeliverFee: (params: number) => void;
+    voucher: OrderCoupon
 }
 
 const DeliveryCom = (props: Props) => {
+    const { setDeliverFee, voucher } = props;
     const commonInfo = useAppStore("commonInfo");
     const [fee, setFee] = useState(0);
 
     useEffect(() => {
         async function fetchFee() {
-            const { data } = await APIDeliveryFee({ "shopId": commonInfo?.shopId, "userShippingAddressId": commonInfo?.deliveryAddressId });
-            setFee(data.price);
+            if (voucher?.type === COUPONTYPE_DELIVERYFEE) {
+                const { data } = await APIDeliveryFee({ "shopId": commonInfo?.shopId, "userFreightCouponId": voucher.id, "userShippingAddressId": commonInfo?.deliveryAddressId });
+                setFee(data.price);
+                setDeliverFee(data.price);
+            } else {
+                const { data } = await APIDeliveryFee({ "shopId": commonInfo?.shopId, "userShippingAddressId": commonInfo?.deliveryAddressId });
+                setFee(data.price);
+                setDeliverFee(data.price);
+            }
         }
         fetchFee()
-    }, [])
+    }, [commonInfo?.deliveryAddressId, voucher])
 
     return (
         <div className="orderComfirmType-wrap">

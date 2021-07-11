@@ -21,7 +21,7 @@ import style from "@/styles/theme/icon.less";
 import "./index.less";
 import { formatDateToDay } from "@/utils/timer";
 import { COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT } from "@/utils/constant";
-import { OrderCouponList, OrderCouponListResponse } from "@/pages/api/types";
+import { OrderCoupon, OrderCouponListResponse } from "@/pages/api/types";
 
 const { Option } = Select;
 
@@ -33,7 +33,7 @@ const OrderForVoucherModal = (props) => {
   const [isEditForVoucher, setIsEditForVoucher] = useState(false);
   const [editForVoucherValue, setEditForVoucherValue] = useState("");
   const [CouponList, setCouponList] = useState<OrderCouponListResponse>();
-  const [selectCoupon, setSelectCoupon] = useState<OrderCouponList>(undefined);
+  const [selectCoupon, setSelectCoupon] = useState<OrderCoupon>(undefined);
   async function getOrderCouponList() {
     const { data } = await APIOrderCouponList({ shopId: commonInfo?.shopId, diningType: commonInfo?.orderType });
     setCouponList(data);
@@ -43,11 +43,8 @@ const OrderForVoucherModal = (props) => {
   const handleOk = async () => {
     if (isEditForVoucher) { return message.error("Please save the coupon first！") }
     // 优惠券，非必填
-    const submint = {
-      coupon: selectCoupon,
-    };
     try {
-      finishFn(submint);
+      finishFn(selectCoupon);
       setvisible(false);
       isClose("ok");
     } catch (err) {
@@ -142,9 +139,9 @@ const OrderForVoucherModal = (props) => {
               )}
             </li>
           }
-          {CouponList?.availableList?.map((el) => {
+          {CouponList?.availableList?.map((el, index) => {
             return (
-              <ul style={{ marginTop: "4rem" }}>
+              <ul style={{ marginTop: "4rem" }} key={index}>
                 <li className="historyContacts-box-li-title">Available：{el.name}</li>
                 {el?.couponList?.map((item) => {
                   // const canUse = item.discountType === COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT && !isIncludeDiscount;

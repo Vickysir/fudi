@@ -41,7 +41,11 @@ const MyOrders = () => {
     }
     const addReviewClose = (type: string) => {
         setisOpen(false);
-        if (type === "ok") return setissend(true);
+        if (type === "ok") {
+            setissend(true);
+            fetchOrderList();
+            return
+        }
         return setissend(false);
     }
     const sendSuccessClose = () => {
@@ -51,7 +55,7 @@ const MyOrders = () => {
     const closeDetails = () => {
         setOpenDetails(false);
     }
-    useEffect(() => {
+    const fetchOrderList = () => {
         const params = {
             shopId: commonInfo?.shopId,
             // status: 1
@@ -66,6 +70,9 @@ const MyOrders = () => {
             .catch((err) => {
                 console.log(`APIPersonalCenterOrderList err`, err)
             })
+    }
+    useEffect(() => {
+        fetchOrderList();
     }, [])
     const dataToGroup = (dataSource) => {
         let activeGroup = [];

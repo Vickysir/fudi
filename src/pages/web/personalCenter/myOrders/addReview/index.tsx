@@ -30,7 +30,6 @@ const AddReview = (props) => {
                 review: remarkValue,
                 goodsList: Object.values(goodRateValue)
             }
-            console.log(sumbmit)
 
             await APIOrderEvaluateSave(sumbmit)
             setvisible(false);

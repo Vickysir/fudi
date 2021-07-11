@@ -217,7 +217,7 @@ const Shop = (props) => {
                                                                                 <div>
                                                                                     {
                                                                                         v?.thumbnail ?
-                                                                                            <img width="100%" alt="example" src={defaultStorage.S3header + v.thumbnail} />
+                                                                                            <img width="100%" style={{ "objectFit": "cover" }} alt="example" src={defaultStorage.S3header + v.thumbnail} />
                                                                                             : <Icon
                                                                                                 component={goodPlaceholder}
                                                                                                 className={` ${style.iconFill}`}

@@ -85,8 +85,8 @@
         - 修改order option ✅
             - Meet in front of the door
             - Drop near the door
-        - 地址，计算运费 
-    - 点击+ Add Voucher，添加优惠券 
+        - 地址，计算运费 ✅
+    - 点击+ Add Voucher，添加优惠券 ✅
         - 优惠券列表 会返回 realm 字段
         - 添加优惠券
         - 选择优惠券 

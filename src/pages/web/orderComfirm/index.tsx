@@ -12,7 +12,7 @@ import RoundButton from '@/pages/components/antd/button';
 import DeliveryCom from './delivery';
 import CollectCom from './collect';
 import { useAppStore } from '@/__internal';
-import { COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT, deliveryOption, DELIVERYTYPE_COLLECTION, DELIVERYTYPE_DELIVERY, moneyType, MONEYTYPE_DEDUCT, MONEYTYPE_FREE, MONEYTYPE_PERCENTAGE, paymentType, PAYMENTTYPE_OFFLINE, PAYMENTTYPE_ONLINE } from '@/utils/constant';
+import { COUPONTYPE_DELIVERYFEE, COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT, deliveryOption, DELIVERYTYPE_COLLECTION, DELIVERYTYPE_DELIVERY, moneyType, MONEYTYPE_DEDUCT, MONEYTYPE_FREE, MONEYTYPE_PERCENTAGE, paymentType, PAYMENTTYPE_OFFLINE, PAYMENTTYPE_ONLINE } from '@/utils/constant';
 import { OrderOtherInfoFormData } from './components';
 import OrderForVoucherModal from '@/pages/components/antd/modal/orderForVoucherModal';
 import { withRouter } from 'react-router';
@@ -95,6 +95,11 @@ const OrderComfirm = (props) => {
         })
         console.log(`undisCountTotalPrice`, undisCountTotalPrice)
         console.log(`disCountTotalPrice`, disCountTotalPrice)
+        if (voucher?.type === COUPONTYPE_DELIVERYFEE) { // 运费的优惠券，则不抵扣商品金额
+            totalPrice = math.format(math.chain(math.bignumber(undisCountTotalPrice)).add(math.bignumber(disCountTotalPrice)).done());
+            return
+        }
+
         // 优惠券限制 
         // - discountType = 0, 不包含打折的商品；= 1，全部商品
         // - money: moneyType = 0，为折扣的金额；如果moneyType=1折扣的百分比，值为0-1，=0.8则表示打8折，有20%的优惠；

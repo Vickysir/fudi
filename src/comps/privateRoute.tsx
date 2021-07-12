@@ -23,7 +23,7 @@ function MyRoute<T extends RouteProps = RouteProps, P = {}>({ component, ...rest
         //[可选] 在这调用api检查token,token无限将authInfo置为null
     })
     return authInfo?.token ? <Comp {...rest} /> : <Redirect to={{
-        pathname: '/login',
+        pathname: '/home/login',
         state: { from: rest.location }
     }} />
 }

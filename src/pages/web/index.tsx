@@ -17,6 +17,7 @@ import Shop from "@/pages/web/shop";
 import GoodsDetails from "@/pages/web/goods";
 import OrderComfirm from "@/pages/web/orderComfirm";
 import Payment from "@/pages/web/payment";
+import { PrivateRoute } from '@/comps/privateRoute';
 
 const Web = () => {
     return (
@@ -34,11 +35,11 @@ const Web = () => {
                     <Route path="/home/setupphone/verification" component={PhoneVerification} />
                     <Route path="/home/faq" component={FAQ} />
                     <Route path="/home/helpCenter" component={HelpCenter} />
-                    <Route path="/home/personalCenter" component={PersonalCenter} />
+                    <PrivateRoute path="/home/personalCenter" component={PersonalCenter} />
                     <Route path="/home/shop/:id" component={Shop} />
                     <Route path="/home/goodsdetails/:id/:shopId" component={GoodsDetails} />
-                    <Route path="/home/orderConfirm" component={OrderComfirm} />
-                    <Route path="/home/payment" component={Payment} />
+                    <PrivateRoute path="/home/orderConfirm" component={OrderComfirm} />
+                    <PrivateRoute path="/home/payment" component={Payment} />
                 </Router>
             </div>
             <WebFooter />

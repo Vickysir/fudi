@@ -162,7 +162,7 @@
 - google登录成功，homepage页面header还是login的button ✅
 - 添加评论成功之后，刷新一下订单页面 ✅
 - homepage zipCode 不是强制的 ✅
-- 商品图片不要拉伸
+- 商品图片不要拉伸 ✅
 - 添加优惠券，优惠券显示出来，可删除
 - 商品数量减为0的时候，减号 disable
 - 商品可选择的区域为整行

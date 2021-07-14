@@ -271,34 +271,41 @@ const GoodsDetails = (props) => {
                                                 <ul>
                                                     {
                                                         item.ingredientList.map((el, index) => {
+                                                            const active = useOptionList[item.name] && useOptionList[item.name].length > 0 && _.findIndex(useOptionList[item.name], ['id', el.id]) !== -1;
                                                             return (
-                                                                <li key={el.id}>
-                                                                    <div className={`toppings-title`}><h5>{el.name}</h5><span>{el.currentPrice === 0 ? "" : `+ € ${el.currentPrice} `}</span></div>
+                                                                <li
+                                                                    key={el.id}
+                                                                    onClick={() => {
+
+                                                                        let arr = useOptionList[item.name];
+                                                                        const index = _.findIndex(arr, ['id', el.id]);
+                                                                        if (index == -1) {
+                                                                            arr.push({
+                                                                                id: el.id,
+                                                                                price: arr.length < item.free ? 0 : el.currentPrice,
+                                                                            })
+                                                                        } else {
+                                                                            arr.splice(index, 1);
+                                                                        }
+                                                                        if (chooseAtLeast(item, arr)) return;
+                                                                        // message.success(_.findIndex(useOptionList[item.name], ['id', el.id]) == -1 ? `- ${item.name}:${el.name}, total: € ${totalPrice - (arr.length <= item.free ? 0 : el.currentPrice)}` : `+ ${item.name}:${el.name}, total: € ${totalPrice + (arr.length <= item.free ? 0 : el.currentPrice)}`)
+
+                                                                        setUseOptionList(
+                                                                            {
+                                                                                ...useOptionList,
+                                                                                [item.name]: arr
+                                                                            }
+                                                                        )
+                                                                    }}
+                                                                >
+                                                                    <div className={active ? `toppings-title active-select-color` : `toppings-title`}>
+                                                                        <h5>{el.name}</h5>
+                                                                        <span>{el.currentPrice === 0 ? "" : `+ € ${el.currentPrice} `}</span>
+                                                                    </div>
                                                                     <div>
                                                                         <CheckOutlined
-                                                                            className={useOptionList[item.name] && useOptionList[item.name].length > 0 && _.findIndex(useOptionList[item.name], ['id', el.id]) !== -1 ? style.themeColor : ""}
-                                                                            onClick={() => {
+                                                                            className={active ? style.themeColor : ""}
 
-                                                                                let arr = useOptionList[item.name];
-                                                                                const index = _.findIndex(arr, ['id', el.id]);
-                                                                                if (index == -1) {
-                                                                                    arr.push({
-                                                                                        id: el.id,
-                                                                                        price: arr.length < item.free ? 0 : el.currentPrice,
-                                                                                    })
-                                                                                } else {
-                                                                                    arr.splice(index, 1);
-                                                                                }
-                                                                                if (chooseAtLeast(item, arr)) return;
-                                                                                // message.success(_.findIndex(useOptionList[item.name], ['id', el.id]) == -1 ? `- ${item.name}:${el.name}, total: € ${totalPrice - (arr.length <= item.free ? 0 : el.currentPrice)}` : `+ ${item.name}:${el.name}, total: € ${totalPrice + (arr.length <= item.free ? 0 : el.currentPrice)}`)
-
-                                                                                setUseOptionList(
-                                                                                    {
-                                                                                        ...useOptionList,
-                                                                                        [item.name]: arr
-                                                                                    }
-                                                                                )
-                                                                            }}
                                                                         />
                                                                     </div>
                                                                 </li>
@@ -327,30 +334,37 @@ const GoodsDetails = (props) => {
                                     <ul>
                                         {
                                             dataSource?.ingredientClassifyGroupList[1]?.ingredientClassifyList[noOnly ? 0 : 1].ingredientList?.map((item, index) => {
+                                                const active = _.findIndex(useOptionList?.ingredientList, ['id', item.id]) !== -1;
                                                 return (
-                                                    <li key={item.id}>
-                                                        <div className="toppings-title"><h5>{item.name}</h5><span>{item.currentPrice === 0 ? "" : `+ € ${item.currentPrice} `}</span></div>
+                                                    <li
+                                                        key={item.id}
+                                                        onClick={() => {
+                                                            let arr = useOptionList.ingredientList;
+                                                            const index = _.findIndex(arr, ['id', item.id]);
+                                                            if (index == -1) {
+                                                                arr.push({
+                                                                    id: item.id,
+                                                                    price: arr.length < dataSource?.ingredientClassifyGroupList[1]?.ingredientClassifyList[noOnly ? 0 : 1].free ? 0 : item.currentPrice,
+                                                                })
+                                                            } else {
+                                                                arr.splice(index, 1);
+                                                            }
+                                                            setUseOptionList(
+                                                                {
+                                                                    ...useOptionList,
+                                                                    "ingredientList": arr
+                                                                }
+                                                            )
+                                                        }}
+                                                    >
+                                                        <div className={active ? "toppings-title active-select-color" : "toppings-title"}>
+                                                            <h5>{item.name}</h5>
+                                                            <span>{item.currentPrice === 0 ? "" : `+ € ${item.currentPrice} `}</span>
+                                                        </div>
                                                         <div>
                                                             <CheckOutlined
-                                                                className={_.findIndex(useOptionList?.ingredientList, ['id', item.id]) !== -1 ? style.themeColor : ""}
-                                                                onClick={() => {
-                                                                    let arr = useOptionList.ingredientList;
-                                                                    const index = _.findIndex(arr, ['id', item.id]);
-                                                                    if (index == -1) {
-                                                                        arr.push({
-                                                                            id: item.id,
-                                                                            price: arr.length < dataSource?.ingredientClassifyGroupList[1]?.ingredientClassifyList[noOnly ? 0 : 1].free ? 0 : item.currentPrice,
-                                                                        })
-                                                                    } else {
-                                                                        arr.splice(index, 1);
-                                                                    }
-                                                                    setUseOptionList(
-                                                                        {
-                                                                            ...useOptionList,
-                                                                            "ingredientList": arr
-                                                                        }
-                                                                    )
-                                                                }}
+                                                                className={active ? style.themeColor : ""}
+
                                                             />
                                                         </div>
                                                     </li>

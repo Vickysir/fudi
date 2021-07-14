@@ -56,7 +56,7 @@ const GoodsDetails = (props) => {
             goodCount = count + 1;
         } else if (action === "minus") {
             if (count === 1) {
-                message.error("The quantity is require")
+                // message.error("The quantity is require")
                 return
             }
             goodCount = count - 1;
@@ -383,7 +383,7 @@ const GoodsDetails = (props) => {
                             <div>
                                 <PlusCircleOutlined onClick={() => handleChangeGoodsCount("plus")} />
                                 <span>{count}</span>
-                                <MinusCircleOutlined onClick={() => handleChangeGoodsCount("minus")} />
+                                <MinusCircleOutlined className={count <= 1 ? `notAllowed ${style.themeGrayColor}` : ""} onClick={() => handleChangeGoodsCount("minus")} />
                             </div>
                         </div>
                         <Button type="primary" shape="round" block size="large" onClick={handleClickAddToOrder}>Add to Order</Button>

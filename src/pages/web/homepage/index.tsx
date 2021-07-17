@@ -49,7 +49,7 @@ const Homepage = (props) => {
     const [selectShopId, setSelectShopId] = useState<AddressListPostResponseArray>()
     const [autoCompeteSelectValue, setAutoCompeteSelectValue] = useState(undefined)
     const [houseNumberValue, setHouseNumberValue] = useState(undefined)
-    const [zipCodeValue, setZipCodeValue] = useState(undefined)
+    const [zipCodeValue, setZipCodeValue] = useState('')
 
     // 该接口要知道shopId ，去请求获取 ShopServicePhone
     useEffect(() => {
@@ -126,7 +126,7 @@ const Homepage = (props) => {
                                 if (!data || data.length === 0) return message.error("The address is out of our delivery range. Please input again.")
                                 //save houseNumber and zipCode 
                                 // TODO 接口有问题需要验证登录，补充联系人和手机信息
-                                const params = { "zipCode": zipCodeValue, "consignee": "Fudi&more", "phone": "13656690321", "sex": 0, "houseNumber": houseNumberValue, "detail": detail, "region": "", latitude: location.lat, longitude: location.lng }
+                                const params = { "zipCode": '', "consignee": "Fudi&more", "phone": "13656690321", "sex": 0, "houseNumber": houseNumberValue, "detail": detail, "region": "", latitude: location.lat, longitude: location.lng }
                                 await APISaveAddress(params);
 
                                 //再获取一遍list ，get deliveryAddressId  存起来
@@ -136,8 +136,8 @@ const Homepage = (props) => {
                                     orderType: DELIVERYTYPE_DELIVERY,
                                     shopId: data.id,
                                     refreshCart: new Date().getTime(),
-                                    deliveryAddress: autoCompeteSelectValue,
-                                    deliveryAddressId,
+                                    deliveryAddress: deliveryAddressId.detail,
+                                    deliveryAddressId: deliveryAddressId.id,
                                     deliveryHouseNumber: houseNumberValue,
                                     deliveryZipCode: zipCodeValue,
                                 };
@@ -167,14 +167,14 @@ const Homepage = (props) => {
     const handleFindAddressId = async (el: SaveAddressPost) => {
         try {
             const { data } = await APIUserAddressList();
-            const ids = data.map((item, index) => {
+            const ids = data.filter((item, index) => {
                 if (item.longitude === el.longitude
                     && item.latitude === el.latitude
                     && item.houseNumber === el.houseNumber
                     && item.zipCode === el.zipCode
                     && item.detail === el.detail
                 ) {
-                    return item.id
+                    return item
                 }
             })
             if (ids.length === 1) {
@@ -203,7 +203,7 @@ const Homepage = (props) => {
 
                                 (
                                     <div style={{ display: "flex", alignContent: "center", justifyContent: "space-between" }}>
-                                        <div style={{ width: "60%" }}>
+                                        <div style={{ width: "75%" }}>
                                             <AutoCompeteSelect
                                                 placeholder="Place input delivery address ..."
                                                 style={{ width: "100%" }}
@@ -226,7 +226,7 @@ const Homepage = (props) => {
                                             }>Previous Addresses</p>
                                         </div>
                                         <div style={{ width: "20%" }}><RoundInput placeholder="houseNumber" value={houseNumberValue} onChange={(e) => { handleInputChange(e, "houseNumber") }} /></div>
-                                        <div style={{ width: "15%" }}><RoundInput placeholder="zipCode" value={zipCodeValue} onChange={(e) => { handleInputChange(e, "zipCode") }} /></div>
+                                        {/* <div style={{ width: "15%" }}><RoundInput placeholder="zipCode" value={zipCodeValue} onChange={(e) => { handleInputChange(e, "zipCode") }} /></div> */}
                                     </div>
                                 )
                                 :

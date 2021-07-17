@@ -111,7 +111,7 @@ const Homepage = (props) => {
             //"Delivery"
             default:
                 {
-                    if (!houseNumberValue) return message.error("Place select houseNumber")
+                    if (!houseNumberValue) return message.error("Place select houseNumber", 10)
                     //zipCode 不是必须的
                     // if (!zipCodeValue) return message.error("Place select zipCode")
                     APITranslatePlaceIdToLocation(autoCompeteSelectValue)

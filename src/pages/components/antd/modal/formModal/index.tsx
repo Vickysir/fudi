@@ -187,6 +187,7 @@ const FormModal = (props) => {
                                                 value={editForNameValue}
                                                 placeholder="Input name ..."
                                                 style={{ width: "100% " }}
+                                                size="large"
                                                 onChange={handleChangeForName}
                                                 suffix={
                                                     <CheckOutlined onClick={() => setIsEditForName(false)} />
@@ -212,6 +213,7 @@ const FormModal = (props) => {
                                                 value={editForPhoneValue}
                                                 placeholder="000-000-000"
                                                 type="number"
+                                                size="large"
                                                 style={{ width: "100% " }}
                                                 onChange={handleChangeForPhone}
                                                 suffix={

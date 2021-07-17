@@ -143,6 +143,7 @@ const OrderForVoucherModal = (props) => {
                     value={editForVoucherValue}
                     placeholder="Add Voucher Number ..."
                     style={{ width: "100% " }}
+                    size="large"
                     onChange={handleChangeForName}
                     suffix={<>
                       <CheckOutlined style={{ marginRight: "1rem" }} onClick={handleSaveForName} />

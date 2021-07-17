@@ -26,84 +26,93 @@ export const segmentationTime = (time) => {
     }
     return { h: hh, m: mm }
 }
+
+
 //禁用时间
-const getAfterNowDisabledHours=()=> {
-    let HOURS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-    var myDate = new Date();
-    // myDate.getHours(); //获取当前小时数(0-23)
-    // myDate.getMinutes(); //获取当前分钟数(0-59)
-    let hours = []
-    let HOURSDate=[];
-    // let time = this.startTime
-    let timeArr = [myDate.getHours(),myDate.getMinutes()]
-    // let timeArr = time.split(':')
-    for (var i = 0; i < (timeArr[0]); i++) {
-    console.log('hoursiiiiiiiiii', HOURS, i, HOURS.indexOf(i));
-    hours.push(i)
+function range(start, end) {
+    const result = [];
+    for (let i = start; i < end; i++) {
+        result.push(i);
     }
-    for ( var i = 0; i < HOURS.length; i++) {
-    if (hours.indexOf(i) < 0) {
-    HOURSDate.push(i)
-    }
-    }
-    return HOURSDate
-    }
-const getAfterNowDisabledMinutes=(selectedHour)=> {
-    var MINITES = []
-    for(var i = 0;i<60;i++){
-    MINITES.push(i)
-    }
-    var myDate = new Date();
-    // myDate.getHours(); //获取当前小时数(0-23)
-    // myDate.getMinutes(); //获取当前分钟数(0-59)
-    let timeArr = [myDate.getHours(), myDate.getMinutes()]
-    let minutes = []
-    let MINITESDATE=[]
-    if (selectedHour == (timeArr[0])) {
-    for (var i = 0; i < (timeArr[1]); i++) {
-    minutes.push(i)
-    }
-    }
-    for(var i = 0;i<MINITES.length;i++){
-    if (minutes.indexOf(i) < 0) {
-    MINITESDATE.push(i)
-    }
-    }
-    return MINITESDATE
+    return result;
 }
-const getBeforNowDisabledHours =(startTime)=> {
+export const getBeforNowDisabledHours = (startTime) => {
     let hours = []
     let time = startTime
     let timeArr = time.split(':')
     for (var i = 0; i < parseInt(timeArr[0]); i++) {
-    hours.push(i)
+        hours.push(i)
     }
     return hours
-    }
-const getBeforNowDisabledMinutes =(selectedHour,startTime) =>{
+}
+export const getAfterNowDisabledHours = (startTime) => {
+    let HOURS = range(0, 24)
+    let hours = []
+    let HOURSDate = [];
     let time = startTime
     let timeArr = time.split(':')
-    let minutes = []
-    if (selectedHour == parseInt(timeArr[0])) {
-    for(var i = 0; i < parseInt(timeArr[1]); i++) {
-    minutes.push(i)
+    for (var i = 0; i <= (timeArr[0]); i++) {
+        hours.push(i)
     }
+    for (var i = 0; i < HOURS.length; i++) {
+        if (hours.indexOf(i) < 0) {
+            HOURSDate.push(i)
+        }
+    }
+    return HOURSDate
+}
+
+
+export const getBeforNowDisabledMinutes = (selectedHour, startTime) => {
+    let time = startTime
+    let timeArr = time.split(':') // 09:30
+    let minutes = []
+
+    // 正好选中 营业开始 hour
+    if (selectedHour == parseInt(timeArr[0])) {
+        for (var i = 0; i <= parseInt(timeArr[1]); i++) {
+            minutes.push(i)
+        }
+    }
+    if (selectedHour === -1) {
+        minutes = range(0, 60)
     }
     return minutes
+}
+export const getAfterNowDisabledMinutes = (selectedHour, startTime) => {
+    var MINITES = range(0, 60)
+    let time = startTime
+    let timeArr = time.split(':') // 22:30
+    let minutes = []
+    let MINITESDATE = []
+    if (selectedHour == (timeArr[0])) {
+        for (var i = 0; i < (timeArr[1]); i++) {
+            minutes.push(i)
+        }
+        for (var i = 0; i < MINITES.length; i++) {
+            if (minutes.indexOf(i) < 0) {
+                MINITESDATE.push(i)
+            }
+        }
     }
-     
-const getBeforNowDisabledSeconds =(selectedHour, selectedMinute,startTime)=> {
+
+    return MINITESDATE
+}
+
+
+
+export const getBeforNowDisabledSeconds = (selectedHour, selectedMinute, startTime) => {
     let time = startTime
     let timeArr = time.split(':')
     let second = []
     if (selectedHour == parseInt(timeArr[0]) && selectedMinute == parseInt(timeArr[1])) {
-    for(var i = 0; i <= parseInt(timeArr[2]); i++) {
-    second.push(i)
-    }
+        for (var i = 0; i <= parseInt(timeArr[2]); i++) {
+            second.push(i)
+        }
     }
     return second
-    }
-    
+}
+
 
 
 // 倒计时 逻辑

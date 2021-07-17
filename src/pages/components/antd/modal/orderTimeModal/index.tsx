@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Input, Button, Select, DatePicker, message, TimePicker } from "antd";
+import { Modal, Button, Select, message, TimePicker } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useAppStore } from "@/__internal";
@@ -9,9 +9,7 @@ import {
   ORDERTIME_ONTIME,
 } from "@/utils/constant";
 import "./index.less";
-import { getDefaultProps } from "antd-mobile/lib/picker/AbstractPicker";
-import { formatDateToHour, segmentationTime } from "@/utils/timer";
-import { number } from "mathjs";
+import { getAfterNowDisabledHours, getAfterNowDisabledMinutes, getBeforNowDisabledHours, getBeforNowDisabledMinutes, segmentationTime } from "@/utils/timer";
 
 const OrderTimeModal = (props) => {
   const { isOpen, isClose, shopId, finishFn } = props;
@@ -24,8 +22,8 @@ const OrderTimeModal = (props) => {
   const [editForTimeValue, setEditForTimeValue] = useState<number>(
     moment(new Date()).valueOf()
   );
-  const openTIme = segmentationTime(commonInfo?.startTimeFormat);
-  const closeTIme = segmentationTime(commonInfo?.endTimeFormat);
+  const openTIme = commonInfo?.startTimeFormat ?? '00:00';
+  const closeTIme = commonInfo?.endTimeFormat ?? '23:59';
 
   useEffect(() => {
     setvisible(isOpen);
@@ -64,113 +62,69 @@ const OrderTimeModal = (props) => {
     setIsEditForTime(true);
   };
   const handleChangeForTime = (value) => {
-    const time = moment(value).valueOf();
+    const time = compareShowDefaultTime(openTIme, closeTIme, moment(value).format('HH: mm'))
+
     setEditForTimeValue(time);
   };
 
-  function disabledDate(current) {
-    // Can not select days before today and today
-    //  return current && current < moment().endOf('day');
-    // return current < moment().startOf("minute");
-    return current && moment(current).isBefore(moment(), 'minute');
 
-  }
-  const range = (start, end) => {
-    const result = [];
-    for (let i = start; i < end; i++) {
-      result.push(i);
-    }
-    return result;
-  }
-  const getDisableHours = (start: number, end: number, minutesEnd: number) => {
-    const current = moment().hours()
-
-    let arry
-    if (current <= start) {
-      console.log(`arry 在营业时间开始前`)
-
-      arry = [...range(0, 24).splice(0, start + 1), ...range(0, 24).splice(end, 24 - end)]
-    }
-    if (current > start && current <= (end - 1)) {
-      if (minutesEnd > 0) {
-        console.log(`minutesEnd >0`)
-
-        arry = [...range(0, 24).splice(0, current + 1), ...range(0, 24).splice(end + 1, 24 - (end + 1))]
-      } else {
-        console.log(`整点`)
-
-        arry = [...range(0, 24).splice(0, current + 1), ...range(0, 24).splice((end - 1), 24 - (end - 1))]
+  const compareShowDefaultTime = (s, d, inputTime) => {
+    const date = moment().format('YYYY-MM-DD');
+    const now = moment().add(1, 'h');  // 当前时间 加 1h
+    const start = moment(`${date} ${s}`);
+    const end = moment(`${date} ${d}`);
+    const input = moment(`${date} ${inputTime}`);
+    if (input.diff(start) > 0 && input.diff(end) < 0) { // 在营业时间
+      if (now.diff(input) > 0) { // 当前时间 大于
+        message.info(`You can only choose 1 hour later`)
+        return moment(now).valueOf()
       }
-      console.log(`arry 在营业区间`)
+      return moment(input).valueOf()
     }
-    if (current > (end - 1)) {
-      console.log(`arry 在营业时间结束后`)
+    if (input.diff(start) <= 0) {
+      return moment(start).valueOf()
+    }
+    if (input.diff(end) >= 0) {
+      return moment(end).valueOf()
+    }
 
-      arry = [...range(0, 24)]
-    }
-    return arry
   }
-
-  const getDisableMinutes = (disabledHours: number[], userSelectHour: number, closeTIme) => {
-    const currentMinutes = moment().minutes()
-
-    if (disabledHours.indexOf(userSelectHour) > 0) { // 小时都被禁用时
-      return range(0, 60)
-
+  const compareNowAndBusinessHours = (s, d) => {
+    // 比较现在时间是否在营业时间之内
+    const date = moment().format('YYYY-MM-DD');
+    const now = moment().add(1, 'h');  // 当前时间 加 1h
+    const start = moment(`${date} ${s}`);
+    const end = moment(`${date} ${d}`);
+    let startTime, endTime;
+    if (now.diff(start) > 0) {
+      startTime = now.format("HH:mm");
     } else {
-      if (userSelectHour === moment().hours() + 1) {
-        console.log(`配送1小时`)
-        return range(0, 60).splice(0, currentMinutes);
-      }
-      if (userSelectHour === Number(closeTIme.h)) {
-        console.log(`结束时间`)
-        return range(0, 60).splice(Number(closeTIme.m), 60 - Number(closeTIme.m));
-      }
-      if (currentMinutes >= Number(closeTIme.m)) {
-        return range(0, 60) //全部禁用
-      }
-      return []
+      startTime = s;
     }
-  }
-  const getDefaultTime = (start, end) => {
-    const currentDay = moment().days();
-    const currentHour = moment().hours();
-    const currentMinutes = moment().minutes();
-    let h = 0;
-
-    if (currentHour <= Number(start.h)) {
-      h = Number(start.h) + 1
+    if (now.diff(end) < 0) { // 超出营业时间
+      endTime = d
+    } else {
+      endTime = d
     }
-    if (currentHour > Number(start.h) && currentHour < Number(end.h)) {
-      h = currentHour + 1
-    }
-    if (currentHour >= Number(end.h)) {
-    }
-
-    return `${h}:${currentMinutes}`
-  }
-
-  const disabledTime = current => {
-    const hours = moment().hours()
-    const minutes = moment().minutes()
-    // const seconds = moment().seconds()
-    const currentHour = moment(current).hour();
-    if (current && moment(current).date() === moment().date()) {
-      const hoursArry = getDisableHours(Number(openTIme.h), Number(closeTIme.h), Number(closeTIme.m));
-      // setDisabledHoursArry(hoursArry);
-      console.log(`营业时间：${commonInfo.startTimeFormat} - ${commonInfo.endTimeFormat}`)
-      return {
-        disabledHours: () => hoursArry,
-        disabledMinutes: () => getDisableMinutes(hoursArry, currentHour, closeTIme)
-      }
-    }
-    // TODO 其他日期，应该禁用掉非营业时间
     return {
-      disabledHours: () => [],
-      disabledMinutes: () => [],
-      // disabledSeconds: () => [],
+      startTime,
+      endTime,
     }
   }
+
+  const businessHours = compareNowAndBusinessHours(openTIme, closeTIme);
+
+  const disabledHours = () => {
+    const start = getBeforNowDisabledHours(businessHours.startTime);
+    const end = getAfterNowDisabledHours(businessHours.endTime);
+    return [...start, ...end]
+  }
+  const disabledMinutes = (selectedHour) => {
+    const start = getBeforNowDisabledMinutes(selectedHour, businessHours.startTime)
+    const end = getAfterNowDisabledMinutes(selectedHour, businessHours.endTime);
+    return Array.from(new Set([...start, ...end]))
+  }
+
 
   useEffect(() => { }, []);
   const onSelectTimeTypeChange = (type) => {
@@ -204,14 +158,13 @@ const OrderTimeModal = (props) => {
                 <TimePicker
                   style={{ width: "100% " }}
                   placeholder="Select time"
-                  // showTime={
-                  //   { defaultValue: moment(getDefaultTime(openTIme, closeTIme), 'HH:mm') }
-                  // }
+                  inputReadOnly
+                  hideDisabledOptions
                   showMinute
                   showNow={false}
                   format="HH:mm"
-                  // disabledDate={disabledDate}
-                  // disabledTime={disabledTime}
+                  disabledHours={() => disabledHours()}
+                  disabledMinutes={(selectedHour) => disabledMinutes(selectedHour)}
                   onChange={handleChangeForTime}
                   onOk={() => {
                     setIsEditForTime(false);
@@ -219,7 +172,7 @@ const OrderTimeModal = (props) => {
                 />
               </div>
             ) : (
-              <span className="orderTimeModal-content-ontime">
+              <span className="orderTimeModal-content-ontime" onClick={() => onSelectTimeTypeChange(ORDERTIME_ONTIME)}>
                 {moment(editForTimeValue)
                   .format('HH:mm')
                   .replace(/\"/g, "")}

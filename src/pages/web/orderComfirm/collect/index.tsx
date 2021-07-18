@@ -1,4 +1,4 @@
-import { Divider, Spin } from 'antd'
+import { Divider, Spin, Tooltip } from 'antd'
 import React, { useEffect, useState } from 'react'
 import Icon from '@ant-design/icons';
 
@@ -46,8 +46,12 @@ const CollectCom = (props: Props) => {
                         </li>
 
                         <li>
-                            <h3>{shopDetails?.name}</h3>
-                            <h5>{shopDetails?.address}</h5>
+                            <Tooltip placement="topLeft" title={shopDetails?.name}>
+                                <h3>{shopDetails?.name}</h3>
+                            </Tooltip>
+                            <Tooltip placement="topLeft" title={shopDetails?.address}>
+                                <h5>{shopDetails?.address}</h5>
+                            </Tooltip>
                         </li>
                     </ul>
                 </Spin>

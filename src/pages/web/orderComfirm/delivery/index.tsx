@@ -8,6 +8,7 @@ import { APIDeliveryFee } from '@/pages/api/request';
 import { useAppStore } from '@/__internal';
 import { COUPONTYPE_DELIVERYFEE } from '@/utils/constant';
 import { OrderCoupon } from '@/pages/api/types';
+import { Tooltip } from 'antd';
 
 interface Props {
     setFormData: (params: OrderOtherInfoFormData) => void
@@ -43,7 +44,9 @@ const DeliveryCom = (props: Props) => {
                     <li>
                         <div className="inaline">
                             <span><EnvironmentOutlined style={{ fontSize: '1.5rem' }} /></span>
-                            <p className="inaline">{commonInfo.deliveryAddress}</p>
+                            <Tooltip placement="topLeft" title={commonInfo.deliveryAddress}>
+                                <p className="inaline">{commonInfo.deliveryAddress}</p>
+                            </Tooltip>
                         </div>
                         <span>
                             {/* <Icon
@@ -56,13 +59,17 @@ const DeliveryCom = (props: Props) => {
                     <li>
                         <div>
                             <span><HomeOutlined style={{ fontSize: '1.5rem' }} /></span>
-                            <p>{commonInfo.deliveryHouseNumber}</p>
+                            <Tooltip placement="topLeft" title={commonInfo.deliveryHouseNumber}>
+                                <p>{commonInfo.deliveryHouseNumber}</p>
+                            </Tooltip>
                         </div>
                     </li>
                     <li>
                         <div>
                             <span><WalletOutlined style={{ fontSize: '1.5rem' }} /></span>
-                            <p>{commonInfo.deliveryZipCode}</p>
+                            <Tooltip placement="topLeft" title={commonInfo.deliveryZipCode}>
+                                <p>{commonInfo.deliveryZipCode}</p>
+                            </Tooltip>
                         </div>
                     </li>
                 </ul>

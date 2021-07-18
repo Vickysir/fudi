@@ -19,6 +19,7 @@ import moment from "moment";
 
 import style from "@/styles/theme/icon.less";
 import "./index.less";
+import { Tooltip } from "antd";
 
 interface Props {
   type: string;
@@ -112,9 +113,11 @@ const OrderMethod = (props: Props) => {
                 <span>
                   <UserOutlined style={{ fontSize: "1.5rem" }} />
                 </span>
-                <p className="inaline">
-                  {orderData.consignee} <span>+{orderData.phone}</span>
-                </p>
+                <Tooltip placement="topLeft" title={`${orderData.consignee} +${orderData.phone}`}>
+                  <p className="inaline">
+                    {orderData.consignee} <span>+{orderData.phone}</span>
+                  </p>
+                </Tooltip>
               </div>
               <span
                 onClick={() => {
@@ -168,9 +171,11 @@ const OrderMethod = (props: Props) => {
                 <span>
                   <UserOutlined style={{ fontSize: "1.5rem" }} />
                 </span>
-                <p className="inaline">
-                  {orderData.consignee} <span>+{orderData.phone}</span>
-                </p>
+                <Tooltip placement="topLeft" title={`${orderData.consignee} +${orderData.phone}`}>
+                  <p className="inaline">
+                    {orderData.consignee} <span>+{orderData.phone}</span>
+                  </p>
+                </Tooltip>
               </div>
               <span
                 onClick={() => {
@@ -189,9 +194,11 @@ const OrderMethod = (props: Props) => {
             <li>Order Option</li>
             <li>
               <div className="inaline">
-                <p className="inaline" style={{ margin: 0 }}>
-                  {orderData.orderOption.label}
-                </p>
+                <Tooltip placement="topLeft" title={orderData.orderOption.label}>
+                  <p className="inaline" style={{ margin: 0 }}>
+                    {orderData.orderOption.label}
+                  </p>
+                </Tooltip>
               </div>
               <span
                 onClick={() => {

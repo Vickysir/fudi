@@ -1,7 +1,7 @@
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
 import OrderDetailsList, { TotalStructure } from '../../components/orderDetailsList'
-import { Button, Form, Radio, Row } from 'antd';
+import { Button, Form, Radio, Row, Tag } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import React, { useEffect, useState } from 'react'
@@ -19,6 +19,8 @@ import { withRouter } from 'react-router';
 import { CollectionInfo, DeliveryInfo, OrderCoupon, UserOrderBasicSubmit } from '@/pages/api/types';
 import moment from 'moment';
 import { create, all } from 'mathjs'
+import style from '@/styles/theme/icon.less'
+
 
 
 const config = {
@@ -34,6 +36,7 @@ const OrderComfirm = (props) => {
     const [isOrderForVoucherModal, setisOrderForVoucherModal] = useState(false);
     const [totalStructure, setTotalStructure] = useState<TotalStructure[]>([])
     const [voucher, setVoucher] = useState<OrderCoupon>(undefined)
+    const [voucherIsVisitable, setVoucherIsVisitable] = useState(true)
     const [fee, setFee] = useState<number>(0)
     const [form] = Form.useForm();
     const commonInfo = useAppStore("commonInfo");
@@ -77,6 +80,9 @@ const OrderComfirm = (props) => {
         }
         if (type === "voucher") {
             console.log(`voucherData`, data)
+            if (data?.id) {
+                setVoucherIsVisitable(false);
+            }
             setVoucher(data)
         }
         if (type === "fee") {
@@ -232,7 +238,17 @@ const OrderComfirm = (props) => {
                                             <Radio.Button value={PAYMENTTYPE_ONLINE}>{paymentType.get(PAYMENTTYPE_ONLINE)}</Radio.Button>
                                         </Radio.Group>
                                     </Form.Item>
-                                    <span style={{ "cursor": "pointer" }} onClick={() => setisOrderForVoucherModal(true)}>+ Add Voucher</span>
+                                    <Tag
+                                        closable
+                                        visible={!voucherIsVisitable}
+                                        onClose={() => { setVoucherIsVisitable(true); setVoucher(undefined) }}
+                                        className="voucher"
+                                    >
+                                        {voucher?.title}
+                                    </Tag>
+                                    {
+                                        voucherIsVisitable && <span style={{ "cursor": "pointer" }} onClick={() => setisOrderForVoucherModal(true)}>+ Add Voucher</span>
+                                    }
                                 </Row>
                             </Form.Item>
                             <Form.Item>

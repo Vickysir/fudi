@@ -49,6 +49,17 @@ const OrderDetails = (props) => {
     const location = data?.userShippingAddress ?
         { "lat": data?.userShippingAddress.latitude, "lng": data?.userShippingAddress.longitude }
         : { "lat": data?.shop?.latitude, "lng": data?.shop?.longitude }
+
+    const calculategoodsPrices = (item) => {
+        let price = item.price;
+        const quantity = item.quantity;
+        item.ingredientClassifyList.map((el) => {
+            el.ingredientList.map((v) => {
+                price = price + v.price
+            })
+        })
+        return price * quantity
+    }
     return (
         <div>
             <Modal
@@ -99,7 +110,7 @@ const OrderDetails = (props) => {
                                                             })
                                                         }
                                                     </div>
-                                                    <span style={{ width: "20%", textAlign: "right" }}>€ {item.price}</span>
+                                                    <span style={{ width: "20%", textAlign: "right" }}>€ {calculategoodsPrices(item)}</span>
                                                 </li>
                                             )
                                         })

@@ -18,7 +18,7 @@ import { APIAddToCart, APIGetCommon, APIGoodsDetails } from '@/pages/api/request
 import style from '@/styles/theme/icon.less'
 import './index.less'
 import { GoodsDetailsResponse } from '@/pages/api/types';
-import { create, all } from 'mathjs'
+import { create, all, e } from 'mathjs'
 
 
 
@@ -102,9 +102,11 @@ const GoodsDetails = (props) => {
         Object.keys(useOptionList).map((item) => {
             if (!useOptionList[item]) return;
 
-            useOptionList[item]?.map((el) => {
+            useOptionList[item]?.map((el, index) => {
                 // 商品单价 = 裸价 + 附加的option 价格
+
                 total = math.format(math.chain(math.bignumber(total)).add(math.bignumber(el.price)).done());
+
 
             })
 
@@ -160,7 +162,7 @@ const GoodsDetails = (props) => {
         required: number,
         only: number,
         defaultSelect: number
-    }, arr: any[]) => {
+    }, arr: { id: number, price: number }[]) => {
         // 是否必选
         if (item.required) {
             const res = arr.length; // 用户选择的list
@@ -171,6 +173,16 @@ const GoodsDetails = (props) => {
                 return false
             }
         }
+    }
+
+    //确保 first any  的情况
+    const beSureFirstAny = (free: number, arr: { id: number, price: number }[]) => {
+        return arr?.map((el, index) => {
+            if (index < free) {
+                return { ...el, price: 0 }
+            }
+            return el
+        })
     }
     return (
         <>
@@ -276,7 +288,6 @@ const GoodsDetails = (props) => {
                                                                 <li
                                                                     key={el.id}
                                                                     onClick={() => {
-
                                                                         let arr = useOptionList[item.name];
                                                                         const index = _.findIndex(arr, ['id', el.id]);
                                                                         if (index == -1) {
@@ -288,6 +299,7 @@ const GoodsDetails = (props) => {
                                                                             arr.splice(index, 1);
                                                                         }
                                                                         if (chooseAtLeast(item, arr)) return;
+                                                                        arr = beSureFirstAny(item?.free, arr);
                                                                         // message.success(_.findIndex(useOptionList[item.name], ['id', el.id]) == -1 ? `- ${item.name}:${el.name}, total: € ${totalPrice - (arr.length <= item.free ? 0 : el.currentPrice)}` : `+ ${item.name}:${el.name}, total: € ${totalPrice + (arr.length <= item.free ? 0 : el.currentPrice)}`)
 
                                                                         setUseOptionList(
@@ -349,6 +361,8 @@ const GoodsDetails = (props) => {
                                                             } else {
                                                                 arr.splice(index, 1);
                                                             }
+                                                            arr = beSureFirstAny(dataSource?.ingredientClassifyGroupList[1]?.ingredientClassifyList[noOnly ? 0 : 1].free, arr);
+
                                                             setUseOptionList(
                                                                 {
                                                                     ...useOptionList,

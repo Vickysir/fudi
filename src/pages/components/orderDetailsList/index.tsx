@@ -66,7 +66,7 @@ const OrderDetailsList = (props: Props) => {
                 const freeOption = el.free;
                 el.ingredientList.map((v, index) => {
                     // free option 计算 currentPrice
-                    if (index < freeOption || (index === 0 && index === freeOption)) {
+                    if (index < freeOption) {
                         // 是否为打折商品
                         if (v.currentPrice === v.originalPrice) {
                             price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(0)).done());
@@ -142,7 +142,7 @@ const OrderDetailsList = (props: Props) => {
                                             el.ingredientList.map((v, index) => {
                                                 optionList.push(v.name);
                                                 // free option 计算 currentPrice
-                                                if (index < freeOption || (index === 0 && index === freeOption)) {
+                                                if (index < freeOption) {
                                                     price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(0)).done());
                                                 } else {
                                                     price = math.format(math.chain(math.bignumber(price)).add(math.bignumber(v.currentPrice)).done());

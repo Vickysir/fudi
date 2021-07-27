@@ -8,21 +8,48 @@ import './index.less'
 import RoundButton from '@/pages/components/antd/button';
 import RoundInput from '@/pages/components/antd/input';
 import { PaymentOnlineEntityPost } from '@/pages/api/types';
-import { APIPaymentOnlineEntity } from '@/pages/api/request';
+import { APIPaymentEncryptRsa, APIPaymentOnlineEntity } from '@/pages/api/request';
 import { withRouter } from 'react-router';
+import JSEncrypt from 'jsencrypt';
 
 const Payment = (props) => {
     const { history } = props;
-
     const commonInfo = useAppStore("commonInfo");
     const [submitValue, setSubmitValue] = useState<PaymentOnlineEntityPost>();
+    const [publicKey, setPublicKey] = useState('');
     const handleChange = (e, type) => {
         const value = e.target.value;
 
         setSubmitValue({
             ...submitValue,
+            userOrderId: commonInfo?.userOrderId,
             [type]: value
         })
+    }
+    useEffect(() => {
+        async function fetch() {
+            const id = commonInfo?.userOrderId
+            const { event, data } = await APIPaymentEncryptRsa({ userOrderId: id });
+            if (event === 'SUCCESS') {
+                setPublicKey(data.publicKey);
+                setSubmitValue({
+                    ...submitValue,
+                    userOrderId: commonInfo?.userOrderId,
+                    rsaKey: data?.rsaKey
+                })
+            }
+        }
+        fetch();
+    }, [])
+    function rsa_encrypt(data) {
+        let encryptor = new JSEncrypt({});  // 新建JSEncrypt对象
+        encryptor.setPublicKey(publicKey); // 设置公钥
+        for (let i in data) {
+            if (i !== 'rsaKey' && i !== 'userOrderId') {
+                data[i] = (encryptor.encrypt(data[i]))
+            }
+        }
+        return data
     }
     return (
         <div>
@@ -92,12 +119,14 @@ const Payment = (props) => {
                                         if (!submitValue?.expiryDate) { return message.error("Place input Expiry date information") }
                                         if (!submitValue?.cvc) { return message.error("Place input CVV information") }
                                         if (!submitValue?.customerName) { return message.error("Place input Cardoldern Name information") }
+                                        if (!submitValue?.userOrderId) { return message.error("订单号获取失败") }
+                                        if (!submitValue?.rsaKey) { return message.error("rsa 获取失败") }
                                         console.log(`submitValue`, submitValue)
                                         // 提交下单
-                                        // cosnt {event} = await APIPaymentOnlineEntity(submitValue)
-                                        // if(event===''){
-                                        //     history.push('/home')
-                                        // }
+                                        const { event } = await APIPaymentOnlineEntity(rsa_encrypt(submitValue))
+                                        if (event === 'SUCCESS') {
+                                            history.push('/home')
+                                        }
                                     } catch (err) {
                                         console.log(`APIPaymentOnlineEntity err`, err)
                                     }

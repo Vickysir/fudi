@@ -1,7 +1,7 @@
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
 import OrderDetailsList, { TotalStructure } from '../../components/orderDetailsList'
-import { Button, Form, Radio, Row, Tag } from 'antd';
+import { Button, Form, message, Radio, Row, Tag } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import React, { useEffect, useState } from 'react'
@@ -191,6 +191,24 @@ const OrderComfirm = (props) => {
         handleCaculateTotalPrice(totalStructure, fee, voucher);
     }, [totalStructure, fee, voucher])
 
+    const formatDeleverySubmit = (params) => {
+        let data = {}
+        return data
+    }
+    const formatColoctionSubmit = (params) => {
+        let data = {
+            deliveryTime: params?.deliveryTime,
+            diningType: params?.diningType,
+            notes: params?.notes,
+            paymentType: params?.paymentType,
+            shopId: params?.shopId,
+            collection: {
+                contactName: params?.contactName,
+                contactNumber: params?.contactNumber,
+            },
+        }
+        return data
+    }
     return (
         <div>
             <div className="orderComfirm-wrap">
@@ -256,26 +274,40 @@ const OrderComfirm = (props) => {
                                     type="primary"
                                     block
                                     onClick={async () => {
-                                        const submit = {
-                                            ...basicRequireSubmint,
-                                            ...form.getFieldsValue(),
-                                            collection: { ...otherOrderInfo },
+                                        let submit;
+
+                                        if (orderType === DELIVERYTYPE_DELIVERY) {
+                                            submit = formatDeleverySubmit({
+                                                ...basicRequireSubmint,
+                                                ...form.getFieldsValue(),
+                                                ...otherOrderInfo,
+                                            });
+                                        } else {
+                                            submit = formatColoctionSubmit({
+                                                ...basicRequireSubmint,
+                                                ...form.getFieldsValue(),
+                                                ...otherOrderInfo,
+                                            });
+
                                         }
                                         console.log(`联合表单`, submit)
 
                                         if (submit.paymentType === PAYMENTTYPE_ONLINE) {
                                             // TODO payment 0 为online ,保存订单号
-                                            // const {data} = await APIOrderSubmit(submit)
-                                            // console.log(`APIOrderSubmit`, data)
-                                            // APP_STORE.commonInfo = {
-                                            //     ...APP_STORE.commonInfo,
-                                            //     userOrderId:''
-                                            // };
+                                            const { data } = await APIOrderSubmit(submit)
+                                            console.log(`APIOrderSubmit`, data)
+                                            APP_STORE.commonInfo = {
+                                                ...APP_STORE.commonInfo,
+                                                userOrderId: data?.id
+                                            };
                                             history.push("/home/payment");
                                         } else {
                                             // TODO payment 1 为现金直接下单
-                                            // await APIOrderSubmit(submit)
-                                            history.push("/home");
+                                            const { event } = await APIOrderSubmit(submit);
+                                            if (event === 'SUCCESS') {
+                                                message.success("Successfully ordered")
+                                                history.push("/home");
+                                            }
                                         }
                                     }}
                                     style={{ marginTop: "4rem" }}

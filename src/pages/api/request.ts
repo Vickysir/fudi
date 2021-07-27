@@ -309,7 +309,7 @@ export const APIOrderSubmit = async (params) => {
 };
 
 // 获取在线支付key 
-export const APIPaymentEncryptRsa = async (params: { userOrderId: number }) => {
+export const APIPaymentEncryptRsa = async (params: { userOrderId: number|string }) => {
   return await axios.post<PaymentEncryptRsaResponse>(apiPath.paymentEncryptRsa, params);
 };
 //提交在线支付

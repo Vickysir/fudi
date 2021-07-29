@@ -125,7 +125,8 @@ const Payment = (props) => {
                                         // 提交下单
                                         const { event } = await APIPaymentOnlineEntity(rsa_encrypt(submitValue))
                                         if (event === 'SUCCESS') {
-                                            history.push('/home')
+                                            message.success("Successfully ordered")
+                                            history.push('/home');
                                         }
                                     } catch (err) {
                                         console.log(`APIPaymentOnlineEntity err`, err)

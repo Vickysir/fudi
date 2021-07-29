@@ -87,7 +87,7 @@ const OrderForVoucherModal = (props) => {
     if (!canUse) {
       return message.error('Sorry, this coupon cannot be used for this order')
     }
-    if (item.id === selectCoupon?.id) {
+    if (item.couponId === selectCoupon?.couponId) {
       setEditForVoucherValue('');
       setSelectCoupon(undefined)
       return
@@ -177,7 +177,7 @@ const OrderForVoucherModal = (props) => {
                   const canUse = handleCanUseVoucher(item);
                   return (
                     <li
-                      key={item.id}
+                      key={item.couponId}
                       className="historyContacts-box-li"
                       onClick={() => handleClickHitoryContacts(item)}
                     >
@@ -191,7 +191,7 @@ const OrderForVoucherModal = (props) => {
                       </div>
                       <CheckOutlined
                         style={{ fontSize: '26px' }}
-                        className={item.id === selectCoupon?.id ? style.themeColor : ""}
+                        className={item.couponId === selectCoupon?.couponId ? style.themeColor : ""}
                       />
                     </li>
                   );

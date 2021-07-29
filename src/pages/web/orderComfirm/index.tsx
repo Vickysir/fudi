@@ -138,13 +138,13 @@ const OrderComfirm = (props) => {
             totalPrice = math.format(math.chain(math.bignumber(undisCountTotalPrice)).add(math.bignumber(disCountTotalPrice)).done());
 
             if (voucher.moneyType === MONEYTYPE_DEDUCT) { // 直接从价格中扣除
-                totalPrice = math.format(math.chain(math.bignumber(undisCountTotalPrice)).subtract(math.bignumber(voucher.money)).done());
+                totalPrice = math.format(math.chain(math.bignumber(totalPrice)).subtract(math.bignumber(voucher.money)).done());
                 if (Number(totalPrice) <= 0) {
                     totalPrice = '0'
                 }
 
             } else if (voucher.moneyType === MONEYTYPE_PERCENTAGE) { // 按照百分百扣除
-                totalPrice = math.format(math.chain(math.bignumber(undisCountTotalPrice)).multiply(math.bignumber(voucher.money)).done());
+                totalPrice = math.format(math.chain(math.bignumber(totalPrice)).multiply(math.bignumber(voucher.money)).done());
                 if (Number(totalPrice) <= 0) {
                     totalPrice = '0'
                 }
@@ -203,7 +203,9 @@ const OrderComfirm = (props) => {
             deliveryOption: params?.deliveryOption,
             userShippingAddress: {
                 id: commonInfo?.deliveryAddressId,
-            }
+            },
+            userFreightCouponId: params?.voucher?.realm === 0 ? params?.voucher?.id : params?.voucher?.couponId,
+            couponRealm: params?.voucher?.realm,
         }
         return data
     }
@@ -218,6 +220,8 @@ const OrderComfirm = (props) => {
                 contactName: params?.contactName,
                 contactNumber: params?.contactNumber,
             },
+            userGoodsCouponId: params?.voucher?.realm === 0 ? params?.voucher?.id : params?.voucher?.couponId,
+            couponRealm: params?.voucher?.realm,
         }
         return data
     }
@@ -293,12 +297,14 @@ const OrderComfirm = (props) => {
                                                 ...basicRequireSubmint,
                                                 ...form.getFieldsValue(),
                                                 ...otherOrderInfo,
+                                                voucher
                                             });
                                         } else {
                                             submit = formatColoctionSubmit({
                                                 ...basicRequireSubmint,
                                                 ...form.getFieldsValue(),
                                                 ...otherOrderInfo,
+                                                voucher
                                             });
 
                                         }

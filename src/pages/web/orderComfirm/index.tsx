@@ -12,7 +12,7 @@ import RoundButton from '@/pages/components/antd/button';
 import DeliveryCom from './delivery';
 import CollectCom from './collect';
 import { useAppStore } from '@/__internal';
-import { COUPONTYPE_DELIVERYFEE, COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT, deliveryOption, DELIVERYTYPE_COLLECTION, DELIVERYTYPE_DELIVERY, moneyType, MONEYTYPE_DEDUCT, MONEYTYPE_FREE, MONEYTYPE_PERCENTAGE, orderTimeType, ORDERTIME_ASAP, paymentType, PAYMENTTYPE_OFFLINE, PAYMENTTYPE_ONLINE } from '@/utils/constant';
+import { COUPONTYPE_DELIVERYFEE, COUPONTYPE_FOOD, COUPON_DISCOUNTTYPE_DISCOUNTED_EXCEPT, deliveryOption, DELIVERYTYPE_COLLECTION, DELIVERYTYPE_DELIVERY, moneyType, MONEYTYPE_DEDUCT, MONEYTYPE_FREE, MONEYTYPE_PERCENTAGE, orderTimeType, ORDERTIME_ASAP, paymentType, PAYMENTTYPE_OFFLINE, PAYMENTTYPE_ONLINE } from '@/utils/constant';
 import { OrderOtherInfoFormData } from './components';
 import OrderForVoucherModal from '@/pages/components/antd/modal/orderForVoucherModal';
 import { withRouter } from 'react-router';
@@ -53,17 +53,18 @@ const OrderComfirm = (props) => {
 
         let otherOrderInfo;
         const { timeType } = params
-        //TODO 处理需要提交的表单数据
         if (orderType === DELIVERYTYPE_DELIVERY) {
-            //TODO diningType 为 delivery
+            // diningType 为 delivery
             otherOrderInfo = {
+                contactName: params.consignee,
+                contactNumber: params.phone,
                 deliveryTime: timeType === ORDERTIME_ASAP ? orderTimeType.get(timeType) : moment(params.diningTime).format("HH:mm"),
                 deliveryOption: params?.orderOption.label
             }
 
         }
         if (orderType === DELIVERYTYPE_COLLECTION) {
-            //TODO diningType 为 collection
+            // diningType 为 collection
             otherOrderInfo = {
                 contactName: params.consignee,
                 contactNumber: params.phone,
@@ -194,22 +195,8 @@ const OrderComfirm = (props) => {
     }, [totalStructure, fee, voucher])
 
     const formatDeleverySubmit = (params) => {
-        let data = {
-            deliveryTime: params?.deliveryTime,
-            diningType: params?.diningType,
-            notes: params?.notes,
-            paymentType: params?.paymentType,
-            shopId: params?.shopId,
-            deliveryOption: params?.deliveryOption,
-            userShippingAddress: {
-                id: commonInfo?.deliveryAddressId,
-            },
-            userFreightCouponId: params?.voucher?.realm === 0 ? params?.voucher?.id : params?.voucher?.couponId,
-            couponRealm: params?.voucher?.realm,
-        }
-        return data
-    }
-    const formatColoctionSubmit = (params) => {
+        const CouponId = params?.voucher?.realm === 0 ? params?.voucher?.id : params?.voucher?.couponId;
+
         let data = {
             deliveryTime: params?.deliveryTime,
             diningType: params?.diningType,
@@ -220,9 +207,45 @@ const OrderComfirm = (props) => {
                 contactName: params?.contactName,
                 contactNumber: params?.contactNumber,
             },
-            userGoodsCouponId: params?.voucher?.realm === 0 ? params?.voucher?.id : params?.voucher?.couponId,
+            userGoodsCouponId: undefined,
+            userFreightCouponId: undefined,
+            couponRealm: params?.voucher?.realm,
+
+            deliveryOption: params?.deliveryOption,
+            userShippingAddress: {
+                id: commonInfo?.deliveryAddressId,
+            },
+        }
+        if (params?.voucher?.type === COUPONTYPE_FOOD) {
+            data.userGoodsCouponId = CouponId;
+        } else {
+            data.userFreightCouponId = CouponId;
+        }
+
+        return data
+    }
+    const formatColoctionSubmit = (params) => {
+        const CouponId = params?.voucher?.realm === 0 ? params?.voucher?.id : params?.voucher?.couponId;
+        let data = {
+            deliveryTime: params?.deliveryTime,
+            diningType: params?.diningType,
+            notes: params?.notes,
+            paymentType: params?.paymentType,
+            shopId: params?.shopId,
+            collection: {
+                contactName: params?.contactName,
+                contactNumber: params?.contactNumber,
+            },
+            userGoodsCouponId: undefined,
+            userFreightCouponId: undefined,
             couponRealm: params?.voucher?.realm,
         }
+        if (params?.voucher?.type === COUPONTYPE_FOOD) {
+            data.userGoodsCouponId = CouponId;
+        } else {
+            data.userFreightCouponId = CouponId;
+        }
+
         return data
     }
     return (

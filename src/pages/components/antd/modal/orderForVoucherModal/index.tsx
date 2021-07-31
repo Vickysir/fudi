@@ -199,7 +199,7 @@ const OrderForVoucherModal = (props) => {
               </ul>
             )
           })}
-          {CouponList?.unavailableList?.map((el) => {
+          {/* {CouponList?.unavailableList?.map((el) => {
             return (
               <ul style={{ marginTop: "2rem", marginBottom: "4rem" }}>
                 <li className="historyContacts-box-li-title">Unavailable：{el.name}</li>
@@ -224,7 +224,7 @@ const OrderForVoucherModal = (props) => {
                 })}
               </ul>
             )
-          })}
+          })} */}
         </ul>
         <div className="model-content-action">
           <Button shape="round" type="primary" block onClick={handleOk}>

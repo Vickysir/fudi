@@ -25,15 +25,18 @@
                     color: @theme-color;
                 }
             }
-            >li:nth-child(3){
+            >li:nth-child(3),>li:nth-child(4){
                 display: flex;
                 align-items: center;
-                >p{
-                    margin:0;
-                }
-                >span{
-                    margin-left: 0.5rem;
-                    color: @theme-color;
+                justify-content: space-between;
+                >div{
+                    >p{
+                        margin:0;
+                    }
+                    >span{
+                        margin-left: 0.5rem;
+                        color: @theme-color;
+                    }
                 }
             }
         }
@@ -85,14 +88,23 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                margin:0.5rem 0;
                 >div{
                     width: 50%;
                     font-size: @title18;
                     >p{
                         color: @theme-gray;
+                        margin: 0;
                         >span{
                             color: @theme-black;
                         }
+                    }
+                }
+                >p{
+                    color: @theme-gray;
+                    margin: 0;
+                    >span{
+                        color: @theme-black;
                     }
                 }
             }

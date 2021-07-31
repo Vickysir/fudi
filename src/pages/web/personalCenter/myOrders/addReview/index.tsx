@@ -18,10 +18,6 @@ const AddReview = (props) => {
     const [remarkValue, setRemarkValue] = useState<string>('');
     const [goodRateValue, setGoodRateValue] = useState<any>();
 
-    useEffect(() => {
-        setvisible(isOpen);
-    }, [isOpen])
-
     const handleOk = async (e) => {
         try {
             const sumbmit: OrderEvaluateSavePost = {
@@ -42,6 +38,7 @@ const AddReview = (props) => {
         console.log(e);
         setvisible(false);
         isClose("cancel");
+        setData(undefined);
     }
     const handleChange = (value, type) => {
         if (type === 'shopRate') {
@@ -73,7 +70,9 @@ const AddReview = (props) => {
 
 
     useEffect(() => {
-        setIsLoading(true)
+        setIsLoading(true);
+        setvisible(isOpen);
+
         async function fetchDetails() {
             const { data } = await APIOrderDetail({ id: orderId });
             setData(data);
@@ -88,10 +87,10 @@ const AddReview = (props) => {
             })
             setGoodRateValue(rateList)
         }
-        if (orderId !== 0) {
+        if (orderId !== 0 && isOpen) {
             fetchDetails();
         }
-    }, [orderId])
+    }, [orderId, isOpen])
 
     return (
         <div>

@@ -7,29 +7,28 @@ import OrderDetailsList from 'src/pages/components/orderDetailsList'
 import { APIOrderDetail } from '@/pages/api/request';
 import './index.less'
 import { OrderDetailResponse } from '@/pages/api/types';
-import { OrderStatus, paymentType } from '@/utils/constant';
+import { DELIVERYTYPE_DELIVERY, OrderStatus, paymentType } from '@/utils/constant';
 import { havePlaceholder } from '@/utils';
+import { formatDateTime } from '@/utils/timer';
 
 
 
 const OrderDetails = (props) => {
     const [visible, setvisible] = useState(false)
     const [loading, setIsLoading] = useState(true)
-    const { isOpen, isClose, orderId } = props;
+    const { isOpen, isClose, orderId, orderType } = props;
     const [data, setData] = useState<OrderDetailResponse>();
-
-    useEffect(() => {
-        setvisible(isOpen);
-    }, [isOpen])
-
 
     const handleCancel = (e) => {
         console.log(e);
         setvisible(false);
         isClose();
+        setData(undefined);
     }
     useEffect(() => {
-        setIsLoading(true)
+        setIsLoading(true);
+        setvisible(isOpen);
+
         async function fetchDetails() {
             try {
                 const { data } = await APIOrderDetail({ id: orderId });
@@ -39,14 +38,13 @@ const OrderDetails = (props) => {
                 console.log(`APIOrderDetail err`, err)
             }
         }
-        if (orderId !== 0) {
+        if (orderId !== 0 && isOpen) {
             fetchDetails();
         }
-        if (orderId !== 0) {
-            fetchDetails();
-        }
-    }, [orderId])
-    const location = data?.userShippingAddress ?
+
+    }, [isOpen])
+
+    const location = orderType === DELIVERYTYPE_DELIVERY ?
         { "lat": data?.userShippingAddress.latitude, "lng": data?.userShippingAddress.longitude }
         : { "lat": data?.shop?.latitude, "lng": data?.shop?.longitude }
 
@@ -80,7 +78,15 @@ const OrderDetails = (props) => {
                                     <p>{OrderStatus.get(data?.status)}</p>
                                 </li>
                                 <li>
-                                    <p>Total</p><span> € {data?.totalAmount}</span>
+                                    <div>
+                                        <p>Total</p><span> € {data?.totalAmount}</span>
+                                    </div>
+                                    <div>
+                                        <p>Coupon</p><span> € {data?.couponAmount}</span>
+                                    </div>
+                                    <div>
+                                        <p>Actual</p><span> € {data?.actualAmount}</span>
+                                    </div>
                                 </li>
                             </ul>
                             <Divider />
@@ -119,7 +125,7 @@ const OrderDetails = (props) => {
                             </div>
                             <Divider />
                             {
-                                data?.userShippingAddress ? (
+                                orderType === DELIVERYTYPE_DELIVERY ? (
                                     <ul className="orderDetials-left-address" >
                                         <li>
                                             <p><EnvironmentOutlined style={{ fontSize: '1.5rem', marginRight: "1rem" }} />{havePlaceholder(data?.userShippingAddress?.detail)}</p>
@@ -140,21 +146,27 @@ const OrderDetails = (props) => {
 
                             <Divider />
                             <ul className="orderDetials-left-options">
+                                {
+                                    orderType === DELIVERYTYPE_DELIVERY &&
+                                    <li>
+                                        <div>
+                                            <p>Delivery Fee: <span>€ {data?.freightAmount}</span> </p>
+                                        </div>
+                                        {/* <div>
+                                            <p>Delivery Time: <span>ASAP</span> </p>
+                                        </div> */}
+                                    </li>
+                                }
                                 <li>
-                                    <div>
-                                        <p>Delivery Fee: <span>€ {data?.freightAmount}</span> </p>
-                                    </div>
                                     <div>
                                         <p>Order for: <span>{data?.userShippingAddress.consignee}</span> </p>
                                     </div>
-                                </li>
-                                <li>
-                                    {/* <div>
-                                        <p>Delivery Time: <span>ASAP</span> </p>
-                                    </div> */}
                                     <div>
                                         <p>Payment Method: <span>{paymentType.get(data?.paymentType)}</span> </p>
                                     </div>
+                                </li>
+                                <li>
+                                    <p>Create Time: <span>{formatDateTime(data?.createTime)}</span></p>
                                 </li>
                                 <li>
                                     <div>

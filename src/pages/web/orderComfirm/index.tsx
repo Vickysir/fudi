@@ -105,7 +105,7 @@ const OrderComfirm = (props) => {
         console.log(`disCountTotalPrice`, disCountTotalPrice)
         if (voucher?.type === COUPONTYPE_DELIVERYFEE) { // 运费的优惠券，则不抵扣商品金额
             totalPrice = math.format(math.chain(math.bignumber(undisCountTotalPrice)).add(math.bignumber(disCountTotalPrice)).done());
-            return
+            return totalPrice
         }
 
         // 优惠券限制 

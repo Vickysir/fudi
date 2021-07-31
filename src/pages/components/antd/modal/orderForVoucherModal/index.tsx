@@ -69,8 +69,11 @@ const OrderForVoucherModal = (props) => {
     APIOrderObtainCoupon({ code: editForVoucherValue, diningType: commonInfo?.orderType, shopId: commonInfo?.shopId })
       .then((res) => {
         getOrderCouponList();
-        setSelectCoupon(res.data);
         setIsEditForVoucher(false);
+        // 添加完成后，置空input
+        setEditForVoucherValue('');
+        setSelectCoupon(undefined);
+        message.success("Added successfully");
       })
       .catch((err) => {
         setEditForVoucherValue("");

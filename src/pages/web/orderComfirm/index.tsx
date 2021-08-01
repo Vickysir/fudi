@@ -200,7 +200,7 @@ const OrderComfirm = (props) => {
         let data = {
             deliveryTime: params?.deliveryTime,
             diningType: params?.diningType,
-            notes: params?.notes,
+            remark: params?.remark,
             paymentType: params?.paymentType,
             shopId: params?.shopId,
             collection: {
@@ -229,7 +229,7 @@ const OrderComfirm = (props) => {
         let data = {
             deliveryTime: params?.deliveryTime,
             diningType: params?.diningType,
-            notes: params?.notes,
+            remark: params?.remark,
             paymentType: params?.paymentType,
             shopId: params?.shopId,
             collection: {
@@ -276,7 +276,7 @@ const OrderComfirm = (props) => {
                                 <div className="orderComfirm-wrap-body-form-title">notes</div>
                             </Form.Item>
                             <Form.Item
-                                name="notes"
+                                name="remark"
                                 label="notes"
                                 noStyle
                             >
@@ -334,7 +334,7 @@ const OrderComfirm = (props) => {
                                         console.log(`联合表单`, submit)
 
                                         if (submit.paymentType === PAYMENTTYPE_ONLINE) {
-                                            // TODO payment 0 为online ,保存订单号
+                                            // payment 0 为online ,保存订单号
                                             const { data } = await APIOrderSubmit(submit)
                                             console.log(`APIOrderSubmit`, data)
                                             APP_STORE.commonInfo = {
@@ -343,7 +343,7 @@ const OrderComfirm = (props) => {
                                             };
                                             history.push("/home/payment");
                                         } else {
-                                            // TODO payment 1 为现金直接下单
+                                            // payment 1 为现金直接下单
                                             const { event } = await APIOrderSubmit(submit);
                                             if (event === 'SUCCESS') {
                                                 message.success("Successfully ordered")

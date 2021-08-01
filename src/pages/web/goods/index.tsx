@@ -30,7 +30,7 @@ const math = create(all, config)
 const GoodsDetails = (props) => {
     const { history, match: { params: { id, shopId } } } = props;
     const [loading, setLoading] = useState(true);
-    const [noOnly, setNoOnly] = useState(false);
+    const [noOnly, setNoOnly] = useState(true);
     const [useOptionList, setUseOptionList] = useState({ "ingredientList": [] });
     const [richText, setRichText] = useState('')
     const [dataSource, setDataSource] = useState<GoodsDetailsResponse>();
@@ -337,7 +337,7 @@ const GoodsDetails = (props) => {
                             <>
                                 <div className="goodsDetails-wrap-product-noOnly">
                                     <Tooltip title={""}>
-                                        <h3>Ingredient <Switch checkedChildren="only" unCheckedChildren="no" defaultChecked
+                                        <h3>Ingredient <Switch checkedChildren="no" unCheckedChildren="only" defaultChecked
                                             onChange={(value) => {
                                                 setUseOptionList({ ...useOptionList, "ingredientList": [] })
                                                 setNoOnly(value)

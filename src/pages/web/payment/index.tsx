@@ -8,7 +8,7 @@ import './index.less'
 import RoundButton from '@/pages/components/antd/button';
 import RoundInput from '@/pages/components/antd/input';
 import { PaymentOnlineEntityPost } from '@/pages/api/types';
-import { APIPaymentEncryptRsa, APIPaymentOnlineEntity } from '@/pages/api/request';
+import { APIPaymentEncryptRsa, APIPaymentOnlineCheck, APIPaymentOnlineEntity } from '@/pages/api/request';
 import { withRouter } from 'react-router';
 import JSEncrypt from 'jsencrypt';
 
@@ -17,6 +17,9 @@ const Payment = (props) => {
     const commonInfo = useAppStore("commonInfo");
     const [submitValue, setSubmitValue] = useState<PaymentOnlineEntityPost>();
     const [publicKey, setPublicKey] = useState('');
+    const id = commonInfo?.userOrderId
+
+
     const handleChange = (e, type) => {
         const value = e.target.value;
 
@@ -28,17 +31,34 @@ const Payment = (props) => {
     }
     useEffect(() => {
         async function fetch() {
-            const id = commonInfo?.userOrderId
-            const { event, data } = await APIPaymentEncryptRsa({ userOrderId: id });
-            if (event === 'SUCCESS') {
-                setPublicKey(data.publicKey);
-                setSubmitValue({
-                    ...submitValue,
-                    userOrderId: commonInfo?.userOrderId,
-                    rsaKey: data?.rsaKey
-                })
+            try {
+                const { event, data } = await APIPaymentEncryptRsa({ userOrderId: id });
+                if (event === 'SUCCESS') {
+                    setPublicKey(data.publicKey);
+                    setSubmitValue({
+                        ...submitValue,
+                        userOrderId: commonInfo?.userOrderId,
+                        rsaKey: data?.rsaKey
+                    })
+                }
+            } catch (err) {
+                console.log(`APIPaymentEncryptRsa:`, err)
             }
         }
+        async function PaymentCheck() {
+            try {
+                const { event, data } = await APIPaymentOnlineCheck({ userOrderId: id })
+                if (event === 'SUCCESS' && data?.status === 1) {
+                    message.info("The order has been placed, place contact customer service for more info", 5);
+                    history.push('/home');
+                }
+            }
+            catch (err) {
+                console.log(`APIPaymentOnlineCheck update:`, err)
+            }
+        }
+        // 页面刷新时需要 check 一下订单状态；
+        PaymentCheck();
         fetch();
     }, [])
     function rsa_encrypt(data) {
@@ -58,7 +78,20 @@ const Payment = (props) => {
                     <Button
                         type="primary"
                         shape="round"
-                        onClick={() => { history.go(-1) }}
+                        onClick={async () => {
+                            try {
+                                const { event, data } = await APIPaymentOnlineCheck({ userOrderId: id })
+                                if (event === 'SUCCESS' && data?.status === 0) {
+                                    history.go(-1);
+                                } else if (event === 'SUCCESS' && data?.status === 1) {
+                                    message.info("The order has been placed, place contact customer service for more info", 5);
+                                    history.push('/home');
+                                }
+                            }
+                            catch (err) {
+                                console.log(`APIPaymentOnlineCheck back:`, err)
+                            }
+                        }}
                     >
                         <ArrowLeftOutlined />Back
                         </Button>
@@ -125,7 +158,7 @@ const Payment = (props) => {
                                         // 提交下单
                                         const { event } = await APIPaymentOnlineEntity(rsa_encrypt(submitValue))
                                         if (event === 'SUCCESS') {
-                                            message.success("Successfully ordered")
+                                            message.success("Ordered Successfully")
                                             history.push('/home');
                                         }
                                     } catch (err) {

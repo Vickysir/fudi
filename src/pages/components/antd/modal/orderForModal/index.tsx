@@ -34,7 +34,7 @@ const OrderForModal = (props) => {
   const [historyContactsId, setHistoryContactsId] = useState(0)
   async function getPersonList() {
     const { data } = await APIHistoricalContacts({ limit: 5 });
-    setHistoryContacts([{ name: 'Sam', phone: '186120644567', id: 1 }, { name: 'Jonh', phone: '18212069305', id: 2 }]);
+    setHistoryContacts(data.map((item, index) => { return { ...item, id: index + 1 } }));
   }
   useEffect(() => {
     setvisible(isOpen);

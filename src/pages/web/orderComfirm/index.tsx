@@ -1,7 +1,7 @@
 import WebFooter from '@/pages/components/header/webFooter'
 import WebHeader from '@/pages/components/header/webHeader'
 import OrderDetailsList, { TotalStructure } from '../../components/orderDetailsList'
-import { Button, Form, message, Radio, Row, Tag } from 'antd';
+import { Button, Form, message, Radio, Row, Spin, Tag } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import React, { useEffect, useState } from 'react'
@@ -40,6 +40,8 @@ const OrderComfirm = (props) => {
     const [fee, setFee] = useState<number>(0)
     const [form] = Form.useForm();
     const commonInfo = useAppStore("commonInfo");
+    const [loading, setLoading] = useState(false);
+
 
     const shopId = commonInfo?.shopId;
     const orderType = commonInfo?.orderType;
@@ -250,134 +252,138 @@ const OrderComfirm = (props) => {
     }
     return (
         <div>
-            <div className="orderComfirm-wrap">
-                <div className="orderComfirm-wrap-header">
-                    <Button
-                        // className="shop-wrap-banner-button"
-                        type="primary"
-                        shape="round"
-                        onClick={() => { history.go(-1) }}
-                    >
-                        <ArrowLeftOutlined />Back
-                        </Button>
-                </div>
-                <div className="orderComfirm-wrap-body">
-                    <div>
-                        <h1>Confirm Order</h1>
-                        <OrderDetailsList comfirmBtn={false} orderListPrice={(data) => { getOrderInfo(data, "totalStructure") }} />
-                        <Form
-                            form={form}
-                            layout="vertical"
-                            initialValues={{ paymentType: PAYMENTTYPE_OFFLINE }}
-                            style={{ margin: "1rem 2rem" }}
+            <Spin spinning={loading} size="large" tip="Loading...">
+                <div className="orderComfirm-wrap">
+                    <div className="orderComfirm-wrap-header">
+                        <Button
+                            // className="shop-wrap-banner-button"
+                            type="primary"
+                            shape="round"
+                            onClick={() => { history.go(-1) }}
                         >
-
-                            <Form.Item noStyle>
-                                <div className="orderComfirm-wrap-body-form-title">notes</div>
-                            </Form.Item>
-                            <Form.Item
-                                name="remark"
-                                label="notes"
-                                noStyle
+                            <ArrowLeftOutlined />Back
+                        </Button>
+                    </div>
+                    <div className="orderComfirm-wrap-body">
+                        <div>
+                            <h1>Confirm Order</h1>
+                            <OrderDetailsList comfirmBtn={false} orderListPrice={(data) => { getOrderInfo(data, "totalStructure") }} />
+                            <Form
+                                form={form}
+                                layout="vertical"
+                                initialValues={{ paymentType: PAYMENTTYPE_OFFLINE }}
+                                style={{ margin: "1rem 2rem" }}
                             >
-                                <TextArea />
-                            </Form.Item>
-                            <Form.Item noStyle>
-                                <div className="orderComfirm-wrap-body-form-title">Payment Method</div>
-                            </Form.Item>
-                            <Form.Item
-                                noStyle
-                            >
-                                <Row className="orderComfirm-wrap-body-form-payment">
-                                    <Form.Item noStyle name="paymentType">
-                                        <Radio.Group buttonStyle="solid" >
-                                            <Radio.Button value={PAYMENTTYPE_OFFLINE}>{paymentType.get(PAYMENTTYPE_OFFLINE)}</Radio.Button>
-                                            <Radio.Button value={PAYMENTTYPE_ONLINE}>{paymentType.get(PAYMENTTYPE_ONLINE)}</Radio.Button>
-                                        </Radio.Group>
-                                    </Form.Item>
-                                    <Tag
-                                        closable
-                                        visible={!voucherIsVisitable}
-                                        onClose={() => { setVoucherIsVisitable(true); setVoucher(undefined) }}
-                                        className="voucher"
-                                    >
-                                        {voucher?.title}
-                                    </Tag>
-                                    {
-                                        voucherIsVisitable && <span style={{ "cursor": "pointer" }} onClick={() => setisOrderForVoucherModal(true)}>+ Add Voucher</span>
-                                    }
-                                </Row>
-                            </Form.Item>
-                            <Form.Item>
-                                <RoundButton
-                                    type="primary"
-                                    block
-                                    onClick={async () => {
-                                        let submit;
 
-                                        if (orderType === DELIVERYTYPE_DELIVERY) {
-                                            submit = formatDeleverySubmit({
-                                                ...basicRequireSubmint,
-                                                ...form.getFieldsValue(),
-                                                ...otherOrderInfo,
-                                                voucher
-                                            });
-                                        } else {
-                                            submit = formatColoctionSubmit({
-                                                ...basicRequireSubmint,
-                                                ...form.getFieldsValue(),
-                                                ...otherOrderInfo,
-                                                voucher
-                                            });
-
-                                        }
-                                        console.log(`联合表单`, submit)
-
-                                        if (submit.paymentType === PAYMENTTYPE_ONLINE) {
-                                            // payment 0 为online ,保存订单号
-                                            const { data } = await APIOrderSubmit(submit)
-                                            console.log(`APIOrderSubmit`, data)
-                                            APP_STORE.commonInfo = {
-                                                ...APP_STORE.commonInfo,
-                                                userOrderId: data?.id
-                                            };
-                                            history.push("/home/payment");
-                                        } else {
-                                            // payment 1 为现金直接下单
-                                            const { event } = await APIOrderSubmit(submit);
-                                            if (event === 'SUCCESS') {
-                                                message.success("Successfully ordered")
-                                                history.push("/home");
-                                            }
-                                        }
-                                    }}
-                                    style={{ marginTop: "4rem" }}
+                                <Form.Item noStyle>
+                                    <div className="orderComfirm-wrap-body-form-title">notes</div>
+                                </Form.Item>
+                                <Form.Item
+                                    name="remark"
+                                    label="notes"
+                                    noStyle
                                 >
-                                    Pay Now € {total}
-                                </RoundButton>
-                            </Form.Item>
-                        </Form>
+                                    <TextArea />
+                                </Form.Item>
+                                <Form.Item noStyle>
+                                    <div className="orderComfirm-wrap-body-form-title">Payment Method</div>
+                                </Form.Item>
+                                <Form.Item
+                                    noStyle
+                                >
+                                    <Row className="orderComfirm-wrap-body-form-payment">
+                                        <Form.Item noStyle name="paymentType">
+                                            <Radio.Group buttonStyle="solid" >
+                                                <Radio.Button value={PAYMENTTYPE_OFFLINE}>{paymentType.get(PAYMENTTYPE_OFFLINE)}</Radio.Button>
+                                                <Radio.Button value={PAYMENTTYPE_ONLINE}>{paymentType.get(PAYMENTTYPE_ONLINE)}</Radio.Button>
+                                            </Radio.Group>
+                                        </Form.Item>
+                                        <Tag
+                                            closable
+                                            visible={!voucherIsVisitable}
+                                            onClose={() => { setVoucherIsVisitable(true); setVoucher(undefined) }}
+                                            className="voucher"
+                                        >
+                                            {voucher?.title}
+                                        </Tag>
+                                        {
+                                            voucherIsVisitable && <span style={{ "cursor": "pointer" }} onClick={() => setisOrderForVoucherModal(true)}>+ Add Voucher</span>
+                                        }
+                                    </Row>
+                                </Form.Item>
+                                <Form.Item>
+                                    <RoundButton
+                                        type="primary"
+                                        block
+                                        onClick={async () => {
+                                            setLoading(true)
+                                            let submit;
+
+                                            if (orderType === DELIVERYTYPE_DELIVERY) {
+                                                submit = formatDeleverySubmit({
+                                                    ...basicRequireSubmint,
+                                                    ...form.getFieldsValue(),
+                                                    ...otherOrderInfo,
+                                                    voucher
+                                                });
+                                            } else {
+                                                submit = formatColoctionSubmit({
+                                                    ...basicRequireSubmint,
+                                                    ...form.getFieldsValue(),
+                                                    ...otherOrderInfo,
+                                                    voucher
+                                                });
+
+                                            }
+                                            console.log(`联合表单`, submit)
+
+                                            if (submit.paymentType === PAYMENTTYPE_ONLINE) {
+                                                // payment 0 为online ,保存订单号
+                                                const { data } = await APIOrderSubmit(submit)
+                                                setLoading(false);
+                                                APP_STORE.commonInfo = {
+                                                    ...APP_STORE.commonInfo,
+                                                    userOrderId: data?.id
+                                                };
+                                                history.push("/home/payment");
+                                            } else {
+                                                // payment 1 为现金直接下单
+                                                const { event } = await APIOrderSubmit(submit);
+                                                if (event === 'SUCCESS') {
+                                                    setLoading(false);
+                                                    message.success("Successfully ordered")
+                                                    history.push("/home");
+                                                }
+                                            }
+                                        }}
+                                        style={{ marginTop: "4rem" }}
+                                    >
+                                        Pay Now € {total}
+                                    </RoundButton>
+                                </Form.Item>
+                            </Form>
+                        </div>
+                        <div>
+                            {
+                                Number(orderType) === DELIVERYTYPE_DELIVERY
+                                    ? <DeliveryCom
+                                        setFormData={getOtherOrderInfo}
+                                        setDeliverFee={(data) => { getOrderInfo(data, 'fee') }}
+                                        voucher={voucher}
+                                    />
+                                    : <CollectCom shopId={shopId} setFormData={getOtherOrderInfo} />
+                            }
+                        </div>
+                        <OrderForVoucherModal
+                            isOpen={isOrderForVoucherModal}
+                            isClose={orderForVoucherModalClose}
+                            shopId={Number(1)}
+                            finishFn={(data) => { getOrderInfo(data, 'voucher') }}
+                            totalStructure={totalStructure}
+                        />
                     </div>
-                    <div>
-                        {
-                            Number(orderType) === DELIVERYTYPE_DELIVERY
-                                ? <DeliveryCom
-                                    setFormData={getOtherOrderInfo}
-                                    setDeliverFee={(data) => { getOrderInfo(data, 'fee') }}
-                                    voucher={voucher}
-                                />
-                                : <CollectCom shopId={shopId} setFormData={getOtherOrderInfo} />
-                        }
-                    </div>
-                    <OrderForVoucherModal
-                        isOpen={isOrderForVoucherModal}
-                        isClose={orderForVoucherModalClose}
-                        shopId={Number(1)}
-                        finishFn={(data) => { getOrderInfo(data, 'voucher') }}
-                        totalStructure={totalStructure}
-                    />
                 </div>
-            </div>
+            </Spin>
         </div>
     )
 }

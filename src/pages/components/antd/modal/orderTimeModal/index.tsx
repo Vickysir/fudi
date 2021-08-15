@@ -31,13 +31,13 @@ const OrderTimeModal = (props) => {
   }, [isOpen]);
 
   const handleOk = async () => {
-    if (!editForTimeValue) return message.error("Place select time !");
     let submint;
     if (timeType === ORDERTIME_ASAP) {
       submint = {
         timeType: timeType,
       };
     } else {
+      if (!editForTimeValue) return message.error("Place select time !");
       submint = {
         timeType: timeType,
         diningTime: editForTimeValue, // 精确到毫秒
@@ -75,7 +75,7 @@ const OrderTimeModal = (props) => {
     const end = moment(`${date} ${d}`);
     const input = moment(`${date} ${inputTime}`);
     if (input.diff(start) > 0 && input.diff(end) < 0) { // 在营业时间之内
-      if (now.diff(input) >= 0) { // 当前时间 大于
+      if (now.diff(input) >= 0) { // 当前时间 大于 
         if (isInputTime) { // 判断是默认显示，还是用户选择，如果是用户选择则需要提示
           message.info(`You can only choose 1 hour later`);
         }
@@ -83,13 +83,9 @@ const OrderTimeModal = (props) => {
       }
       return moment(input).valueOf();
     }
-    if (input.diff(start) < 0) { // 用户选择了 超过open营业时间
-      return moment(start).valueOf();
+    if (input.diff(start) <= 0 || input.diff(end) >= 0) { // 用户选择了 超过open营业时间 以及整点
+      return moment(now).valueOf();
     }
-    if (input.diff(end) > 0) {
-      return moment(end).valueOf(); // 用户选择了 超过close营业时间
-    }
-
   }
   const compareNowAndBusinessHours = (s, d) => {
     // 比较现在时间是否在营业时间之内
@@ -98,6 +94,7 @@ const OrderTimeModal = (props) => {
     const start = moment(`${date} ${s}`);
     const end = moment(`${date} ${d}`);
     let startTime, endTime, isOverStartTime, isOverEndTime;
+
     if (now.diff(start) > 0) { // 是否超出open营业时间
       startTime = now.format("HH:mm");
       isOverStartTime = false;
@@ -105,7 +102,8 @@ const OrderTimeModal = (props) => {
       startTime = s;
       isOverStartTime = true;
     }
-    if (now.diff(end) < 0) { // 是否超出close营业时间
+
+    if (now.diff(end) <= 60000) { // 是否超出close营业时间
       endTime = d
       isOverEndTime = false;
     } else {
@@ -135,9 +133,9 @@ const OrderTimeModal = (props) => {
 
   const onSelectTimeTypeChange = (type) => {
     // 如果超过营业时间,只能 ASAP
-    if (businessHours.isOverStartTime && businessHours.isOverEndTime) {
+    if (businessHours.isOverStartTime || businessHours.isOverEndTime) {
       if (type === ORDERTIME_ONTIME) {
-        message.error("Sorry，Business hours have passed");
+        message.error(`Sorry，Business time is ${openTIme}-${closeTIme}`);
       }
       return
     }

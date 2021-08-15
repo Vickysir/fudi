@@ -111,13 +111,15 @@ const MyOrders = () => {
                                         activeGroup.map((item, index) => {
                                             return (
                                                 <div key={item.id} className="myOrders-wrap-list">
-                                                    <ul className="myOrders-wrap-list-title">
-                                                        <li>{item.shop.name} <span>·</span> {DeliveryType.get(item.deliveryType)} <span>·</span> {item.goodsList.length}Item <span>·</span> €{item.actualAmount}</li>
-                                                        <li onClick={() => { setOpenDetails(true); setSelectOrder(item) }}><InfoCircleOutlined /></li>
-                                                    </ul>
-                                                    <div className="myOrders-wrap-list-content">
-                                                        <p>Estimated Time:<span><HistoryOutlined /> {formatDateToHour(item.createTime)}</span></p>
-                                                        <p>Status:<span>{OrderStatus.get(item.status)}</span></p>
+                                                    <div onClick={() => { setOpenDetails(true); setSelectOrder(item) }}>
+                                                        <ul className="myOrders-wrap-list-title">
+                                                            <li>{item.shop.name} <span>·</span> {DeliveryType.get(item.deliveryType)} <span>·</span> {item.goodsList.length}Item <span>·</span> €{item.actualAmount}</li>
+                                                            <li onClick={() => { setOpenDetails(true); setSelectOrder(item) }}><InfoCircleOutlined /></li>
+                                                        </ul>
+                                                        <div className="myOrders-wrap-list-content">
+                                                            <p>Estimated Time:<span><HistoryOutlined /> {formatDateToHour(item.createTime)}</span></p>
+                                                            <p>Status:<span>{OrderStatus.get(item.status)}</span></p>
+                                                        </div>
                                                     </div>
                                                     <ul className="myOrders-wrap-list-footer">
                                                         <li>Order #{item.id}</li>
@@ -147,13 +149,15 @@ const MyOrders = () => {
                                         completedGroup.map((item, index) => {
                                             return (
                                                 <div key={item.id} className="myOrders-wrap-list">
-                                                    <ul className="myOrders-wrap-list-title title-completed">
-                                                        <li>{item.shop.name} <span>·</span> {DeliveryType.get(item.deliveryType)} <span>·</span> {item.goodsList.length}Item <span>·</span> €{item.actualAmount}</li>
-                                                        <li onClick={() => { setOpenDetails(true); setSelectOrder(item) }}><InfoCircleOutlined /></li>
-                                                    </ul>
-                                                    <div className="myOrders-wrap-list-content">
-                                                        <p>Estimated Time:<span className="completed"><HistoryOutlined /> {formatDateToHour(item.createTime)}</span></p>
-                                                        <p>Status:<span className="completed">{OrderStatus.get(item.status)}</span></p>
+                                                    <div onClick={() => { setOpenDetails(true); setSelectOrder(item) }}>
+                                                        <ul className="myOrders-wrap-list-title title-completed">
+                                                            <li>{item.shop.name} <span>·</span> {DeliveryType.get(item.deliveryType)} <span>·</span> {item.goodsList.length}Item <span>·</span> €{item.actualAmount}</li>
+                                                            <li onClick={() => { setOpenDetails(true); setSelectOrder(item) }}><InfoCircleOutlined /></li>
+                                                        </ul>
+                                                        <div className="myOrders-wrap-list-content">
+                                                            <p>Estimated Time:<span className="completed"><HistoryOutlined /> {formatDateToHour(item.createTime)}</span></p>
+                                                            <p>Status:<span className="completed">{OrderStatus.get(item.status)}</span></p>
+                                                        </div>
                                                     </div>
                                                     <ul className="myOrders-wrap-list-footer footer-completed">
                                                         <li>Order #{item.id}</li>

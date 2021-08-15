@@ -213,7 +213,7 @@ const Shop = (props) => {
                                                                 {
                                                                     el.goodsList.map((v) => {
                                                                         return (
-                                                                            <div key={v.id}>
+                                                                            <div key={v.id} onClick={() => { history.push(`/home/goodsDetails/${v.id}/${params.id}`) }}>
                                                                                 <div>
                                                                                     {
                                                                                         v?.thumbnail ?
@@ -229,7 +229,7 @@ const Shop = (props) => {
                                                                                     <h3 className="intwoline">{v.title}</h3>
                                                                                     <h6 className="inaline"><span className="originalPrice">€ {v.originalPrice}</span><span>€ {v.currentPrice} / portion</span></h6>
                                                                                     <p className="inthreeline">{v.title}</p>
-                                                                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to={`/home/goodsDetails/${v.id}/${params.id}`}>Order</Link></Button>
+                                                                                    <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to={`/home/goodsDetails/${v.id}/${params.id}`}>Detail</Link></Button>
                                                                                 </div>
                                                                             </div>
                                                                         )
@@ -252,9 +252,8 @@ const Shop = (props) => {
                                 <div className="shop-wrap-shopCategoriesList-box">
                                     {
                                         searchGoodsList.map((v) => {
-                                            console.log(`vVVVVVVVV`, v)
                                             return (
-                                                <div key={v.id}>
+                                                <div key={v.id} onClick={() => { history.push(`/home/goodsDetails/${v.id}/${params.id}`) }}>
                                                     <div>
                                                         {
                                                             v?.thumbnail ?
@@ -270,7 +269,7 @@ const Shop = (props) => {
                                                         <h3 className="intwoline">{v.title}</h3>
                                                         <h6 className="inaline"><span className="originalPrice">€ {v.originalPrice}</span><span>€ {v.currentPrice} / portion</span></h6>
                                                         <p className="inthreeline">{v.title}</p>
-                                                        <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to={`/home/goodsDetails/${v.id}/${params.id}`}>Order</Link></Button>
+                                                        <Button className="shop-wrap-shopCategoriesList-box-button" type="primary" shape="round" block><Link to={`/home/goodsDetails/${v.id}/${params.id}`}>Detail</Link></Button>
                                                     </div>
                                                 </div>
                                             )

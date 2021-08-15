@@ -33,7 +33,7 @@ const Setupphone = (props) => {
     const commonInfo = useAppStore("commonInfo")
 
     const onFinish = async (values: PhoneVerificationCodePost) => {
-        values.phone = phonePrefix + values.phone;
+        values.phone = phonePrefix.substr(1) + values.phone;
         if (type === "regist") {
 
             try {

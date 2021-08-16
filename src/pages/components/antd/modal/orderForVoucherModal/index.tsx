@@ -42,9 +42,19 @@ const OrderForVoucherModal = (props) => {
   const [editForVoucherValue, setEditForVoucherValue] = useState("");
   const [CouponList, setCouponList] = useState<OrderCouponListResponse>();
   const [selectCoupon, setSelectCoupon] = useState<OrderCoupon>(undefined);
-  async function getOrderCouponList() {
+  async function getOrderCouponList(code?: string) {
     const { data } = await APIOrderCouponList({ shopId: commonInfo?.shopId, diningType: commonInfo?.orderType });
     setCouponList(data);
+    if (code) { // 检查一下添加的优惠券是否在优惠券列表，并提示
+      const titles = data?.availableList?.map((el) => {
+        return el?.couponList?.map((item) => {
+          return item?.title
+        })
+      })
+      if ([].concat(...titles).includes(code) === false) {
+        return message.error(`The coupon (${code}) can not be applied on this order.`)
+      }
+    }
   }
 
 
@@ -68,7 +78,7 @@ const OrderForVoucherModal = (props) => {
     // 添加优惠券，更新优惠券列表
     APIOrderObtainCoupon({ code: editForVoucherValue, diningType: commonInfo?.orderType, shopId: commonInfo?.shopId })
       .then((res) => {
-        getOrderCouponList();
+        getOrderCouponList(editForVoucherValue);
         setIsEditForVoucher(false);
         // 添加完成后，置空input
         setEditForVoucherValue('');

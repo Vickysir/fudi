@@ -12,7 +12,7 @@ import { ContainerOutlined, PlusOutlined } from '@ant-design/icons';
 import logoOne from '@/assets/images/fudi/logoOne.svg'
 import VouchersInfo from './info';
 import './index.less'
-import { APIPersonalCenterCouponList, APIPersonalCenterInvalidCoupon, APIPersonalCenterObtainCoupon, APIPersonalCenterUsableCoupon } from '@/pages/api/request';
+import { APIOrderCouponList, APIPersonalCenterCouponList, APIPersonalCenterInvalidCoupon, APIPersonalCenterObtainCoupon, APIPersonalCenterUsableCoupon } from '@/pages/api/request';
 import { useAppStore } from '@/__internal';
 import { formatDateToDay } from '@/utils/timer';
 
@@ -27,16 +27,15 @@ const Vouchers = () => {
 
 
     const handleAddVouchers = (value: string) => {
-        console.log(value);
         if (value) {
-            APIPersonalCenterObtainCoupon({ code: value })
-                .then((res) => {
-                    console.log(`APIPersonalCenterCouponList res`, res)
-                    getVouchersList();
-                })
-                .catch((err) => {
-                    console.log(`APIPersonalCenterCouponList err`, err)
-                })
+            // APIPersonalCenterObtainCoupon({ code: value })
+            //     .then((res) => {
+            //         console.log(`APIPersonalCenterCouponList res`, res)
+            //         getVouchersList();
+            //     })
+            //     .catch((err) => {
+            //         console.log(`APIPersonalCenterCouponList err`, err)
+            //     })
         }
 
     }
@@ -69,8 +68,15 @@ const Vouchers = () => {
 
     const getVouchersList = async () => {
         if (commonInfo?.shopId) {
-            const { data } = await APIPersonalCenterCouponList({ "shopId": commonInfo.shopId });
-            setData(data);
+            // const { data } = await APIPersonalCenterCouponList({ "shopId": commonInfo.shopId });
+            // 使用下单的那套优惠券的接口
+            const { data } = await APIOrderCouponList({ shopId: commonInfo?.shopId, diningType: commonInfo?.orderType });
+            const couponList = data?.availableList?.map((el) => {
+                return el?.couponList?.map((item) => {
+                    return item
+                })
+            })
+            setData([].concat(...couponList));
         } else {
             message.error("not have shop id")
         }
@@ -84,14 +90,14 @@ const Vouchers = () => {
             <>
                 <header>
                     <h3>My Vouchers</h3>
-                    <Search
+                    {/* <Search
                         placeholder="Add Voucher Code"
                         allowClear
                         onSearch={handleAddVouchers}
                         prefix={<ContainerOutlined style={{ "margin": "0 0.5rem" }} />}
                         enterButton={<PlusOutlined />}
                         style={{ "width": 300 }}
-                    />
+                    /> */}
                 </header>
                 {
                     data.length > 0 ?

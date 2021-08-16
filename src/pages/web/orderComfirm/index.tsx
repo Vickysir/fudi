@@ -205,10 +205,10 @@ const OrderComfirm = (props) => {
             remark: params?.remark,
             paymentType: params?.paymentType,
             shopId: params?.shopId,
-            collection: {
-                contactName: params?.contactName,
-                contactNumber: params?.contactNumber,
-            },
+            // collection: {
+            //     contactName: params?.contactName,
+            //     contactNumber: params?.contactNumber,
+            // },
             userGoodsCouponId: undefined,
             userFreightCouponId: undefined,
             couponRealm: params?.voucher?.realm,
@@ -216,6 +216,8 @@ const OrderComfirm = (props) => {
             deliveryOption: params?.deliveryOption,
             userShippingAddress: {
                 id: commonInfo?.deliveryAddressId,
+                consignee: params?.contactName,
+                phone: params?.contactNumber,
             },
         }
         if (params?.voucher?.type === COUPONTYPE_FOOD) {

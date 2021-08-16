@@ -277,8 +277,8 @@
         - 修复了，在存入手机号时，将 +353 这个 + 前缀存入的问题  ✅
     - 在使用满减 和 打九折的优惠券时，饮料跟snack 这两种不应该打折的
         - 无法区分，暂时不做
-    - Order for me/others 联系人姓名跟电话没有传上去 
-        - 可能是deliver 传的参数问题
+    - Order for me/others 联系人姓名跟电话没有传上去  ✅
+        - 可能是deliver 传的参数问题  
             - userShippingAddress: {
                 id: commonInfo?.deliveryAddressId,
                 consignee: params?.contactName,

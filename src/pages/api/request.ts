@@ -144,6 +144,14 @@ export const APIPersonalCenterCouponList = async (
     params
   );
 };
+export const APIPersonalCenterUserCouponList = async (
+  params: PersonalCenterCouponListPost
+) => {
+  return await axios.post<PersonalCenterCouponListPostResponseArray[]>(
+    apiPath.personalCenterUserCouponList,
+    params
+  );
+};
 // 个人中心 有效的 Vouchers
 export const APIPersonalCenterUsableCoupon = async () => {
   return await axios.post(apiPath.personalCenterUsableCoupon);

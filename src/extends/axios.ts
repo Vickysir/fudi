@@ -52,6 +52,7 @@ export function initAxiosConfig() {
                         message.error("Login has expired，you will jump to the login page in 3 seconds")
                         setTimeout(() => {
                             APP_STORE?.clear();
+                            console.log(`location:${window.location.origin}`)
                             window.location.href = `${window.location.origin}/#/home/login`;
                         }, 3000)
                     }

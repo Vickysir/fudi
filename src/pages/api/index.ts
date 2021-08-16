@@ -30,10 +30,12 @@ export const apiPath = {
   personalCenterUpdatePassword: "/user/update/password", //Update Password     一期
 
   // "personalCenterCouponList": "/coupon/list/v2",//Get coupon list     一期
-  personalCenterCouponList: "/coupon/list/received", //Get coupon list     一期
-  personalCenterObtainCoupon: "/user/coupon/obtain/v2", //Obtain the coupon code from the text field     一期
-  personalCenterUsableCoupon: "/user/coupon/usable", // return the useable coupon     一期
-  personalCenterInvalidCoupon: "/user/coupon/invalid", // Return the expired coupon     一期
+  personalCenterCouponList: "/coupon/list/received", // 使用下单时那套接口
+  personalCenterObtainCoupon: "/user/coupon/obtain/v2", // 使用下单时那套接口
+  personalCenterUsableCoupon: "/user/coupon/usable", // 使用下单时那套接口
+  personalCenterInvalidCoupon: "/user/coupon/invalid", // 使用下单时那套接口
+  personalCenterUserCouponList: "/user/coupon/list", // 使用下单时那套接口
+
 
   personalCenterInvitation: "/user/invitation", // Return if this user's invitation status     一期
   personalCenterUpdateNickname: "/user/update/nickname", // Update user name     一期

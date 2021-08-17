@@ -12,22 +12,25 @@ import "./index.less";
 import { getAfterNowDisabledHours, getAfterNowDisabledMinutes, getBeforNowDisabledHours, getBeforNowDisabledMinutes, segmentationTime } from "@/utils/timer";
 
 const OrderTimeModal = (props) => {
-  const { isOpen, isClose, shopId, finishFn } = props;
+  const { isOpen, isClose, shopId, finishFn, displayData } = props;
   const authInfo = useAppStore("authInfo");
   const commonInfo = useAppStore("commonInfo");
 
   const [visible, setvisible] = useState(false);
   const [timeType, setTimeType] = useState(ORDERTIME_ASAP);
   const [isEditForTime, setIsEditForTime] = useState(false);
-  const [editForTimeValue, setEditForTimeValue] = useState<number>(
-    moment(new Date()).valueOf()
-  );
+  const [editForTimeValue, setEditForTimeValue] = useState<number>(undefined);
   const openTIme = commonInfo?.startTimeFormat ?? '00:00';
   const closeTIme = commonInfo?.endTimeFormat ?? '23:59';
 
   useEffect(() => {
     setvisible(isOpen);
-    handleChangeForTime(moment(new Date()).valueOf(), false);
+    // 回显
+    if (displayData?.timeType !== ORDERTIME_ASAP) {
+      setTimeType(ORDERTIME_ONTIME);
+      setEditForTimeValue(displayData?.diningTime);
+      setIsEditForTime(true)
+    }
   }, [isOpen]);
 
   const handleOk = async () => {
@@ -135,7 +138,7 @@ const OrderTimeModal = (props) => {
     // 如果超过营业时间,只能 ASAP
     if (businessHours.isOverStartTime || businessHours.isOverEndTime) {
       if (type === ORDERTIME_ONTIME) {
-        message.error(`Sorry，Business time is ${openTIme}-${closeTIme}`);
+        message.error(`Sorry，Business time is ${openTIme}-${closeTIme},place choose ASAP`);
       }
       return
     }
@@ -164,33 +167,36 @@ const OrderTimeModal = (props) => {
               {timeType === ORDERTIME_ONTIME && <CheckOutlined />}
             </div>
           </li>
-          <li>
-            {isEditForTime ? (
-              <div style={{ width: "100% " }}>
-                <TimePicker
-                  style={{ width: "100% " }}
-                  placeholder="Select time"
-                  inputReadOnly
-                  hideDisabledOptions
-                  showMinute
-                  showNow={false}
-                  format="HH:mm"
-                  disabledHours={() => disabledHours()}
-                  disabledMinutes={(selectedHour) => disabledMinutes(selectedHour)}
-                  onChange={handleChangeForTime}
-                  onOk={() => {
-                    setIsEditForTime(false);
-                  }}
-                />
-              </div>
-            ) : (
-              <span className="orderTimeModal-content-ontime" onClick={() => onSelectTimeTypeChange(ORDERTIME_ONTIME)}>
-                {moment(editForTimeValue)
-                  .format('HH:mm')
-                  .replace(/\"/g, "")}
-              </span>
-            )}
-          </li>
+          {
+            timeType === ORDERTIME_ONTIME &&
+            <li>
+              {isEditForTime ? (
+                <div style={{ width: "100% " }}>
+                  <TimePicker
+                    style={{ width: "100% " }}
+                    placeholder="Select time"
+                    inputReadOnly
+                    hideDisabledOptions
+                    showMinute
+                    showNow={false}
+                    format="HH:mm"
+                    disabledHours={() => disabledHours()}
+                    disabledMinutes={(selectedHour) => disabledMinutes(selectedHour)}
+                    onChange={handleChangeForTime}
+                    onOk={() => {
+                      setIsEditForTime(false);
+                    }}
+                  />
+                </div>
+              ) : (
+                <span className="orderTimeModal-content-ontime" onClick={() => onSelectTimeTypeChange(ORDERTIME_ONTIME)}>
+                  {moment(editForTimeValue)
+                    .format('HH:mm')
+                    .replace(/\"/g, "")}
+                </span>
+              )}
+            </li>
+          }
         </ul>
         <div className="model-content-action">
           <Button shape="round" type="primary" block onClick={handleOk}>

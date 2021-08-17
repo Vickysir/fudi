@@ -219,6 +219,7 @@ const OrderMethod = (props: Props) => {
         isClose={orderTimeModalClose}
         shopId={Number(1)}
         finishFn={setDataFn}
+        displayData={{ timeType: orderData.timeType, dingtime: orderData.diningTime }}
       />
       <OrderForModal
         isOpen={isOrderForModal}

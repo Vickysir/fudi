@@ -29,7 +29,11 @@ const OrderTimeModal = (props) => {
     if (displayData?.timeType !== ORDERTIME_ASAP) {
       setTimeType(ORDERTIME_ONTIME);
       setEditForTimeValue(displayData?.diningTime);
-      setIsEditForTime(true)
+      setIsEditForTime(true);
+    }
+    if (displayData?.timeType === ORDERTIME_ASAP) {
+      setTimeType(ORDERTIME_ASAP);
+
     }
   }, [isOpen]);
 
@@ -174,7 +178,7 @@ const OrderTimeModal = (props) => {
                 <div style={{ width: "100% " }}>
                   <TimePicker
                     style={{ width: "100% " }}
-                    placeholder="Select time"
+                    placeholder={`${moment(displayData?.dingtime).format('HH:mm')}`}
                     inputReadOnly
                     hideDisabledOptions
                     showMinute

@@ -27,27 +27,31 @@ const OrderDetailsList = (props: Props) => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     const handleChangeGoodsCount = async (action, id, count) => {
-        let goodCount;
-        if (action === "plus") {
-            goodCount = count + 1;
-            await APIUpdateCartList({ shopId: commonInfo?.shopId, id, quantity: goodCount });
-            await refreshHeader();
+        try {
+            setLoading(true);
+            let goodCount;
+            if (action === "plus") {
+                goodCount = count + 1;
+                await APIUpdateCartList({ shopId: commonInfo?.shopId, id, quantity: goodCount });
+                await refreshHeader();
 
-        } else if (action === "minus") {
-            if (count === 1) {
-                setLoading(true);
-                await APIRemoveCartList({ shopId: commonInfo?.shopId, id });
+            } else if (action === "minus") {
+                if (count === 1) {
+                    await APIRemoveCartList({ shopId: commonInfo?.shopId, id });
+                    await refreshHeader();
+                    await refreshHeader();
+                    return
+                }
+                goodCount = count - 1;
+                await APIUpdateCartList({ shopId: commonInfo?.shopId, id, quantity: goodCount });
                 await refreshHeader();
-                await refreshHeader();
-                return
+
             }
-            goodCount = count - 1;
-            await APIUpdateCartList({ shopId: commonInfo?.shopId, id, quantity: goodCount });
             await refreshHeader();
-
+        } catch (err) {
+            setLoading(false);
+            console.log("修改购物车数量", err)
         }
-        setLoading(true);
-        await refreshHeader();
     }
 
     const caculateTotal = (data) => {
@@ -101,20 +105,22 @@ const OrderDetailsList = (props: Props) => {
     const fetchData = async () => {
         const { data } = await APIGetCartList({ shopId: commonInfo?.shopId });
         setData(data);
-        setLoading(false)
-        caculateTotal(data)
+        setLoading(false);
+        caculateTotal(data);
     }
     const refreshHeader = async () => {
         APP_STORE.commonInfo = {
             ...APP_STORE.commonInfo,
             refreshCart: new Date().getTime()
         };
+        fetchData();
     }
 
     useEffect(() => {
         fetchData();
     }, [])
     useEffect(() => {
+        // 监听购物车的刷新
         fetchData();
     }, [commonInfo?.refreshCart])
 

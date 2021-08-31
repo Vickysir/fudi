@@ -55,7 +55,6 @@ function initPlaceService(input, callback) {
 
         const displaySuggestions = function (predictions, status) {
             if (status != google.maps.places.PlacesServiceStatus.OK || !predictions) {
-                alert(status);
                 return;
             }
             console.log(`predictions`, predictions)

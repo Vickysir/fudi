@@ -216,8 +216,8 @@ const OrderComfirm = (props) => {
             deliveryOption: params?.deliveryOption,
             userShippingAddress: {
                 id: commonInfo?.deliveryAddressId,
-                consignee: params?.contactName,
-                phone: params?.contactNumber,
+                contactName: params?.contactName,
+                contactNumber: params?.contactNumber,
             },
         }
         if (params?.voucher?.type === COUPONTYPE_FOOD) {
@@ -318,44 +318,49 @@ const OrderComfirm = (props) => {
                                         type="primary"
                                         block
                                         onClick={async () => {
-                                            setLoading(true)
-                                            let submit;
+                                            try {
+                                                setLoading(true);
+                                                let submit;
 
-                                            if (orderType === DELIVERYTYPE_DELIVERY) {
-                                                submit = formatDeleverySubmit({
-                                                    ...basicRequireSubmint,
-                                                    ...form.getFieldsValue(),
-                                                    ...otherOrderInfo,
-                                                    voucher
-                                                });
-                                            } else {
-                                                submit = formatColoctionSubmit({
-                                                    ...basicRequireSubmint,
-                                                    ...form.getFieldsValue(),
-                                                    ...otherOrderInfo,
-                                                    voucher
-                                                });
+                                                if (orderType === DELIVERYTYPE_DELIVERY) {
+                                                    submit = formatDeleverySubmit({
+                                                        ...basicRequireSubmint,
+                                                        ...form.getFieldsValue(),
+                                                        ...otherOrderInfo,
+                                                        voucher
+                                                    });
+                                                } else {
+                                                    submit = formatColoctionSubmit({
+                                                        ...basicRequireSubmint,
+                                                        ...form.getFieldsValue(),
+                                                        ...otherOrderInfo,
+                                                        voucher
+                                                    });
 
-                                            }
-                                            console.log(`联合表单`, submit)
-
-                                            if (submit.paymentType === PAYMENTTYPE_ONLINE) {
-                                                // payment 0 为online ,保存订单号
-                                                const { data } = await APIOrderSubmit(submit)
-                                                setLoading(false);
-                                                APP_STORE.commonInfo = {
-                                                    ...APP_STORE.commonInfo,
-                                                    userOrderId: data?.id
-                                                };
-                                                history.push("/home/payment");
-                                            } else {
-                                                // payment 1 为现金直接下单
-                                                const { event } = await APIOrderSubmit(submit);
-                                                if (event === 'SUCCESS') {
-                                                    setLoading(false);
-                                                    message.success("Successfully ordered")
-                                                    history.push("/home");
                                                 }
+                                                console.log(`联合表单`, submit)
+
+                                                if (submit.paymentType === PAYMENTTYPE_ONLINE) {
+                                                    // payment 0 为online ,保存订单号
+                                                    const { data } = await APIOrderSubmit(submit)
+                                                    setLoading(false);
+                                                    APP_STORE.commonInfo = {
+                                                        ...APP_STORE.commonInfo,
+                                                        userOrderId: data?.id
+                                                    };
+                                                    history.push("/home/payment");
+                                                } else {
+                                                    // payment 1 为现金直接下单
+                                                    const { event } = await APIOrderSubmit(submit);
+                                                    if (event === 'SUCCESS') {
+                                                        setLoading(false);
+                                                        message.success("Successfully ordered")
+                                                        history.push("/home");
+                                                    }
+                                                }
+                                            } catch (err) {
+                                                setLoading(false);
+                                                console.log(`确认订单`, err)
                                             }
                                         }}
                                         style={{ marginTop: "4rem" }}

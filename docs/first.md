@@ -23,7 +23,7 @@
         - 登录页面，按钮显示Home
         - 注册页面，按钮显示Login
     - homepage shop电话号码隐藏
-    - Help Center 电话号码 、online chat  是否和homepage的一致 【？？？】
+    - Help Center 电话号码 、online chat  是否和homepage的一致
 
 
 2. 已登录

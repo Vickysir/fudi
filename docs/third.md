@@ -26,11 +26,10 @@
         - 修改商品数量，减到0时，删除该商品
         - 修改商品数量时，计算出total价格显示出来
         - 点击Confirm Order 跳转到 确认订单页面
-        - change to collecttion 【删掉】
 
 <br>
 
-### header 通知 list【 隐藏 】
+### header 通知 list
 
 <br>
 <div style="color:green">接口文档：</div>
@@ -73,7 +72,6 @@
 
     - 左侧订单详情 仅展示
     - 右侧信息
-        - 地图查看位置 【删掉】
         - 修改时间 ✅
             - ASAP 立刻送
             - On Time 
@@ -131,11 +129,10 @@
         - 根据socket实时渲染位置信息 【先不做】
     - 点击Add a Review 状态为4的时候可评论
         - 添加评论
-    - Repeat Order 【删除】
 
 <br>
 
-### 个人中心-通知 【隐藏】
+### 个人中心-通知 
 
 <div style="color:green">接口文档：</div>
 

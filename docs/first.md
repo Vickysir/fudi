@@ -175,7 +175,7 @@
 
 
 ### 路由
-1. <div style="color:red">auth路由</div>
+1. auth路由
     - personalCenter
     
 2. 公开路由

@@ -2,10 +2,10 @@
 
 <br>
 
-- [header 购物车 list](#header购物车list) ✅<br>
+- [header 购物车 list](#header购物车list) <br>
 - [header 通知 list](#header通知list) 【暂缓】<br>
 - [确认订单](#确认订单)<br> 
-- [个人中心-订单](#个人中心-订单)<br> ✅
+- [个人中心-订单](#个人中心-订单)<br> 
 - [个人中心-通知](#个人中心-通知) 【暂缓】<br>
 - [主题色](#主题色)<br>
 
@@ -53,7 +53,7 @@
 <br>
 <div style="color:green">接口文档：</div>
 
-    - 获取购物车内容  /user/cart/list/v3 ❌ preview v4 
+    - 获取购物车内容  /user/cart/list/v3 - preview v4 
     - 根据 type = deliver、collect，展示右侧的相关信息 ✅
     - delivery fee  /user/order/freight_price/v3 
     - delivery 地址 是用户在homepage 输入的地址 ✅
@@ -76,7 +76,7 @@
         - 地图查看位置 【删掉】
         - 修改时间 ✅
             - ASAP 立刻送
-            - On Time ❌
+            - On Time 
         - 修改people ✅
             - for self 为自己
             - order for another person
@@ -110,7 +110,6 @@
     - 下单 
         - 下单成功，清空购物车，回到首页
 
-<div style="color:red">Order Option 的list是什么？</div>
 <br>
 
 ### 个人中心-订单
@@ -134,7 +133,6 @@
         - 添加评论
     - Repeat Order 【删除】
 
-<div style="color:red">添加评论的具体交互设计？</div>
 <br>
 
 ### 个人中心-通知 【隐藏】
@@ -193,7 +191,7 @@
         - 增删商品，总价格是否计算正确 ✅
         - 运费对总价格的影响
             - delivery
-                - 有运费（不知道有运费的地址范围是哪些，暂无法测试） ❌
+                - 有运费
                 - 无运费 ✅
             - coloction ✅
                 无 ✅
@@ -212,7 +210,7 @@
                 - 修改联系人 ✅
         - 支付
             - delivery
-                - 无法下单（暂无法测试） ❌
+                - 无法下单（暂无法测试） 
             - coloction
                 - cash
                     - 下单是否成功 ✅

@@ -81,7 +81,7 @@ type 两种类型
 
     - shop 详情：/shop/detail/v2 评分要自己计算一下
     - 商品分类：/goods/classify/list/first/v2  只返回一级分类
-    - 二级分类：good/list/v2 返回二级分类和二级分类下面的所有产品【 这个接口最好能拆分一下】
+    - 二级分类：good/list/v2 返回二级分类和二级分类下面的所有产品
     - 搜索查询接口：/goods/search 进入商品详情
     - book table 接口  /user/order/submit/v3
 
@@ -92,8 +92,8 @@ dom 结构
         - book table  ，点击预定
             - 表单模态框
                 - for who
-                    - 下拉列表 【 什么列表，对应什么接口】
-                - number of people  几个人 【min，max是多少？】
+                    - 下拉列表 
+                - number of people  
                 - time 精确到时刻
             - 确定
                 - 非空验证
@@ -114,8 +114,8 @@ dom 结构
 
 接口文档：
 
-    - goodsDetails：/goods/detail/v2  【接口字段需要解释一下】
-    - 添加购物车接口：/user/cart/add/v3 【接口字段remark哪里填的？goodsIngredientList结构？】
+    - goodsDetails：/goods/detail/v2 
+    - 添加购物车接口：/user/cart/add/v3 
 
 dom 结构:
 
@@ -136,6 +136,5 @@ dom 结构:
             - 未登录
                 - 跳转至login
                 - 登录成功，自动加入购物车
-                - 【如果用户不登录，选购的商品信息如何】
             - 已登录
                 - 加入购物车

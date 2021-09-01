@@ -83,7 +83,7 @@ googlemaplist
 - 第三方授权登录，set 手机号的时候，按钮显示 undefined ✅
 - 购物车 Change to Collection 去掉 ✅
 
-### 2021-06-13 讨论主题
+### 2021-06-13 
 
 - 下单规则
 - 优惠券规则
